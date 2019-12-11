@@ -1,0 +1,68 @@
+html {
+    scroll-behavior: smooth;
+}
+body {
+    background-color: #fff;
+    font-family: 'Comfortaa', cursive;
+}
+a {
+    color: #000000;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+    color: #000000;
+}
+.header {
+    background: #E7B9CB;
+    font-size: 1.2rem;
+    line-height: 22px;
+   overflow-x: hidden;
+}
+.header hr {
+    border: 1px solid #000000;
+}
+.header a {
+    position: relative;
+    top: 10px;
+}
+.header .cart-hdr {
+    font-size: 1rem;
+    line-height: 18px;
+}
+.nav_block input {
+    border-right: none;
+}
+.nav_block .input-group-text {
+    background-color: transparent;
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+
+
+footer {
+    font-size: 1.2rem;
+    line-height: 22px;
+    background: #E7B9CB;
+}
+footer ul li {
+    margin-right: 3%;
+}
+footer hr {
+    background-color: #E13075;
+}
+footer .contact-list {
+    font-size: 1rem;
+    line-height: 22px;
+}
+
+@media (min-width: 320px) and (max-width: 520px) {
+    footer ul li {
+        padding-bottom: .5rem;
+    }
+    footer ul li:last-child {
+        padding-bottom: 0;
+    }
+}
