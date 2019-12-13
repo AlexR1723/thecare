@@ -51,6 +51,22 @@ a:hover {
     margin-right: 1.5rem;
     color: #000000;
 }
+.nav_block .nav-item .nav-link:after {
+    background-color: #E13075;
+    display: block;
+    margin-top: 1%;
+    content: "";
+    height: 2px;
+    width: 0;
+    transition: width .5s ease-in-out;
+}
+.nav_block .nav-item .nav-link:hover:after,
+.nav_block .nav-item .nav-link:focus:after {
+    width: 100%;
+}
+.nav_block .nav-item .nav-link:hover {
+    color: #000000;
+}
 .items_hdr_bg {
     height: 20rem;
     min-height: 10rem;
@@ -85,13 +101,91 @@ a:hover {
     text-align: center;
     margin: 0;
 }
-.face-top_blk h3 {
+.shop-items_blk h3 {
+    margin: 0;
+    margin-bottom: 1.5rem;
+    padding-bottom: .3rem;
     font-weight: bold;
     font-size: 1.5rem;
     line-height: 27px;
     color: #000000;
-    padding-bottom: .3rem;
     border-bottom: 2px solid #E13075;
+}
+.shop-items_blk .card {
+    border-radius: 0;
+}
+.shop-items_blk .slider .slick-slide:hover {
+    box-shadow: 0 0 20px 5px rgba(221, 221, 221, 1);
+    transition: .5s;
+}
+.shop-items_blk .card-body {
+    height: 9rem;
+    background: transparent;
+}
+.shop-items_blk .card-title {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1.4rem;
+    line-height: 25px;
+    color: #E13075;
+}
+.shop-items_blk .card-title:after {
+    background-color: #E13075;
+    display: block;
+    margin-top: 5%;
+    content: "";
+    height: 2px;
+    width: 0;
+    transition: width .5s ease-in-out;
+}
+.shop-items_blk .card-title:hover:after,
+.shop-items_blk .card-title:focus:after {
+    width: 100%;
+}
+.shop-items_blk .card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: normal;
+    font-size: 1.1rem;
+    line-height: 22px;
+    color: #000000;
+}
+.shop-items_blk .card-text:after {
+    background-color: #E13075;
+    display: block;
+    margin-top: 1%;
+    content: "";
+    height: 2px;
+    width: 0;
+    transition: width .5s ease-in-out;
+}
+.shop-items_blk .card-text:hover:after,
+.shop-items_blk .card-text:focus:after {
+    width: 85%;
+}
+.hair-top_blk {
+    background: #F2F2F2;
+}
+.hair-top_blk .card-body {
+    background: #F2F2F2;
+}
+.shop-items_blk .slider {
+    position: relative;
+}
+.shop-items_blk .prev,
+.shop-items_blk .next {
+    position: absolute;
+    top: 50%;
+    font-size: 2rem;
+    z-index: 1;
+    cursor: pointer;
+    color: #ffffff;
+}
+.shop-items_blk .next {
+    right: 0;
 }
 
 footer {
