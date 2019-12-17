@@ -91,6 +91,7 @@ a:hover {
     height: 100%;
     width: 100%;
     background: rgba(51, 51, 51, 0.5);
+    border: 2px solid white;
 }
 .item_hdr_bg_layout a {
     color: #FFFFFF;
