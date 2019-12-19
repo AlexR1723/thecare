@@ -6,3 +6,6 @@ def Main(request):
 
 def Dev(request):
     return render(request, 'Main/Dev.html', locals())
+
+def Delivery(request):
+    return render(request, 'Main/Delivery.html', locals())

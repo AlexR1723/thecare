@@ -19,4 +19,5 @@ from . import views
 urlpatterns = [
     url(r'^$', views.Main, name="Main"),
     url(r'^dev/$', views.Dev, name="Dev"),
+    url(r'^delivery/$', views.Delivery, name="Delivery"),
 ]

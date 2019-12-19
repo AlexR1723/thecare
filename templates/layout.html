@@ -24,7 +24,7 @@
             <div class="row justify-content-md-between align-items-center">
                 <div class="col-12 col-md-4 text-center text-md-left phone-hdr mb-3 mb-md-0">
                     <a href="tel:88004001212">
-                        <img src="static/image/telephone1.png" alt="" class="mb-1">
+                        <img src="{% static 'image/telephone1.png' %}" alt="" class="mb-1">
 <!--                        <i class="fa fa-phone" aria-hidden="true"></i>-->
                         <span>8 (800) 400-12-12</span>
                     </a>
@@ -41,7 +41,7 @@
                     <hr class="">
                 </div>
                 <div class="col-6 col-md-3 text-center">
-                    <img src="static/image/main_logo.png" alt="" class="img-fluid">
+                    <img src="{% static 'image/main_logo.png' %}" alt="" class="img-fluid">
                 </div>
                 <div class="col-3 col-md-4 pt-2 pt-md-4">
                     <hr class="">
@@ -148,11 +148,11 @@
                 <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 mx-auto p-0">
                     <ul class="contact-list list-group list-unstyled">
                         <li>
-                            <img src="static/image/telephone1.png" alt="" class="mb-1">
+                            <img src="{% static 'image/telephone1.png' %}" alt="" class="mb-1">
                             <a href="#">8 (800) 400-12-12</a>
                         </li>
                         <li class="mt-2">
-                            <img src="static/image/email1.png" alt="">
+                            <img src="{% static 'image/email1.png' %}" alt="">
                             <a href="mailto:mail@gmail.com">email@gmail.com</a>
                         </li>
                     </ul>
@@ -163,7 +163,10 @@
 </div>
 
 <script src="https://kit.fontawesome.com/2c9fd467ea.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -173,10 +176,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous"></script>
-<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
 <script src="{% static 'js/slick.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.js' %}"></script>

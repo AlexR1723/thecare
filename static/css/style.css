@@ -188,8 +188,42 @@ a:hover {
 .shop-items_blk .next {
     right: 0;
 }
+.nav_block {
+    border-bottom: 1px solid #E0E0E0;
+}
+.custom-breadcrumb {
+    background: transparent;
+}
+.custom-breadcrumb .home-icon {
+    font-size: 1.2rem;
+    color: #4f4f4f;
+}
+.custom-breadcrumb .breadcrumb-item+.breadcrumb-item::before {
+    font-family: "FontAwesome";
+    content: "\f054";
+    color: #4f4f4f;
+}
+.custom-breadcrumb .breadcrumb-item.active a {
+    color: #4F4F4F;
+    border-bottom: 1px solid transparent;
+}
+.custom-breadcrumb .breadcrumb-item.active a:hover {
+    border-bottom: 1px solid #4F4F4F;
+    transition: .5s;
+}
+.delivery_blk {
+    color: #000000;
+}
+.delivery_blk h1 {
+    font-size: 1.7rem;
+    font-weight: bold;
+    line-height: 31px;
+}
 
 footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
     font-size: 1.2rem;
     line-height: 22px;
     background: #E7B9CB;
