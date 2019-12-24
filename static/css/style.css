@@ -211,10 +211,12 @@ a:hover {
     border-bottom: 1px solid #4F4F4F;
     transition: .5s;
 }
-.delivery_blk {
+.delivery_blk,
+.payment_blk {
     color: #000000;
 }
-.delivery_blk h1 {
+.delivery_blk h1,
+.payment_blk h1 {
     font-size: 1.7rem;
     font-weight: bold;
     line-height: 31px;

@@ -9,3 +9,6 @@ def Dev(request):
 
 def Delivery(request):
     return render(request, 'Main/Delivery.html', locals())
+
+def Payment(request):
+    return render(request, 'Main/Payment.html', locals())
