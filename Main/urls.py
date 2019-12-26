@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^dev/$', views.Dev, name="Dev"),
     url(r'^delivery/$', views.Delivery, name="Delivery"),
     url(r'^payment/$', views.Payment, name="Payment"),
+    url(r'^contacts/$', views.Contacts, name="Contacts"),
 ]

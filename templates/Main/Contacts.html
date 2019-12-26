@@ -1,0 +1,139 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<div class="container-fluid p-0">
+    <div class="row m-0 justify-content-center">
+        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 mt-3">
+            <div class="row m-0 justify-content-start align-items-center">
+                <nav aria-label="breadcrumb">
+                    <ol class="custom-breadcrumb breadcrumb px-0">
+                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home home-icon" aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><a href="#">Контакты</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 payment_blk mb-5">
+            <div class="row m-0 justify-content-start align-items-center">
+                <div class="row m-0 justify-content-start align-items-center">
+                    <h1>Контакты</h1>
+                </div>
+            </div>
+            <div class="row m-0 justify-content-center align-items-center mt-4">
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-0 mt-3">
+                    <div class="row m-0 justify-content-center align-items-center">
+                        <div class="text-center">
+                            <img src="/static/image/map_1.png" class="" alt="Map icon">
+                            <div class="">
+                                <p class="card-text mt-5">г. Москва, ул. _________</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-0 mt-3">
+                    <div class="row m-0 justify-content-center align-items-center">
+                        <div class="text-center">
+                            <img src="/static/image/telephone_3.png" class="img-fluid" alt="Phone icon">
+                            <div class="">
+                                <p class="card-text mt-5">8 (800) 400-12-12</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-0 mt-3">
+                    <div class="row m-0 justify-content-center align-items-center">
+                        <div class="text-center">
+                            <img src="/static/image/clock_1.png" alt="Clock icon">
+                            <div class="">
+                                <p class="card-text mt-4">Пн. - Пт. 10:00 - 19:00 <br> Сб. 12:00 - 17:00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 map_blk mb-5">
+            <div class="row m-0 justify-content-center align-items-center mt-4">
+                <div class="col-12 col-sm-12 col-md-11 col-lg-6 col-xl-6 p-0 mt-3">
+                    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A8cae44439ec970d04a4f057704378b27e97e1424ab7af1e348827a8dd6f2b1b6&amp;source=constructor" width="500" height="490" frameborder="0"></iframe>
+                </div>
+                <div class="col-12 col-sm-12 col-md-11 col-lg-6 col-xl-6 p-0 pt-3 px-5">
+                        <form class="feedback-form">
+                            <h2 class="text-center mb-4">Напишите нам</h2>
+                            <div class="form-group">
+                                <label for="FormControlInput1">Имя <span>*</span></label>
+                                <input type="text" class="form-control" id="FormControlInput1" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label for="FormControlInput1">E-mail <span>*</span></label>
+                                <input type="email" class="form-control" id="FormControlInput2" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label for="FormControlInput3">Тема сообщения</label>
+                                <input type="text" class="form-control" id="FormControlInput3" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label for="FormControlTextarea1">Сообщение <span>*</span></label>
+                                <textarea class="form-control" id="FormControlTextarea1" rows="3"></textarea>
+                            </div>
+                            <div class="form-group text-right">
+                                <button type="submit" class="btn mb-2 w-50 py-2">Отправить</button>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 social_blk mb-5">
+            <div class="row justify-content-between">
+                <div class="col-3 col-md-2 col-lg-2 col-xl-3">
+                    <hr class="">
+                </div>
+                <div class="col-6 col-md-7 col-lg-7 col-xl-6 text-center p-0">
+                    <h3>Ищите нас в социальных сетях</h3>
+                </div>
+                <div class="col-3 col-md-2 col-lg-2 col-xl-3">
+                    <hr class="">
+                </div>
+            </div>
+
+            <div class="row m-0 justify-content-center align-items-center text-center mt-4">
+                <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 p-0 mt-3">
+                    <a href="#" class="text-center">
+                        <div class="ellipse mx-auto">
+                                    <img src="/static/image/vk_b.png" class="img-fluid" alt="">
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 p-0 mt-3">
+                    <a href="#">
+                        <div class="ellipse mx-auto">
+                                <img src="/static/image/twit_b.png" class="img-fluid" alt="">
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 p-0 mt-3">
+                    <a href="#">
+                        <div class="ellipse mx-auto">
+                                <img src="/static/image/insta_b.png" class="img-fluid" alt="">
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 p-0 mt-3">
+                    <a href="#">
+                        <div class="ellipse mx-auto">
+                                <img src="/static/image/face_b.png" class="img-fluid" alt="">
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

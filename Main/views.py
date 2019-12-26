@@ -12,3 +12,6 @@ def Delivery(request):
 
 def Payment(request):
     return render(request, 'Main/Payment.html', locals())
+
+def Contacts(request):
+    return render(request, 'Main/Contacts.html', locals())

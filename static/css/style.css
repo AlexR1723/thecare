@@ -221,6 +221,57 @@ a:hover {
     font-weight: bold;
     line-height: 31px;
 }
+.feedback-form h2 {
+    font-size: 1.5rem;
+    line-height: 25px;
+    color: #000000;
+}
+.feedback-form .form-control {
+    border: 1px solid rgba(51, 51, 51, 0.3);
+    border-radius: 5px;
+}
+.feedback-form span {
+    font-size: 20px;
+    line-height: 22px;
+    color: #FF0000;
+}
+.feedback-form button {
+    background: #E7B9CB;
+    border: 1px solid #E7B9CB;
+    border-radius: 5px;
+    font-size: 1rem;
+    line-height: 22px;
+    color: #000000;
+}
+.feedback-form button:hover {
+    transition: .5s;
+    background: none;
+}
+.social_blk hr {
+    background:  #E13075;
+}
+.social_blk h3 {
+    font-weight: bold;
+    font-size: 1.5rem;
+    line-height: 27px;
+    text-align: center;
+    color: #000000;
+}
+.social_blk img {
+    padding-top: 1.7rem;
+}
+.social_blk .ellipse {
+    background: transparent;
+    border: 1px solid rgba(51, 51, 51, 0.3);
+    width: 6rem;
+    height: 6rem;
+    border-radius: 100%;
+}
+.social_blk .ellipse:hover {
+    box-shadow: 0 0 20px 5px rgba(221, 221, 221, 1);
+    transition: .5s;
+}
+
 
 footer {
     position: relative;
@@ -240,6 +291,13 @@ footer .contact-list {
     font-size: 1rem;
     line-height: 22px;
 }
+
+@media (min-width: 520px) and (max-width: 1024px) {
+    .map_blk iframe {
+        width: 430px;
+    }
+}
+
 
 @media (min-width: 520px) and (max-width: 768px) {
     .nav_block .nav-item .nav-link {
