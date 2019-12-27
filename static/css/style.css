@@ -292,12 +292,17 @@ footer .contact-list {
     line-height: 22px;
 }
 
-@media (min-width: 520px) and (max-width: 1024px) {
+@media (min-width: 770px) and (max-width: 1024px) {
     .map_blk iframe {
         width: 430px;
     }
 }
-
+@media (min-width: 320px) and (max-width: 768px) {
+    .map_blk iframe {
+        width: 100%;
+        height: 20rem;
+    }
+}
 
 @media (min-width: 520px) and (max-width: 768px) {
     .nav_block .nav-item .nav-link {
