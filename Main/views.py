@@ -15,3 +15,6 @@ def Payment(request):
 
 def Contacts(request):
     return render(request, 'Main/Contacts.html', locals())
+
+def Items_catalog(request):
+    return render(request, 'Main/Items_catalog.html', locals())
