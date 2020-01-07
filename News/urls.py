@@ -19,7 +19,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.Main, name="Main"),
     url(r'^dev/$', views.Dev, name="Dev"),
-    url(r'^delivery/$', views.Delivery, name="Delivery"),
+    url(r'^delivery/$', views.Deliveries, name="Deliveries"),
     url(r'^payment/$', views.Payment, name="Payment"),
     url(r'^contacts/$', views.Contacts, name="Contacts"),
     url(r'^items_catalog/$', views.Items_catalog, name="Items_catalog"),
