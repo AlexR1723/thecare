@@ -3,6 +3,7 @@ from .models import *
 
 # Create your views here.
 
+
 def Deliveries(request):
     list = Delivery.objects.all()
     return render(request, 'Delivery/Delivery.html', locals())
