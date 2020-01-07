@@ -18,4 +18,6 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.Contacts, name="Contacts"),
+
+    url(r'send_feedback', views.send_feedback, name='send_feedback'),
 ]
