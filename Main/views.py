@@ -18,3 +18,6 @@ def Contacts(request):
 
 def Items_catalog(request):
     return render(request, 'Main/Items_catalog.html', locals())
+
+def Face(request):
+    return render(request, 'Main/Items_catalog.html', locals())

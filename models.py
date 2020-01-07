@@ -81,9 +81,6 @@ class CategoryType(models.Model):
         managed = False
         db_table = 'category_type'
 
-    def __str__(self):
-        return self.name
-
 
 class DjangoAdminLog(models.Model):
     action_time = models.DateTimeField()
@@ -137,9 +134,6 @@ class NeedType(models.Model):
         managed = False
         db_table = 'need_type'
 
-    def __str__(self):
-        return self.name
-
 
 class Product(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
@@ -175,6 +169,3 @@ class ResourceType(models.Model):
     class Meta:
         managed = False
         db_table = 'resource_type'
-
-    def __str__(self):
-        return self.name
