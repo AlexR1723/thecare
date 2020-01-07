@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class MainConfig(AppConfig):
     name = 'Main'
-    verbose_name = u"Каталог"
+    verbose_name = u"Главная"
