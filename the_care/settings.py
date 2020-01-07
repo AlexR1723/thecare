@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'the_care.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dc5r95v5mnm128',
-        'USER': 'syliijsmaogkuj',
-        'PASSWORD': '118f1d7f8e7e1c8cf7a42fa2c71b3346697e2137f5521fbb1d05519255fc4b25',
-        'HOST': 'ec2-54-228-252-67.eu-west-1.compute.amazonaws.com',
+        'NAME': 'dbvh9j72shni68',
+        'USER': 'ctpgsekgklrode',
+        'PASSWORD': '5538bf75a59b86696b02be9cb59ecfaef53f4c0b96f889ee3299de4eadb0a8c9',
+        'HOST': 'ec2-54-247-72-30.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
     }
 }

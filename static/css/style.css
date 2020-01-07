@@ -51,7 +51,15 @@ a:hover {
     margin-right: 1.5rem;
     color: #000000;
 }
-.nav_block .nav-item .nav-link:after {
+.nav_block .dropdown-menu .dropdown-item {
+    color: #000000;
+}
+.nav_block .dropdown-menu a.dropdown-item{
+    width: auto;
+    display: inline-block;
+}
+.nav_block .nav-item .nav-link:after,
+.nav_block .dropdown-menu .dropdown-item:after{
     background-color: #E13075;
     display: block;
     margin-top: 1%;
@@ -61,10 +69,13 @@ a:hover {
     transition: width .5s ease-in-out;
 }
 .nav_block .nav-item .nav-link:hover:after,
-.nav_block .nav-item .nav-link:focus:after {
+.nav_block .nav-item .nav-link:focus:after,
+.nav_block .dropdown-menu .dropdown-item:hover:after,
+.nav_block .dropdown-menu .dropdown-item:focus:after {
     width: 100%;
 }
-.nav_block .nav-item .nav-link:hover {
+.nav_block .nav-item .nav-link:hover,
+.nav_block .dropdown-menu .dropdown-item:hover {
     color: #000000;
 }
 .items_hdr_bg {

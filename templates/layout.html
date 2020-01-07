@@ -25,7 +25,7 @@
                 <div class="col-12 col-md-4 text-center text-md-left phone-hdr mb-3 mb-md-0">
                     <a href="tel:88004001212">
                         <img src="{% static 'image/telephone1.png' %}" alt="" class="mb-1">
-<!--                        <i class="fa fa-phone" aria-hidden="true"></i>-->
+                        <!--                        <i class="fa fa-phone" aria-hidden="true"></i>-->
                         <span>8 (800) 400-12-12</span>
                     </a>
                 </div>
@@ -41,7 +41,9 @@
                     <hr class="">
                 </div>
                 <div class="col-6 col-md-3 text-center">
-                    <img src="{% static 'image/main_logo.png' %}" alt="" class="img-fluid">
+                    <a href="{% url 'Main' %}">
+                        <img src="{% static 'image/main_logo.png' %}" alt="" class="img-fluid">
+                    </a>
                 </div>
                 <div class="col-3 col-md-4 pt-2 pt-md-4">
                     <hr class="">
@@ -83,10 +85,37 @@
                         <div class="collapse navbar-collapse justify-content-start px-0" id="navbarTogglerDemo02">
                             <div class="col-12 col-sm-12 col-md-11 col-lg-9 col-xl-8 px-0 mx-auto mx-md-auto mx-lg-0 mr-lg-auto">
                                 <ul class="navbar-nav justify-content-start text-center">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="">Каталог
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link" href="#" id="navbarDropdown"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Каталог
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                         </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <label class="w-100 m-0">
+                                                <a class="dropdown-item" href="#">Бренды</a>
+                                            </label>
+                                            <label class="w-100 m-0">
+                                                <a class="dropdown-item" href="#">Для мужчин</a>
+                                            </label>
+                                            <label class="w-100 m-0">
+                                                <a class="dropdown-item" href="#">Наборы и миниатюры</a>
+                                            </label>
+                                            <label class="w-100 m-0">
+                                                <a class="dropdown-item" href="#">Sale</a>
+                                            </label>
+                                            <label class="w-100 m-0">
+                                                <a class="dropdown-item" href="#">Для волос</a>
+                                            </label>
+                                            <label class="w-100 m-0">
+                                                <a class="dropdown-item" href="{% url 'Face' %}">Для лица</a>
+                                            </label>
+                                            <label class="w-100 m-0">
+                                                <a class="dropdown-item" href="#">Для тела</a>
+                                            </label>
+                                            <label class="w-100 m-0">
+                                                <a class="dropdown-item" href="#">Красители для волос</a>
+                                            </label>
+                                        </div>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="">Новости</a>

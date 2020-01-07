@@ -17,6 +17,5 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.Main, name="Main"),
-    url(r'^dev/$', views.Dev, name="Dev"),
+    url(r'^$', views.Payment, name="Payment"),
 ]

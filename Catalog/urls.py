@@ -17,6 +17,6 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.Main, name="Main"),
-    url(r'^dev/$', views.Dev, name="Dev"),
+    url(r'^face/$', views.Face, name="Face"),
+    url(r'^items_catalog/$', views.Items_catalog, name="Items_catalog"),
 ]
