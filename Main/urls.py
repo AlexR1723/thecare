@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^$', views.Main, name="Main"),
     url(r'^dev/$', views.Dev, name="Dev"),
     url(r'^brands/$', views.Brands, name="Brands"),
+    url(r'^news/$', views.News, name="News"),
 ]

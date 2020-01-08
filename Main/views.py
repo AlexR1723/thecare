@@ -19,5 +19,9 @@ def Brands(request):
     number, email = func_contact()
     return render(request, 'Main/Brands.html', locals())
 
+def News(request):
+    number, email = func_contact()
+    return render(request, 'Main/News.html', locals())
+
 
 

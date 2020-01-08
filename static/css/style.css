@@ -294,7 +294,8 @@ a:hover {
 .delivery_blk h1,
 .payment_blk h1,
 .items_blk h1,
-.brands_blk h1 {
+.brands_blk h1,
+.news_blk h1 {
     font-size: 1.7rem;
     font-weight: bold;
     line-height: 31px;
@@ -528,26 +529,25 @@ a:hover {
     line-height: 25px;
     color: #E13075 !important;
 }
-
 .items-list_catalog .card-deck .card:hover {
     box-shadow: 0px 0px 10px #C4C4C4;
 }
-
-.items-list_catalog .nav_blk .page-link {
+.items-list_catalog .nav_blk .page-link,
+.news_blk .nav_blk .page-link {
     border: none;
     color: #000000;
 }
-
-.items-list_catalog .nav_blk .page-link:hover {
+.items-list_catalog .nav_blk .page-link:hover,
+.news_blk .nav_blk .page-link:hover {
     background-color: transparent;
     color: #E13075;
 }
-
-.items-list_catalog .nav_blk .page-link:focus {
+.items-list_catalog .nav_blk .page-link:focus,
+.news_blk .nav_blk .page-link:focus {
     box-shadow: 0 0 0 0.2rem rgba(225, 48, 117, .25);
 }
-
-.items-list_catalog .nav_blk .page-link span i {
+.items-list_catalog .nav_blk .page-link span i,
+.news_blk .nav_blk .page-link span i {
     font-size: 1.3rem;
 }
 
@@ -597,7 +597,8 @@ a:hover {
     border-bottom: 1px solid transparent;
 }
 .brands_blk .brand-card:hover a {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.7);    transition: .5s;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+    transition: .5s;
 }
 .brands_blk .brand-card .scale {
     display: inline-block;
@@ -610,6 +611,42 @@ a:hover {
 .brands_blk .brand-card:hover .scale img {
     transform: scale(1.2);
 }
+.news_blk .card {
+    border: none;
+    transition: .5s;
+}
+.news_blk .card .card-body a {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 22px;
+    color: #000000;
+    border-bottom: 1px solid transparent;
+    transition: .5s;
+}
+.news_blk .card .card-body .card-text {
+    font-size: 1rem;
+    line-height: 20px;
+    color: rgba(0, 0, 0, 0.7);
+    margin-top: 1rem;
+}
+.news_blk .card .card-body .card-text .text-muted {
+    font-size: 1rem;
+    line-height: 18px;
+    color: #C4C4C4!important;
+}
+.news_blk .card .card-body .card-text .text-muted i {
+    font-weight: normal;
+    font-size: 1.5rem;
+    margin-right: .7rem;
+}
+.news_blk .card:hover {
+    background: #FFFFFF;
+    box-shadow: 0px 0px 10px #C4C4C4;
+}
+.news_blk .card:hover .card-body a {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+}
+
 
 
 footer {
