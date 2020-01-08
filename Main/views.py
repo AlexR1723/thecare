@@ -13,7 +13,11 @@ def Main(request):
 
 def Dev(request):
     number, email = func_contact()
-
-
     return render(request, 'Main/Dev.html', locals())
+
+def Brands(request):
+    number, email = func_contact()
+    return render(request, 'Main/Brands.html', locals())
+
+
 
