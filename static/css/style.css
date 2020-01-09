@@ -295,7 +295,8 @@ a:hover {
 .payment_blk h1,
 .items_blk h1,
 .brands_blk h1,
-.news_blk h1 {
+.news_blk h1,
+.item-card_blk h1 {
     font-size: 1.7rem;
     font-weight: bold;
     line-height: 31px;
@@ -470,14 +471,14 @@ a:hover {
 .items-list_catalog .card-deck .card .btn-buy {
     display: none;
 }
-
+.item-card_blk .card .btn,
 .items-list_catalog .card-deck .card .btn-buy {
     background: #E7B9CB;
     border: 1px solid #E7B9CB;
     border-radius: 5px;
     width: 93%;
 }
-
+.item-card_blk .card .btn:hover,
 .items-list_catalog .card-deck .card .btn-buy:hover {
     background: transparent;
 }
@@ -646,6 +647,83 @@ a:hover {
 .news_blk .card:hover .card-body a {
     border-bottom: 1px solid rgba(0, 0, 0, 0.7);
 }
+.item-card_blk .vendor-code {
+    font-weight: 300;
+    font-size: .9rem;
+    line-height: 16px;
+    color: #4F4F4F;
+}
+.item-card_blk .card {
+    border: none;
+}
+.item-card_blk .card-text {
+    font-size: 1rem;
+    line-height: 20px;
+    color: rgba(0, 0, 0, 0.7);
+}
+.item-card_blk .card .card-text b {
+    color: #000000;
+}
+.item-card_blk .badge {
+    background: #FFFFFF;
+    border: 1px solid #C4C4C4;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 18px;
+    color: #000000;
+    padding: .5rem 1.5rem;
+    margin: .5rem 1rem .5rem 0;
+}
+.item-card_blk .badge:hover {
+    box-shadow: 0px 0px 10px #C4C4C4;
+    transition: .5s;
+}
+.item-card_blk h2 {
+    font-weight: bold;
+    font-size: 1.4rem;
+    line-height: 25px;
+    color: #000000;
+ }
+.item-card_blk h3 {
+    font-weight: bold;
+    font-size: 1.3rem;
+    line-height: 22px;
+    color: #000000;
+}
+.item-card_blk .card .card-text .price-text {
+    font-weight: bold;
+    font-size: 1.2rem;
+    line-height: 25px;
+    color: #E13075;
+}
+.item-card_blk .card .btn {
+    width: 13rem;
+}
+.item-card_blk .items-counter .minus, .plus {
+    padding: .5rem;
+    background: transparent;
+    border: none;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+.item-card_blk .items-counter input {
+    height: 3rem;
+    width: 4.5rem;
+    text-align: center;
+    font-size: 1.2rem;
+    border: 1px solid #E5E5E5;
+    border-radius: 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.item-card_blk input[type="number"]::-webkit-outer-spin-button,
+.item-card_blk input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 
 
 
@@ -662,6 +740,7 @@ footer ul li {
     margin-right: 3%;
 }
 
+.item-card_blk hr,
 footer hr {
     background-color: #E13075;
 }

@@ -23,5 +23,9 @@ def News(request):
     number, email = func_contact()
     return render(request, 'Main/News.html', locals())
 
+def Item_card(request):
+    number, email = func_contact()
+    return render(request, 'Main/Item_card.html', locals())
+
 
 

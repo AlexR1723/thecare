@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^dev/$', views.Dev, name="Dev"),
     url(r'^brands/$', views.Brands, name="Brands"),
     url(r'^news/$', views.News, name="News"),
+    url(r'^item_card/$', views.Item_card, name="Item_card"),
 ]
