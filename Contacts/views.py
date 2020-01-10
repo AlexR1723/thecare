@@ -18,6 +18,7 @@ def Contacts(request):
     emails=list.filter(contact_id=4)
     grafic=list.filter(contact_id=3)
     adress=list.filter(contact_id=1)
+    map=list.filter(contact_id=5)[0].text
 
     return render(request, 'Contacts/Contacts.html', locals())
 

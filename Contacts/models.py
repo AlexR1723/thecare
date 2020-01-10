@@ -12,7 +12,6 @@ class ContactType(models.Model):
         verbose_name_plural = _("Типы контактов")
 
 
-
 class Contact(models.Model):
     contact = models.ForeignKey('ContactType', models.DO_NOTHING, blank=True, null=True)
     text = models.CharField(max_length=500, blank=True, null=True, verbose_name='Текст')
@@ -23,6 +22,26 @@ class Contact(models.Model):
         db_table = 'contact'
         verbose_name = _("Контакт")
         verbose_name_plural = _("Контакты")
+
+    def save(self, *args, **kwargs):
+        if self.contact_id == 5:
+            st = str(self.text)
+            arr = st.split(' ')
+            # arr_w = arr[2].split('\"')
+            # width = arr_w[0] + '\"100%\"' + arr_w[2]
+            # arr_h = arr[3].split('\"')
+            # height = arr_h[0] + '\"40vh\"' + arr_h[2]
+            # st2 = arr[0] + ' ' + arr[1] + ' ' + width + ' ' + height + ' ' + arr[4] + ' ' + arr[5] + ' ' + arr[6]
+            arr_s = arr[5].split('\"')
+            style = 'style=\"border:0; width:100%; height:40vh;\"'
+            st2 = arr[0] + ' ' + arr[1] + ' ' + arr[4] + ' ' + style + ' ' + arr[6]
+
+
+            self.text=st2
+
+
+
+        super().save(*args, **kwargs)
 
 
 class AuthUser(models.Model):
@@ -54,4 +73,3 @@ class Feedback(models.Model):
         db_table = 'feedback'
         verbose_name = _("Обратная связь")
         verbose_name_plural = _("Обратная связь")
-
