@@ -13,7 +13,19 @@ def Main(request):
 
 def Dev(request):
     number, email = func_contact()
-
-
     return render(request, 'Main/Dev.html', locals())
+
+def Brands(request):
+    number, email = func_contact()
+    return render(request, 'Main/Brands.html', locals())
+
+def News(request):
+    number, email = func_contact()
+    return render(request, 'Main/News.html', locals())
+
+def Item_card(request):
+    number, email = func_contact()
+    return render(request, 'Main/Item_card.html', locals())
+
+
 
