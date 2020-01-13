@@ -298,7 +298,8 @@ a:hover {
 .items_blk h1,
 .brands_blk h1,
 .news_blk h1,
-.item-card_blk h1 {
+.item-card_blk h1,
+.news-details_blk h1{
     font-size: 1.7rem;
     font-weight: bold;
     line-height: 31px;
@@ -553,6 +554,9 @@ a:hover {
 .news_blk .nav_blk .page-link span i {
     font-size: 1.3rem;
 }
+.slick-slide {
+    width: 10rem;
+}
 
 @media (min-width: 1224px) {
     .card-deck .card {
@@ -632,12 +636,14 @@ a:hover {
     color: rgba(0, 0, 0, 0.7);
     margin-top: 1rem;
 }
-.news_blk .card .card-body .card-text .text-muted {
+.news_blk .card .card-body .card-text .text-muted,
+.news-details_blk .text-muted {
     font-size: 1rem;
     line-height: 18px;
     color: #C4C4C4!important;
 }
-.news_blk .card .card-body .card-text .text-muted i {
+.news_blk .card .card-body .card-text .text-muted i,
+.news-details_blk .text-muted i {
     font-weight: normal;
     font-size: 1.5rem;
     margin-right: .7rem;
@@ -681,13 +687,15 @@ a:hover {
     box-shadow: 0px 0px 10px #C4C4C4;
     transition: .5s;
 }
-.item-card_blk h2 {
+.item-card_blk h2,
+.news-details_blk h2 {
     font-weight: bold;
     font-size: 1.4rem;
     line-height: 25px;
     color: #000000;
  }
-.item-card_blk h3 {
+.item-card_blk h3,
+.news-details_blk h3 {
     font-weight: bold;
     font-size: 1.3rem;
     line-height: 22px;
@@ -725,8 +733,44 @@ a:hover {
     -webkit-appearance: none;
     margin: 0;
 }
+.news-details_blk p {
+    font-size: 1rem;
+    line-height: 20px;
+    color: rgba(0, 0, 0, 0.7);
+}
+.news-details_blk .card-wrap {
+    margin: 10px;
+}
+.news-details_blk .items-list_catalog .card-deck .card:hover {
+    box-shadow: none;
+}
+.news-details_blk .items-list_catalog .card-deck .card:hover .card-wrap {
+    box-shadow: 0px 0px 10px #C4C4C4;
+    transition: .5s;
+}
+.news-details_blk .items-list_catalog .slider {
+    position: relative;
+}
+.news-details_blk .items-list_catalog .prev,
+.news-details_blk .items-list_catalog .next {
+    position: absolute;
+    top: 50%;
+    font-size: 2rem;
+    margin: 0 -1rem;
+    z-index: 1;
+    cursor: pointer;
+    color: #E0E0E0;
+}
+.news-details_blk .items-list_catalog .next {
+    right: 0;
+}
 
-
+@media (max-width: 425px) {
+    .news-details_blk .items-list_catalog .prev,
+    .news-details_blk .items-list_catalog .next {
+        margin: 0;
+    }
+}
 
 
 footer {
@@ -743,6 +787,7 @@ footer ul li {
 }
 
 .item-card_blk hr,
+.news-details_blk hr,
 footer hr {
     background-color: #E13075;
 }
