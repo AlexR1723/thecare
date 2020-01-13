@@ -17,11 +17,6 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.Main, name="Main"),
-    url(r'^dev/$', views.Dev, name="Dev"),
-    url(r'^delivery/$', views.Deliveries, name="Deliveries"),
-    url(r'^payment/$', views.Payments, name="Payments"),
-    url(r'^contacts/$', views.Contacts, name="Contacts"),
-    url(r'^items_catalog/$', views.Items_catalog, name="Items_catalog"),
-    url(r'^face/$', views.Face, name="Face"),
+    url(r'^$', views.News, name="News"),
+    url(r'^(?P<page>[0-9]+)/$', views.News_page, name="News_page"),
 ]

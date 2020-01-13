@@ -119,10 +119,11 @@
                                         </div>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="">Новости</a>
+                                        <a class="nav-link " href="{% url 'News' %}">Новости</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link " href="{% url 'Deliveries' %}">Доставка</a>                                        </a>
+                                        <a class="nav-link " href="{% url 'Deliveries' %}">Доставка</a>
+{#                                        </a>#}
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link " href="{% url 'Payments' %}">Оплата</a>
@@ -163,7 +164,7 @@
                             <a href="{% url 'Payments' %}">Оплата</a>
                         </li>
                         <li>
-                            <a href="">Новости</a>
+                            <a href="{% url 'News' %}">Новости</a>
                         </li>
                         <li>
                             <a href="{% url 'Contacts' %}">Контакты</a>
