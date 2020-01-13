@@ -29,7 +29,7 @@ def Item_card(request):
 
 def News_details(request):
     number, email = func_contact()
-    return render(request, 'Main/News_details.html', locals())
+    return render(request, 'Main/../templates/News/News_details.html', locals())
 
 
 

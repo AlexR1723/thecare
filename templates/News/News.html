@@ -28,14 +28,15 @@
                                 <div class="row no-gutters">
                                     <div class="col-12 col-md-4 my-auto">
                                         <img src="/static/image/cosmedix.png" class="card-img img-fluid" alt="">
+{#                                        <img src="{{ MEDIA_URL }}{{ i.image.url }}" class="card-img img-fluid" alt="">#}
                                     </div>
                                     <div class="col-12 col-md-8">
                                         <div class="card-body">
-                                            <a href="">{{ i.name }}</a>
+                                            <a href="{{ i.get_absolute_url}}">{{ i.name }}</a>
                                             <p class="card-text">{{ i.text }}</p>
                                             <p class="card-text">
                                                 <small class="text-muted">
-                                                    <i class="fa fa-calendar" aria-hidden="true"></i>{{ i.date }}
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>{{ i.date|date }}
                                                 </small>
                                             </p>
                                         </div>
