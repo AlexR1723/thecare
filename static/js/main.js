@@ -48,19 +48,19 @@ $('#send_feedback').click(function () {
         url: 'send_feedback',
         data: {
             name: name,
-            email:email,
-            subject:subject,
-            text:text
+            email: email,
+            subject: subject,
+            text: text
         },
         success: function (data) {
-                if (data==true){
-                    // alert('good')
-                    notice(data)
-                }
-                else {
-                    // alert('bad')
-                    notice(data)
-                }
+            if (data == true) {
+                // alert('good')
+                notice(data,'info','bottomCenter')
+            } else {
+                // alert('bad')
+                // notice(data,'info','bottomCenter')
+                notice('false false false false false false false false false false false false false false false ','info','bottomCenter')
+            }
         },
         error: function (data) {
             alert('error')
@@ -68,7 +68,17 @@ $('#send_feedback').click(function () {
     })
 })
 
-function notice(text) {
+function notice(text, type, layout) {
+    // function generate(text) {
+        new Noty({
+            text: text,
+            type: type,
+            dismissQueue: true,
+            layout: layout,
+            theme: 'relax'
+        }).show();
+    // }
+
     // let el = document.createElement('div')
     // el.setAttribute('class','')
     // el.setAttribute('style','z-index:999;width:30%;height:20%;transform: translate(50%, 50%);')
@@ -77,15 +87,15 @@ function notice(text) {
     // p.setAttribute('style','text-align:center')
     //
     // el.appendChild(p)
-    let el=document.getElementById('notice_style')
-    el.innerHTML=text;
-    // coord =
-    // el.style.top=100
 
-    $( "#notice_style" ).fadeIn(1000).delay(2000).fadeOut(1000)
+    // let el = document.getElementById('notice_style')
+    // el.innerHTML = text;
+    // document.getElementById('notice_style').getBoundingClientRect.top = 90 %
+    //     $("#notice_style").fadeIn(1000).delay(2000).fadeOut(1000)
 
 
 }
+
 // var total_wheel=0;
 // window.onwheel= function(e){
 //     console.clear()
@@ -95,7 +105,7 @@ function notice(text) {
 //
 // }
 
-$('.items-counter').ready(function() {
+$('.items-counter').ready(function () {
     $('.minus').click(function () {
         var $input = $(this).parent().find('input');
         var count = parseInt($input.val()) - 1;
