@@ -55,11 +55,11 @@ $('#send_feedback').click(function () {
         success: function (data) {
             if (data == true) {
                 // alert('good')
-                notice(data,'info','bottomCenter')
+                notice(data)
             } else {
                 // alert('bad')
-                // notice(data,'info','bottomCenter')
-                notice('false false false false false false false false false false false false false false false ','info','bottomCenter')
+                notice(data)
+                // notice('false false false false false false false false false false false false false false false ','info','bottomCenter')
             }
         },
         error: function (data) {
@@ -68,13 +68,16 @@ $('#send_feedback').click(function () {
     })
 })
 
-function notice(text, type, layout) {
+
+function notice(text) {
     // function generate(text) {
         new Noty({
             text: text,
-            type: type,
+            // type: type,
+            type: 'info',
             dismissQueue: true,
-            layout: layout,
+            // layout: layout,
+            layout: 'bottomCenter',
             theme: 'relax'
         }).show();
     // }

@@ -48,7 +48,7 @@
   bottom: 5%;
   left: 50%;
   /*width: 325px;*/
-  width: 100%;
+  /*width: 100%;*/
   -webkit-transform: translate(-webkit-calc(-50% - .5px)) translateZ(0) scale(1, 1);
           transform: translate(calc(-50% - .5px)) translateZ(0) scale(1, 1); }
 

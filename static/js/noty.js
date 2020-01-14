@@ -501,11 +501,13 @@ var Defaults = exports.Defaults = {
   layout: 'topRight',
   theme: 'mint',
   text: '',
-  timeout: false,
+  timeout: 5000,
   progressBar: true,
   closeWith: ['click'],
   animation: {
+    // open: 'animated fadeInRight',
     open: 'noty_effects_open',
+    // close: 'animated fadeOutRight'
     close: 'noty_effects_close'
   },
   id: false,
