@@ -31,5 +31,9 @@ def News_details(request):
     number, email = func_contact()
     return render(request, 'Main/../templates/News/News_details.html', locals())
 
+def Search_results(request):
+    number, email = func_contact()
+    return render(request, 'Main/Search_results.html', locals())
+
 
 

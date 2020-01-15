@@ -23,6 +23,7 @@ urlpatterns = [
     # url(r'^news/$', views.News, name="News"),
     url(r'^item_card/$', views.Item_card, name="Item_card"),
     url(r'^news_details/$', views.News_details, name="News_details"),
+    url(r'^search_results/$', views.Search_results, name="Search_results"),
 
     # url(r'^$', views.Main, name="Main"),
     # url(r'^dev/$', views.Dev, name="Dev"),

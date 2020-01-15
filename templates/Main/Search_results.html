@@ -1,0 +1,305 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<div class="container-fluid p-0">
+    <div class="row m-0 justify-content-center">
+        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 mt-3">
+            <div class="row m-0 justify-content-start align-items-center">
+                <nav aria-label="breadcrumb">
+                    <ol class="custom-breadcrumb breadcrumb px-0">
+                        <li class="breadcrumb-item"><a href="{% url 'Main' %}"><i class="fa fa-home home-icon" aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><a href="#">Поиск</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 items_blk">
+            <div class="row m-0 justify-content-start align-items-center">
+                <h1 class="m-0">Поиск по запросу “Крем”</h1>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-11 p-md-0 sort_col">
+            <div class="row m-0 justify-content-end">
+                <div class="col-12 col-md-5 col-lg-4 col-xl-3">
+                    <select class="form-control sort-select" id="exampleFormControlSelect1">
+                        <option selected>По возрастанию цены</option>
+                        <option>По убыванию цены</option>
+                        <option>Новые</option>
+                        <option>По названию</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-md-0 sort_col">
+
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 p-0 items_catalog my-5">
+                    <div class="row m-0 justify-content-start align-items-center">
+                        <div class="col">
+                            <div class="card filter_form">
+                                <form action="">
+                                    <div class="card-body filter-body_form">
+                                        <h5 class="card-title">Цена</h5>
+                                        <div class="row">
+                                            <div class="col-12 p-0">
+                                                <div class="row m-0 justify-content-between align-items-center">
+                                                    <div class="col-6">
+                                                        <div class="input-group mb-2 mr-sm-2">
+                                                            <div class="input-group-prepend">
+                                                                <div class="input-group-text px-2">от</div>
+                                                            </div>
+                                                            <input type="text" class="form-control px-2" id="filter_formInput1" placeholder="145">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="input-group mb-2 mr-sm-2">
+                                                            <div class="input-group-prepend">
+                                                                <div class="input-group-text px-2">до</div>
+                                                            </div>
+                                                            <input type="text" class="form-control px-2" id="filter_formInput2" placeholder="1278">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion" id="accordion1">
+                                        <div class="card-body filter-body_form">
+                                            <div class="row">
+                                                <div class="col-12 d-flex justify-content-between align-items-baseline">
+                                                    <h5 class="card-title">Средства</h5>
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"><i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                                <div id="collapseOne" class="collapse fade" aria-labelledby="headingOne" data-parent="#accordion1">
+                                                    <div class="card-body pt-0">
+                                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                            <input type="checkbox" class="custom-control-input" id="customControl1">
+                                                            <label class="custom-control-label" for="customControl1">1</label>
+                                                        </div>
+                                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                            <input type="checkbox" class="custom-control-input" id="customControl2">
+                                                            <label class="custom-control-label" for="customControl2">2</label>
+                                                        </div>
+                                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                            <input type="checkbox" class="custom-control-input" id="customControl3">
+                                                            <label class="custom-control-label" for="customControl3">3</label>
+                                                        </div>
+                                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                            <input type="checkbox" class="custom-control-input" id="customControl4">
+                                                            <label class="custom-control-label" for="customControl4">4</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="accordion" id="accordion2">
+                                        <div class="card-body filter-body_form">
+                                            <div class="row">
+                                                <div class="col-12 d-flex justify-content-between align-items-baseline">
+                                                    <h5 class="card-title">Потребности</h5>
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                                <div id="collapseTwo" class="collapse active show" aria-labelledby="headingTwo" data-parent="#accordion2">
+                                                    <div class="card-body pt-0">
+                                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                            <input type="checkbox" class="custom-control-input" id="customControlInline1">
+                                                            <label class="custom-control-label" for="customControlInline1">Жирная кожа</label>
+                                                        </div>
+                                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                            <input type="checkbox" class="custom-control-input" id="customControlInline2">
+                                                            <label class="custom-control-label" for="customControlInline2">Комбинированная кожа</label>
+                                                        </div>
+                                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                            <input type="checkbox" class="custom-control-input" id="customControlInline3">
+                                                            <label class="custom-control-label" for="customControlInline3">Сухая кожа</label>
+                                                        </div>
+                                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                            <input type="checkbox" class="custom-control-input" id="customControlInline4">
+                                                            <label class="custom-control-label" for="customControlInline4">Чувствительная кожа</label>
+                                                        </div>
+                                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                            <input type="checkbox" class="custom-control-input" id="customControlInline5">
+                                                            <label class="custom-control-label" for="customControlInline5">Проблемная кожа</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="accordion" id="accordion3">
+                                        <div class="card-body filter-body_form">
+                                            <div class="row">
+                                                <div class="col-12 d-flex justify-content-between align-items-baseline">
+                                                    <h5 class="card-title">Бренды</h5>
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"><i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                                <div id="collapseThree" class="col-12 collapse fade p-0" aria-labelledby="headingThree" data-parent="#accordion3">
+                                                    <div class="card-body pt-0">
+                                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                            <input type="checkbox" class="custom-control-input" id="Control1">
+                                                            <label class="custom-control-label" for="Control1">3Lab</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card-body p-0 mt-3">
+                                                    <div class="card-footer text-center p-0">
+                                                        <button type="submit" class="btn my-1">Применить</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9 p-md-0 items-list_catalog">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-md-0 my-md-5">
+                            <div class="row m-0 justify-content-start align-items-center">
+                                <div class="card-deck mb-5 ml-md-2">
+                                    <div class="card col-lg-4 col-xl-3">
+                                        <img src="/static/image/image-27.png" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">3Lab Увлажняющий крем для лица</h5>
+                                            <p class="card-text">Идельно подойдет для ежедневного использования</p>
+                                            <button type="submit" class="btn btn-buy mx-auto">Купить</button>
+                                        </div>
+                                        <div class="card-footer">
+                                            <hr>
+                                            <small class="text-muted">3 200 руб</small>
+                                        </div>
+                                    </div>
+                                    <div class="card col-lg-4 col-xl-3">
+                                        <img src="/static/image/image-28.png" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">3Lab Очищающий скраб для лица</h5>
+                                            <p class="card-text">Предназначен для глубокого очищения кожи</p>
+                                            <button type="submit" class="btn btn-buy mx-auto">Купить</button>
+                                        </div>
+                                        <div class="card-footer">
+                                            <hr>
+                                            <small class="text-muted">1 660 руб</small>
+                                        </div>
+                                    </div>
+                                    <div class="card col-lg-4 col-xl-3">
+                                        <img src="/static/image/image-29.png" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">3Lab Очищающий гель для лица</h5>
+                                            <p class="card-text">Обеспечивает бережный и тщательный уход</p>
+                                            <button type="submit" class="btn btn-buy mx-auto">Купить</button>
+                                        </div>
+                                        <div class="card-footer">
+                                            <hr>
+                                            <small class="text-muted">1 530 руб</small>
+                                        </div>
+                                    </div>
+                                    <div class="card col-lg-4 col-xl-3">
+                                        <img src="/static/image/image-27.png" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">3Lab Увлажняющий крем для лица</h5>
+                                            <p class="card-text">Идельно подойдет для ежедневного использования</p>
+                                            <button type="submit" class="btn btn-buy mx-auto">Купить</button>
+                                        </div>
+                                        <div class="card-footer">
+                                            <hr>
+                                            <small class="text-muted">3 200 руб</small>
+                                        </div>
+                                    </div>
+                                    <div class="card col-lg-4 col-xl-3">
+                                        <img src="/static/image/image-27.png" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">3Lab Увлажняющий крем для лица</h5>
+                                            <p class="card-text">Идельно подойдет для ежедневного использования</p>
+                                            <button type="submit" class="btn btn-buy mx-auto">Купить</button>
+                                        </div>
+                                        <div class="card-footer">
+                                            <hr>
+                                            <small class="text-muted">3 200 руб</small>
+                                        </div>
+                                    </div>
+                                    <div class="card col-lg-4 col-xl-3">
+                                        <img src="/static/image/image-28.png" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">3Lab Очищающий скраб для лица</h5>
+                                            <p class="card-text">Предназначен для глубокого очищения кожи</p>
+                                            <button type="submit" class="btn btn-buy mx-auto">Купить</button>
+                                        </div>
+                                        <div class="card-footer">
+                                            <hr>
+                                            <small class="text-muted">1 660 руб</small>
+                                        </div>
+                                    </div>
+                                    <div class="card col-lg-4 col-xl-3">
+                                        <img src="/static/image/image-29.png" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">3Lab Очищающий гель для лица</h5>
+                                            <p class="card-text">Обеспечивает бережный и тщательный уход</p>
+                                            <button type="submit" class="btn btn-buy mx-auto">Купить</button>
+                                        </div>
+                                        <div class="card-footer">
+                                            <hr>
+                                            <small class="text-muted">1 530 руб</small>
+                                        </div>
+                                    </div>
+                                    <div class="card col-lg-4 col-xl-3">
+                                        <img src="/static/image/image-27.png" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">3Lab Увлажняющий крем для лица</h5>
+                                            <p class="card-text">Идельно подойдет для ежедневного использования</p>
+                                            <button type="submit" class="btn btn-buy mx-auto">Купить</button>
+                                        </div>
+                                        <div class="card-footer">
+                                            <hr>
+                                            <small class="text-muted">3 200 руб</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row m-0 justify-content-center align-items-center nav_blk">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">...</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">39</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        </div>
+</div>
+
+{% endblock %}
