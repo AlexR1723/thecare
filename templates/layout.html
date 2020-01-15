@@ -95,7 +95,7 @@
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                             <label class="w-100 m-0">
-                                                <a class="dropdown-item" href="#">Бренды</a>
+                                                <a class="dropdown-item" href="{% url 'Brands' %}">Бренды</a>
                                             </label>
                                             <label class="w-100 m-0">
                                                 <a class="dropdown-item" href="#">Для мужчин</a>
@@ -154,8 +154,8 @@
 {% endblock %}
 {#подвал#}
 <div class="container-fluid p-0">
-    <footer class="py-4">
-        <div class="container-fluid text-center text-md-left">
+    <footer class="pt-4">
+        <div class="container-fluid text-center text-md-left pb-4">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 mx-auto p-0">
                     <ul class="list-group list-group-horizontal-md list-unstyled">
@@ -192,22 +192,14 @@
                 </div>
             </div>
         </div>
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3 colorCopy">© 2020 Copyright:
+        <a href="http://www.web-dev-group.com/">Web Dev Group</a>
+    </div>
+    <!-- Copyright -->
     </footer>
 </div>
 
-{#<div class="row justify-content-center align-content-center" style="z-index: 999; position: absolute">#}
-{#    <div class="col-12 col-sm-10 col-md-6 col-lg-2 col-xl-1">#}
-{#        <p class="my-5" id="notice_p">awfawf</p>#}
-{#    </div>#}
-{#</div>#}
-{##}
-<div id="notice_style"></div>
-{#<div id="notes">#}
-{#    <div class="note-item" data-type="info" role="alert">#}
-{#      <div class="note-item-text">Announcement</div>#}
-{#      <button class="note-item-btn" role="button" aria-label="Скрыть"></button>#}
-{#    </div>#}
-{#  </div>#}
 
 <script src="https://kit.fontawesome.com/2c9fd467ea.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"

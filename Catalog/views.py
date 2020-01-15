@@ -20,3 +20,7 @@ def Face(request):
     resource=ResourceType.objects.filter(category__name='Для лица')
     need=NeedType.objects.filter(category__name='Для лица')
     return render(request, 'Catalog/Items_catalog.html', locals())
+
+def Item_card(request):
+    number, email = func_contact()
+    return render(request, 'Catalog/Item_card.html', locals())

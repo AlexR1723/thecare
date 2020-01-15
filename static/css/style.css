@@ -6,7 +6,15 @@ body {
     background-color: #fff;
     font-family: 'Comfortaa', cursive;
 }
-
+.colorCopy {
+    background-color: rgba(0,0,0,.2);
+    color: black;
+    font-size: .9rem;
+}
+.colorCopy a:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
 #notice_style{
     position: absolute;
     background-color: black;
