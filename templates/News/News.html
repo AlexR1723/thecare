@@ -1,0 +1,118 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+{% block content %}
+
+    <div class="container-fluid p-0">
+        <div class="row m-0 justify-content-center">
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 mt-3">
+                <div class="row m-0 justify-content-start align-items-center">
+                    <nav aria-label="breadcrumb">
+                        <ol class="custom-breadcrumb breadcrumb px-0">
+                            <li class="breadcrumb-item"><a href=""><i class="fa fa-home home-icon"
+                                                                      aria-hidden="true"></i></a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><a href="#">Новости</a></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 news_blk mb-5">
+                <div class="row m-0 justify-content-start align-items-center">
+                    <div class="row m-0 justify-content-start align-items-center">
+                        <h1>Новости</h1>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-11 col-lg-12 col-xl-12 p-0 mt-3 mx-auto">
+                    <div class="row m-0 justify-content-start align-items-center">
+                        {% for i in news %}
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-12 col-md-4 my-auto">
+                                        <img src="/static/image/cosmedix.png" class="card-img img-fluid" alt="">
+{#                                        <img src="{{ MEDIA_URL }}{{ i.image.url }}" class="card-img img-fluid" alt="">#}
+                                    </div>
+                                    <div class="col-12 col-md-8">
+                                        <div class="card-body">
+                                            <a href="{{ i.get_absolute_url}}">{{ i.name }}</a>
+                                            <p class="card-text">{{ i.text }}</p>
+                                            <p class="card-text">
+                                                <small class="text-muted">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>{{ i.date|date }}
+                                                </small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {#                    <div class="card mb-3">#}
+                        {#                        <div class="row no-gutters">#}
+                        {#                            <div class="col-12 col-md-4 my-auto">#}
+                        {#                                <img src="/static/image/cosmedix.png" class="card-img img-fluid" alt="">#}
+                        {#                            </div>#}
+                        {#                            <div class="col-12 col-md-8">#}
+                        {#                                <div class="card-body">#}
+                        {#                                    <a href="">Новая линейка косметики от COSMEDIX</a>#}
+                        {#                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum ....</p>#}
+                        {#                                    <p class="card-text">#}
+                        {#                                        <small class="text-muted">#}
+                        {#                                            <i class="fa fa-calendar" aria-hidden="true"></i>07.01.2020#}
+                        {#                                        </small>#}
+                        {#                                    </p>#}
+                        {#                                </div>#}
+                        {#                            </div>#}
+                        {#                        </div>#}
+                        {#                    </div>#}
+
+
+                    </div>
+
+                    <div class="row m-0 justify-content-center align-items-center nav_blk">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+
+                                {% if prev %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{% url 'News_page' prev %}" aria-label="Previous">
+                                        <span aria-hidden="true"><i class="fa fa-angle-left"
+                                                                    aria-hidden="true"></i></span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                {% for i in pages %}
+                                    {% if not i %}
+                                        <a class="page-link" href="">...</a>
+                                    {% else %}
+                                        <li class="page-item">
+                                            {% if forloop.counter == chs %}
+                                                <a class="page-link" href="{% url 'News_page' i %}"
+                                                   style="color: #E7B9CB;">
+                                                    <b>{{ i }}</b>
+                                                </a>
+                                            {% else %}
+                                                <a class="page-link" href="{% url 'News_page' i %}">
+                                                    {{ i }}
+                                                </a>
+                                            {% endif %}
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{% url 'News_page' next %}" aria-label="Next">
+                                        <span aria-hidden="true">
+                                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        </span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

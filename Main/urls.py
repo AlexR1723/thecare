@@ -19,4 +19,17 @@ from . import views
 urlpatterns = [
     url(r'^$', views.Main, name="Main"),
     url(r'^dev/$', views.Dev, name="Dev"),
+    url(r'^brands/$', views.Brands, name="Brands"),
+    # url(r'^news/$', views.News, name="News"),
+    url(r'^item_card/$', views.Item_card, name="Item_card"),
+    url(r'^news_details/$', views.News_details, name="News_details"),
+    url(r'^search_results/$', views.Search_results, name="Search_results"),
+
+    # url(r'^$', views.Main, name="Main"),
+    # url(r'^dev/$', views.Dev, name="Dev"),
+    # url(r'^delivery/$', views.Deliveries, name="Deliveries"),
+    # url(r'^payment/$', views.Payments, name="Payments"),
+    # url(r'^contacts/$', views.Contacts, name="Contacts"),
+    # url(r'^items_catalog/$', views.Items_catalog, name="Items_catalog"),
+    # url(r'^face/$', views.Face, name="Face"),
 ]

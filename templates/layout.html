@@ -13,10 +13,13 @@
     <link rel="stylesheet" href="{% static 'css/slick.css' %}">
     <link rel="stylesheet" href="{% static 'css/slick-theme.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/noty.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
 
 
 </head>
 <body>
+{#<div style="position: absolute; background-color: black; transform: translate(50% 50%);"></div>#}
 {#шапка#}
 <div class="container-fluid p-0">
     <div class="row m-0 justify-content-center header">
@@ -26,7 +29,7 @@
                     <a href="tel:88004001212">
                         <img src="{% static 'image/telephone1.png' %}" alt="" class="mb-1">
                         <!--                        <i class="fa fa-phone" aria-hidden="true"></i>-->
-                        <span>8 (800) 400-12-12</span>
+                        <span>{{number}}</span>
                     </a>
                 </div>
                 <div class="col-12 col-md-4 text-center text-md-right mb-3 mb-md-0">
@@ -118,13 +121,14 @@
                                         </div>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="">Новости</a>
+                                        <a class="nav-link " href="{% url 'News' %}">Новости</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link " href="{% url 'Deliveries' %}">Доставка</a>                                        </a>
+                                        <a class="nav-link " href="{% url 'Deliveries' %}">Доставка</a>
+{#                                        </a>#}
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link " href="{% url 'Payment' %}">Оплата</a>
+                                        <a class="nav-link " href="{% url 'Payments' %}">Оплата</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link " href="{% url 'Contacts' %}">Контакты</a>
@@ -159,10 +163,10 @@
                             <a href="{% url 'Deliveries' %}">Доставка</a>
                         </li>
                         <li>
-                            <a href="{% url 'Payment' %}">Оплата</a>
+                            <a href="{% url 'Payments' %}">Оплата</a>
                         </li>
                         <li>
-                            <a href="">Новости</a>
+                            <a href="{% url 'News' %}">Новости</a>
                         </li>
                         <li>
                             <a href="{% url 'Contacts' %}">Контакты</a>
@@ -178,11 +182,11 @@
                     <ul class="contact-list list-group list-unstyled">
                         <li>
                             <img src="{% static 'image/telephone1.png' %}" alt="" class="mb-1">
-                            <a href="#">8 (800) 400-12-12</a>
+                            <a href="#">{{number}}</a>
                         </li>
                         <li class="mt-2">
                             <img src="{% static 'image/email1.png' %}" alt="">
-                            <a href="mailto:mail@gmail.com">email@gmail.com</a>
+                            <a href="mailto:mail@gmail.com">{{email}}</a>
                         </li>
                     </ul>
                 </div>
@@ -191,14 +195,28 @@
     </footer>
 </div>
 
+{#<div class="row justify-content-center align-content-center" style="z-index: 999; position: absolute">#}
+{#    <div class="col-12 col-sm-10 col-md-6 col-lg-2 col-xl-1">#}
+{#        <p class="my-5" id="notice_p">awfawf</p>#}
+{#    </div>#}
+{#</div>#}
+{##}
+<div id="notice_style"></div>
+{#<div id="notes">#}
+{#    <div class="note-item" data-type="info" role="alert">#}
+{#      <div class="note-item-text">Announcement</div>#}
+{#      <button class="note-item-btn" role="button" aria-label="Скрыть"></button>#}
+{#    </div>#}
+{#  </div>#}
+
 <script src="https://kit.fontawesome.com/2c9fd467ea.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
-<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+{#<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>#}
+{#<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"#}
+{#        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"#}
+{#        crossorigin="anonymous"></script>#}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
@@ -210,6 +228,7 @@
 <script src="{% static 'js/bootstrap.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/noty.js' %}"></script>
 
 
 </body>

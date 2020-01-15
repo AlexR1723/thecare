@@ -8,7 +8,8 @@
             <div class="row m-0 justify-content-start align-items-center">
                 <nav aria-label="breadcrumb">
                     <ol class="custom-breadcrumb breadcrumb px-0">
-                        <li class="breadcrumb-item"><a href="{% url 'Main' %}"><i class="fa fa-home home-icon" aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'Main' %}"><i class="fa fa-home home-icon"
+                                                                                  aria-hidden="true"></i></a></li>
                         <li class="breadcrumb-item active" aria-current="page"><a href="#">Доставка</a></li>
                     </ol>
                 </nav>
@@ -22,18 +23,23 @@
                     <h1>Доставка</h1>
                 </div>
             </div>
-                <div class="col-12 col-sm-12 col-md-11 col-lg-12 col-xl-12 p-0 mt-3">
-                    <div class="row m-0 justify-content-start align-items-center">
-                        <p>Наш онлайн магазин The Care осуществляет доставку по всей территории России.</p>
-                        <p>Вы можете выбрать один из вариантов получить свои покупки:</p>
-                    </div>
+            <div class="col-12 col-sm-12 col-md-11 col-lg-12 col-xl-12 p-0 mt-3">
+                <div class="row m-0 justify-content-start align-items-center">
+                    <p>Наш онлайн магазин The Care осуществляет доставку по всей территории России.</p>
+                    <p>Вы можете выбрать один из вариантов получить свои покупки:</p>
                 </div>
+            </div>
             <div class="col-12 col-sm-12 col-md-11 col-lg-12 col-xl-12 p-0">
                 <div class="row m-0 justify-content-start align-items-center">
                     <ol class="ml-0 ml-md-3">
-                        <li>Доставка почтой России</li>
-                        <li>Курьерская доставка к вам домой или в офис</li>
-                        <li>Вы можете сами забрать покупку у нас в магазине</li>
+                        {% for i in list %}
+                        <li>{{i.text}}</li>
+
+                        <!--                        <li>Доставка почтой России</li>-->
+                        <!--                        <li>Курьерская доставка к вам домой или в офис</li>-->
+                        <!--                        <li>Вы можете сами забрать покупку у нас в магазине</li>-->
+                        {% endfor %}
+
                     </ol>
                 </div>
             </div>
