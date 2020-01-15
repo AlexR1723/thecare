@@ -17,7 +17,5 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^face/$', views.Face, name="Face"),
-    url(r'^items_catalog/$', views.Items_catalog, name="Items_catalog"),
-    url(r'^item_card/$', views.Item_card, name="Item_card"),
+    url(r'^$', views.Brands, name="Brands"),
 ]
