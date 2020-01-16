@@ -8,4 +8,6 @@ def func_contact():
 
 def Brands(request):
     number, email = func_contact()
+
+    items=Brands_model.objects.all().order_by('name')
     return render(request, 'Brands/Brands.html', locals())

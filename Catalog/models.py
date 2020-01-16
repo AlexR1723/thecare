@@ -144,6 +144,17 @@ class NeedType(models.Model):
         return self.name
 
 
+class Brands_model(models.Model):
+    name = models.CharField(max_length=200, blank=True, null=True, verbose_name='Наименование')
+    image = models.ImageField(upload_to='uploads/', blank=True, null=True, verbose_name='Изображение')
+
+    class Meta:
+        managed = False
+        db_table = 'brands'
+        verbose_name = _("Брэнд")
+        verbose_name_plural = _("Брэнды")
+
+
 class Product(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True, verbose_name="Наименование")
     shot_description = models.TextField(max_length=100, blank=True, null=True, verbose_name="Краткое описание")
@@ -156,6 +167,7 @@ class Product(models.Model):
     category = models.ForeignKey(CategoryType, models.DO_NOTHING, blank=True, null=True, verbose_name="Категория")
     resource = models.ForeignKey('ResourceType', models.DO_NOTHING, blank=True, null=True, verbose_name="Средство")
     size = models.IntegerField(blank=True, null=True, verbose_name="Объем")
+    brand = models.ForeignKey('Brands_model', models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -197,7 +209,6 @@ class ContactType(models.Model):
         db_table = 'contact_type'
         verbose_name = _("Тип контакта")
         verbose_name_plural = _("Типы контактов")
-
 
 
 class Contact(models.Model):

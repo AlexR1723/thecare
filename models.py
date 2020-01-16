@@ -147,6 +147,7 @@ class Product(models.Model):
     category = models.ForeignKey(CategoryType, models.DO_NOTHING, blank=True, null=True)
     resource = models.ForeignKey('ResourceType', models.DO_NOTHING, blank=True, null=True)
     size = models.IntegerField(blank=True, null=True)
+    brand = models.ForeignKey('Brands', models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False

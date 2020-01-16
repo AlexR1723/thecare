@@ -23,3 +23,15 @@ class Contact(models.Model):
         db_table = 'contact'
         verbose_name = _("Контакт")
         verbose_name_plural = _("Контакты")
+
+
+class Brands_model(models.Model):
+    name = models.CharField(max_length=200, blank=True, null=True,verbose_name='Наименование')
+    image = models.ImageField(upload_to='uploads/',blank=True, null=True,verbose_name='Изображение')
+
+    class Meta:
+        managed = False
+        db_table = 'brands'
+        verbose_name = _("Брэнд")
+        verbose_name_plural = _("Брэнды")
+
