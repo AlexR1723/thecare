@@ -30,5 +30,9 @@ def Search_results(request):
     number, email = func_contact()
     return render(request, 'Main/Search_results.html', locals())
 
+def Cart(request):
+    number, email = func_contact()
+    return render(request, 'Main/Cart.html', locals())
+
 
 
