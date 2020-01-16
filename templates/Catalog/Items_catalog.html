@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 items_blk">
+        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 items_blk head_blk">
             <div class="row m-0 justify-content-start align-items-center">
                  <h1 class="m-0">{{head}}</h1>
             </div>
@@ -72,10 +72,10 @@
                                     <div class="row">
                                         <div class="col-12 d-flex justify-content-between align-items-baseline">
                                             <h5 class="card-title">Средства</h5>
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"><i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"><i class="fa fa-chevron-up" aria-hidden="true"></i>
                                             </button>
                                         </div>
-                                        <div id="collapseOne" class="collapse fade" aria-labelledby="headingOne" data-parent="#accordion1">
+                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion1">
                                             <div class="card-body pt-0">
                                                 {% for r in resource %}
                                                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
@@ -94,7 +94,7 @@
                                     <div class="row">
                                         <div class="col-12 d-flex justify-content-between align-items-baseline">
                                             <h5 class="card-title">Потребности</h5>
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><i class="fa fa-chevron-up" aria-hidden="true"></i>
                                             </button>
                                         </div>
                                         <div id="collapseTwo" class="collapse active show" aria-labelledby="headingTwo" data-parent="#accordion2">
@@ -107,8 +107,28 @@
                                                 {% endfor %}
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div class="card-body p-0">
+                                </div>
+                            </div>
+                            <div class="accordion" id="accordion3">
+                                <div class="card-body filter-body_form">
+                                    <div class="row">
+                                        <div class="col-12 d-flex justify-content-between align-items-baseline">
+                                            <h5 class="card-title">Бренды</h5>
+                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"><i class="fa fa-chevron-up" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                        <div id="collapseThree" class="col-12 collapse p-0" aria-labelledby="headingThree" data-parent="#accordion3">
+                                            <div class="card-body pt-0">
+                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                    <input type="checkbox" class="custom-control-input" id="Control1">
+                                                    <label class="custom-control-label" for="Control1">3Lab</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-body p-0 mt-3">
                                             <div class="card-footer text-center p-0">
                                                 <button type="submit" class="btn my-1">Применить</button>
                                             </div>

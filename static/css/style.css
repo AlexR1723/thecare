@@ -6,7 +6,15 @@ body {
     background-color: #fff;
     font-family: 'Comfortaa', cursive;
 }
-
+.colorCopy {
+    background-color: rgba(0,0,0,.2);
+    color: black;
+    font-size: .9rem;
+}
+.colorCopy a:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
 #notice_style{
     position: absolute;
     background-color: black;
@@ -336,13 +344,7 @@ a:hover {
     color: #000000;
 }
 
-.delivery_blk h1,
-.payment_blk h1,
-.items_blk h1,
-.brands_blk h1,
-.news_blk h1,
-.item-card_blk h1,
-.news-details_blk h1{
+.head_blk h1 {
     font-size: 1.7rem;
     font-weight: bold;
     line-height: 31px;
@@ -517,6 +519,7 @@ a:hover {
 .items-list_catalog .card-deck .card .btn-buy {
     display: none;
 }
+.cart_blk .btn,
 .item-card_blk .card .btn,
 .items-list_catalog .card-deck .card .btn-buy {
     background: #E7B9CB;
@@ -524,6 +527,7 @@ a:hover {
     border-radius: 5px;
     width: 93%;
 }
+.cart_blk .btn:hover,
 .item-card_blk .card .btn:hover,
 .items-list_catalog .card-deck .card .btn-buy:hover {
     background: transparent;
@@ -753,7 +757,8 @@ a:hover {
 .item-card_blk .card .btn {
     width: 13rem;
 }
-.item-card_blk .items-counter .minus, .plus {
+.item-card_blk .items-counter .minus, .plus,
+.cart_blk .items-counter .minus, .plus {
     padding: .5rem;
     background: transparent;
     border: none;
@@ -761,7 +766,8 @@ a:hover {
     vertical-align: middle;
     text-align: center;
 }
-.item-card_blk .items-counter input {
+.item-card_blk .items-counter input,
+.cart_blk .items-counter input {
     height: 3rem;
     width: 4.5rem;
     text-align: center;
@@ -772,7 +778,9 @@ a:hover {
     vertical-align: middle;
 }
 .item-card_blk input[type="number"]::-webkit-outer-spin-button,
-.item-card_blk input[type="number"]::-webkit-inner-spin-button {
+.item-card_blk input[type="number"]::-webkit-outer-spin-button,
+.cart_blk input[type="number"]::-webkit-outer-spin-button,
+.cart_blk input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
@@ -812,6 +820,63 @@ a:hover {
     .news-details_blk .items-list_catalog .prev,
     .news-details_blk .items-list_catalog .next {
         margin: 0;
+    }
+}
+
+.cart_blk .card {
+    border: none;
+}
+.cart_blk .card .item-name {
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 22px;
+    color: #000000;
+    border-bottom: 1px solid transparent;
+}
+.cart_blk .card .item-name:hover {
+    border-bottom: 1px solid #4F4F4F;
+    transition: .5s;
+}
+.cart_blk .card .price,
+.cart_blk .card .price-text {
+    font-weight: bold;
+    font-size: 1rem;
+    line-height: 20px;
+}
+.cart_blk .card .price {
+    color: rgba(0, 0, 0, 0.5);
+}
+.cart_blk .price-text,
+.cart_blk .card .price-text {
+    color: #E13075;
+}
+.cart_blk .price-text {
+    font-weight: bold;
+    font-size: 1.3rem;
+    line-height: 25px;
+}
+.cart_blk .card .items-counter .minus i,
+.cart_blk .card .items-counter .plus i {
+    font-size: .9rem;
+}
+.cart_blk .card .items-counter input {
+    height: 2.7rem;
+}
+.cart_blk .card .del-btn i {
+    font-size: 1.2rem;
+    color: #c4c4c4;
+}
+.cart_blk .btn {
+    width: 25%;
+}
+@media (max-width: 768px) {
+    .cart_blk .btn {
+        width: 35%;
+    }
+}
+@media (max-width: 425px) {
+    .cart_blk .btn {
+        width: 65%;
     }
 }
 

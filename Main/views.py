@@ -15,21 +15,24 @@ def Dev(request):
     number, email = func_contact()
     return render(request, 'Main/Dev.html', locals())
 
-def Brands(request):
-    number, email = func_contact()
-    return render(request, 'Main/Brands.html', locals())
 
 # def News(request):
 #     number, email = func_contact()
 #     return render(request, 'Main/../templates/News/News.html', locals())
 
-def Item_card(request):
-    number, email = func_contact()
-    return render(request, 'Main/Item_card.html', locals())
 
-def News_details(request):
+
+# def News_details(request):
+#     number, email = func_contact()
+#     return render(request, 'Main/../templates/News/News_details.html', locals())
+
+def Search_results(request):
     number, email = func_contact()
-    return render(request, 'Main/../templates/News/News_details.html', locals())
+    return render(request, 'Main/Search_results.html', locals())
+
+def Cart(request):
+    number, email = func_contact()
+    return render(request, 'Main/Cart.html', locals())
 
 
 
