@@ -54,12 +54,9 @@ $('#send_feedback').click(function () {
         },
         success: function (data) {
             if (data == true) {
-                // alert('good')
                 notice(data)
             } else {
-                // alert('bad')
                 notice(data)
-                // notice('false false false false false false false false false false false false false false false ','info','bottomCenter')
             }
         },
         error: function (data) {
