@@ -32,7 +32,7 @@ class Contact(models.Model):
 class News_model(models.Model):
     name = models.CharField(max_length=500, blank=True, null=True, verbose_name='Заголовок')
     text = models.TextField(blank=True, null=True, verbose_name='Текст')
-    date = models.DateTimeField(default=timezone.now,blank=True, null=True, verbose_name='Дата публикации')
+    date = models.DateTimeField(default=timezone.now, blank=True, null=True, verbose_name='Дата публикации')
     image = models.ImageField(upload_to='uploads/', blank=True, null=True, verbose_name='Изображение')
     slug = models.TextField(blank=True, null=True, verbose_name="Ссылка")
 
@@ -53,6 +53,75 @@ class News_model(models.Model):
             string = str(self.id) + '-' + self.name
         self.slug = slugify(string)
         super(News_model, self).save(*args, **kwargs)
-        self.text=self.text.replace('\n','<br />')
+        self.text = self.text.replace('\n', '<br />')
+
+    def __str__(self):
+        return str(self.id) + ' ' + self.name
 
 
+class Brands_model(models.Model):
+    name = models.CharField(max_length=200, blank=True, null=True, verbose_name='Наименование')
+    image = models.ImageField(upload_to='uploads/', blank=True, null=True, verbose_name='Изображение')
+
+    class Meta:
+        managed = False
+        db_table = 'brands'
+        verbose_name = _("Брэнд")
+        verbose_name_plural = _("Брэнды")
+
+
+class CategoryType(models.Model):
+    name = models.CharField(max_length=50, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'category_type'
+
+    def __str__(self):
+        return self.name
+
+
+class ResourceType(models.Model):
+    name = models.CharField(max_length=100, blank=True, null=True, verbose_name="Наименование")
+    category = models.ForeignKey(CategoryType, models.DO_NOTHING, blank=True, null=True, verbose_name="Категория")
+
+    class Meta:
+        managed = False
+        db_table = 'resource_type'
+        verbose_name = _("средства")
+        verbose_name_plural = _("Средства")
+
+    def __str__(self):
+        return self.name
+
+
+class Product(models.Model):
+    title = models.CharField(max_length=100, blank=True, null=True, verbose_name="Наименование")
+    shot_description = models.TextField(max_length=100, blank=True, null=True, verbose_name="Краткое описание")
+    description = models.TextField(max_length=5000, blank=True, null=True, verbose_name="Описание")
+    main_photo = models.ImageField(upload_to='uploads/', blank=True, null=True, verbose_name="Фото")
+    price = models.IntegerField(blank=True, null=True, verbose_name="Стоимость")
+    artikul = models.IntegerField(blank=True, null=True, verbose_name="Артикул")
+    note = models.TextField(max_length=5000, blank=True, null=True, verbose_name="Примечание")
+    components = models.TextField(max_length=500, blank=True, null=True, verbose_name="Состав")
+    category = models.ForeignKey(CategoryType, models.DO_NOTHING, blank=True, null=True, verbose_name="Категория")
+    resource = models.ForeignKey('ResourceType', models.DO_NOTHING, blank=True, null=True, verbose_name="Средство")
+    size = models.IntegerField(blank=True, null=True, verbose_name="Объем")
+    brand = models.ForeignKey('Brands_model', models.DO_NOTHING, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'product'
+        verbose_name = _("товар")
+        verbose_name_plural = _("Товары")
+
+
+class ProductForNews(models.Model):
+    news = models.ForeignKey('News_model', models.DO_NOTHING, blank=True, null=True, verbose_name='Новость')
+    product = models.ForeignKey('Product', models.DO_NOTHING, blank=True, null=True, verbose_name='Продукт')
+
+    class Meta:
+        managed = False
+        db_table = 'product_for_news'
+        verbose_name = _("Продукт к новости")
+        verbose_name_plural = _("Продукты к новостям")

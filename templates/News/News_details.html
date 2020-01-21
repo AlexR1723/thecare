@@ -32,7 +32,8 @@
                 <div class="col-12 col-sm-12 col-md-11 col-lg-12 col-xl-12 p-0 my-md-4 mx-auto">
                     <div class="row m-0 justify-content-center">
                         <div class="">
-                            <p><img src="/static/image/news_28.png" class="img-fluid float-md-left" alt="">
+                            {#                            <p><img src="/static/image/news_28.png" class="img-fluid float-md-left" alt="">#}
+                            <p><img src="{{ MEDIA_URL }}{{ news.image.url }}" class="img-fluid float-md-left" alt="">
                                 {% autoescape off %}
                                     {{ news.text|linebreaks }}
                                 {% endautoescape %}
@@ -60,76 +61,28 @@
 
                                 <!--                            <div class="card-deck ml-md-2">-->
                                 <div class="card-deck slider multiple-items w-100">
-                                    <div class="card">
-                                        <div class="card-wrap">
-                                            <img src="/static/image/image-27.png" class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                                <h5 class="card-title">3Lab Увлажняющий крем для лица</h5>
-                                                <p class="card-text">Идельно подойдет для ежедневного использования</p>
-                                                <button type="submit" class="btn btn-buy mx-auto">Купить</button>
+
+                                    {% for i in prods %}
+                                        <div class="card">
+                                            <a href="">
+                                            <div class="card-wrap">
+                                                <img src="{{ MEDIA_URL }}{{ i.product.main_photo.url }}"
+                                                     class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{ i.product.title }}</h5>
+                                                    <p class="card-text">{{ i.product.shot_description }}</p>
+                                                    <button type="button" class="btn btn-buy mx-auto">Купить</button>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <hr>
+                                                    <small class="text-muted">{{ i.product.price }} руб</small>
+                                                </div>
                                             </div>
-                                            <div class="card-footer">
-                                                <hr>
-                                                <small class="text-muted">3 200 руб</small>
-                                            </div>
+                                                </a>
                                         </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-wrap">
-                                            <img src="/static/image/image-28.png" class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                                <h5 class="card-title">3Lab Очищающий скраб для лица</h5>
-                                                <p class="card-text">Предназначен для глубокого очищения кожи</p>
-                                                <button type="submit" class="btn btn-buy mx-auto">Купить</button>
-                                            </div>
-                                            <div class="card-footer">
-                                                <hr>
-                                                <small class="text-muted">1 660 руб</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-wrap">
-                                            <img src="/static/image/image-29.png" class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                                <h5 class="card-title">3Lab Очищающий гель для лица</h5>
-                                                <p class="card-text">Обеспечивает бережный и тщательный уход</p>
-                                                <button type="submit" class="btn btn-buy mx-auto">Купить</button>
-                                            </div>
-                                            <div class="card-footer">
-                                                <hr>
-                                                <small class="text-muted">1 530 руб</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-wrap">
-                                            <img src="/static/image/image-27.png" class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                                <h5 class="card-title">3Lab Увлажняющий крем для лица</h5>
-                                                <p class="card-text">Идельно подойдет для ежедневного использования</p>
-                                                <button type="submit" class="btn btn-buy mx-auto">Купить</button>
-                                            </div>
-                                            <div class="card-footer">
-                                                <hr>
-                                                <small class="text-muted">3 200 руб</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-wrap">
-                                            <img src="/static/image/image-27.png" class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                                <h5 class="card-title">3Lab Увлажняющий крем для лица</h5>
-                                                <p class="card-text">Идельно подойдет для ежедневного использования</p>
-                                                <button type="submit" class="btn btn-buy mx-auto">Купить</button>
-                                            </div>
-                                            <div class="card-footer">
-                                                <hr>
-                                                <small class="text-muted">3 200 руб</small>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {% endfor %}
+
+
                                 </div>
                                 <!--                        </div>-->
                             </div>

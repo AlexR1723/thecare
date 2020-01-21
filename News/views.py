@@ -119,23 +119,22 @@ def News_page(request, page):
 def News_detail(request, slug):
     number, email = func_contact()
 
-    # print(slug)
     slug=str(slug)
-    slug=slug.split('-')
-    # print(slug)
-    s_id = int(slug[0])
-    s_name = '-'.join(slug[1:])
-
-    item=News_model.objects.get(id=s_id)
-
-    # print(slugify(item.name))
-    # print(s_name)
-
-    if slugify(item.name)!=s_name:
+    slug = slug.split('-')
+    try:
+        s_id = int(slug[0])
+        s_name = '-'.join(slug[1:])
+        item = News_model.objects.get(id=s_id)
+        if slugify(item.name) != s_name:
+            print('slug error')
+            # вывод страницы 404
+        else:
+            news = item
+            prods=ProductForNews.objects.filter(news_id=item.id)
+    except:
         print('slug error')
         # вывод страницы 404
-    else:
-        news=item
+
 
 
     return render(request, 'News/News_details.html', locals())
