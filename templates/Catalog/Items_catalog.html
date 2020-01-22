@@ -2,201 +2,254 @@
 {% load staticfiles %}
 {% block content %}
 
-<div class="container-fluid p-0">
-    <div class="row m-0 justify-content-center">
-        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 mt-3">
-            <div class="row m-0 justify-content-start align-items-center">
-                <nav aria-label="breadcrumb">
-                    <ol class="custom-breadcrumb breadcrumb px-0">
-                        <li class="breadcrumb-item"><a href="{% url 'Main' %}"><i class="fa fa-home home-icon" aria-hidden="true"></i></a></li>
-                        <li class="breadcrumb-item active" aria-current="page"><a href="#">Лицо</a></li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 items_blk head_blk">
-            <div class="row m-0 justify-content-start align-items-center">
-                 <h1 class="m-0">{{head}}</h1>
-            </div>
-        </div>
-        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-11 p-md-0 sort_col">
-            <div class="row m-0 justify-content-end">
-                <div class="col-12 col-md-5 col-lg-4 col-xl-3">
-                <select class="form-control sort-select" id="exampleFormControlSelect1">
-                    <option selected>По возрастанию цены</option>
-                    <option>По убыванию цены</option>
-                    <option>Новые</option>
-                    <option>По названию</option>
-                </select>
+    <div class="container-fluid p-0">
+        <div class="row m-0 justify-content-center">
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 mt-3">
+                <div class="row m-0 justify-content-start align-items-center">
+                    <nav aria-label="breadcrumb">
+                        <ol class="custom-breadcrumb breadcrumb px-0">
+                            <li class="breadcrumb-item"><a href="{% url 'Main' %}"><i class="fa fa-home home-icon"
+                                                                                      aria-hidden="true"></i></a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><a href="#">Лицо</a></li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
-        </div>
 
-
-        <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-md-0 sort_col">
-
-        <div class="row">
-        <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 p-0 items_catalog my-5">
-            <div class="row m-0 justify-content-start align-items-center">
-                <div class="col">
-                    <div class="card filter_form">
-                        <form action="">
-                            <div class="card-body filter-body_form">
-                                <h5 class="card-title">Цена</h5>
-                                <div class="row">
-                                    <div class="col-12 p-0">
-                                        <div class="row m-0 justify-content-between align-items-center">
-                                            <div class="col-6">
-                                                <div class="input-group mb-2 mr-sm-2">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text px-2">от</div>
-                                                    </div>
-                                                    <input type="text" class="form-control px-2" id="filter_formInput1" placeholder="145">
-                                                </div>
-                                                </div>
-                                            <div class="col-6">
-                                                <div class="input-group mb-2 mr-sm-2">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text px-2">до</div>
-                                                    </div>
-                                                    <input type="text" class="form-control px-2" id="filter_formInput2" placeholder="1278">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion" id="accordion1">
-                                <div class="card-body filter-body_form">
-                                    <div class="row">
-                                        <div class="col-12 d-flex justify-content-between align-items-baseline">
-                                            <h5 class="card-title">Средства</h5>
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"><i class="fa fa-chevron-up" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion1">
-                                            <div class="card-body pt-0">
-                                                {% for r in resource %}
-                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                                    <input type="checkbox" class="custom-control-input" id="customControl{{forloop.counter}}">
-                                                    <label class="custom-control-label" for="customControl{{forloop.counter}}">{{r.name}}</label>
-                                                </div>
-                                                {% endfor %}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="accordion" id="accordion2">
-                                <div class="card-body filter-body_form">
-                                    <div class="row">
-                                        <div class="col-12 d-flex justify-content-between align-items-baseline">
-                                            <h5 class="card-title">Потребности</h5>
-                                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><i class="fa fa-chevron-up" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-                                        <div id="collapseTwo" class="collapse active show" aria-labelledby="headingTwo" data-parent="#accordion2">
-                                            <div class="card-body pt-0">
-                                                {% for n in need %}
-                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                                    <input type="checkbox" class="custom-control-input" id="customControlInline{{forloop.counter}}">
-                                                    <label class="custom-control-label" for="customControlInline{{forloop.counter}}">{{n.name}}</label>
-                                                </div>
-                                                {% endfor %}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="accordion" id="accordion3">
-                                <div class="card-body filter-body_form">
-                                    <div class="row">
-                                        <div class="col-12 d-flex justify-content-between align-items-baseline">
-                                            <h5 class="card-title">Бренды</h5>
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"><i class="fa fa-chevron-up" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-                                        <div id="collapseThree" class="col-12 collapse p-0" aria-labelledby="headingThree" data-parent="#accordion3">
-                                            <div class="card-body pt-0">
-                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                                    <input type="checkbox" class="custom-control-input" id="Control1">
-                                                    <label class="custom-control-label" for="Control1">3Lab</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="card-body p-0 mt-3">
-                                            <div class="card-footer text-center p-0">
-                                                <button type="submit" class="btn my-1">Применить</button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </form>
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 items_blk head_blk">
+                <div class="row m-0 justify-content-start align-items-center">
+                    <h1 class="m-0">{{ head }}</h1>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-11 p-md-0 sort_col">
+                <div class="row m-0 justify-content-end">
+                    <div class="col-12 col-md-5 col-lg-4 col-xl-3">
+                        <select class="form-control sort-select" id="exampleFormControlSelect1">
+                            <option selected>По возрастанию цены</option>
+                            <option>По убыванию цены</option>
+                            <option>Новые</option>
+                            <option>По названию</option>
+                        </select>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9 p-md-0 items-list_catalog">
-        <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-md-0 my-md-5">
-                <div class="row m-0 justify-content-start align-items-center">
-                    <div class="card-deck mb-5 ml-md-2 w-100">
-                        {% for p in product %}
-                        <div class="card col-lg-4 col-xl-3">
-                            {% if p.main_photo != None and p.main_photo != "" %}
-                            <img src="{{MEDIA_URL}}{{p.main_photo.url}}" class="card-img-top" alt="...">
-                            {% endif %}
-                            <div class="card-body">
-                                <h5 class="card-title">{{p.title}}</h5>
-                                <p class="card-text">{{p.shot_description}}</p>
-                                <button type="submit" class="btn btn-buy mx-auto">Купить</button>
-                            </div>
-                            <div class="card-footer">
-                                <hr>
-                                <small class="text-muted">{{p.price}} руб</small>
+
+            <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-md-0 sort_col">
+
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 p-0 items_catalog my-5">
+                        <div class="row m-0 justify-content-start align-items-center">
+                            <div class="col">
+                                <div class="card filter_form">
+                                    <form action="">
+                                        <div class="card-body filter-body_form">
+                                            <h5 class="card-title">Цена</h5>
+                                            <div class="row">
+                                                <div class="col-12 p-0">
+                                                    <div class="row m-0 justify-content-between align-items-center">
+                                                        <div class="col-6">
+                                                            <div class="input-group mb-2 mr-sm-2">
+                                                                <div class="input-group-prepend">
+                                                                    <div class="input-group-text px-2">от</div>
+                                                                </div>
+                                                                <input type="text" class="form-control px-2"
+                                                                       id="price_from" placeholder="145"
+                                                                        {% if price_from %}
+                                                                       value="{{ price_from }}"
+                                                                        {% endif %}
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="input-group mb-2 mr-sm-2">
+                                                                <div class="input-group-prepend">
+                                                                    <div class="input-group-text px-2">до</div>
+                                                                </div>
+                                                                <input type="text" class="form-control px-2"
+                                                                       id="price_until" placeholder="1278"
+                                                                        {% if price_until %}
+                                                                       value="{{ price_until }}"
+                                                                        {% endif %}
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="accordion" id="accordion1">
+                                            <div class="card-body filter-body_form">
+                                                <div class="row">
+                                                    <div class="col-12 d-flex justify-content-between align-items-baseline">
+                                                        <h5 class="card-title">Средства</h5>
+                                                        <button class="btn btn-link collapsed" type="button"
+                                                                data-toggle="collapse" data-target="#collapseOne"
+                                                                aria-expanded="false" aria-controls="collapseOne"><i
+                                                                class="fa fa-chevron-up" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                                         data-parent="#accordion1">
+                                                        <div class="card-body pt-0" id="card_resources">
+                                                            {% for r in resource %}
+                                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                           id="res{{ forloop.counter }}"
+                                                                           data-res="{{ r.id }}"
+                                                                            {% if r.id in resources_id %}
+                                                                           checked
+                                                                            {% endif %}
+                                                                    >
+                                                                    <label class="custom-control-label"
+                                                                           for="res{{ forloop.counter }}">{{ r.name }}</label>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="accordion" id="accordion2">
+                                            <div class="card-body filter-body_form">
+                                                <div class="row">
+                                                    <div class="col-12 d-flex justify-content-between align-items-baseline">
+                                                        <h5 class="card-title">Потребности</h5>
+                                                        <button class="btn btn-link" type="button"
+                                                                data-toggle="collapse" data-target="#collapseTwo"
+                                                                aria-expanded="false" aria-controls="collapseTwo"><i
+                                                                class="fa fa-chevron-up" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div id="collapseTwo" class="collapse active show"
+                                                         aria-labelledby="headingTwo" data-parent="#accordion2">
+                                                        <div class="card-body pt-0" id="card_needs">
+                                                            {% for n in need %}
+                                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                           id="need{{ forloop.counter }}"
+                                                                           data-res="{{ n.id }}"
+                                                                           {% if n.id in needs_id %}
+                                                                           checked
+                                                                            {% endif %}
+                                                                    >
+                                                                    <label class="custom-control-label"
+                                                                           for="need{{ forloop.counter }}">{{ n.name }}</label>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="accordion" id="accordion3">
+                                            <div class="card-body filter-body_form">
+                                                <div class="row">
+                                                    <div class="col-12 d-flex justify-content-between align-items-baseline">
+                                                        <h5 class="card-title">Бренды</h5>
+                                                        <button class="btn btn-link collapsed" type="button"
+                                                                data-toggle="collapse" data-target="#collapseThree"
+                                                                aria-expanded="false" aria-controls="collapseThree"><i
+                                                                class="fa fa-chevron-up" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div id="collapseThree" class="col-12 collapse p-0"
+                                                         aria-labelledby="headingThree" data-parent="#accordion3">
+                                                        <div class="card-body pt-0" id="card_brands">
+                                                            {% for n in brands %}
+                                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                           id="brands{{ forloop.counter }}"
+                                                                           data-res="{{ n.id }}"
+                                                                           {% if n.id in brands_id %}
+                                                                           checked
+                                                                            {% endif %}
+                                                                    >
+                                                                    <label class="custom-control-label"
+                                                                           for="brands{{ forloop.counter }}">{{ n.name }}</label>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="card-body p-0 mt-3">
+                                                        <div class="card-footer text-center p-0">
+                                                            <button type="button" id="btn_filter" class="btn my-1"
+                                                                    data-page="{{ url_page }}">
+                                                                Применить
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                        {% endfor %}
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9 p-md-0 items-list_catalog">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-md-0 my-md-5">
+                                <div class="row m-0 justify-content-start align-items-center">
+                                    <div class="card-deck mb-5 ml-md-2 w-100">
+                                        {% for p in product %}
+                                            <a href="{{ p.get_absolute_url }}" style="">
+                                                <div class="card col-lg-4 col-xl-3">
+                                                    {% if p.main_photo != None and p.main_photo != "" %}
+                                                        <img src="{{ MEDIA_URL }}{{ p.main_photo.url }}"
+                                                             class="card-img-top" alt="...">
+                                                    {% endif %}
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ p.title }}</h5>
+                                                        <p class="card-text">{{ p.shot_description }}</p>
+                                                        <button type="submit" class="btn btn-buy mx-auto">Купить
+                                                        </button>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <hr>
+                                                        <small class="text-muted">{{ p.price }} руб</small>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <div class="row m-0 justify-content-center align-items-center nav_blk">
+                                    <!--                    <nav aria-label="Page navigation">-->
+                                    <!--                        <ul class="pagination">-->
+                                    <!--                            <li class="page-item">-->
+                                    <!--                                <a class="page-link" href="#" aria-label="Previous">-->
+                                    <!--                                    <span aria-hidden="true"><i class="fa fa-angle-left" aria-hidden="true"></i></span>-->
+                                    <!--                                </a>-->
+                                    <!--                            </li>-->
+                                    <!--                            <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+                                    <!--                            <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+                                    <!--                            <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+                                    <!--                            <li class="page-item"><a class="page-link" href="#">...</a></li>-->
+                                    <!--                            <li class="page-item"><a class="page-link" href="#">39</a></li>-->
+                                    <!--                            <li class="page-item">-->
+                                    <!--                                <a class="page-link" href="#" aria-label="Next">-->
+                                    <!--                                    <span aria-hidden="true"><i class="fa fa-angle-right" aria-hidden="true"></i></span>-->
+                                    <!--                                </a>-->
+                                    <!--                            </li>-->
+                                    <!--                        </ul>-->
+                                    <!--                    </nav>-->
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-
-                <div class="row m-0 justify-content-center align-items-center nav_blk">
-<!--                    <nav aria-label="Page navigation">-->
-<!--                        <ul class="pagination">-->
-<!--                            <li class="page-item">-->
-<!--                                <a class="page-link" href="#" aria-label="Previous">-->
-<!--                                    <span aria-hidden="true"><i class="fa fa-angle-left" aria-hidden="true"></i></span>-->
-<!--                                </a>-->
-<!--                            </li>-->
-<!--                            <li class="page-item"><a class="page-link" href="#">1</a></li>-->
-<!--                            <li class="page-item"><a class="page-link" href="#">2</a></li>-->
-<!--                            <li class="page-item"><a class="page-link" href="#">3</a></li>-->
-<!--                            <li class="page-item"><a class="page-link" href="#">...</a></li>-->
-<!--                            <li class="page-item"><a class="page-link" href="#">39</a></li>-->
-<!--                            <li class="page-item">-->
-<!--                                <a class="page-link" href="#" aria-label="Next">-->
-<!--                                    <span aria-hidden="true"><i class="fa fa-angle-right" aria-hidden="true"></i></span>-->
-<!--                                </a>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </nav>-->
-                </div>
             </div>
-        </div>
+
 
         </div>
     </div>
-</div>
-
-
-        </div>
-</div>
 
 {% endblock %}

@@ -108,12 +108,29 @@ class Product(models.Model):
     resource = models.ForeignKey('ResourceType', models.DO_NOTHING, blank=True, null=True, verbose_name="Средство")
     size = models.IntegerField(blank=True, null=True, verbose_name="Объем")
     brand = models.ForeignKey('Brands_model', models.DO_NOTHING, blank=True, null=True)
+    slug = models.TextField(blank=True, null=True, verbose_name="Ссылка")
 
     class Meta:
         managed = False
         db_table = 'product'
         verbose_name = _("товар")
         verbose_name_plural = _("Товары")
+
+    def get_absolute_url(self):
+        return reverse('Item_card', kwargs={'slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            super(Product, self).save(*args, **kwargs)
+            string = str(self.id) + '-' + self.title
+        else:
+            string = str(self.id) + '-' + self.title
+        self.slug = slugify(string)
+        super(Product, self).save(*args, **kwargs)
+        # self.text = self.text.replace('\n', '<br />')
+
+    def __str__(self):
+        return str(self.id) + ' ' + self.title
 
 
 class ProductForNews(models.Model):

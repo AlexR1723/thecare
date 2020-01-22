@@ -64,7 +64,7 @@
 
                                     {% for i in prods %}
                                         <div class="card">
-                                            <a href="">
+                                            <a href="{{ i.product.get_absolute_url }}">
                                             <div class="card-wrap">
                                                 <img src="{{ MEDIA_URL }}{{ i.product.main_photo.url }}"
                                                      class="card-img-top" alt="...">

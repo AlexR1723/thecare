@@ -15,9 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import url
 from . import views
+from django.urls import path
 
 urlpatterns = [
     url(r'^face/$', views.Face, name="Face"),
+    url(r'^for_men/$', views.For_men, name="For_men"),
+    # url(r'^for_men/$', views.For_men_s, name="For_men_s"),
+    # url(r'^for_men/(?P<text>)/$', views.For_men_s, name="For_men_s"),
+    path('for_men/<str:text>/', views.For_men_s),
+    # url(r'^for_men/(?P<text>[А-Яа-я\s0-9-()/a-z,:]+)/$', views.For_men_s, name="For_men_s"),
     url(r'^items_catalog/$', views.Items_catalog, name="Items_catalog"),
-    url(r'^item_card/$', views.Item_card, name="Item_card"),
+    # url(r'^item_card/$', views.Item_card, name="Item_card"),
+    path('<slug:slug>', views.Item_card, name='Item_card'),
 ]

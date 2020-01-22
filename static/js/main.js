@@ -68,15 +68,15 @@ $('#send_feedback').click(function () {
 
 function notice(text) {
     // function generate(text) {
-        new Noty({
-            text: text,
-            // type: type,
-            type: 'info',
-            dismissQueue: true,
-            // layout: layout,
-            layout: 'bottomCenter',
-            theme: 'relax'
-        }).show();
+    new Noty({
+        text: text,
+        // type: type,
+        type: 'info',
+        dismissQueue: true,
+        // layout: layout,
+        layout: 'bottomCenter',
+        theme: 'relax'
+    }).show();
     // }
 
     // let el = document.createElement('div')
@@ -121,3 +121,54 @@ $('.items-counter').ready(function () {
         return false;
     });
 });
+
+$('#btn_filter').click(function () {
+
+    let arr_link=[]
+
+    let price_from = $('#price_from')[0].value
+    let price_until = $('#price_until')[0].value
+    let str_price = ''
+    if (price_from || price_until) {
+        str_price = 'price=' + price_from + '&' + price_until
+        arr_link.push(str_price)
+    }
+
+
+    let resources = $("#card_resources>div").children(':checked')
+    let needs = $("#card_needs>div").children(':checked')
+    let brands = $("#card_brands>div").children(':checked')
+
+    let str_resources = ''
+    if (resources.length > 0) {
+        let arr_resources = []
+        for (let i = 0; i < resources.length; i++) {
+            arr_resources.push(resources[i].dataset.res)
+        }
+        str_resources = 'resources=' + arr_resources.join('&')
+        arr_link.push(str_resources)
+    }
+
+    let str_needs = ''
+    if (needs.length > 0) {
+        let arr_needs = []
+        for (let i = 0; i < needs.length; i++) {
+            arr_needs.push(needs[i].dataset.res)
+        }
+        str_needs = 'needs='+arr_needs.join('&')
+        arr_link.push(str_needs)
+    }
+
+    let str_brands = ''
+    if (brands.length > 0) {
+        let arr_brands=[]
+        for (let i = 0; i < brands.length; i++) {
+            arr_brands.push(brands[i].dataset.res)
+        }
+        str_brands = 'brands='+arr_brands.join('&')
+        arr_link.push(str_brands)
+    }
+    let link = arr_link.join('%')
+    console.log(link)
+    window.location.href='/catalog/'+this.dataset.page+'/'+link
+})
