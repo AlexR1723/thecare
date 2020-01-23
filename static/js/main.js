@@ -170,5 +170,13 @@ $('#btn_filter').click(function () {
     }
     let link = arr_link.join('%')
     console.log(link)
-    window.location.href='/catalog/'+this.dataset.page+'/'+link
+    window.location.href='/catalog/'+this.dataset.page+'/'+link+'/'
 })
+
+// $('#filter_selector').onchange(function () {
+//     console.log(this.value)
+// })
+// let prod=document.getElementById("products").children
+// price=prod[0].querySelector('small.text-muted').innerText
+// name=prod[0].querySelector('h5.card-title').innerText
+// id=prod[0].querySelector('a').href

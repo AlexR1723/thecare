@@ -96,15 +96,15 @@ class ResourceType(models.Model):
 
 
 class Product(models.Model):
-    title = models.CharField(max_length=100, blank=True, null=True, verbose_name="Наименование")
-    shot_description = models.TextField(max_length=100, blank=True, null=True, verbose_name="Краткое описание")
-    description = models.TextField(max_length=5000, blank=True, null=True, verbose_name="Описание")
+    title = models.CharField(max_length=500, blank=True, null=True, verbose_name="Наименование")
+    shot_description = models.TextField(blank=True, null=True, verbose_name="Краткое описание")
+    description = models.TextField(blank=True, null=True, verbose_name="Описание")
     main_photo = models.ImageField(upload_to='uploads/', blank=True, null=True, verbose_name="Фото")
     price = models.IntegerField(blank=True, null=True, verbose_name="Стоимость")
     artikul = models.IntegerField(blank=True, null=True, verbose_name="Артикул")
-    note = models.TextField(max_length=5000, blank=True, null=True, verbose_name="Примечание")
-    components = models.TextField(max_length=500, blank=True, null=True, verbose_name="Состав")
-    category = models.ForeignKey(CategoryType, models.DO_NOTHING, blank=True, null=True, verbose_name="Категория")
+    note = models.TextField(blank=True, null=True, verbose_name="Примечание")
+    components = models.TextField(blank=True, null=True, verbose_name="Состав")
+    category = models.ForeignKey('CategoryType', models.DO_NOTHING, blank=True, null=True, verbose_name="Категория")
     resource = models.ForeignKey('ResourceType', models.DO_NOTHING, blank=True, null=True, verbose_name="Средство")
     size = models.IntegerField(blank=True, null=True, verbose_name="Объем")
     brand = models.ForeignKey('Brands_model', models.DO_NOTHING, blank=True, null=True)

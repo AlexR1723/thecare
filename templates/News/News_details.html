@@ -32,11 +32,10 @@
                 <div class="col-12 col-sm-12 col-md-11 col-lg-12 col-xl-12 p-0 my-md-4 mx-auto">
                     <div class="row m-0 justify-content-center">
                         <div class="">
-                            {#                            <p><img src="/static/image/news_28.png" class="img-fluid float-md-left" alt="">#}
-                            <p><img src="{{ MEDIA_URL }}{{ news.image.url }}" class="img-fluid float-md-left" alt="">
-                                {% autoescape off %}
-                                    {{ news.text|linebreaks }}
-                                {% endautoescape %}
+                            <p>{% if news.image %}
+                                    <img src="{{ MEDIA_URL }}{{ news.image.url }}" class="img-fluid float-md-left"
+                                         alt="">
+                                {% endif %} {{ news.text }}
                             </p>
                         </div>
                     </div>
@@ -65,20 +64,24 @@
                                     {% for i in prods %}
                                         <div class="card">
                                             <a href="{{ i.product.get_absolute_url }}">
-                                            <div class="card-wrap">
-                                                <img src="{{ MEDIA_URL }}{{ i.product.main_photo.url }}"
-                                                     class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">{{ i.product.title }}</h5>
-                                                    <p class="card-text">{{ i.product.shot_description }}</p>
-                                                    <button type="button" class="btn btn-buy mx-auto">Купить</button>
+                                                <div class="card-wrap">
+                                                    {#                                                {% if i.product.main_photo %}#}
+                                                    <img src="{{ MEDIA_URL }}{{ i.product.main_photo.url }}"
+                                                         class="card-img-top" alt="...">
+                                                    {#                                                {% endif %}#}
+
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ i.product.title }}</h5>
+                                                        <p class="card-text">{{ i.product.shot_description }}</p>
+                                                        <button type="button" class="btn btn-buy mx-auto">Купить
+                                                        </button>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <hr>
+                                                        <small class="text-muted">{{ i.product.price }} руб</small>
+                                                    </div>
                                                 </div>
-                                                <div class="card-footer">
-                                                    <hr>
-                                                    <small class="text-muted">{{ i.product.price }} руб</small>
-                                                </div>
-                                            </div>
-                                                </a>
+                                            </a>
                                         </div>
                                     {% endfor %}
 

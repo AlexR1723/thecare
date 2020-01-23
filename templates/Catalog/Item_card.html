@@ -33,7 +33,7 @@
                             </div>
                             <div class="col-12 col-md-7 col-lg-8">
                                 <div class="card-body">
-                                    <p class="card-text">{{ item.description|linebreaks }}</p>
+                                    <p class="card-text">{{ item.description }}</p>
                                     <p class="card-text text-center text-md-left">
                                         <span class="price-text">{{item.price}} руб</span>
                                     </p>
@@ -78,7 +78,8 @@
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 mt-3">
                 <div class="row m-0 justify-content-start align-items-center">
-                    <p class="card-text">{{ item.note|linebreaks }}</p>
+{#                    <p class="card-text">{{ item.note|linebreaks }}</p>#}
+                    <p class="card-text">{{ item.note }}</p>
 {#                    {% autoescape off %}#}
 {#                    <p class="card-text">{{ item.note }}</p>#}
 {#                    {% endautoescape %}#}
@@ -93,7 +94,7 @@
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 mt-3">
                 <div class="row m-0 justify-content-start align-items-center">
-                    <p class="card-text">{{ item.components|linebreaks }}</p>
+                    <p class="card-text">{{ item.components }}</p>
                 </div>
             </div>
         </div>

@@ -10,24 +10,24 @@ def func_contact():
     return number, email
 
 
-def f_pages(page, queryset):
+def f_pages(page, queryset,count_item):
     cnt_pgs = queryset.count()
 
     try:
         page = int(page) - 1
-        count_pages = int(cnt_pgs / 10) + (cnt_pgs % 10 > 0)
+        count_pages = int(cnt_pgs / count_item) + (cnt_pgs % count_item > 0)
         if page < 0 or page > count_pages:
             # print('exep 1')
             return False, [], 0, 0, 0, []
         else:
-            pgs = page * 10
+            pgs = page * count_item
     except:
         # print('exep 2')
         return False, [], 0, 0, 0, []
     if pgs == 0:
-        query_res = queryset[:10]
+        query_res = queryset[:count_item]
     else:
-        query_res = queryset[pgs:pgs + 10]
+        query_res = queryset[pgs:pgs + count_item]
 
     pages = []
     if page >= 3:
@@ -63,7 +63,18 @@ def f_pages(page, queryset):
 
 def News(request):
     number, email = func_contact()
-    news = News_model.objects.all()[:10]
+    # news = News_model.objects.all()[:10]
+
+    page = 1
+    # queryset = News_model.objects.count()
+
+    queryset = News_model.objects.all().order_by('-date')
+    status, pages, chs, prev, next, query_res = f_pages(page, queryset, 10)
+    if status == False:
+        # вывод страницы 404
+        print('news pages error')
+    else:
+        news = query_res
 
     # News_model.objects.all().delete()
     #
@@ -89,25 +100,21 @@ def News(request):
     #     i.slug=slugify(str(i.id)+'-'+i.name)
     #     i.save()
 
-    page = 1
-    queryset = News_model.objects.count()
 
-    queryset = News_model.objects.all().order_by('-date')
-    status, pages, chs, prev, next, query_res = f_pages(page, queryset)
-    if status == False:
-        # вывод страницы 404
-        print('news pages error')
-    else:
-        news = query_res
 
     return render(request, 'News/News.html', locals())
 
 
 def News_page(request, page):
     number, email = func_contact()
+    try:
+        page=int(page)
+    except:
+        # вывод страницы 404
+        print('news pages error')
 
     queryset = News_model.objects.all().order_by('-date')
-    status, pages, chs, prev, next, query_res = f_pages(page, queryset)
+    status, pages, chs, prev, next, query_res = f_pages(page, queryset,10)
     if status == False:
         # вывод страницы 404
         print('news pages error')

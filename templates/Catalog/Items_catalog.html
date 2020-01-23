@@ -24,11 +24,11 @@
             <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-11 p-md-0 sort_col">
                 <div class="row m-0 justify-content-end">
                     <div class="col-12 col-md-5 col-lg-4 col-xl-3">
-                        <select class="form-control sort-select" id="exampleFormControlSelect1">
-                            <option selected>По возрастанию цены</option>
-                            <option>По убыванию цены</option>
-                            <option>Новые</option>
-                            <option>По названию</option>
+                        <select class="form-control sort-select" id="filter_selector">
+                            <option value="new" selected>Новые</option>
+                            <option value="price_up">По возрастанию цены</option>
+                            <option value="price_down">По убыванию цены</option>
+                            <option value="name">По названию</option>
                         </select>
                     </div>
                 </div>
@@ -130,7 +130,7 @@
                                                                     <input type="checkbox" class="custom-control-input"
                                                                            id="need{{ forloop.counter }}"
                                                                            data-res="{{ n.id }}"
-                                                                           {% if n.id in needs_id %}
+                                                                            {% if n.id in needs_id %}
                                                                            checked
                                                                             {% endif %}
                                                                     >
@@ -163,7 +163,7 @@
                                                                     <input type="checkbox" class="custom-control-input"
                                                                            id="brands{{ forloop.counter }}"
                                                                            data-res="{{ n.id }}"
-                                                                           {% if n.id in brands_id %}
+                                                                            {% if n.id in brands_id %}
                                                                            checked
                                                                             {% endif %}
                                                                     >
@@ -196,31 +196,120 @@
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-md-0 my-md-5">
                                 <div class="row m-0 justify-content-start align-items-center">
-                                    <div class="card-deck mb-5 ml-md-2 w-100">
-                                        {% for p in product %}
-                                            <a href="{{ p.get_absolute_url }}" style="">
-                                                <div class="card col-lg-4 col-xl-3">
-                                                    {% if p.main_photo != None and p.main_photo != "" %}
-                                                        <img src="{{ MEDIA_URL }}{{ p.main_photo.url }}"
-                                                             class="card-img-top" alt="...">
-                                                    {% endif %}
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">{{ p.title }}</h5>
-                                                        <p class="card-text">{{ p.shot_description }}</p>
+                                    <div class="card-deck mb-5 ml-md-2 w-100" id="products">
+                                        {% for p in products %}
+                                            {#                                            <a href="{{ p.get_absolute_url }}" style="">#}
+                                            <div class="card col-lg-4 col-xl-3"
+                                            data-price="{{ p.price }}"
+                                            data-name="{{ p.title }}"
+                                            data-num="{{ forloop.counter }}"
+                                            >
+                                                {% if p.main_photo != None and p.main_photo != "" %}
+                                                    <img src="{{ MEDIA_URL }}{{ p.main_photo.url }}"
+                                                         class="card-img-top" alt="...">
+                                                {% endif %}
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{ p.title }}</h5>
+                                                    <p class="card-text">{{ p.shot_description }}</p>
+                                                    <a href="{{ p.get_absolute_url }}">
                                                         <button type="submit" class="btn btn-buy mx-auto">Купить
                                                         </button>
-                                                    </div>
-                                                    <div class="card-footer">
-                                                        <hr>
-                                                        <small class="text-muted">{{ p.price }} руб</small>
-                                                    </div>
+                                                    </a>
                                                 </div>
-                                            </a>
+                                                <div class="card-footer">
+                                                    <hr>
+                                                    <small class="text-muted">{{ p.price }} руб</small>
+                                                </div>
+                                            </div>
+                                            {#                                            </a>#}
                                         {% endfor %}
                                     </div>
                                 </div>
 
+
+                                {#                                {% if is_search %}#}
+                                {#                                {% else %}#}
+                                {#                                {% endif %}#}
                                 <div class="row m-0 justify-content-center align-items-center nav_blk">
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination">
+
+                                            {% if prev %}
+                                                <li class="page-item">
+                                                    {% if is_search %}
+                                                        <a class="page-link"
+                                                           href="{% url 'For_men_search_page' text prev %}"
+                                                           aria-label="Previous">
+                                                    {% else %}
+                                                        <a class="page-link" href="{% url 'For_men_page' prev %}"
+                                                           aria-label="Previous">
+                                                    {% endif %}
+                                                    <span aria-hidden="true">
+                                            <i class="fa fa-angle-left" aria-hidden="true"></i>
+                                        </span>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+
+                                            {% for i in pages %}
+                                                {% if not i %}
+                                                    <a class="page-link" href="">...</a>
+                                                {% else %}
+                                                    <li class="page-item">
+                                                        {% if forloop.counter == chs %}
+                                                            {% if is_search %}
+                                                                <a class="page-link"
+                                                                   href="{% url 'For_men_search_page' text i %}"
+                                                                   style="color: #E7B9CB;">
+                                                                    <b>{{ i }}</b>
+                                                                </a>
+                                                            {% else %}
+                                                                <a class="page-link" href="{% url 'For_men_page' i %}"
+                                                                   style="color: #E7B9CB;">
+                                                                    <b>{{ i }}</b>
+                                                                </a>
+                                                            {% endif %}
+
+                                                        {% else %}
+                                                            {% if is_search %}
+                                                                <a class="page-link"
+                                                                   href="{% url 'For_men_search_page' text i %}">
+                                                                    {{ i }}
+                                                                </a>
+                                                            {% else %}
+                                                                <a class="page-link" href="{% url 'For_men_page' i %}">
+                                                                    {{ i }}
+                                                                </a>
+                                                            {% endif %}
+
+                                                        {% endif %}
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                            {% if next %}
+                                                <li class="page-item">
+                                                    {% if is_search %}
+                                                        <a class="page-link"
+                                                           href="{% url 'For_men_search_page' text next %}"
+                                                           aria-label="Next">
+                                        <span aria-hidden="true">
+                                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        </span>
+                                                        </a>
+                                                    {% else %}
+                                                        <a class="page-link" href="{% url 'For_men_page' next %}"
+                                                           aria-label="Next">
+                                        <span aria-hidden="true">
+                                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        </span>
+                                                        </a>
+                                                    {% endif %}
+
+                                                </li>
+                                            {% endif %}
+                                        </ul>
+                                    </nav>
                                     <!--                    <nav aria-label="Page navigation">-->
                                     <!--                        <ul class="pagination">-->
                                     <!--                            <li class="page-item">-->

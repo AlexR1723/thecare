@@ -6,6 +6,9 @@ body {
     background-color: #fff;
     font-family: 'Comfortaa', cursive;
 }
+p{
+    white-space: pre-line;
+}
 .colorCopy {
     background-color: rgba(0,0,0,.2);
     color: black;
