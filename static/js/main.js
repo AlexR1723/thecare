@@ -170,7 +170,11 @@ $('#btn_filter').click(function () {
     }
     let link = arr_link.join('%')
     console.log(link)
-    window.location.href='/catalog/'+this.dataset.page+'/'+link+'/'
+    if (this.dataset.filter){
+        link+='/'+this.dataset.filter+'/'
+    }
+
+    window.location.href='/catalog/'+this.dataset.page+'/'+link
 })
 
 // $('#filter_selector').onchange(function () {
