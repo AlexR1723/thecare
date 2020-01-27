@@ -65,6 +65,13 @@ def News(request):
     number, email = func_contact()
     # news = News_model.objects.all()[:10]
 
+    # nws= News_model.objects.all()
+    # for i in nws:
+    #     if not i.image:
+    #         i.image='uploads/news_img_logo.png'
+    #         i.save()
+    # print('news image ready')
+
     page = 1
     # queryset = News_model.objects.count()
 

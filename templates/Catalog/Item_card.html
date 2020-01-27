@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% load staticfiles %}
+{% load poll_extras %}
 {% block content %}
 
 <div class="container-fluid p-0">
@@ -8,8 +9,8 @@
             <div class="row m-0 justify-content-start align-items-center">
                 <nav aria-label="breadcrumb">
                     <ol class="custom-breadcrumb breadcrumb px-0">
-                        <li class="breadcrumb-item"><a href=""><i class="fa fa-home home-icon" aria-hidden="true"></i></a></li>
-                        <li class="breadcrumb-item active" aria-current="page"><a href="#">Лицо</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'Main'  %}"><i class="fa fa-home home-icon" aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'Catalog' category %}">{{head}}</a></li>
                         <li class="breadcrumb-item active d-none d-md-block" aria-current="page"><a href="{{ item.get_absolute_url }}">{{item.title}}</a></li>
                     </ol>
                 </nav>
@@ -62,7 +63,7 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 mt-2">
                 <div class="row m-0 justify-content-start align-items-center">
                     {% for i in item.needed %}
-                        <a href=""><span class="badge">{{i.need.name}}</span></a>
+                        <a href="{% url 'Catalog_search' category i.need.id|make_search_url:"needs" %}"><span class="badge">{{i.need.name}}</span></a>
                     {% endfor %}
 {#                    <a href=""><span class="badge">Жирная кожа</span></a>#}
 {#                    <a href=""><span class="badge badge-light">Комбинированная кожа</span></a>#}

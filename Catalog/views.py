@@ -39,7 +39,8 @@ def f_pages(page, queryset, count_item):
         pages.append(page - 2 + 1)
     if page - 1 >= 0:
         pages.append(page - 1 + 1)
-    pages.append(page + 1)
+    if count_pages != 1:
+        pages.append(page + 1)
     chs = len(pages)
     if page + 1 < count_pages:
         pages.append(page + 1 + 1)
@@ -64,9 +65,11 @@ def f_pages(page, queryset, count_item):
 
 def get_filter(text):
     filter_dict = {'new': '-id', 'price_up': 'price', 'price_down': '-price', 'name': 'title'}
-    try:
-        filt = filter_dict[str(text)]
-    except:
+    # try:
+        # filt = filter_dict[str(text)]
+    filt = filter_dict.get(str(text))
+    if not filt:
+    # except:
         filt = '-id'
     return filt
 
@@ -149,26 +152,37 @@ def search(text):
     if price_from and price_until and price_from < price_until:
         q_price = Q(price__gte=price_from) & Q(price__lte=price_until)
     product = Product.objects.filter(Q(q_resources) & Q(q_needs) & Q(q_brand) & Q(q_price))
-    return resources_id ,needs_id ,brands_id,product
+    return resources_id, needs_id, brands_id, price_from, price_until, product
 
-def get_url(url):
+
+def get_url(url,rec=False):
     url_page = str(url)
-    dict={'For_men':'Для мужчин',
-          'For_body': 'Для тела',
-          'For_face': 'Для лица',
-          'For_hair': 'Для волос',
-          'Dyes_for_hair': 'Красители для волос',
-          'Sale': 'Скидки',
-          'Sets_and_miniatures': 'Наборы и миниатюры'
-          }
-    try:
-        head=dict[url_page]
-    except:
-        head=False
+    dict = {'For_men': 'Для мужчин',
+            'For_body': 'Для тела',
+            'For_face': 'Для лица',
+            'For_hair': 'Для волос',
+            'Dyes_for_hair': 'Красители для волос',
+            'Sale': 'Скидки',
+            'Sets_and_miniatures': 'Наборы и миниатюры'
+            }
+    # try:
+    head = dict.get(url_page)
 
-    print(head)
-    print(url_page)
-    return url_page,head
+    if rec:
+        for key, value in dict.items():
+            if value==url:
+                url_page=key
+                head=value
+                print(key, value)
+    # if head
+    # except:
+    #     head = False
+    #
+    # for
+
+    # print(head)
+    # print(url_page)
+    return url_page, head
 
 
 def Items_catalog(request):
@@ -255,19 +269,19 @@ def Face(request):
     return render(request, 'Catalog/Items_catalog.html', locals())
 
 
-def Catalog(request,head_url):
+def Catalog(request, head_url):
     number, email = func_contact()
 
     # head = 'Для мужчин'
     # url_page = 'for_men'
-    url_page,head=get_url(head_url)
+    url_page, head = get_url(head_url)
     if not head:
         # вывод страницы 404
         print('catalog for_men error')
 
     is_search = False
     is_filter = False
-    is_page=False
+    is_page = False
     # print('is for men')
     resource = ResourceType.objects.filter(category__name__icontains=head)
     need = NeedType.objects.filter(category__name__icontains=head)
@@ -287,7 +301,7 @@ def Catalog(request,head_url):
     return render(request, 'Catalog/Items_catalog.html', locals())
 
 
-def Catalog_filter(request,head_url, filter):
+def Catalog_filter(request, head_url, filter):
     number, email = func_contact()
 
     # head = 'Для мужчин'
@@ -298,7 +312,7 @@ def Catalog_filter(request,head_url, filter):
         print('catalog for_men error')
     is_search = False
     is_filter = True
-    is_page=False
+    is_page = False
     print('is filter')
     resource = ResourceType.objects.filter(category__name__icontains=head)
     need = NeedType.objects.filter(category__name__icontains=head)
@@ -317,7 +331,7 @@ def Catalog_filter(request,head_url, filter):
     return render(request, 'Catalog/Items_catalog.html', locals())
 
 
-def Catalog_page(request,head_url, page):
+def Catalog_page(request, head_url, page):
     number, email = func_contact()
 
     # head = 'Для мужчин'
@@ -328,7 +342,7 @@ def Catalog_page(request,head_url, page):
         print('catalog for_men error')
     is_search = False
     is_filter = False
-    is_page=True
+    is_page = True
     print('is page')
 
     resource = ResourceType.objects.filter(category__name__icontains=head)
@@ -351,7 +365,7 @@ def Catalog_page(request,head_url, page):
     return render(request, 'Catalog/Items_catalog.html', locals())
 
 
-def Catalog_page_filter(request,head_url, page, filter):
+def Catalog_page_filter(request, head_url, page, filter):
     number, email = func_contact()
 
     # head = 'Для мужчин'
@@ -362,7 +376,7 @@ def Catalog_page_filter(request,head_url, page, filter):
         print('catalog for_men error')
     is_search = False
     is_filter = True
-    is_page=True
+    is_page = True
 
     resource = ResourceType.objects.filter(category__name__icontains=head)
     need = NeedType.objects.filter(category__name__icontains=head)
@@ -384,7 +398,7 @@ def Catalog_page_filter(request,head_url, page, filter):
     return render(request, 'Catalog/Items_catalog.html', locals())
 
 
-def Catalog_search(request,head_url, text):
+def Catalog_search(request, head_url, text):
     number, email = func_contact()
 
     # head = 'Для мужчин'
@@ -395,13 +409,13 @@ def Catalog_search(request,head_url, text):
         print('catalog for_men error')
     is_search = True
     is_filter = False
-    is_page=False
+    is_page = False
 
     resource = ResourceType.objects.filter(category__name__icontains=head)
     need = NeedType.objects.filter(category__name__icontains=head)
     brands = Brands_model.objects.all()
 
-    resources_id ,needs_id ,brands_id,product = search(text)
+    resources_id, needs_id, brands_id, price_from, price_until, product = search(text)
 
     page = 1
     queryset = product.order_by('-id')
@@ -414,7 +428,7 @@ def Catalog_search(request,head_url, text):
     return render(request, 'Catalog/Items_catalog.html', locals())
 
 
-def Catalog_search_filter(request,head_url, text, filter):
+def Catalog_search_filter(request, head_url, text, filter):
     number, email = func_contact()
 
     # head = 'Для мужчин'
@@ -425,13 +439,13 @@ def Catalog_search_filter(request,head_url, text, filter):
         print('catalog for_men error')
     is_search = True
     is_filter = True
-    is_page=False
+    is_page = False
 
     resource = ResourceType.objects.filter(category__name__icontains=head)
     need = NeedType.objects.filter(category__name__icontains=head)
     brands = Brands_model.objects.all()
 
-    resources_id ,needs_id ,brands_id,product = search(text)
+    resources_id, needs_id, brands_id, price_from, price_until, product = search(text)
 
     page = 1
     queryset = product.order_by(get_filter(filter))
@@ -444,7 +458,7 @@ def Catalog_search_filter(request,head_url, text, filter):
     return render(request, 'Catalog/Items_catalog.html', locals())
 
 
-def Catalog_search_page(request,head_url, text, page):
+def Catalog_search_page(request, head_url, text, page):
     number, email = func_contact()
 
     # head = 'Для мужчин'
@@ -455,7 +469,7 @@ def Catalog_search_page(request,head_url, text, page):
         print('catalog for_men error')
     is_search = True
     is_filter = False
-    is_page=True
+    is_page = True
 
     resource = ResourceType.objects.filter(category__name__icontains=head)
     need = NeedType.objects.filter(category__name__icontains=head)
@@ -467,7 +481,7 @@ def Catalog_search_page(request,head_url, text, page):
         # вывод страницы 404
         print('catalog for_men pages error')
 
-    resources_id ,needs_id ,brands_id,product = search(text)
+    resources_id, needs_id, brands_id, price_from, price_until, product = search(text)
 
     queryset = product.order_by('-id')
     status, pages, chs, prev, next, query_res = f_pages(page, queryset, 12)
@@ -479,7 +493,7 @@ def Catalog_search_page(request,head_url, text, page):
     return render(request, 'Catalog/Items_catalog.html', locals())
 
 
-def Catalog_search_page_filter(request,head_url, text, page, filter):
+def Catalog_search_page_filter(request, head_url, text, page, filter):
     number, email = func_contact()
 
     # head = 'Для мужчин'
@@ -490,7 +504,7 @@ def Catalog_search_page_filter(request,head_url, text, page, filter):
         print('catalog for_men error')
     is_search = True
     is_filter = True
-    is_page=True
+    is_page = True
 
     resource = ResourceType.objects.filter(category__name__icontains=head)
     need = NeedType.objects.filter(category__name__icontains=head)
@@ -502,7 +516,7 @@ def Catalog_search_page_filter(request,head_url, text, page, filter):
         # вывод страницы 404
         print('catalog for_men pages error')
 
-    resources_id ,needs_id ,brands_id,product = search(text)
+    resources_id, needs_id, brands_id, price_from, price_until, product = search(text)
 
     queryset = product.order_by(get_filter(filter))
     status, pages, chs, prev, next, query_res = f_pages(page, queryset, 12)
@@ -529,9 +543,34 @@ def Item_card(request, slug):
             # вывод страницы 404
         else:
             item = itm
+            category,head = get_url(item.category.name,True)
             # prods = ProductForNews.objects.filter(news_id=item.id)
     except:
         print('slug error')
         # вывод страницы 404
+
+
+    # urls = {
+    #     'For_men': 'Для мужчин',
+    #     'For_body': 'Для тела',
+    #     'For_face': 'Для лица',
+    #     'For_hair': 'Для волос',
+    #     'Dyes_for_hair': 'Красители для волос',
+    #     'Sale': 'Скидки',
+    #     'Sets_and_miniatures': 'Наборы и миниатюры'
+    # }
+    # dict = {
+    #     'For_men': 'Для мужчин',
+    #     'For_body': 'Для тела',
+    #     'For_face': 'Для лица',
+    #     'For_hair': 'Для волос',
+    #     'Dyes_for_hair': 'Красители для волос',
+    #     'Sale': 'Скидки',
+    #     'Sets_and_miniatures': 'Наборы и миниатюры'
+    # }
+    # try:
+    #     head = dict[url_page]
+    # except:
+    #     head = False
 
     return render(request, 'Catalog/Item_card.html', locals())
