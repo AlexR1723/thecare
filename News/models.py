@@ -109,6 +109,9 @@ class Product(models.Model):
     size = models.IntegerField(blank=True, null=True, verbose_name="Объем")
     brand = models.ForeignKey('Brands_model', models.DO_NOTHING, blank=True, null=True)
     slug = models.TextField(blank=True, null=True, verbose_name="Ссылка")
+    sale = models.IntegerField(blank=True, null=True)
+    sale_is_number = models.BooleanField(blank=True, null=True)
+    sale_price = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
