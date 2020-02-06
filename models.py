@@ -74,12 +74,47 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (('user', 'permission'),)
 
 
+class Brands(models.Model):
+    name = models.CharField(max_length=200, blank=True, null=True)
+    image = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'brands'
+
+
 class CategoryType(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'category_type'
+
+
+class Contact(models.Model):
+    contact = models.ForeignKey('ContactType', models.DO_NOTHING, blank=True, null=True)
+    text = models.CharField(max_length=500, blank=True, null=True)
+    is_main = models.BooleanField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'contact'
+
+
+class ContactType(models.Model):
+    name = models.CharField(max_length=50, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'contact_type'
+
+
+class Delivery(models.Model):
+    text = models.CharField(max_length=500, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'delivery'
 
 
 class DjangoAdminLog(models.Model):
@@ -126,6 +161,26 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
+class Feedback(models.Model):
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING, blank=True, null=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
+    email = models.CharField(max_length=200, blank=True, null=True)
+    subject = models.CharField(max_length=300, blank=True, null=True)
+    text = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'feedback'
+
+
+class Files(models.Model):
+    file = models.CharField(max_length=500, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'files'
+
+
 class NeedType(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     category = models.ForeignKey(CategoryType, models.DO_NOTHING, blank=True, null=True)
@@ -135,23 +190,56 @@ class NeedType(models.Model):
         db_table = 'need_type'
 
 
+class News(models.Model):
+    name = models.CharField(max_length=500, blank=True, null=True)
+    text = models.TextField(blank=True, null=True)
+    date = models.DateTimeField(blank=True, null=True)
+    image = models.TextField(blank=True, null=True)
+    slug = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'news'
+
+
+class Payment(models.Model):
+    text = models.CharField(max_length=500, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'payment'
+
+
 class Product(models.Model):
-    title = models.CharField(max_length=100, blank=True, null=True)
-    shot_description = models.CharField(max_length=100, blank=True, null=True)
-    description = models.CharField(max_length=5000, blank=True, null=True)
-    main_photo = models.CharField(max_length=500, blank=True, null=True)
+    title = models.CharField(max_length=500, blank=True, null=True)
+    shot_description = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    main_photo = models.TextField(blank=True, null=True)
     price = models.IntegerField(blank=True, null=True)
     artikul = models.IntegerField(blank=True, null=True)
-    note = models.CharField(max_length=5000, blank=True, null=True)
-    components = models.CharField(max_length=500, blank=True, null=True)
+    note = models.TextField(blank=True, null=True)
+    components = models.TextField(blank=True, null=True)
     category = models.ForeignKey(CategoryType, models.DO_NOTHING, blank=True, null=True)
     resource = models.ForeignKey('ResourceType', models.DO_NOTHING, blank=True, null=True)
     size = models.IntegerField(blank=True, null=True)
-    brand = models.ForeignKey('Brands_model', models.DO_NOTHING, blank=True, null=True)
+    brand = models.ForeignKey(Brands, models.DO_NOTHING, blank=True, null=True)
+    slug = models.TextField(blank=True, null=True)
+    sale = models.IntegerField(blank=True, null=True)
+    sale_is_number = models.BooleanField(blank=True, null=True)
+    sale_price = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'product'
+
+
+class ProductForNews(models.Model):
+    news = models.ForeignKey(News, models.DO_NOTHING, blank=True, null=True)
+    product = models.ForeignKey(Product, models.DO_NOTHING, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'product_for_news'
 
 
 class ProductNeed(models.Model):

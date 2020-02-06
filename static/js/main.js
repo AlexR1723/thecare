@@ -184,3 +184,15 @@ $('#btn_filter').click(function () {
 // price=prod[0].querySelector('small.text-muted').innerText
 // name=prod[0].querySelector('h5.card-title').innerText
 // id=prod[0].querySelector('a').href
+
+
+
+
+$('#excel-file-admin').on('change', function(){
+    var fileName = $(this).val();
+    if (fileName) {
+        var btn=$('#submit-excel-file-admin');
+        btn.click();
+    }
+
+});
