@@ -34,23 +34,53 @@ def Save_excel_file(request):
             sheet = rb.sheet_by_index(0)
             vals = [sheet.row_values(rownum) for rownum in range(sheet.nrows)]
             for v in vals:
-                if v[2] != "" and v[2] != "Бренд (производитель)":
-                    categ=CategoryType.objects.get(name=v[8])
+                if v[1] != "" and v[1] != "Привязка к позиции":
+                    categ=CategoryType.objects.filter(name=v[8])
                     print(categ)
-                    res=ResourceType.objects.get(name=v[9])
+                    res=ResourceType.objects.filter(name=v[9])
                     print(res)
-                    brand=Brands_model.objects.get(name=v[2])
+                    brand=Brands_model.objects.filter(name=v[2])
+                    if brand.count()==0:
+                        brand=Brands_model(name=v[2])
+                        brand.save()
+                    else:
+                        brand = Brands_model.objects.get(name=v[2])
                     print(brand)
-                    product=Product(title=v[3], shot_description=v[4],description=v[5],note=v[6],components=v[7],
-                                    category=categ,resource=res, size=v[12], artikul=v[13],price=v[15], brand=brand)
-                    product.save()
-                    print(product)
-                    needs=v[10]
-                    list_need=needs.split(', ')
-                    for n in list_need:
-                        need=NeedType.objects.get(name=n)
-                        product_need=ProductNeed(product=product,need=need)
-                        product_need.save()
+                    print(v[12])
+                    size=Size.objects.filter(name=v[12])
+                    print(size)
+                    product=Product.objects.filter(title=v[3])
+                    if categ.count() > 0 and res.count() > 0 and size.count() > 0:
+                        if product.count() == 0 :
+                            print(1)
+                            product=Product(title=v[3], shot_description=v[4],description=v[5],note=v[6],components=v[7],
+                                        category=categ[0],resource=res[0], brand=brand)
+                            # product = Product(title=v[3], shot_description=v[4], description=v[5], note=v[6],
+                            #                   components=v[7],
+                            #                   category=categ, resource=res, artikul=v[13], price=v[15], brand=brand[0])
+                            product.save()
+                            needs = v[10]
+                            list_need = needs.split(', ')
+                            if list_need.count == 0:
+                                need = NeedType.objects.filter(name=needs)
+                                if need.count()>0:
+                                    product_need = ProductNeed(product=product, need=need[0])
+                                    product_need.save()
+                            else:
+                                for n in list_need:
+                                    need = NeedType.objects.filter(name=n)
+                                    if need.count() > 0:
+                                        product_need = ProductNeed(product=product, need=need[0])
+                                        product_need.save()
+                            print(2)
+                        else:
+                            product=product[0]
+                        product_size = ProductSize.objects.filter(size=size[0]).filter(product=product)
+                        print(product_size)
+                        if product_size.count == 0:
+                            product_size = ProductSize(product=product, size=size[0])
+                            product_size.save()
+                        print(product)
     return HttpResponseRedirect("/admin")
 
 # def News(request):

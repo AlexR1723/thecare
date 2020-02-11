@@ -221,7 +221,6 @@ class Product(models.Model):
     components = models.TextField(blank=True, null=True)
     category = models.ForeignKey(CategoryType, models.DO_NOTHING, blank=True, null=True)
     resource = models.ForeignKey('ResourceType', models.DO_NOTHING, blank=True, null=True)
-    size = models.IntegerField(blank=True, null=True)
     brand = models.ForeignKey(Brands, models.DO_NOTHING, blank=True, null=True)
     slug = models.TextField(blank=True, null=True)
     sale = models.IntegerField(blank=True, null=True)
@@ -251,6 +250,15 @@ class ProductNeed(models.Model):
         db_table = 'product_need'
 
 
+class ProductSize(models.Model):
+    product = models.ForeignKey(Product, models.DO_NOTHING, blank=True, null=True)
+    size = models.ForeignKey('Size', models.DO_NOTHING, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'product_size'
+
+
 class ResourceType(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     category = models.ForeignKey(CategoryType, models.DO_NOTHING, blank=True, null=True)
@@ -258,3 +266,11 @@ class ResourceType(models.Model):
     class Meta:
         managed = False
         db_table = 'resource_type'
+
+
+class Size(models.Model):
+    name = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'size'

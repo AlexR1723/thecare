@@ -169,7 +169,6 @@ class Product(models.Model):
     components = models.TextField(blank=True, null=True, verbose_name="Состав")
     category = models.ForeignKey('CategoryType', models.DO_NOTHING, blank=True, null=True, verbose_name="Категория")
     resource = models.ForeignKey('ResourceType', models.DO_NOTHING, blank=True, null=True, verbose_name="Средство")
-    size = models.IntegerField(blank=True, null=True, verbose_name="Объем")
     brand = models.ForeignKey('Brands_model', models.DO_NOTHING, blank=True, null=True)
     slug = models.TextField(blank=True, null=True, verbose_name="Ссылка")
     sale = models.IntegerField(blank=True, null=True)
@@ -204,6 +203,27 @@ class Product(models.Model):
     def needed(self):
         prods=ProductNeed.objects.filter(product_id=self.id)
         return prods
+
+
+
+class Size(models.Model):
+    name = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'size'
+
+
+
+
+class ProductSize(models.Model):
+    product = models.ForeignKey(Product, models.DO_NOTHING, blank=True, null=True)
+    size = models.ForeignKey('Size', models.DO_NOTHING, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'product_size'
+
 
 
 class ProductNeed(models.Model):
