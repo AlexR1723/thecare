@@ -177,13 +177,6 @@ def get_url(url, rec=False):
 
 
 def left_filter(url_page, head,filter=False, prod=False):
-
-    # print(url_page)
-    # print(head)
-    # print(is_filter)
-    # print(filter)
-    # print(prod)
-
     if url_page != 'Sale' and url_page != 'Brands':
 
         resource = ResourceType.objects.filter(category__name__icontains=head)
@@ -202,25 +195,16 @@ def left_filter(url_page, head,filter=False, prod=False):
         need = NeedType.objects.all()
         brands = Brands_model.objects.all()
         if url_page == 'Sale':
-            # print('sale')
-            # print(Product.objects.filter(sale__gt=0).count())
-            # print(Product.objects.filter(sale_price__gt=0).count())
-            # print(Product.objects.filter(sale_is_number=True).count())
             if filter and not prod:
                 queryset = Product.objects.filter(sale__gt=0).order_by(get_filter(filter))
-                # print('filter and not prod')
             if not filter and not prod:
-                # print('not filter and not prod')
                 queryset = Product.objects.filter(sale__gt=0).order_by('-id')
             if filter and prod:
-                # print('filter and prod')
                 queryset = prod.filter(sale__gt=0).order_by(get_filter(filter))
             if not filter and prod:
-                # print('not filter and prod')
                 queryset = prod.filter(sale__gt=0).order_by('-id')
 
         if url_page == 'Brands':
-            # print(prod)
             if filter:
                 queryset = prod.order_by(get_filter(filter))
             else:
@@ -370,6 +354,7 @@ def Catalog(request, head_url):
     page = 1
     # queryset = queryset.order_by('-id')
     status, pages, chs, prev, next, query_res = f_pages(page, queryset, 12)
+    # print(resource[0])
     if status == False:
         # вывод страницы 404
         print('catalog for_men error')
@@ -616,20 +601,22 @@ def Catalog_search_page_filter(request, head_url, text, page, filter):
     return render(request, 'Catalog/Items_catalog.html', locals())
 
 
-# def search_prods(lst):
-#     # random.shuffle(lst)
-#     print(lst)
-#     lst=list(lst)
-#     q_prod=Q()
-#     for i in lst:
-#         q_prod.add(Q(need_id=i), Q.AND)
-#     prods=list(ProductNeed.objects.filter(Q(q_prod)).values_list('product_id',flat=True))
-#     print(prods)
-#     if len(prods)<10:
-#         if len(lst)>2:
-#             prods=prods+search_prods(lst[1:])
-#     else:
-#         return prods
+# def search_prods(lst,prod_id):
+    # print(lst)
+    # query=Q()
+    # for i in lst:
+    #     query.add(Q(need_id=i), Q.OR)
+    # prods=ProductNeed.objects.filter(Q(query)).exclude(product_id=prod_id)
+    # prods=prods.order_by('product_id','id').distinct('product_id')
+    #
+    # print(prods.count())
+    # print(prods[0].product.id)
+    # print(prods[0].product.slug)
+    # print(prods[prods.count()-1].product.id)
+    # print(prods[prods.count()-1].product.slug)
+
+
+    # return prods.
 
 def Item_card(request, slug):
     number, email = func_contact()
@@ -665,16 +652,39 @@ def Item_card(request, slug):
 
     cat = item.category.id
     res = item.resource_id
-    q_prod = Q()
-    prods = Product.objects.filter(Q(category_id=cat) and Q(resource_id=res))
+    # q_prod = Q()
+    # prods = Product.objects.filter(Q(category_id=cat) and Q(resource_id=res))
     ress = ProductNeed.objects.filter(product_id=item.id).values_list('need_id', flat=True)
-    print(ress)
+    # print(ress)
+
+    # for i in ress:
+    #     q_prod.add(Q(need_id=i), Q.OR)
+    # needs = ProductNeed.objects.filter(product__category__id=cat)
+    # needs = needs.filter(product__resource_id=res)
+    # needs = needs.filter(Q(q_prod))
+
+    # print(needs.count())
+    # prls=search_prods(ress,item.id)
+    # print(lst)
+    query = Q()
     for i in ress:
-        q_prod.add(Q(need_id=i), Q.OR)
-    needs = ProductNeed.objects.filter(product__category__id=cat)
-    needs = needs.filter(product__resource_id=res)
-    needs = needs.filter(Q(q_prod))
-    print(needs.count())
+        query.add(Q(need_id=i), Q.OR)
+    prods = ProductNeed.objects.filter(Q(query)).exclude(product_id=item.id)
+    prods = prods.order_by('product_id', 'id').distinct('product_id')
+
+    print(prods.count())
+    print(prods[0].product.id)
+    print(prods[0].product.slug)
+    print(prods[prods.count() - 1].product.id)
+    print(prods[prods.count() - 1].product.slug)
+
+    prods=list(prods)
+    prods.reverse()
+    print(prods)
+    print('-------------')
+    if len(prods)>8:
+        prods=prods[:8]
+    print(prods)
     # ress=list(ress)
     # ress2=list(ress)
     # for i in ress1:

@@ -196,3 +196,22 @@ $('#excel-file-admin').on('change', function(){
     }
 
 });
+
+function set_footer(){
+    let body = document.getElementsByTagName('body')[0].getBoundingClientRect().height
+    let wind = document.documentElement.clientHeight
+    if (wind > body) {
+        let res2 = (wind - body) / 2;
+        // $('#main_block_content').css('top', res2);
+        $('#main_footer:first').addClass('absolute_footer');
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    set_footer()
+});
+window.onload = function () {
+
+    set_footer()
+
+}

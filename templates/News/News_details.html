@@ -66,11 +66,8 @@
                                         <div class="card">
                                             <a href="{{ i.product.get_absolute_url }}">
                                                 <div class="card-wrap">
-                                                    {#                                                {% if i.product.main_photo %}#}
                                                     <img src="{{ MEDIA_URL }}{{ i.product.main_photo.url }}"
                                                          class="card-img-top" alt="...">
-                                                    {#                                                {% endif %}#}
-
                                                     <div class="card-body">
                                                         <h5 class="card-title">{{ i.product.title }}</h5>
                                                         <p class="card-text">{{ i.product.shot_description }}</p>
