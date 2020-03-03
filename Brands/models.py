@@ -32,6 +32,6 @@ class Brands_model(models.Model):
     class Meta:
         managed = False
         db_table = 'brands'
-        verbose_name = _("Брэнд")
-        verbose_name_plural = _("Брэнды")
+        verbose_name = _("Бренд")
+        verbose_name_plural = _("Бренды")
 
