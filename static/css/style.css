@@ -6,6 +6,9 @@ body {
     background-color: #fff;
     font-family: 'Comfortaa', cursive;
 }
+.h_70vh{
+    height: 70vh;
+}
 p{
     white-space: pre-line;
 }

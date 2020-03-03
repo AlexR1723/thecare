@@ -181,6 +181,15 @@ class Files(models.Model):
         db_table = 'files'
 
 
+class MainBlock(models.Model):
+    name = models.CharField(max_length=20, blank=True, null=True)
+    image = models.CharField(max_length=500, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'main_block'
+
+
 class NeedType(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     category = models.ForeignKey(CategoryType, models.DO_NOTHING, blank=True, null=True)
@@ -269,8 +278,16 @@ class ResourceType(models.Model):
 
 
 class Size(models.Model):
-    name = models.IntegerField(blank=True, null=True)
+    name = models.CharField(max_length=10, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'size'
+
+
+class Slider(models.Model):
+    image = models.CharField(max_length=500, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'slider'

@@ -155,3 +155,26 @@ class Files(models.Model):
     class Meta:
         managed = False
         db_table = 'files'
+
+
+
+class Slider(models.Model):
+    image = models.ImageField(upload_to='uploads', max_length=500, blank=True, null=True, verbose_name='Изображение')
+
+    class Meta:
+        managed = False
+        db_table = 'slider'
+        verbose_name = _("Слайд")
+        verbose_name_plural = _("Слайдер")
+
+
+
+class MainBlock(models.Model):
+    name = models.CharField(max_length=20, blank=True, null=True, verbose_name='Наименование')
+    image = models.ImageField(upload_to='uploads', max_length=500, blank=True, null=True, verbose_name='Изображение')
+
+    class Meta:
+        managed = False
+        db_table = 'main_block'
+        verbose_name = _("Блок")
+        verbose_name_plural = _("Блоки с картинками")

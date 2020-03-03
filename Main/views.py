@@ -14,6 +14,9 @@ def func_contact():
 
 def Main(request):
     number, email = func_contact()
+    slide_first=Slider.objects.all()[0]
+    slide=Slider.objects.all()[1:]
+    main_block=MainBlock.objects.all()
     return render(request, 'Main/Main.html', locals())
 
 def Dev(request):
