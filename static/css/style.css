@@ -975,3 +975,7 @@ footer .contact-list {
         margin-right: 0;
     }
 }
+.navbar-light .navbar-toggler{
+    color: rgba(0,0,0,1) !important;
+    border-color: rgba(0,0,0,1) !important;
+}
