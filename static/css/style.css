@@ -314,7 +314,8 @@ a:hover {
     font-size: 2rem;
     z-index: 1;
     cursor: pointer;
-    color: #ffffff;
+    /*color: #ffffff;*/
+    color: #C4C4C4;
 }
 
 .shop-items_blk .next {

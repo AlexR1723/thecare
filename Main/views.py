@@ -17,6 +17,24 @@ def Main(request):
     slide_first=Slider.objects.all()[0]
     slide=Slider.objects.all()[1:]
     main_block=MainBlock.objects.all()
+    face_count=Product.objects.order_by('-id').filter(category__name='Для лица').count()
+    if face_count<10:
+        face=Product.objects.order_by('-id').filter(category__name='Для лица')
+    else:
+        face=Product.objects.order_by('-id').filter(category__name='Для лица')[0:10]
+    print(face)
+    hair_count=Product.objects.order_by('-id').filter(category__name='Для волос').count()
+    if hair_count<10:
+        hair=Product.objects.order_by('-id').filter(category__name='Для волос')
+    else:
+        hair=Product.objects.order_by('-id').filter(category__name='Для волос')[0:10]
+    print(hair)
+    body_count=Product.objects.order_by('-id').filter(category__name='Для тела').count()
+    if body_count<10:
+        body=Product.objects.order_by('-id').filter(category__name='Для тела')
+    else:
+        body=Product.objects.order_by('-id').filter(category__name='Для тела')[0:10]
+    print(body)
     return render(request, 'Main/Main.html', locals())
 
 def Dev(request):
