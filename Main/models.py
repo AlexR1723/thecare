@@ -106,6 +106,10 @@ class Product(models.Model):
         prods=ProductNeed.objects.filter(product_id=self.id)
         return prods
 
+    def get_sizes(self):
+        sizes = ProductSize.objects.filter(product=self)
+        return sizes
+
 
 class Size(models.Model):
     name = models.TextField(blank=True, null=True)
