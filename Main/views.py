@@ -126,5 +126,9 @@ def Log_in(request):
     number, email = func_contact()
     return render(request, 'Main/Log_in.html', locals())
 
+def Registration(request):
+    number, email = func_contact()
+    return render(request, 'Main/Registration.html', locals())
+
 
 

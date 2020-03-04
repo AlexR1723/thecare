@@ -559,10 +559,16 @@ a:hover {
 }
 
 .items-list_catalog .card-deck .card .card-title,
-.login-form label {
+.login-form label,
+.register-form label {
     font-size: 18px;
     line-height: 22px;
     color: #000000;
+}
+.register-form label span {
+    font-size: 1.5rem;
+    line-height: 33px;
+    color: #E13075;
 }
 
 .items-list_catalog .card-deck .card .card-text {
@@ -886,6 +892,11 @@ a:hover {
 .login-btn {
     width: 25%;
 }
+@media (min-width: 1024px) {
+    .register-form .login-btn {
+        width: 27%;
+    }
+}
 @media (max-width: 768px) {
     .cart_blk .btn,
     .login-btn {
@@ -897,16 +908,22 @@ a:hover {
     .login-btn {
         width: 65%;
     }
+    .register-form .login-btn {
+        width: 80%;
+    }
 }
-.login-form .form-control {
+.login-form .form-control,
+.register-form .form-control {
     border: 1px solid #C4C4C4;
     border-radius: 5px;
 }
-.login-form .register-link {
+.login-form .register-link,
+.register-form .login-link {
     font-size: 1.1rem;
 }
 .login-form .restore-link:hover,
-.login-form .register-link:hover {
+.login-form .register-link:hover,
+.register-form .login-link:hover {
     text-decoration: underline;
 }
 .login-form .register-link:hover {
@@ -915,9 +932,17 @@ a:hover {
 .login-form .hr-divider {
     margin-top: 2.3em;
 }
+.register-form .hr-divider {
+    margin-top: 3.5em;
+}
+.register-form .notice i {
+    color: #c4c4c4;
+    font-size: 1.5rem;
+}
 .hr-divider {
     border: .5px solid #C4C4C4;
 }
+
 
 footer {
     position: relative;

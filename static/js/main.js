@@ -215,3 +215,7 @@ window.onload = function () {
     set_footer()
 
 }
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
