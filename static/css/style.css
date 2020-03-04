@@ -532,6 +532,7 @@ a:hover {
     display: none;
 }
 .cart_blk .btn,
+.login-btn,
 .item-card_blk .card .btn,
 .items-list_catalog .card-deck .card .btn-buy {
     background: #E7B9CB;
@@ -540,6 +541,7 @@ a:hover {
     width: 93%;
 }
 .cart_blk .btn:hover,
+.login-btn:hover,
 .item-card_blk .card .btn:hover,
 .items-list_catalog .card-deck .card .btn-buy:hover {
     background: transparent;
@@ -556,7 +558,8 @@ a:hover {
     text-align: center;
 }
 
-.items-list_catalog .card-deck .card .card-title {
+.items-list_catalog .card-deck .card .card-title,
+.login-form label {
     font-size: 18px;
     line-height: 22px;
     color: #000000;
@@ -760,7 +763,8 @@ a:hover {
     line-height: 22px;
     color: #000000;
 }
-.item-card_blk .card .card-text .price-text {
+.item-card_blk .card .card-text .price-text,
+.register-link {
     font-weight: bold;
     font-size: 1.2rem;
     line-height: 25px;
@@ -878,20 +882,42 @@ a:hover {
     font-size: 1.2rem;
     color: #c4c4c4;
 }
-.cart_blk .btn {
+.cart_blk .btn,
+.login-btn {
     width: 25%;
 }
 @media (max-width: 768px) {
-    .cart_blk .btn {
+    .cart_blk .btn,
+    .login-btn {
         width: 35%;
     }
 }
 @media (max-width: 425px) {
-    .cart_blk .btn {
+    .cart_blk .btn,
+    .login-btn {
         width: 65%;
     }
 }
-
+.login-form .form-control {
+    border: 1px solid #C4C4C4;
+    border-radius: 5px;
+}
+.login-form .register-link {
+    font-size: 1.1rem;
+}
+.login-form .restore-link:hover,
+.login-form .register-link:hover {
+    text-decoration: underline;
+}
+.login-form .register-link:hover {
+    color: #E13075;
+}
+.login-form .hr-divider {
+    margin-top: 2.3em;
+}
+.hr-divider {
+    border: .5px solid #C4C4C4;
+}
 
 footer {
     position: relative;

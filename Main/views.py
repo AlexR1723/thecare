@@ -122,5 +122,9 @@ def Cart(request):
     number, email = func_contact()
     return render(request, 'Main/Cart.html', locals())
 
+def Log_in(request):
+    number, email = func_contact()
+    return render(request, 'Main/Log_in.html', locals())
+
 
 

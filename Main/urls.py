@@ -25,6 +25,7 @@ urlpatterns = [
     # url(r'^news_details/$', views.News_details, name="News_details"),
     url(r'^search_results/$', views.Search_results, name="Search_results"),
     url(r'^cart/$', views.Cart, name="Cart"),
+    url(r'^log_in/$', views.Log_in, name="Log_in"),
 
     # url(r'^$', views.Main, name="Main"),
     # url(r'^dev/$', views.Dev, name="Dev"),

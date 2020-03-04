@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<div class="container-fluid p-0">
+    <div class="row m-0 justify-content-center">
+        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 mt-5 head_blk">
+            <div class="row m-0 justify-content-start align-items-center">
+                <div class="row m-0 justify-content-start align-items-center">
+                    <h1>Вход в личный кабинет</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 mt-4 mb-5">
+            <div class="row m-0 justify-content-start align-items-center">
+                <form class="login-form col-12 p-0">
+                    <div class="form-group col-md-7 col-lg-5 p-0">
+                        <label for="exampleInputEmail1">E-mail</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+                    <div class="form-group col-md-7 col-lg-5 p-0">
+                        <label for="exampleInputPassword1">Пароль</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 mx-auto">
+                        <hr class="hr-divider">
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-12 col-xl-12 d-flex flex-wrap justify-content-md-start align-items-center p-0 mt-4">
+                        <button type="submit" class="btn login-btn mx-auto mx-md-0">ВОЙТИ</button>
+                        <a href="#" class="restore-link my-3 my-md-0 mx-auto mx-md-3 mx-lg-4">Восстановить пароль</a>
+                        <a href="#" class="register-link mx-auto mx-md-0">Зарегистрироваться</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
