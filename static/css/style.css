@@ -11,7 +11,7 @@ body {
 }
 @media (max-width: 768px){
     .h_vh{
-        height: 30vh;
+        height: 20vh;
     }
     .items_hdr_bg{
         height: 10rem !important;
