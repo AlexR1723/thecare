@@ -126,10 +126,11 @@ a:hover {
 .header hr {
     border: 1px solid #000000;
 }
-
-.header a {
-    position: relative;
-    top: 10px;
+@media (min-width: 768px) {
+    .header a {
+        position: relative;
+        top: 10px;
+    }
 }
 
 .header .cart-hdr {
