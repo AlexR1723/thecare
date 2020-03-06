@@ -5,10 +5,10 @@
 <div class="container-fluid p-0">
     <div class="row m-0 justify-content-center">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0">
-            <div class="row m-0 justify-content-md-between align-items-center">
-                <div class="col-12 col-md-12 mb-3 mb-md-0 p-0">
-                    <div id="carouselExampleControls" class="carousel slide h_70vh" data-ride="carousel">
-                          <div class="carousel-inner h_70vh">
+            <div class="row m-0 justify-content-center justify-content-md-between align-items-center">
+                <div class="col-11 col-md-12 mb-3 mb-md-0 p-0">
+                    <div id="carouselExampleControls" class="carousel slide h_vh" data-ride="carousel">
+                          <div class="carousel-inner h_vh">
                             <div class="carousel-item active h-100" style="background: url({{MEDIA_URL}}{{ slide_first.image.url }}) no-repeat center center; background-size: cover;">
 {#                                <img src="{{MEDIA_URL}}{{ slide_first.image.url }}" class="d-block w-100" alt="...">#}
                             </div>
@@ -33,14 +33,14 @@
     </div>
 
     <div class="row m-0 justify-content-center">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 my-2">
+        <div class="col-11 col-sm-11 col-md-12 col-lg-12 col-xl-12 p-0 my-2">
             <div class="row m-0 justify-content-center align-items-center">
                 {%  for m in main_block %}
-                <div class="col-12 col-md-6 col-lg-3 p-0 mb-1 mb-md-0">
+                <div class="col-6 col-md-6 col-lg-3 p-0 mb-1 mb-md-0">
                     <div class="w-100 items_hdr_bg" style="background: url({{ MEDIA_URL }}{{ m.image.url }}); background-size: cover">
                         <div class="item_hdr_bg_layout row justify-content-center align-items-center m-0">
                             <a href="#">
-                                <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9">
+                                <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-0">
                                     <h2>{{m.name}}</h2>
                                 </div>
                             </a>

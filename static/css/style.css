@@ -6,8 +6,21 @@ body {
     background-color: #fff;
     font-family: 'Comfortaa', cursive;
 }
-.h_70vh{
+.h_vh{
     height: 70vh;
+}
+@media (max-width: 768px){
+    .h_vh{
+        height: 30vh;
+    }
+    .items_hdr_bg{
+        height: 10rem !important;
+    }
+}
+@media(max-width: 425px){
+    .item_hdr_bg_layout h2{
+        font-size: 1.75rem !important;
+    }
 }
 p{
     white-space: pre-line;
