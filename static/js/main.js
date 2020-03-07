@@ -124,7 +124,7 @@ $('.items-counter').ready(function () {
 
 $('#btn_filter').click(function () {
 
-    let arr_link=[]
+    let arr_link = []
 
     let price_from = $('#price_from')[0].value
     let price_until = $('#price_until')[0].value
@@ -155,26 +155,26 @@ $('#btn_filter').click(function () {
         for (let i = 0; i < needs.length; i++) {
             arr_needs.push(needs[i].dataset.res)
         }
-        str_needs = 'needs='+arr_needs.join('&')
+        str_needs = 'needs=' + arr_needs.join('&')
         arr_link.push(str_needs)
     }
 
     let str_brands = ''
     if (brands.length > 0) {
-        let arr_brands=[]
+        let arr_brands = []
         for (let i = 0; i < brands.length; i++) {
             arr_brands.push(brands[i].dataset.res)
         }
-        str_brands = 'brands='+arr_brands.join('&')
+        str_brands = 'brands=' + arr_brands.join('&')
         arr_link.push(str_brands)
     }
     let link = arr_link.join('%')
     console.log(link)
-    if (this.dataset.filter){
-        link+='/'+this.dataset.filter+'/'
+    if (this.dataset.filter) {
+        link += '/' + this.dataset.filter + '/'
     }
 
-    window.location.href='/catalog/'+this.dataset.page+'/'+link
+    window.location.href = '/catalog/' + this.dataset.page + '/' + link
 })
 
 // $('#filter_selector').onchange(function () {
@@ -186,18 +186,16 @@ $('#btn_filter').click(function () {
 // id=prod[0].querySelector('a').href
 
 
-
-
-$('#excel-file-admin').on('change', function(){
+$('#excel-file-admin').on('change', function () {
     var fileName = $(this).val();
     if (fileName) {
-        var btn=$('#submit-excel-file-admin');
+        var btn = $('#submit-excel-file-admin');
         btn.click();
     }
 
 });
 
-function set_footer(){
+function set_footer() {
     let body = document.getElementsByTagName('body')[0].getBoundingClientRect().height
     let wind = document.documentElement.clientHeight
     if (wind > body) {
@@ -218,4 +216,72 @@ window.onload = function () {
 
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
+})
+
+function check_login() {
+    let email = document.getElementById('login_email').value
+    let password = document.getElementById('login_password').value
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        async: true,
+        url: 'check_login',
+        data: {
+            email: email,
+            password: password
+        },
+        success: function (data) {
+            if (data !== true) {
+                notice(data)
+                return true
+            } else {
+                window.location.href = '/'
+            }
+        },
+        error: function (data) {
+            alert('error')
+        }
+    })
+}
+
+function check_register() {
+    let name = document.getElementById('reg_name').value
+    let surename = document.getElementById('reg_surename').value
+    let patronymic = document.getElementById('reg_patronymic').value
+    let phone = document.getElementById('reg_phone').value
+    let email = document.getElementById('reg_email').value
+    let adress = document.getElementById('reg_adress').value
+    let pass1 = document.getElementById('reg_pass1').value
+    let pass2 = document.getElementById('reg_pass2').value
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        async: true,
+        url: 'check_register',
+        data: {
+            name: name,
+            surename: surename,
+            patronymic: patronymic,
+            phone: phone,
+            email: email,
+            adress: adress,
+            pass1: pass1,
+            pass2: pass2
+        },
+        success: function (data) {
+            if (data !== true) {
+                notice(data)
+            } else {
+                window.location.href = '/log_in'
+            }
+        },
+        error: function (data) {
+            alert('error')
+        }
+    })
+}
+
+$('#search_input').keyup(function () {
+    let names=this.value.split(' ').join('_')
+    let form=document.getElementById('search_form').action="/catalog/"+names+'/'
 })

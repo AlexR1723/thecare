@@ -12,7 +12,10 @@ def func_contact():
 
 
 def f_pages(page, queryset, count_item):
-    cnt_pgs = queryset.count()
+    try:
+        cnt_pgs = queryset.count()
+    except:
+        return True, [], 0, 0, 0, []
 
     try:
         page = int(page) - 1
@@ -74,7 +77,9 @@ def get_filter(text):
     return filt
 
 
-def search(text):
+def search(text, is_search=False):
+    # print('start search')
+    # print(text)
     text = str(text)
     arr = text.split('%')
     prices = ''
@@ -92,25 +97,37 @@ def search(text):
         if st[0] == 'brands':
             brand = st[1].split('&')
 
+    # print(prices)
+    # print(resources)
+    # print(needs)
+    # print(brand)
+
     resources_id = []
     needs_id = []
     brands_id = []
 
+    q_needs = Q()
     if needs:
-        q_needs = Q()
+        q_needs1 = Q()
         for item in needs:
             try:
                 item = int(item)
-                q_needs.add(Q(need_id=item), Q.OR)
+                q_needs1.add(Q(need_id=item), Q.OR)
                 needs_id.append(item)
             except:
                 item = ''
-        prod_needs = ProductNeed.objects.filter(q_needs).values_list('product_id', flat=True)
-        pr = []
-        for i in prod_needs:
-            if i not in pr:
-                pr.append(i)
-        prod_needs = pr
+        prod_needs = set(ProductNeed.objects.filter(q_needs1).values_list('product_id', flat=True))
+        for item in prod_needs:
+            q_needs.add(Q(id=item), Q.OR)
+            # q_needs.add(Q(pk=item), Q.OR)
+        # print(q_needs)
+        # print(prod_needs)
+        # pr = []
+        # for i in prod_needs:
+        #     if i not in pr:
+        #         pr.append(i)
+        # prod_needs = pr
+        # print(prod_needs)
 
     q_resources = Q()
     if resources:
@@ -121,11 +138,6 @@ def search(text):
                 resources_id.append(item)
             except:
                 item = ''
-
-    q_needs = Q()
-    if needs:
-        for item in prod_needs:
-            q_needs.add(Q(pk=item), Q.OR)
 
     q_brand = Q()
     if brand:
@@ -145,13 +157,47 @@ def search(text):
     except:
         price_until = ''
     q_price = Q()
+    # print(price_from)
+    # print(price_until)
     if price_from and not price_until:
         q_price = Q(price__gte=price_from)
     if price_until and not price_from:
         q_price = Q(price__lte=price_until)
     if price_from and price_until and price_from < price_until:
         q_price = Q(price__gte=price_from) & Q(price__lte=price_until)
-    product = Product.objects.filter(Q(q_resources) & Q(q_needs) & Q(q_brand) & Q(q_price))
+
+    qname = Q()
+    if is_search:
+        names = str(is_search).lower().split('_')
+        for i in names:
+            qname.add(Q(title__icontains=i), Q.AND)
+        # prod = Product.objects.filter(qname)
+    print('qname')
+    print(qname)
+    if q_resources or q_needs or q_brand or q_price:
+        # print('shit')
+        product = Product.objects.filter(Q(q_resources) & Q(q_needs) & Q(q_brand) & Q(q_price) & Q(qname))
+    else:
+        product = Product.objects.filter(id=0)
+
+    # ids=list(prod.values_list('id',flat=True))
+    # need = NeedType.objects.filter(productneed__product__id__in=ids).distinct('id').order_by('id','name')
+    # resource=ResourceType.objects.filter(product__id__in=ids).distinct('id').order_by('id','name')
+    # brands = Brands_model.objects.filter(product__id__in=ids).distinct('id').order_by('id','name')
+
+    print(product)
+    # print('shit false')
+    # product=[]
+    # print('end f search:')
+    # print(q_resources)
+    # print(q_needs)
+    # print(q_brand)
+    # print(q_price)
+    # product = Product.objects.filter(q_resources, q_needs, q_brand, q_price)
+    print(product.count())
+    # product = Product.objects.filter(resource_id=104)
+    # print(product.count())
+    # print(ProductSize.objects.filter(Q(q_resources) & Q(q_needs) & Q(q_brand) & Q(q_price)).count())
     return resources_id, needs_id, brands_id, price_from, price_until, product
 
 
@@ -167,6 +213,10 @@ def get_url(url, rec=False):
             'Brands': 'Бренды'
             }
     head = dict.get(url_page)
+    print(head)
+    if not head and not rec:
+        return url, 'Поиск'
+
     if rec:
         for key, value in dict.items():
             if value == url:
@@ -176,24 +226,68 @@ def get_url(url, rec=False):
     return url_page, head
 
 
-def left_filter(url_page, head,filter=False, prod=False):
-    if url_page != 'Sale' and url_page != 'Brands':
+def left_filter(url_page, head, filter=False, prod=False):
+    if head == 'Поиск':
+        # print(url_page)
+        # if not prod:
+        names = str(url_page).lower().split('_')
+        qname = Q()
+        for i in names:
+            qname.add(Q(title__icontains=i), Q.AND)
+        prod1 = Product.objects.filter(qname)
+        ids = list(prod1.values_list('id', flat=True))
+        # else:
+        # ids=list(prod.values_list('id',flat=True))
+        need = NeedType.objects.filter(productneed__product__id__in=ids).distinct('id').order_by('id', 'name')
+        resource = ResourceType.objects.filter(product__id__in=ids).distinct('id').order_by('id', 'name')
+        brands = Brands_model.objects.filter(product__id__in=ids).distinct('id').order_by('id', 'name')
+        if not prod:
+            prod=prod1
+        # print(resource)
+        # print(need)
+        # print(brands)
 
-        resource = ResourceType.objects.filter(category__name__icontains=head)
-        need = NeedType.objects.filter(category__name__icontains=head)
-        brands = Brands_model.objects.all()
+        return resource, need, brands, prod
+    if url_page != 'Sale' and url_page != 'Brands':
+        # print('start left filter')
+        # print(filter)
+        # print(prod)
+
+        # if prod!=False:
+        #     prod=True
+        resource = ResourceType.objects.filter(category__name__icontains=head).order_by('name')
+        need = NeedType.objects.filter(category__name__icontains=head).order_by('name')
+        brands = Brands_model.objects.all().order_by('name')
+        # if prod==None:
+        #     print('short left 1')
+        #     return resource, need, brands, False
+        if prod != False and prod.count() == 0:
+            # print('short left')
+            return resource, need, brands, prod
+
         if filter and not prod:
             queryset = Product.objects.filter(category__name__icontains=head).order_by(get_filter(filter))
         if not filter and not prod:
+            # print('not filter and not prod')
             queryset = Product.objects.filter(category__name__icontains=head).order_by('-id')
         if filter and prod:
-            queryset = prod.order_by(get_filter(filter))
+            queryset = prod.filter(category__name__icontains=head).order_by(get_filter(filter))
         if not filter and prod:
-            queryset = prod.order_by('-id')
+            # print('not filter and prod')
+            queryset = prod.filter(category__name__icontains=head).order_by('-id')
+
+        # ids=set(list(queryset.values_list('brand_id',flat=True)))
+        # print(ids)
+        # brands=Brands_model.objects.filter(id__in=ids)
+
+        # print(queryset[0])
+        # print(queryset)
+        # print(prod)
+        # brands=Brands_model.objects.filter(id__in=)
     else:
-        resource = ResourceType.objects.all()
-        need = NeedType.objects.all()
-        brands = Brands_model.objects.all()
+        resource = ResourceType.objects.all().order_by('name')
+        need = NeedType.objects.all().order_by('name')
+        brands = Brands_model.objects.all().order_by('name')
         if url_page == 'Sale':
             if filter and not prod:
                 queryset = Product.objects.filter(sale__gt=0).order_by(get_filter(filter))
@@ -209,6 +303,9 @@ def left_filter(url_page, head,filter=False, prod=False):
                 queryset = prod.order_by(get_filter(filter))
             else:
                 queryset = prod.order_by('-id')
+
+    # print('left filter:')
+    # print(queryset)
     return resource, need, brands, queryset
 
 
@@ -260,7 +357,6 @@ def Face(request):
     #     i.save()
     #     inc=inc+1
     #     print(str(inc)+'/'+str(prods.count()))
-
 
     # function "add resource type"
     # res_list = CategoryType.objects.all()
@@ -351,6 +447,7 @@ def Catalog(request, head_url):
     # queryset = Product.objects.filter(category__name__icontains=head).order_by('-id')
     resource, need, brands, queryset = left_filter(url_page, head, filter=False, prod=False)
 
+    # print(queryset)
     page = 1
     # queryset = queryset.order_by('-id')
     status, pages, chs, prev, next, query_res = f_pages(page, queryset, 12)
@@ -485,11 +582,14 @@ def Catalog_search(request, head_url, text):
     # need = NeedType.objects.filter(category__name__icontains=head)
     # brands = Brands_model.objects.all()
     # print('start')
-    resources_id, needs_id, brands_id, price_from, price_until, product = search(text)
-    resource, need, brands, queryset = left_filter(url_page, head,filter=False,prod=product)
+    resources_id, needs_id, brands_id, price_from, price_until, product = search(text, head_url)
+    print(product)
+    resource, need, brands, queryset = left_filter(url_page, head, filter=False, prod=product)
+    # print(queryset)
     page = 1
     # queryset = product.order_by('-id')
     status, pages, chs, prev, next, query_res = f_pages(page, queryset, 12)
+    # print(queryset)
     if status == False:
         # вывод страницы 404
         print('catalog for_men search error')
@@ -515,7 +615,7 @@ def Catalog_search_filter(request, head_url, text, filter):
     # need = NeedType.objects.filter(category__name__icontains=head)
     # brands = Brands_model.objects.all()
 
-    resources_id, needs_id, brands_id, price_from, price_until, product = search(text)
+    resources_id, needs_id, brands_id, price_from, price_until, product = search(text, head_url)
     # resource, need, brands, queryset = left_filter(url_page, head, True,filter,product)
     resource, need, brands, queryset = left_filter(url_page, head, filter=filter, prod=product)
     page = 1
@@ -552,7 +652,7 @@ def Catalog_search_page(request, head_url, text, page):
         # вывод страницы 404
         print('catalog for_men pages error')
 
-    resources_id, needs_id, brands_id, price_from, price_until, product = search(text)
+    resources_id, needs_id, brands_id, price_from, price_until, product = search(text, head_url)
     # resource, need, brands, queryset = left_filter(url_page, head, False,product)
     resource, need, brands, queryset = left_filter(url_page, head, filter=False, prod=product)
     # queryset = product.order_by('-id')
@@ -588,7 +688,7 @@ def Catalog_search_page_filter(request, head_url, text, page, filter):
         # вывод страницы 404
         print('catalog for_men pages error')
 
-    resources_id, needs_id, brands_id, price_from, price_until, product = search(text)
+    resources_id, needs_id, brands_id, price_from, price_until, product = search(text, head_url)
     # resource, need, brands, queryset = left_filter(url_page, head, True,filter,product)
     resource, need, brands, queryset = left_filter(url_page, head, filter=filter, prod=product)
     # queryset = product.order_by(get_filter(filter))
@@ -601,27 +701,10 @@ def Catalog_search_page_filter(request, head_url, text, page, filter):
     return render(request, 'Catalog/Items_catalog.html', locals())
 
 
-# def search_prods(lst,prod_id):
-    # print(lst)
-    # query=Q()
-    # for i in lst:
-    #     query.add(Q(need_id=i), Q.OR)
-    # prods=ProductNeed.objects.filter(Q(query)).exclude(product_id=prod_id)
-    # prods=prods.order_by('product_id','id').distinct('product_id')
-    #
-    # print(prods.count())
-    # print(prods[0].product.id)
-    # print(prods[0].product.slug)
-    # print(prods[prods.count()-1].product.id)
-    # print(prods[prods.count()-1].product.slug)
-
-
-    # return prods.
-
 def Item_card(request, slug):
     number, email = func_contact()
-
-    print(slug)
+    # print('item_start')
+    # print(slug)
     slug = str(slug)
     slug = slug.split('-')
     try:
@@ -672,32 +755,24 @@ def Item_card(request, slug):
     prods = ProductNeed.objects.filter(Q(query)).exclude(product_id=item.id)
     prods = prods.order_by('product_id', 'id').distinct('product_id')
 
-    print(prods.count())
-    print(prods[0].product.id)
-    print(prods[0].product.slug)
-    print(prods[prods.count() - 1].product.id)
-    print(prods[prods.count() - 1].product.slug)
+    # print(prods.count())
+    # print(prods[0].product.id)
+    # print(prods[0].product.slug)
+    # print(prods[prods.count() - 1].product.id)
+    # print(prods[prods.count() - 1].product.slug)
 
-    prods=list(prods)
+    prods = list(prods)
     prods.reverse()
-    print(prods)
-    print('-------------')
-    if len(prods)>8:
-        prods=prods[:8]
-    print(prods)
-    # ress=list(ress)
-    # ress2=list(ress)
-    # for i in ress1:
-    #     for j in ress2:
-    # shit=search_prods(ress)
-    # print(shit)
+    # print(prods)
+    # print('-------------')
+    if len(prods) > 8:
+        prods = prods[:8]
+    # print(prods)
 
-    # print(list(ress))
-    # q_needs = Q()
-    # for item in needs:
-    #     try:
-    #         item = int(item)
-    #         q_needs.add(Q(need_id=item), Q.OR)
-    #     head = False
-
+    sizes = ProductSize.objects.filter(product_id=item.id).values_list('size__name', flat=True)
+    sizes = ', '.join(sizes)
+    sz = ProductSize.objects.filter(product_id=item.id)
+    # print(item.id)
+    # print(sz)
+    # print(sizes)
     return render(request, 'Catalog/Item_card.html', locals())

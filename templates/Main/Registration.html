@@ -7,57 +7,57 @@
         <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 mt-5 head_blk">
             <div class="row m-0 justify-content-start align-items-center">
                 <div class="row m-0 justify-content-start align-items-center">
-                    <h1>Вход в личный кабинет</h1>
+                    <h1>Регистрация</h1>
                 </div>
             </div>
         </div>
         <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 mt-4 mb-5">
             <div class="row m-0 justify-content-start align-items-center">
-                <form class="register-form col-12 p-0">
+                <form class="register-form col-12 p-0" onsubmit="check_register(this);return false;">
                     <div class="form-group col-md-7 col-lg-5 p-0">
                         <label for="inputName">Имя <span class="font-weight-bold">*</span></label>
-                        <input type="text" class="form-control" id="inputName">
+                        <input type="text" class="form-control" id="reg_name">
                     </div>
                     <div class="form-group col-md-7 col-lg-5 p-0">
                         <label for="inputSurname">Фамилия <span class="font-weight-bold">*</span></label>
-                        <input type="text" class="form-control" id="inputSurname">
+                        <input type="text" class="form-control" id="reg_surename">
                     </div>
                     <div class="form-group col-md-7 col-lg-5 p-0">
                         <label for="inputPatronymic">Отчество <span class="font-weight-bold">*</span></label>
-                        <input type="text" class="form-control" id="inputPatronymic">
+                        <input type="text" class="form-control" id="reg_patronymic">
                     </div>
                     <div class="form-group col-12 col-md-12 col-lg-6 p-0">
                         <label for="inputPhone">Контактный номер телефона <span class="font-weight-bold">*</span></label>
-                        <input type="tel" class="form-control col-10 col-md-7 col-lg-10 d-inline" id="inputPhone">
+                        <input type="tel" class="form-control col-10 col-md-7 col-lg-10 d-inline" id="reg_phone">
                         <span class="notice col-1 col-md-6 col-lg-1 pr-0" data-toggle="tooltip" data-placement="top" title="Всплывающая подсказка">
                             <i class="fa fa-question-circle" aria-hidden="true"></i>
                         </span>
                     </div>
                     <div class="form-group col-md-7 col-lg-5 p-0">
                         <label for="inputEmail">E-mail <span class="font-weight-bold">*</span></label>
-                        <input type="email" class="form-control" id="inputEmail">
+                        <input type="text" class="form-control" id="reg_email">
                     </div>
                     <div class="form-group col-12 col-md-12 col-lg-6 p-0">
                         <label for="inputAddress">Адрес для отправки</label> <br class="d-md-block d-lg-none">
-                        <input type="text" class="form-control col-10 col-md-7 col-lg-10 d-inline" id="inputAddress">
+                        <input type="text" class="form-control col-10 col-md-7 col-lg-10 d-inline" id="reg_adress">
                         <span class="notice col-1 col-md-6 col-lg-1 pr-0" data-toggle="tooltip" data-placement="top" title="Всплывающая подсказка">
                             <i class="fa fa-question-circle" aria-hidden="true"></i>
                         </span>
                     </div>
                     <div class="form-group col-md-7 col-lg-5 p-0">
                         <label for="inputPassword">Пароль <span class="font-weight-bold">*</span></label>
-                        <input type="password" class="form-control" id="inputPassword">
+                        <input type="password" class="form-control" id="reg_pass1">
                     </div>
                     <div class="form-group col-md-7 col-lg-5 p-0">
                         <label for="inputPassword">Повторите пароль <span class="font-weight-bold">*</span></label>
-                        <input type="password" class="form-control" id="inputPassword">
+                        <input type="password" class="form-control" id="reg_pass2">
                     </div>
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 mx-auto">
                         <hr class="hr-divider">
                     </div>
                     <div class="col-12 col-md-12 col-lg-12 col-xl-12 d-flex flex-wrap justify-content-md-start align-items-center p-0 mt-4">
                         <button type="submit" class="btn login-btn mx-auto mx-md-0">ЗАРЕГИСТРИРОВАТЬСЯ</button>
-                        <a href="#" class="login-link my-3 my-md-0 mx-auto mx-md-3 mx-lg-4">Уже есть аккаунт</a>
+                        <a href="{% url 'Log_in' %}" class="login-link my-3 my-md-0 mx-auto mx-md-3 mx-lg-4">Уже есть аккаунт</a>
                     </div>
                 </form>
             </div>

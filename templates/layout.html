@@ -5,8 +5,10 @@
     <title>The Care</title>
     {% load staticfiles %}
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Comfortaa:400,600,700&display=swap&subset=cyrillic" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa:400,600,700&display=swap&subset=cyrillic"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
@@ -22,57 +24,59 @@
 {#<div style="position: absolute; background-color: black; transform: translate(50% 50%);"></div>#}
 {#шапка#}
 <div class="container-fluid p-0 header">
-    <div class="row m-0 justify-content-center" style="background: url({% static 'image/тиснение.png' %});background-size: contain">
-            <div class="col-10 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0 pt-3 pb-0 pb-md-0">
-                <div class="row justify-content-md-between align-items-center">
-                    <div class="col-6 col-md-4 text-center text-md-left phone-hdr mb-0">
-                        <div class="row justify-content-start pl-3">
-                            <a href="tel:88004001212">
-                                <img src="{% static 'image/telephone1.png' %}" alt="" class="mb-1">
-                                <!--                        <i class="fa fa-phone" aria-hidden="true"></i>-->
-                                <span class="d-none d-sm-none d-md-inline-block d-lg-inline-block d-xl-inline-block">{{number}}</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-4 text-center text-md-right mb-0">
-                        <div class="row justify-content-end pr-3">
-                            <a href="#">
-                                <img src="{% static 'image/user1.png' %}" alt="" class="mb-1 d-inline-block d-sm-inline-block d-md-none d-lg-none d-xl-none">
-                                <!--                        <i class="fa fa-phone" aria-hidden="true"></i>-->
-                                <span class="d-none d-sm-none d-md-block d-lg-block d-xl-block">Вход/Регистрация</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 pt-0 pb-3 pb-md-0">
-                <div class="row justify-content-between">
-                    <div class="col-4 col-md-4 phone-hdr pt-2 pt-md-4">
-                        <hr class="">
-                    </div>
-                    <div class="col-4 col-md-3 text-center">
-                        <a href="{% url 'Main' %}">
-                            <img src="{% static 'image/main_logo.png' %}" alt="" class="img-fluid">
+    <div class="row m-0 justify-content-center"
+         style="background: url({% static 'image/тиснение.png' %});background-size: contain">
+        <div class="col-10 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0 pt-3 pb-0 pb-md-0">
+            <div class="row justify-content-md-between align-items-center">
+                <div class="col-6 col-md-4 text-center text-md-left phone-hdr mb-0">
+                    <div class="row justify-content-start pl-3">
+                        <a href="tel:88004001212">
+                            <img src="{% static 'image/telephone1.png' %}" alt="" class="mb-1">
+                            <!--                        <i class="fa fa-phone" aria-hidden="true"></i>-->
+                            <span class="d-none d-sm-none d-md-inline-block d-lg-inline-block d-xl-inline-block">{{ number }}</span>
                         </a>
                     </div>
-                    <div class="col-4 col-md-4 pt-2 pt-md-4">
-                        <hr class="">
-                    </div>
                 </div>
-            </div>
-
-
-
-            <div class="col-11 col-sm-12 col-md-11 col-lg-11 col-xl-11 p-0 pt-0 pb-3">
-                <div class="row justify-content-between align-items-center">
-                    <div class="col-12 cart-hdr">
-                        <a href="#">
-                            <p class="text-right mb-0 mb-md-3"><i class="fa fa-shopping-basket mr-3" aria-hidden="true"></i>Корзина:  0 руб.</p>
+                <div class="col-6 col-md-4 text-center text-md-right mb-0">
+                    <div class="row justify-content-end pr-3">
+                        <a href="{% url 'Log_in' %}">
+                            <img src="{% static 'image/user1.png' %}" alt=""
+                                 class="mb-1 d-inline-block d-sm-inline-block d-md-none d-lg-none d-xl-none">
+                            <!--                        <i class="fa fa-phone" aria-hidden="true"></i>-->
+                            <span class="d-none d-sm-none d-md-block d-lg-block d-xl-block">Вход/Регистрация</span>
                         </a>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 pt-0 pb-3 pb-md-0">
+            <div class="row justify-content-between">
+                <div class="col-4 col-md-4 phone-hdr pt-2 pt-md-4">
+                    <hr class="">
+                </div>
+                <div class="col-4 col-md-3 text-center">
+                    <a href="{% url 'Main' %}">
+                        <img src="{% static 'image/main_logo.png' %}" alt="" class="img-fluid">
+                    </a>
+                </div>
+                <div class="col-4 col-md-4 pt-2 pt-md-4">
+                    <hr class="">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-11 col-sm-12 col-md-11 col-lg-11 col-xl-11 p-0 pt-0 pb-3">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-12 cart-hdr">
+                    <a href="#">
+                        <p class="text-right mb-0 mb-md-3"><i class="fa fa-shopping-basket mr-3" aria-hidden="true"></i>Корзина:
+                            0 руб.</p>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -91,7 +95,8 @@
                             <div class="col-12 col-sm-12 col-md-11 col-lg-9 col-xl-8 px-0 mx-auto mx-md-auto mx-lg-0 mr-lg-auto">
                                 <ul class="navbar-nav justify-content-start text-center">
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link" href="#" id="navbarDropdown"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a class="nav-link" href="#" id="navbarDropdown" data-toggle="dropdown"
+                                           aria-haspopup="true" aria-expanded="false">
                                             Каталог
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                         </a>
@@ -100,25 +105,32 @@
                                                 <a class="dropdown-item" href="{% url 'Brands' %}">Бренды</a>
                                             </label>
                                             <label class="w-100 m-0">
-                                                <a class="dropdown-item" href="{% url 'Catalog' 'For_men' %}">Для мужчин</a>
+                                                <a class="dropdown-item" href="{% url 'Catalog' 'For_men' %}">Для
+                                                    мужчин</a>
                                             </label>
                                             <label class="w-100 m-0">
-                                                <a class="dropdown-item" href="{% url 'Catalog' 'Sets_and_miniatures' %}">Наборы и миниатюры</a>
+                                                <a class="dropdown-item"
+                                                   href="{% url 'Catalog' 'Sets_and_miniatures' %}">Наборы и
+                                                    миниатюры</a>
                                             </label>
                                             <label class="w-100 m-0">
                                                 <a class="dropdown-item" href="{% url 'Catalog' 'Sale' %}">Sale</a>
                                             </label>
                                             <label class="w-100 m-0">
-                                                <a class="dropdown-item" href="{% url 'Catalog' 'For_hair' %}">Для волос</a>
+                                                <a class="dropdown-item" href="{% url 'Catalog' 'For_hair' %}">Для
+                                                    волос</a>
                                             </label>
                                             <label class="w-100 m-0">
-                                                <a class="dropdown-item" href="{% url 'Catalog' 'For_face' %}">Для лица</a>
+                                                <a class="dropdown-item" href="{% url 'Catalog' 'For_face' %}">Для
+                                                    лица</a>
                                             </label>
                                             <label class="w-100 m-0">
-                                                <a class="dropdown-item" href="{% url 'Catalog' 'For_body' %}">Для тела</a>
+                                                <a class="dropdown-item" href="{% url 'Catalog' 'For_body' %}">Для
+                                                    тела</a>
                                             </label>
                                             <label class="w-100 m-0">
-                                                <a class="dropdown-item" href="{% url 'Catalog' 'Dyes_for_hair' %}">Красители для волос</a>
+                                                <a class="dropdown-item" href="{% url 'Catalog' 'Dyes_for_hair' %}">Красители
+                                                    для волос</a>
                                             </label>
                                         </div>
                                     </li>
@@ -127,7 +139,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link " href="{% url 'Deliveries' %}">Доставка</a>
-{#                                        </a>#}
+                                        {#                                        </a>#}
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link " href="{% url 'Payments' %}">Оплата</a>
@@ -139,10 +151,14 @@
                             </div>
                             <div class="col-9 col-md-4 col-lg-3 mx-auto mx-lg-0">
                                 <label class="sr-only" for="inlineFormInputGroup"></label>
-                                <div class="input-group my-2">
-                                    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="">
-                                    <div class="input-group-text"><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></div>
-                                </div>
+                                <form class="input-group my-2" action="/catalog/" id="search_form">
+                                    <input type="text" class="form-control" id="search_input" placeholder="">
+                                    <div class="input-group-text">
+                                        <button type="submit" style="background: none;border: none;padding: 0"><i
+                                                class="fa fa-search" aria-hidden="true"></i></button>
+                                    </div>
+                                    {#                                    <div class="input-group-text"><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></div>#}
+                                </form>
                             </div>
                         </div>
                     </nav>
@@ -152,9 +168,9 @@
     </div>
 </div>
 <div id="main_block_content">
-{% block content %}
+    {% block content %}
 
-{% endblock %}
+    {% endblock %}
 </div>
 {#подвал#}
 <div class="container-fluid p-0" id="main_footer">
@@ -186,21 +202,21 @@
                     <ul class="contact-list list-group list-unstyled">
                         <li>
                             <img src="{% static 'image/telephone1.png' %}" alt="" class="mb-1">
-                            <a href="#">{{number}}</a>
+                            <a href="#">{{ number }}</a>
                         </li>
                         <li class="mt-2">
                             <img src="{% static 'image/email1.png' %}" alt="">
-                            <a href="mailto:mail@gmail.com">{{email}}</a>
+                            <a href="mailto:mail@gmail.com">{{ email }}</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-    <!-- Copyright -->
-    <div class="footer-copyright text-center py-3 colorCopy">© 2020 Copyright:
-        <a href="http://www.web-dev-group.com/">Web Dev Group</a>
-    </div>
-    <!-- Copyright -->
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3 colorCopy">© 2020 Copyright:
+            <a href="http://www.web-dev-group.com/">Web Dev Group</a>
+        </div>
+        <!-- Copyright -->
     </footer>
 </div>
 
