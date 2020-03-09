@@ -4,6 +4,34 @@ from django.urls import reverse
 from uuslug import slugify
 
 
+class AuthUser(models.Model):
+    password = models.CharField(max_length=128)
+    last_login = models.DateTimeField(blank=True, null=True)
+    is_superuser = models.BooleanField()
+    username = models.CharField(unique=True, max_length=150)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=150)
+    email = models.CharField(max_length=254)
+    is_staff = models.BooleanField()
+    is_active = models.BooleanField()
+    date_joined = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user'
+
+
+class Users(models.Model):
+    user = models.ForeignKey('AuthUser', models.DO_NOTHING, blank=True, null=True)
+    patronymic = models.TextField(blank=True, null=True)
+    phone = models.TextField(blank=True, null=True)
+    adress = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'users'
+
+
 class ContactType(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True, verbose_name='Наименование типа')
 
@@ -12,7 +40,6 @@ class ContactType(models.Model):
         db_table = 'contact_type'
         verbose_name = _("Тип контакта")
         verbose_name_plural = _("Типы контактов")
-
 
 
 class Contact(models.Model):
@@ -26,6 +53,7 @@ class Contact(models.Model):
         verbose_name = _("Контакт")
         verbose_name_plural = _("Контакты")
 
+
 class CategoryType(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
 
@@ -35,6 +63,7 @@ class CategoryType(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class NeedType(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True, verbose_name="Наименование")
@@ -48,6 +77,8 @@ class NeedType(models.Model):
 
     def __str__(self):
         return self.name
+
+
 class Brands_model(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True, verbose_name='Наименование')
     image = models.ImageField(upload_to='uploads/', blank=True, null=True, verbose_name='Изображение')
@@ -55,7 +86,7 @@ class Brands_model(models.Model):
     class Meta:
         managed = False
         db_table = 'brands'
-        ordering=['name']
+        ordering = ['name']
         verbose_name = _("Бренд")
         verbose_name_plural = _("Бренды")
 
@@ -103,7 +134,7 @@ class Product(models.Model):
         return str(self.id) + ' ' + self.title
 
     def needed(self):
-        prods=ProductNeed.objects.filter(product_id=self.id)
+        prods = ProductNeed.objects.filter(product_id=self.id)
         return prods
 
     def get_sizes(self):
@@ -161,7 +192,6 @@ class Files(models.Model):
         db_table = 'files'
 
 
-
 class Slider(models.Model):
     image = models.ImageField(upload_to='uploads', max_length=500, blank=True, null=True, verbose_name='Изображение')
 
@@ -170,7 +200,6 @@ class Slider(models.Model):
         db_table = 'slider'
         verbose_name = _("Слайд")
         verbose_name_plural = _("Слайдер")
-
 
 
 class MainBlock(models.Model):

@@ -1,0 +1,450 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+{% block content %}
+
+    <div class="container-fluid p-0">
+        <div class="row m-0 justify-content-center">
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 mt-3">
+                <div class="row m-0 justify-content-start align-items-center">
+                    <nav aria-label="breadcrumb">
+                        <ol class="custom-breadcrumb breadcrumb px-0">
+                            <li class="breadcrumb-item"><a href="{% url 'Main' %}"><i class="fa fa-home home-icon"
+                                                                                      aria-hidden="true"></i></a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                Поиск
+{#                                <a href="{% url 'Catalog' head_url %}">{{ head }}</a>#}
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 items_blk head_blk">
+                <div class="row m-0 justify-content-start align-items-center">
+                    <h1 class="m-0">{{ head }}</h1>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-11 p-md-0 sort_col">
+                <div class="row m-0 justify-content-end">
+                    <div class="col-12 col-md-5 col-lg-4 col-xl-3">
+                        <select class="form-control sort-select" id="filter_selector"
+                                onchange="location.href=this.value">
+                            <option value="
+                            {% if is_page and not is_search %}
+                            {% url 'Catalog_page_filter' url_page page 'new' %}
+                            {% endif %}
+                            {% if is_search and not is_page %}
+                            {% url 'Catalog_search_filter' url_page text 'new' %}
+                            {% endif %}
+                            {% if is_search and is_page %}
+                            {% url 'Catalog_search_page_filter' url_page text page 'new' %}
+                            {% endif %}
+                            {% if not is_search and not is_page %}
+                            {% url 'Catalog_filter' url_page 'new' %}
+                            {% endif %}
+                            "
+                                    {% if filter == "new" %}
+                                    selected
+                                    {% endif %}>Новые
+                            </option>
+                            <option value="
+                            {% if is_page and not is_search %}
+                            {% url 'Catalog_page_filter' url_page page 'price_up' %}
+                            {% endif %}
+                            {% if is_search and not is_page %}
+                            {% url 'Catalog_search_filter' url_page text 'price_up' %}
+                            {% endif %}
+                            {% if is_search and is_page %}
+                            {% url 'Catalog_search_page_filter' url_page text page 'price_up' %}
+                            {% endif %}
+                            {% if not is_search and not is_page %}
+                            {% url 'Catalog_filter' url_page 'price_up' %}
+                            {% endif %}
+                            "
+                                    {% if filter == "price_up" %}
+                                    selected
+                                    {% endif %}>По возрастанию цены
+                            </option>
+                            <option value="
+                            {% if is_page and not is_search %}
+                            {% url 'Catalog_page_filter' url_page page 'price_down' %}
+                            {% endif %}
+                            {% if is_search and not is_page %}
+                            {% url 'Catalog_search_filter' url_page text 'price_down' %}
+                            {% endif %}
+                            {% if is_search and is_page %}
+                            {% url 'Catalog_search_page_filter' url_page text page 'price_down' %}
+                            {% endif %}
+                            {% if not is_search and not is_page %}
+                            {% url 'Catalog_filter' url_page 'price_down' %}
+                            {% endif %}
+                            "
+                                    {% if filter == "price_down" %}
+                                    selected
+                                    {% endif %}>По убыванию цены
+                            </option>
+                            <option value="
+                            {% if is_page and not is_search %}
+                            {% url 'Catalog_page_filter' url_page page 'name' %}
+                            {% endif %}
+                            {% if is_search and not is_page %}
+                            {% url 'Catalog_search_filter' url_page text 'name' %}
+                            {% endif %}
+                            {% if is_search and is_page %}
+                            {% url 'Catalog_search_page_filter' url_page text page 'name' %}
+                            {% endif %}
+                            {% if not is_search and not is_page %}
+                            {% url 'Catalog_filter' url_page 'name' %}
+                            {% endif %}
+                            "
+                                    {% if filter == "name" %}
+                                    selected
+                                    {% endif %}>По названию
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-md-0 sort_col">
+
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 p-0 items_catalog my-5">
+                        <div class="row m-0 justify-content-start align-items-center">
+                            <div class="col">
+                                <div class="card filter_form">
+                                    <form action="">
+                                        <div class="card-body filter-body_form">
+                                            <h5 class="card-title">Цена</h5>
+                                            <div class="row">
+                                                <div class="col-12 p-0">
+                                                    <div class="row m-0 justify-content-between align-items-center">
+                                                        <div class="col-6">
+                                                            <div class="input-group mb-2 mr-sm-2">
+                                                                <div class="input-group-prepend">
+                                                                    <div class="input-group-text px-2">от</div>
+                                                                </div>
+                                                                <input type="text" class="form-control px-2"
+                                                                       id="price_from" placeholder="145"
+                                                                        {% if price_from %}
+                                                                       value="{{ price_from }}"
+                                                                        {% endif %}
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="input-group mb-2 mr-sm-2">
+                                                                <div class="input-group-prepend">
+                                                                    <div class="input-group-text px-2">до</div>
+                                                                </div>
+                                                                <input type="text" class="form-control px-2"
+                                                                       id="price_until" placeholder="1278"
+                                                                        {% if price_until %}
+                                                                       value="{{ price_until }}"
+                                                                        {% endif %}
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="accordion" id="accordion1">
+                                            <div class="card-body filter-body_form">
+                                                <div class="row">
+                                                    <div class="col-12 d-flex justify-content-between align-items-baseline">
+                                                        <h5 class="card-title">Средства</h5>
+                                                        <button class="btn btn-link collapsed" type="button"
+                                                                data-toggle="collapse" data-target="#collapseOne"
+                                                                aria-expanded="false" aria-controls="collapseOne"><i
+                                                                class="fa fa-chevron-up" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                                         data-parent="#accordion1">
+                                                        <div class="card-body pt-0" id="card_resources">
+                                                            {% for r in resource %}
+                                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                           id="res{{ forloop.counter }}"
+                                                                           data-res="{{ r.id }}"
+                                                                            {% if r.id in resources_id %}
+                                                                           checked
+                                                                            {% endif %}
+                                                                    >
+                                                                    <label class="custom-control-label"
+                                                                           for="res{{ forloop.counter }}">{{ r.name }}</label>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="accordion" id="accordion2">
+                                            <div class="card-body filter-body_form">
+                                                <div class="row">
+                                                    <div class="col-12 d-flex justify-content-between align-items-baseline">
+                                                        <h5 class="card-title">Потребности</h5>
+                                                        <button class="btn btn-link" type="button"
+                                                                data-toggle="collapse" data-target="#collapseTwo"
+                                                                aria-expanded="false" aria-controls="collapseTwo"><i
+                                                                class="fa fa-chevron-up" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div id="collapseTwo" class="collapse active show"
+                                                         aria-labelledby="headingTwo" data-parent="#accordion2">
+                                                        <div class="card-body pt-0" id="card_needs">
+                                                            {% for n in need %}
+                                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                           id="need{{ forloop.counter }}"
+                                                                           data-res="{{ n.id }}"
+                                                                            {% if n.id in needs_id %}
+                                                                           checked
+                                                                            {% endif %}
+                                                                    >
+                                                                    <label class="custom-control-label"
+                                                                           for="need{{ forloop.counter }}">{{ n.name }}</label>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="accordion" id="accordion3">
+                                            <div class="card-body filter-body_form">
+                                                <div class="row">
+                                                    <div class="col-12 d-flex justify-content-between align-items-baseline">
+                                                        <h5 class="card-title">Бренды</h5>
+                                                        <button class="btn btn-link collapsed" type="button"
+                                                                data-toggle="collapse" data-target="#collapseThree"
+                                                                aria-expanded="false" aria-controls="collapseThree"><i
+                                                                class="fa fa-chevron-up" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div id="collapseThree" class="col-12 collapse p-0"
+                                                         aria-labelledby="headingThree" data-parent="#accordion3">
+                                                        <div class="card-body pt-0" id="card_brands">
+                                                            {% for n in brands %}
+                                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                           id="brands{{ forloop.counter }}"
+                                                                           data-res="{{ n.id }}"
+                                                                            {% if n.id in brands_id %}
+                                                                           checked
+                                                                            {% endif %}
+                                                                    >
+                                                                    <label class="custom-control-label"
+                                                                           for="brands{{ forloop.counter }}">{{ n.name }}</label>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="card-body p-0 mt-3">
+                                                        <div class="card-footer text-center p-0">
+                                                            {#                                                            <a href="#}
+                                                            {#{% if is_page and not is_filter %}#}
+                                                            {##}
+                                                            {#{% endif %}#}
+                                                            {#">#}
+                                                            <button type="button" id="btn_filter" class="btn my-1"
+                                                                    data-page="{{ url_page }}"
+                                                                    data-filter="{{ filter }}"
+                                                            >
+                                                                Применить
+                                                            </button>
+                                                            {#                                                            </a>#}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9 p-md-0 items-list_catalog">
+                        <div class="row">
+                        {% if products %}
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-md-0 my-md-5">
+                                <div class="row m-0 justify-content-start align-items-center">
+                                    <div class="card-deck mb-5 ml-md-2 w-100" id="products">
+                                        {% for p in products %}
+                                            {#                                            <a href="{{ p.get_absolute_url }}" style="">#}
+                                            <div class="card col-lg-4 col-xl-3"
+                                                 data-price="{{ p.price }}"
+                                                 data-name="{{ p.title }}"
+                                                 data-num="{{ forloop.counter }}"
+                                            >
+                                                {% if p.main_photo != None and p.main_photo != "" %}
+                                                    <img src="{{ MEDIA_URL }}{{ p.main_photo.url }}"
+                                                         class="card-img-top" alt="...">
+                                                {% endif %}
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{ p.title }}</h5>
+                                                    <p class="card-text">{{ p.shot_description }}</p>
+                                                    <a href="{{ p.get_absolute_url }}">
+                                                        <button type="submit" class="btn btn-buy mx-auto">Купить
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <hr>
+                                                    <small class="text-muted">{{ p.price }} руб {{ p.sale_price }}</small>
+                                                </div>
+                                            </div>
+                                            {#                                            </a>#}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <div class="row m-0 justify-content-center align-items-center nav_blk">
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination">
+
+                                            {% if prev %}
+                                                <li class="page-item">
+                                                    {% if is_search and not is_filter %}
+                                                        <a class="page-link"
+                                                           href="{% url 'Catalog_search_page' url_page text prev %}"
+                                                           aria-label="Previous">
+                                                            <span aria-hidden="true"><i class="fa fa-angle-left"
+                                                                                        aria-hidden="true"></i></span></a>
+                                                    {% endif %}
+                                                    {% if is_filter and not is_search %}
+                                                        <a class="page-link"
+                                                           href="{% url 'Catalog_page_filter' url_page prev filter %}"
+                                                           aria-label="Previous">
+                                                            <span aria-hidden="true"><i class="fa fa-angle-left"
+                                                                                        aria-hidden="true"></i></span></a>
+                                                    {% endif %}
+                                                    {% if is_filter and  is_search %}
+                                                        <a class="page-link"
+                                                           href="{% url 'Catalog_search_page_filter' url_page text prev filter %}"
+                                                           aria-label="Previous">
+                                                            <span aria-hidden="true"><i class="fa fa-angle-left"
+                                                                                        aria-hidden="true"></i></span></a>
+                                                    {% endif %}
+                                                    {% if not is_filter and  not is_search %}
+                                                        <a class="page-link"
+                                                           href="{% url 'Catalog_page' url_page prev %}"
+                                                           aria-label="Previous">
+                                                            <span aria-hidden="true"><i class="fa fa-angle-left"
+                                                                                        aria-hidden="true"></i></span></a>
+                                                    {% endif %}
+                                                </li>
+                                            {% endif %}
+
+                                            {% for i in pages %}
+                                                {% if not i %}
+                                                    <a class="page-link" href="">...</a>
+                                                {% else %}
+                                                    <li class="page-item">
+                                                        {% if forloop.counter == chs %}
+                                                            {% if is_search and not is_filter %}
+                                                                <a class="page-link"
+                                                                   href="{% url 'Catalog_search_page' url_page text i %}"
+                                                                   style="color: #E7B9CB;"><b>{{ i }}</b></a>
+                                                            {% endif %}
+                                                            {% if is_filter and not is_search %}
+                                                                <a class="page-link"
+                                                                   href="{% url 'Catalog_page_filter' url_page i filter %}"
+                                                                   style="color: #E7B9CB;"><b>{{ i }}</b></a>
+                                                            {% endif %}
+                                                            {% if is_filter and  is_search %}
+                                                                <a class="page-link"
+                                                                   href="{% url 'Catalog_search_page_filter' url_page text i filter %}"
+                                                                   style="color: #E7B9CB;"><b>{{ i }}</b></a>
+                                                            {% endif %}
+                                                            {% if not is_filter and  not is_search %}
+                                                                <a class="page-link"
+                                                                   href="{% url 'Catalog_page' url_page i %}"
+                                                                   style="color: #E7B9CB;"><b>{{ i }}</b></a>
+                                                            {% endif %}
+
+                                                        {% else %}
+                                                            {% if is_search and not is_filter %}
+                                                                <a class="page-link"
+                                                                   href="{% url 'Catalog_search_page' url_page text i %}"
+                                                                >{{ i }}</a>
+                                                            {% endif %}
+                                                            {% if is_filter and not is_search %}
+                                                                <a class="page-link"
+                                                                   href="{% url 'Catalog_page_filter' url_page i filter %}"
+                                                                >{{ i }}</a>
+                                                            {% endif %}
+                                                            {% if is_filter and  is_search %}
+                                                                <a class="page-link"
+                                                                   href="{% url 'Catalog_search_page_filter' url_page text i filter %}"
+                                                                >{{ i }}</a>
+                                                            {% endif %}
+                                                            {% if not is_filter and  not is_search %}
+                                                                <a class="page-link"
+                                                                   href="{% url 'Catalog_page' url_page i %}"
+                                                                >{{ i }}</a>
+                                                            {% endif %}
+
+                                                        {% endif %}
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                            {% if next %}
+                                                <li class="page-item">
+                                                    {% if is_search and not is_filter %}
+                                                        <a class="page-link"
+                                                           href="{% url 'Catalog_search_page' url_page text next %}"
+                                                           aria-label="Next">
+                                                            <span aria-hidden="true"><i class="fa fa-angle-right"
+                                                                                        aria-hidden="true"></i></span></a>
+                                                    {% endif %}
+                                                    {% if is_filter and not is_search %}
+                                                        <a class="page-link"
+                                                           href="{% url 'Catalog_page_filter' url_page next filter %}"
+                                                           aria-label="Next">
+                                                            <span aria-hidden="true"><i class="fa fa-angle-right"
+                                                                                        aria-hidden="true"></i></span></a>
+                                                    {% endif %}
+                                                    {% if is_filter and  is_search %}
+                                                        <a class="page-link"
+                                                           href="{% url 'Catalog_search_page_filter' url_page text next filter %}"
+                                                           aria-label="Next">
+                                                            <span aria-hidden="true"><i class="fa fa-angle-right"
+                                                                                        aria-hidden="true"></i></span></a>
+                                                    {% endif %}
+                                                    {% if not is_filter and  not is_search %}
+                                                        <a class="page-link"
+                                                           href="{% url 'Catalog_page' url_page next %}"
+                                                           aria-label="Next">
+                                                            <span aria-hidden="true"><i class="fa fa-angle-right"
+                                                                                        aria-hidden="true"></i></span></a>
+                                                    {% endif %}
+                                                </li>
+                                            {% endif %}
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        {% else %}
+                        <h2 class="p-3">Товаров по указанным фильтрам не найдено.</h2>
+                        {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+{% endblock %}

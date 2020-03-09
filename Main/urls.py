@@ -23,10 +23,12 @@ urlpatterns = [
     # url(r'^brands/$', views.Brands, name="Brands"),
     # url(r'^news/$', views.News, name="News"),
     # url(r'^news_details/$', views.News_details, name="News_details"),
-    url(r'^search_results/$', views.Search_results, name="Search_results"),
+    # url(r'^search_results/$', views.Search_results, name="Search_results"),
     url(r'^cart/$', views.Cart, name="Cart"),
     url(r'^log_in/$', views.Log_in, name="Log_in"),
     url(r'^registration/$', views.Registration, name="Registration"),
+    url(r'check_login', views.check_login, name='check_login'),
+    url(r'check_register', views.check_register, name='check_register'),
 
     # url(r'^$', views.Main, name="Main"),
     # url(r'^dev/$', views.Dev, name="Dev"),
