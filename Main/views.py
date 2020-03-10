@@ -190,7 +190,7 @@ def check_register(request):
             check_email = False
             return HttpResponse(json.dumps('Email введён неверно!'))
 
-        if len(name) == 0 or len(surename) == 0 or len(patronymic) == 0 or len(phone) == 0 or len(adress) == 0:
+        if len(name) == 0 or len(surename) == 0 or len(patronymic) == 0 or len(phone) == 0:
             return HttpResponse(json.dumps('Поля заполнены некоректно!'))
 
         # pass1=hashers.make_password(pass1)
