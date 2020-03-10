@@ -172,8 +172,8 @@ def search(text, is_search=False):
         for i in names:
             qname.add(Q(title__icontains=i), Q.AND)
         # prod = Product.objects.filter(qname)
-    print('qname')
-    print(qname)
+    # print('qname')
+    # print(qname)
     if q_resources or q_needs or q_brand or q_price:
         # print('shit')
         product = Product.objects.filter(Q(q_resources) & Q(q_needs) & Q(q_brand) & Q(q_price) & Q(qname))
@@ -185,7 +185,7 @@ def search(text, is_search=False):
     # resource=ResourceType.objects.filter(product__id__in=ids).distinct('id').order_by('id','name')
     # brands = Brands_model.objects.filter(product__id__in=ids).distinct('id').order_by('id','name')
 
-    print(product)
+    # print(product)
     # print('shit false')
     # product=[]
     # print('end f search:')
@@ -194,7 +194,7 @@ def search(text, is_search=False):
     # print(q_brand)
     # print(q_price)
     # product = Product.objects.filter(q_resources, q_needs, q_brand, q_price)
-    print(product.count())
+    # print(product.count())
     # product = Product.objects.filter(resource_id=104)
     # print(product.count())
     # print(ProductSize.objects.filter(Q(q_resources) & Q(q_needs) & Q(q_brand) & Q(q_price)).count())

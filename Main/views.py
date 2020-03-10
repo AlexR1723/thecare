@@ -177,8 +177,8 @@ def check_register(request):
         adress = request.GET.get('adress')
         pass1 = request.GET.get('pass1')
         pass2 = request.GET.get('pass2')
-        print(pass1)
-        print(pass2)
+        # print(pass1)
+        # print(pass2)
         pass3 = pass1
 
         if AuthUser.objects.filter(email=email).exists():
@@ -190,20 +190,20 @@ def check_register(request):
             check_email = False
             return HttpResponse(json.dumps('Email введён неверно!'))
 
-        if len(name) == 0 or len(surename) == 0 or len(patronymic) == 0 or len(phone) == 0 or len(adress) == 0:
+        if len(name) == 0 or len(surename) == 0 or len(patronymic) == 0 or len(phone) == 0:
             return HttpResponse(json.dumps('Поля заполнены некоректно!'))
 
         # pass1=hashers.make_password(pass1)
         pass1 = hashlib.md5(pass1.encode('utf-8')).hexdigest()
         pass2 = hashlib.md5(pass2.encode('utf-8')).hexdigest()
-        print(pass1)
+        # print(pass1)
         print(pass2)
         if pass1 != pass2:
             return HttpResponse(json.dumps('Пароли не совпадают!'))
 
         pattern_password = re.compile(r'^(?=.*[0-9].*)(?=.*[a-z].*)(?=.*[A-Z].*)[0-9a-zA-Z]{8,}$')
         check_pass = bool(pattern_password.match(pass3))
-        print(check_pass)
+        # print(check_pass)
         if not check_pass:
             return HttpResponse(json.dumps(
                 'Пароль должен быть не менее 8 символов, содержать только латинские буквы, как минимум одну заглавную букву и цифру!'))
