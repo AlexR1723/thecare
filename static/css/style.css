@@ -476,14 +476,15 @@ a:hover {
     font-weight: bold;
     color: #000000;
 }
-
 .items_catalog .filter-body_form .form-control {
     border-left: none;
     font-weight: bold;
-    color: rgba(0, 0, 0, 0.5);
+    color: rgba(0, 0, 0, 0.7);
     padding: 1.3rem 0;
 }
-
+.items_catalog .filter-body_form .form-control::placeholder {
+    color: rgba(0, 0, 0, 0.3);
+}
 .items_catalog .filter-body_form .card-body .custom-control-label {
     padding-top: .2rem;
 }
