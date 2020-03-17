@@ -23,6 +23,7 @@
 <body>
 {#<div style="position: absolute; background-color: black; transform: translate(50% 50%);"></div>#}
 {#шапка#}
+<a id="up"></a>
 <div class="container-fluid p-0 header">
     <div class="row m-0 justify-content-center"
          style="background: url({% static 'image/тиснение.png' %});background-size: contain">
@@ -226,7 +227,12 @@
         <!-- Copyright -->
     </footer>
 </div>
-
+<a href="#up" class="up">
+    <div class="block-up" id="block-up">
+        <img src="{% static 'image/up.png' %}" alt="Вверх" class="w-100 m-auto">
+        <!--<i class="fas fa-arrow-up"></i>-->
+    </div>
+</a>
 <div class="wrapper">
     <div class="send" id="send">
         <img src="{% static 'image/info.png' %}" alt="Информация" class="w-100 m-auto">
@@ -244,7 +250,7 @@
             <label>Бесплатная консультация <br> от наших специалистов</label>
         </div>
         <div class="row m-0">
-            <a class="sub-btn w-100 btn login-btn" href="whatsapp://send?phone=+79160034747">
+            <a class="sub-btn w-100 btn login-btn" href="whatsapp://send?phone=79160034747">
                 ПОЛУЧИТЬ КОНСУЛЬТАЦИЮ
             </a>
         </div>
