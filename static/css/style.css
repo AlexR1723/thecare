@@ -1124,3 +1124,28 @@ footer .contact-list {
     box-shadow: 0 0 0 20px rgba(225,48,117, 0);
   }
 }
+
+.block-up{
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    width: 3rem;
+    height: 3rem;
+    color: #fff;
+    font-size: 0rem;
+    background: rgba(225,48,117,.8);
+    border-radius: .3rem;
+    text-align: center;
+    overflow: hidden;
+    opacity: 0;
+    transition: .3s;
+    padding: .7rem;
+}
+a.up{
+    color: #fff;
+}
+.block-up:hover {
+    background: rgba(225,48,117,1);
+    transition: .3s;
+    cursor: pointer;
+}
