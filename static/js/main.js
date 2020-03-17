@@ -30,7 +30,7 @@ jQuery("document").ready(function($){
         btn.addClass('d-none');
     }
 
-    
+
 
 
     setTimeout(() => showSendBox(), 3000);
