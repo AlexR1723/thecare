@@ -908,12 +908,14 @@ a:hover {
     font-size: 1rem;
     line-height: 20px;
 }
-.cart_blk .card .price {
+.cart_blk .card .price,
+.order_history .order-price {
     color: rgba(0, 0, 0, 0.5);
 }
 .cart_blk .price-text,
 .cart_blk .card .price-text,
-.items-list_catalog .card-deck .sale-card i {
+.items-list_catalog .card-deck .sale-card i,
+.order_history .order-status {
     color: #E13075;
 }
 .cart_blk .price-text {
@@ -990,7 +992,39 @@ a:hover {
 .hr-divider {
     border: .5px solid #C4C4C4;
 }
-
+.nav_menu:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 65%;
+    width: 55%;
+    height: 1px;
+    background-color: #c4c4c4;
+    transform: rotate(90deg);
+}
+.nav_menu a:hover {
+    text-decoration-line: underline;
+    text-decoration-skip-ink: none;
+}
+.order_history a:hover {
+    border-bottom: 1px solid #000000;
+}
+.order_history .order-price,
+.order_history .order-status {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+.order_history::after {
+    content: "";
+    display: block;
+    position: relative;
+    left: 1.5%;
+    width: 95%;
+    height: 1px;
+    margin-top: 1.5rem;
+    background-color: #c4c4c4;
+}
 
 footer {
     position: relative;
@@ -1033,6 +1067,11 @@ footer .contact-list {
     .nav_block .nav-item .nav-link {
         margin-right: 0;
     }
+    .nav_menu:after {
+        /*top: 40%;*/
+        width: 70%;
+        left: 55%;
+    }
 }
 
 @media (min-width: 320px) and (max-width: 520px) {
@@ -1046,6 +1085,12 @@ footer .contact-list {
 
     .nav_block .nav-item .nav-link {
         margin-right: 0;
+    }
+    .nav_menu:after {
+        top: 100%;
+        left: 1.5%;
+        width: 95%;
+        transform: rotate(180deg);
     }
 }
 .navbar-light .navbar-toggler{
