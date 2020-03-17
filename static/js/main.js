@@ -30,6 +30,8 @@ jQuery("document").ready(function($){
         btn.addClass('d-none');
     }
 
+    
+
 
     setTimeout(() => showSendBox(), 3000);
     var tab=document.getElementById('tab1');
