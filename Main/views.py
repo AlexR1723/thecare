@@ -7,9 +7,18 @@ from django.contrib.auth import authenticate, login, logout, hashers
 from django.core.validators import validate_email
 from django.db import transaction
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 import os
 
+def get_user_id(request):
+    user=request.session.get('username',False)
+    if user:
+        try:
+            user=AuthUser.objects.get(username=user).id
+        except:
+            user=False
+    return user
 
 def func_contact():
     number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
@@ -133,12 +142,18 @@ def Cart(request):
 
 def Log_in(request):
     number, email = func_contact()
-    return render(request, 'Main/Log_in.html', locals())
+    if get_user_id:
+        return HttpResponseRedirect(reverse('Main'))
+    else:
+        return render(request, 'Main/Log_in.html', locals())
 
 
 def Registration(request):
     number, email = func_contact()
-    return render(request, 'Main/Registration.html', locals())
+    if get_user_id:
+        return HttpResponseRedirect(reverse('Main'))
+    else:
+        return render(request, 'Main/Registration.html', locals())
 
 
 def check_login(request):
@@ -197,7 +212,7 @@ def check_register(request):
         pass1 = hashlib.md5(pass1.encode('utf-8')).hexdigest()
         pass2 = hashlib.md5(pass2.encode('utf-8')).hexdigest()
         # print(pass1)
-        print(pass2)
+        # print(pass2)
         if pass1 != pass2:
             return HttpResponse(json.dumps('Пароли не совпадают!'))
 
