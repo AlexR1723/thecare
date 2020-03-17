@@ -146,6 +146,8 @@ def search(text, is_search=False):
                 brands_id.append(item)
             except:
                 item = ''
+    # print(brands_id)
+    # print(q_brand)
     try:
         price_from = int(prices[0])
     except:
@@ -155,23 +157,16 @@ def search(text, is_search=False):
     except:
         price_until = ''
     q_price = Q()
-    # print(price_from)
-    # print(price_until)
-
     if price_from:
-        q_price.add(Q(price__gte=price_from),Q.AND)
+        q_price.add(Q(price__gte=price_from), Q.AND)
     if price_until:
-        q_price.add(Q(price__lte=price_until),Q.AND)
-    # print(q_price)
-    # if price_from and not price_until:
-    #     q_price = Q(price__gte=price_from)
-    # if price_until and not price_from:
-    #     q_price = Q(price__lte=price_until)
-    # if price_from and price_until and price_from < price_until:
-    #     q_price = Q(price__gte=price_from) & Q(price__lte=price_until)
+        q_price.add(Q(price__lte=price_until), Q.AND)
 
     qname = Q()
-    if is_search:
+    # if is_search and is_search!='Brands':
+    if is_search =='Поиск':
+        # print('is search')
+        # print(is_search)
         names = str(is_search).lower().split('_')
         for i in names:
             qname.add(Q(title__icontains=i), Q.AND)
@@ -180,10 +175,17 @@ def search(text, is_search=False):
     # print(qname)
     if q_resources or q_needs or q_brand or q_price or qname:
         # print('shit')
-
+        # print(Q(q_resources) & Q(q_needs) & Q(q_brand) & Q(q_price) & Q(qname))
+        # print(q_resources & q_needs & q_brand & q_price & qname)
         product = Product.objects.filter(Q(q_resources) & Q(q_needs) & Q(q_brand) & Q(q_price) & Q(qname))
+        # print(is_search)
+        if is_search == 'New_products':
+            # print('news')
+            dat = datetime.datetime.today() + datetime.timedelta(days=-30)
+            product=product.filter(date__gte=dat)
     else:
         product = Product.objects.filter(id=0)
+
 
     # ids=list(prod.values_list('id',flat=True))
     # need = NeedType.objects.filter(productneed__product__id__in=ids).distinct('id').order_by('id','name')
@@ -214,11 +216,12 @@ def get_url(url, rec=False):
             'For_hair': 'Для волос',
             'Dyes_for_hair': 'Красители для волос',
             'Sets_and_miniatures': 'Наборы и миниатюры',
+            'Beauty_box': 'Бьюти боксы',
             'Sale': 'Скидки',
-            'Brands': 'Бренды'
-            }
+            'Brands': 'Бренды',
+            'New_products': 'Новинки'}
     head = dict.get(url_page)
-    print(head)
+    # print(head)
     if not head and not rec:
         return url, 'Поиск'
 
@@ -237,19 +240,19 @@ def left_filter(url_page, head, filter=False, prod=False):
         for i in names:
             qname.add(Q(title__icontains=i), Q.AND)
         prod1 = Product.objects.filter(qname)
-        if type(prod).__name__=='QuerySet':
+        if type(prod).__name__ == 'QuerySet':
             prod = prod.filter(qname)
         else:
-            prod=Product.objects.filter(qname)
+            prod = Product.objects.filter(qname)
         ids = list(prod1.values_list('id', flat=True))
         need = NeedType.objects.filter(productneed__product__id__in=ids).distinct('id').order_by('id', 'name')
         resource = ResourceType.objects.filter(product__id__in=ids).distinct('id').order_by('id', 'name')
         brands = Brands_model.objects.filter(product__id__in=ids).distinct('id').order_by('id', 'name')
         if filter:
-            prod=prod.order_by(get_filter(filter))
+            prod = prod.order_by(get_filter(filter))
         return resource, need, brands, prod
 
-    if url_page != 'Sale' and url_page != 'Brands':
+    if url_page != 'Sale' and url_page != 'Brands' and url_page != 'New_products':
         resource = ResourceType.objects.filter(category__name__icontains=head).order_by('name')
         need = NeedType.objects.filter(category__name__icontains=head).order_by('name')
         brands = Brands_model.objects.all().order_by('name')
@@ -279,10 +282,24 @@ def left_filter(url_page, head, filter=False, prod=False):
                 queryset = prod.filter(sale__gt=0).order_by('-id')
 
         if url_page == 'Brands':
+            # print(prod)
             if filter:
                 queryset = prod.order_by(get_filter(filter))
             else:
                 queryset = prod.order_by('-id')
+        if url_page=='New_products':
+            dat=datetime.datetime.today()+datetime.timedelta(days=-30)
+            # queryset=Product.objects.filter(date__gte=dat)
+            print(prod)
+            if filter and not prod:
+                queryset = Product.objects.filter(date__gte=dat).order_by(get_filter(filter))
+            if not filter and not prod:
+                queryset = Product.objects.filter(date__gte=dat).order_by('-id')
+            if filter and prod:
+                queryset = prod.order_by(get_filter(filter))
+            if not filter and prod:
+                queryset = prod.order_by('-id')
+
     return resource, need, brands, queryset
 
 
@@ -560,7 +577,7 @@ def Catalog_search(request, head_url, text):
     # brands = Brands_model.objects.all()
     # print('start')
     resources_id, needs_id, brands_id, price_from, price_until, product = search(text, head_url)
-    print(product)
+    # print(product)
     resource, need, brands, queryset = left_filter(url_page, head, filter=False, prod=product)
     # print(queryset)
     page = 1

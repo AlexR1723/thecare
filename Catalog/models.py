@@ -9,6 +9,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
 from uuslug import slugify
+import datetime
 
 
 class AuthGroup(models.Model):
@@ -174,6 +175,7 @@ class Product(models.Model):
     sale = models.IntegerField(blank=True, null=True)
     sale_is_number = models.BooleanField(blank=True, null=True)
     sale_price = models.IntegerField(blank=True, null=True)
+    date = models.DateField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -191,7 +193,10 @@ class Product(models.Model):
         else:
             string = str(self.id) + '-' + self.title
         self.slug = slugify(string)
+        self.date =datetime.datetime.today()
         super(Product, self).save(*args, **kwargs)
+
+
 
         # self.note = self.note.replace('\n', '<br />')
         # self.description = self.description.replace('\n', '<br />')
