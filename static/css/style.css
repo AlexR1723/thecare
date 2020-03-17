@@ -1052,3 +1052,75 @@ footer .contact-list {
     color: rgba(0,0,0,1) !important;
     border-color: rgba(0,0,0,1) !important;
 }
+
+
+
+/*----------wrapper-------------*/
+.send{
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    /*font-size: 0rem;*/
+    background: rgba(225,48,117,.8);
+    border-radius: 50%;
+    padding: .7rem;
+    transition: .3s;
+    z-index: 9999;
+}
+@media (max-width: 320px) {
+    .send-box{
+        right: 0.2rem !important;
+    }
+}
+.send:hover {
+    background: rgba(225,48,117,1);
+    transition: .3s;
+    cursor: pointer;
+}
+.send-box{
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: rgba(255,255,255,1);
+    border-radius: .3rem;
+    opacity: 0;
+    border:2px solid rgb(225,48,117);
+    transition: .3s;
+}
+.cancel-btn{
+    font-size: 1.2rem;
+    color: #aaa;
+    background: none;
+    border: none;
+}
+.cancel-btn:hover{
+    color: #000;
+}
+.cancel-btn:focus{
+    outline:none;
+}
+.active-info{
+    opacity: 1;
+    transition: .3s;
+    z-index: 9999;
+}
+#send-box, #send {
+  /*display: flex;*/
+  animation: radial-pulse 1s infinite;
+}
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@keyframes radial-pulse {
+  0% {
+    box-shadow: 0 0 0 0px rgba(225,48,117, 0.5);
+  }
+
+  100% {
+    box-shadow: 0 0 0 20px rgba(225,48,117, 0);
+  }
+}
