@@ -153,6 +153,10 @@ def Registration(request):
     else:
         return render(request, 'Main/Registration.html', locals())
 
+def Orders_history(request):
+    number, email = func_contact()
+    return render(request, 'Main/Orders_history.html', locals())
+
 
 def check_login(request):
     try:

@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<div class="container-fluid p-0">
+    <div class="row m-0 justify-content-center">
+        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 head_blk my-4">
+            <div class="row m-0 justify-content-start align-items-center">
+                <h1 class="m-0">История заказов</h1>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-12 col-lg-11 col-xl-11 p-0 p-md-0 mt-md-3 mb-5">
+            <div class="row m-0 justify-content-start">
+                <div class="col-12 col-md-4 col-lg-4 col-xl-3 p-0">
+                    <nav class="nav nav_menu flex-column mb-3 mb-md-0">
+                        <a class="nav-link" href="#">История заказов</a>
+                        <a class="nav-link" href="#">Адрес доставки</a>
+                        <a class="nav-link" href="#">Контактный данные</a>
+                        <a class="nav-link" href="#">Выход</a>
+                    </nav>
+                </div>
+
+                <div class="col-12 col-md-8 col-lg-8 col-xl-9 p-0">
+                    <div class="row m-0">
+                        <div class="col-12 col-md-12 col-lg-12 col-xl-12 p-0 my-3 my-md-2">
+                            <div class="row m-0 justify-content-start align-items-center mb-4 order_history">
+                                <div class="col-12 col-md-5 col-lg-5">
+                                    <a href="#" class="order-date m-0">Заказ от 15.03.2020г</a>
+                                </div>
+                                <div class="col-6 col-md-3 col-lg-4 mt-3 mt-md-0">
+                                    <span class="order-price">4850 руб</span>
+                                </div>
+                                <div class="col-6 col-md-4 col-lg-3 mt-3 mt-md-0 text-right text-md-left">
+                                    <span class="order-status">получено</span>
+                                </div>
+                            </div>
+
+                            <div class="row m-0 justify-content-start align-items-center mb-4 order_history">
+                                <div class="col-12 col-md-5 col-lg-5">
+                                    <a href="#" class="order-date m-0">Заказ от 16.03.2020г</a>
+                                </div>
+                                <div class="col-6 col-md-3 col-lg-4 mt-3 mt-md-0">
+                                    <span class="order-price">3320 руб</span>
+                                </div>
+                                <div class="col-6 col-md-4 col-lg-3 mt-3 mt-md-0 text-right text-md-left">
+                                    <span class="order-status">отправлено</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
