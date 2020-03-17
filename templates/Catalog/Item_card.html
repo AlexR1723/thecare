@@ -48,11 +48,11 @@
                                         <div class="items-counter mb-4 text-center text-md-left">
                                             <button class="minus"><i class="fa fa-minus" aria-hidden="true"></i>
                                             </button>
-                                            <input type="number" value="1"/>
+                                            <input type="number" value="1" min="1" id="item_count"/>
                                             <button class="plus"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                         </div>
                                         <div class="text-center text-md-left">
-                                            <button class="btn">В корзину</button>
+                                            <button class="btn" data-slug="{{ item.slug }}" id="btn_add_to_cart">В корзину</button>
                                         </div>
                                     </div>
                                 </div>

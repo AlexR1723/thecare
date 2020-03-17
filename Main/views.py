@@ -135,9 +135,7 @@ def Search_results(request):
     return render(request, 'Main/Search_results.html', locals())
 
 
-def Cart(request):
-    number, email = func_contact()
-    return render(request, 'Main/Cart.html', locals())
+
 
 
 def Log_in(request):

@@ -1,8 +1,17 @@
 from django import template
+
 register = template.Library()
+
+
+@register.filter
+def get_prod_count(dic, item):
+    return dic[item]['count']
+
+
+@register.filter
+def get_prod_price(dic, item):
+    return dic[item]['price']
 
 @register.filter
 def make_search_url(value, arg):
-    """Removes all values of arg from the given string"""
-    res=arg+'='+str(value)
-    return res
+    return arg+'='+str(value)

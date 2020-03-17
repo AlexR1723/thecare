@@ -290,7 +290,7 @@ def left_filter(url_page, head, filter=False, prod=False):
         if url_page=='New_products':
             dat=datetime.datetime.today()+datetime.timedelta(days=-30)
             # queryset=Product.objects.filter(date__gte=dat)
-            print(prod)
+            # print(prod)
             if filter and not prod:
                 queryset = Product.objects.filter(date__gte=dat).order_by(get_filter(filter))
             if not filter and not prod:

@@ -33,9 +33,7 @@
                                     {%  endif %}
                                 </div>
                                 <div>
-                                    <a href="
-{% url 'Catalog_search' 'Brands' i.id|make_search_url:"brands" %}
-">{{ i.name }}</a>
+                                    <a href="{% url 'Catalog_search' 'Brands' i.id|make_search_url:"brands" %}">{{ i.name }}</a>
                                 </div>
                             </div>
                         {% endfor %}

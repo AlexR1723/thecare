@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'News',
     'Payment',
     'Brands',
+    'Basket',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +139,5 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, "static")
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+
+CART_SESSION_ID = 'cart'
