@@ -1101,11 +1101,6 @@ footer .contact-list {
 .cancel-btn:focus{
     outline:none;
 }
-.active-info{
-    opacity: 1;
-    transition: .3s;
-    z-index: 9999;
-}
 #send-box, #send {
   /*display: flex;*/
   animation: radial-pulse 1s infinite;
@@ -1148,4 +1143,9 @@ a.up{
     background: rgba(225,48,117,1);
     transition: .3s;
     cursor: pointer;
+}
+.active-info{
+    opacity: 1 !important;
+    transition: .3s;
+    z-index: 9999;
 }
