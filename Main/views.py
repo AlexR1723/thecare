@@ -89,7 +89,7 @@ def Save_excel_file(request):
                     print(v[12])
                     size = Size.objects.filter(name=v[12])
                     print(size)
-                    product = Product.objects.filter(title=v[3]).filter(brand__name=v[2])
+                    product = Product.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(shot_description=v[4])
                     if categ.count() > 0 and res.count() > 0 and size.count() > 0:
                         if product.count() == 0:
                             print(1)
@@ -102,29 +102,48 @@ def Save_excel_file(request):
                             product.save()
                             needs = v[10]
                             list_need = needs.split(', ')
-                            if list_need.count() == 0:
+                            if list_need.count == 0:
                                 need = NeedType.objects.filter(name=needs)
-                                if need.count() > 0:
-                                    product_need = ProductNeed(product=product, need=need[0])
-                                    product_need.save()
+                                if need.count() == 0:
+                                    need = NeedType(name=needs, category=categ[0])
+                                    need.save()
+                                    need = NeedType.objects.filter(name=needs)
+                                #     product_need = ProductNeed(product=product, need=need[0])
+                                #     product_need.save()
+                                # else:
+                                #     need = NeedType(name=needs, category=categ[0])
+                                #     need.save()
+                                #     need = NeedType.objects.filter(name=needs)
+                                product_need = ProductNeed(product=product, need=need[0])
+                                product_need.save()
                             else:
                                 for n in list_need:
                                     need = NeedType.objects.filter(name=n)
-                                    if need.count() > 0:
-                                        product_need = ProductNeed(product=product, need=need[0])
-                                        product_need.save()
+                                    if need.count() == 0:
+                                        need = NeedType(name=needs, category=categ[0])
+                                        need.save()
+                                        need = NeedType.objects.filter(name=needs)
+                                    #     product_need = ProductNeed(product=product, need=need[0])
+                                    #     product_need.save()
+                                    # else:
+                                    #     need = NeedType(name=needs, category=categ[0])
+                                    #     need.save()
+                                    #     need = NeedType.objects.filter(name=needs)
+                                    product_need = ProductNeed(product=product, need=need[0])
+                                    product_need.save()
                             print(2)
-                            tones=v[13]
-                            list_tone=tones.split('; ')
-                            if list_tone.count() > 0:
-                                for t in list_tone:
-                                    product_tone=ProductTone(product=product,name=t)
-                                    product_tone.save()
+                            if v[13] != "" and v[13] != " ":
+                                tones=v[13]
+                                list_tone=tones.split('; ')
+                                if list_tone != "" and list_tone.count != 0:
+                                    for t in list_tone:
+                                        product_tone=ProductTone(product=product,name=t)
+                                        product_tone.save()
                         else:
                             product = product[0]
                         product_size = ProductSize.objects.filter(size=size[0]).filter(product=product)
                         print(product_size)
-                        if product_size.count == 0:
+                        if product_size.count() == 0:
                             product_size = ProductSize(product=product, size=size[0])
                             product_size.save()
                         print(product)
