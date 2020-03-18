@@ -235,6 +235,9 @@ class Product(models.Model):
     sale = models.IntegerField(blank=True, null=True)
     sale_is_number = models.BooleanField(blank=True, null=True)
     sale_price = models.IntegerField(blank=True, null=True)
+    date = models.DateField(blank=True, null=True)
+    artikul_brand = models.IntegerField(blank=True, null=True)
+    count = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -268,6 +271,15 @@ class ProductSize(models.Model):
         db_table = 'product_size'
 
 
+class ProductTone(models.Model):
+    product = models.ForeignKey(Product, models.DO_NOTHING, blank=True, null=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'product_tone'
+
+
 class ResourceType(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     category = models.ForeignKey(CategoryType, models.DO_NOTHING, blank=True, null=True)
@@ -291,3 +303,14 @@ class Slider(models.Model):
     class Meta:
         managed = False
         db_table = 'slider'
+
+
+class Users(models.Model):
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING, blank=True, null=True)
+    patronymic = models.TextField(blank=True, null=True)
+    phone = models.TextField(blank=True, null=True)
+    adress = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'users'

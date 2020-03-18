@@ -107,6 +107,9 @@ class Product(models.Model):
     sale = models.IntegerField(blank=True, null=True)
     sale_is_number = models.BooleanField(blank=True, null=True)
     sale_price = models.IntegerField(blank=True, null=True)
+    date = models.DateField(blank=True, null=True)
+    artikul_brand = models.IntegerField(blank=True, null=True)
+    count = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -168,6 +171,17 @@ class ProductNeed(models.Model):
         db_table = 'product_need'
         verbose_name = _("Потребности")
         verbose_name_plural = _("Потребности")
+
+
+
+class ProductTone(models.Model):
+    product = models.ForeignKey(Product, models.DO_NOTHING, blank=True, null=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'product_tone'
+
 
 
 class ResourceType(models.Model):

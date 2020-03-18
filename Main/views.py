@@ -73,7 +73,11 @@ def Save_excel_file(request):
                 if v[1] != "" and v[1] != "Привязка к позиции":
                     categ = CategoryType.objects.filter(name=v[8])
                     print(categ)
-                    res = ResourceType.objects.filter(name=v[9])
+                    res = ResourceType.objects.filter(category=categ[0]).filter(name=v[9])
+                    if res.count() == 0:
+                        res=ResourceType(category=categ[0],name=v[9])
+                        res.save()
+                        res = ResourceType.objects.filter(category=categ[0]).filter(name=v[9])
                     print(res)
                     brand = Brands_model.objects.filter(name=v[2])
                     if brand.count() == 0:
@@ -85,7 +89,7 @@ def Save_excel_file(request):
                     print(v[12])
                     size = Size.objects.filter(name=v[12])
                     print(size)
-                    product = Product.objects.filter(title=v[3])
+                    product = Product.objects.filter(title=v[3]).filter(brand__name=v[2])
                     if categ.count() > 0 and res.count() > 0 and size.count() > 0:
                         if product.count() == 0:
                             print(1)
@@ -98,7 +102,7 @@ def Save_excel_file(request):
                             product.save()
                             needs = v[10]
                             list_need = needs.split(', ')
-                            if list_need.count == 0:
+                            if list_need.count() == 0:
                                 need = NeedType.objects.filter(name=needs)
                                 if need.count() > 0:
                                     product_need = ProductNeed(product=product, need=need[0])
@@ -110,6 +114,12 @@ def Save_excel_file(request):
                                         product_need = ProductNeed(product=product, need=need[0])
                                         product_need.save()
                             print(2)
+                            tones=v[13]
+                            list_tone=tones.split('; ')
+                            if list_tone.count() > 0:
+                                for t in list_tone:
+                                    product_tone=ProductTone(product=product,name=t)
+                                    product_tone.save()
                         else:
                             product = product[0]
                         product_size = ProductSize.objects.filter(size=size[0]).filter(product=product)

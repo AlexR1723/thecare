@@ -46,9 +46,14 @@ class ProductNeedAdmin(admin.TabularInline):
     model = ProductNeed
 
 
+
+class ProductToneAdmin(admin.TabularInline):
+    model = ProductTone
+
+
 class ProductAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Product._meta.fields]
-    inlines = [ProductNeedAdmin]
+    inlines = [ProductNeedAdmin, ProductToneAdmin]
     exclude = ('slug',)
 
     class Meta:
