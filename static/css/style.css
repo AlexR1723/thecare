@@ -572,6 +572,7 @@ a:hover {
 }
 .cart_blk .btn,
 .login-btn,
+.save-btn,
 .item-card_blk .card .btn,
 .items-list_catalog .card-deck .card .btn-buy {
     background: #E7B9CB;
@@ -581,6 +582,7 @@ a:hover {
 }
 .cart_blk .btn:hover,
 .login-btn:hover,
+.save-btn:hover,
 .item-card_blk .card .btn:hover,
 .items-list_catalog .card-deck .card .btn-buy:hover {
     background: transparent;
@@ -599,12 +601,17 @@ a:hover {
 
 .items-list_catalog .card-deck .card .card-title,
 .login-form label,
-.register-form label {
+.register-form label,
+.address-form label {
     font-size: 18px;
     line-height: 22px;
     color: #000000;
 }
-.register-form label span {
+.address-form label {
+    font-size: 16px;
+}
+.register-form label span,
+.address-form label span {
     font-size: 1.5rem;
     line-height: 33px;
     color: #E13075;
@@ -938,9 +945,19 @@ a:hover {
 .login-btn {
     width: 25%;
 }
+@media (min-width: 1440px) and (max-width: 2560px) {
+    .address-form .save-btn {
+        width: 30%;
+    }
+}
 @media (min-width: 1024px) {
     .register-form .login-btn {
         width: 27%;
+    }
+}
+@media (max-width: 1024px) {
+    .address-form .save-btn {
+        width: 45%;
     }
 }
 @media (max-width: 768px) {
@@ -952,6 +969,9 @@ a:hover {
     .item-card_blk .items-list_catalog .next {
         display: none!important;
     }
+    .address-form .save-btn {
+        width: 55%;
+    }
 }
 @media (max-width: 425px) {
     .cart_blk .btn,
@@ -961,9 +981,13 @@ a:hover {
     .register-form .login-btn {
         width: 80%;
     }
+    .address-form .save-btn {
+        width: 90%;
+    }
 }
 .login-form .form-control,
-.register-form .form-control {
+.register-form .form-control,
+.address-form .form-control {
     border: 1px solid #C4C4C4;
     border-radius: 5px;
 }
@@ -972,8 +996,7 @@ a:hover {
     font-size: 1.1rem;
 }
 .login-form .restore-link:hover,
-.login-form .register-link:hover,
-.register-form .login-link:hover {
+.login-form .register-link:hover {
     text-decoration: underline;
 }
 .login-form .register-link:hover {
@@ -982,10 +1005,12 @@ a:hover {
 .login-form .hr-divider {
     margin-top: 2.3em;
 }
-.register-form .hr-divider {
+.register-form .hr-divider,
+.address-form .hr-divider {
     margin-top: 3.5em;
 }
-.register-form .notice i {
+.register-form .notice i,
+.address-form .notice i {
     color: #c4c4c4;
     font-size: 1.5rem;
 }
@@ -995,8 +1020,10 @@ a:hover {
 .nav_menu:after {
     content: "";
     display: block;
-    position: absolute;
-    top: 50%;
+    /*position: absolute;*/
+    /*top: 50%;*/
+    position: relative;
+    bottom: 5rem;
     left: 65%;
     width: 55%;
     height: 1px;
@@ -1049,7 +1076,12 @@ footer .contact-list {
     font-size: 1rem;
     line-height: 22px;
 }
-
+@media (min-width: 1440px) {
+    .nav_menu:after {
+        bottom: 4rem;
+        left: 60%;
+    }
+}
 @media (min-width: 770px) and (max-width: 1024px) {
     .map_blk iframe {
         width: 430px;
@@ -1087,7 +1119,8 @@ footer .contact-list {
         margin-right: 0;
     }
     .nav_menu:after {
-        top: 100%;
+        /*top: 100%;*/
+        top: 1rem;
         left: 1.5%;
         width: 95%;
         transform: rotate(180deg);

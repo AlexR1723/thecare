@@ -157,6 +157,10 @@ def Orders_history(request):
     number, email = func_contact()
     return render(request, 'Main/Orders_history.html', locals())
 
+def Delivery_address(request):
+    number, email = func_contact()
+    return render(request, 'Main/Delivery_address.html', locals())
+
 
 def check_login(request):
     try:
