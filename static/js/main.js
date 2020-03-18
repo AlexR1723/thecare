@@ -253,6 +253,14 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 })
 
+$('.custom-control-input').change(function(){
+    if ($(this).is(':checked')) {
+        $('.change-pass_blk').fadeIn(100);
+    } else {
+        $('.change-pass_blk').fadeOut(200);
+    }
+});
+
 function check_login() {
     let email = document.getElementById('login_email').value
     let password = document.getElementById('login_password').value

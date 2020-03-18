@@ -190,6 +190,10 @@ def Delivery_address(request):
     number, email = func_contact()
     return render(request, 'Main/Delivery_address.html', locals())
 
+def Contact_details(request):
+    number, email = func_contact()
+    return render(request, 'Main/Contact_details.html', locals())
+
 
 def check_login(request):
     try:

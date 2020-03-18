@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^registration/$', views.Registration, name="Registration"),
     url(r'^orders_history/$', views.Orders_history, name="Orders_history"),
     url(r'^delivery_address/$', views.Delivery_address, name="Delivery_address"),
+    url(r'^contact_details/$', views.Contact_details, name="Contact_details"),
     url(r'check_login', views.check_login, name='check_login'),
     url(r'check_register', views.check_register, name='check_register'),
 

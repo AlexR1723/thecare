@@ -567,8 +567,16 @@ a:hover {
     padding: .5rem;
 }
 
-.items-list_catalog .card-deck .card .btn-buy {
+.items-list_catalog .card-deck .card .btn-buy,
+.change-pass_blk {
     display: none;
+}
+.custom-checkbox .custom-control-label::before {
+    border-radius: 0;
+}
+.custom-control-input:checked~.custom-control-label::before {
+    border-color: #E7B9CB;
+    background-color: #E7B9CB;
 }
 .cart_blk .btn,
 .login-btn,
@@ -602,16 +610,19 @@ a:hover {
 .items-list_catalog .card-deck .card .card-title,
 .login-form label,
 .register-form label,
-.address-form label {
+.address-form label,
+.contacts-form label {
     font-size: 18px;
     line-height: 22px;
     color: #000000;
 }
-.address-form label {
+.address-form label,
+.contacts-form label {
     font-size: 16px;
 }
 .register-form label span,
-.address-form label span {
+.address-form label span,
+.contacts-form label span {
     font-size: 1.5rem;
     line-height: 33px;
     color: #E13075;
@@ -945,8 +956,9 @@ a:hover {
 .login-btn {
     width: 25%;
 }
-@media (min-width: 1440px) and (max-width: 2560px) {
-    .address-form .save-btn {
+@media (min-width: 1024px) and (max-width: 2560px) {
+    .address-form .save-btn,
+    .contacts-form .save-btn {
         width: 30%;
     }
 }
@@ -955,8 +967,9 @@ a:hover {
         width: 27%;
     }
 }
-@media (max-width: 1024px) {
-    .address-form .save-btn {
+@media (min-width: 768px) and (max-width: 1024px) {
+    .address-form .save-btn,
+    .contacts-form .save-btn {
         width: 45%;
     }
 }
@@ -969,7 +982,8 @@ a:hover {
     .item-card_blk .items-list_catalog .next {
         display: none!important;
     }
-    .address-form .save-btn {
+    .address-form .save-btn,
+    .contacts-form .save-btn {
         width: 55%;
     }
 }
@@ -981,13 +995,15 @@ a:hover {
     .register-form .login-btn {
         width: 80%;
     }
-    .address-form .save-btn {
+    .address-form .save-btn,
+    .contacts-form .save-btn {
         width: 90%;
     }
 }
 .login-form .form-control,
 .register-form .form-control,
-.address-form .form-control {
+.address-form .form-control,
+.contacts-form .form-control {
     border: 1px solid #C4C4C4;
     border-radius: 5px;
 }
@@ -1006,11 +1022,13 @@ a:hover {
     margin-top: 2.3em;
 }
 .register-form .hr-divider,
-.address-form .hr-divider {
+.address-form .hr-divider,
+.contacts-form .hr-divider {
     margin-top: 3.5em;
 }
 .register-form .notice i,
-.address-form .notice i {
+.address-form .notice i,
+.contacts-form .notice i {
     color: #c4c4c4;
     font-size: 1.5rem;
 }
