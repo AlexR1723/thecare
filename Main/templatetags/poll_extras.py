@@ -15,3 +15,7 @@ def get_prod_price(dic, item):
 @register.filter
 def make_search_url(value, arg):
     return arg+'='+str(value)
+
+@register.filter
+def get_dict(value, arg):
+    return value[arg]

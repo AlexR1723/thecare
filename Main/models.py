@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
 from uuslug import slugify
+import datetime
 
 
 class AuthUser(models.Model):
@@ -127,6 +128,7 @@ class Product(models.Model):
         else:
             string = str(self.id) + '-' + self.title
         self.slug = slugify(string)
+        self.date = datetime.datetime.today()
         super(Product, self).save(*args, **kwargs)
 
         # self.note = self.note.replace('\n', '<br />')

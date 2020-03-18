@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'Payment',
     'Brands',
     'Basket',
+    'Profile',
 ]
 
 MIDDLEWARE = [
@@ -142,3 +143,4 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 CART_SESSION_ID = 'cart'
+LOGIN_URL='/log_in'

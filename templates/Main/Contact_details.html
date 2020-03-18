@@ -14,10 +14,10 @@
             <div class="row m-0 justify-content-start">
                 <div class="col-12 col-md-4 col-lg-4 col-xl-3 p-0">
                     <nav class="nav nav_menu flex-column mb-3 mb-md-0">
-                        <a class="nav-link" href="#">История заказов</a>
-                        <a class="nav-link" href="#">Адрес доставки</a>
-                        <a class="nav-link" href="#">Контактный данные</a>
-                        <a class="nav-link" href="#">Выход</a>
+                        <a class="nav-link" href="{% url 'Orders_history' %}">История заказов</a>
+                        <a class="nav-link" href="{% url 'Delivery_address' %}">Адрес доставки</a>
+                        <a class="nav-link" href="{% url 'Contact_details' %}">Контактный данные</a>
+                        <a class="nav-link" href="{% url 'Logout' %}">Выход</a>
                     </nav>
                 </div>
 
@@ -27,30 +27,30 @@
                             <form class="contacts-form col-12 p-0">
                                 <div class="form-group col-md-9 col-lg-8 col-xl-6 p-0">
                                     <label for="inputName">Имя  <span class="font-weight-bold">*</span></label>
-                                    <input type="text" class="form-control" id="inputName">
+                                    <input type="text" class="form-control" id="cd_name" value="{{ user.first_name }}">
                                 </div>
                                 <div class="form-group col-md-9 col-lg-8 col-xl-6 p-0">
                                     <label for="inputSurname">Фамилия <span class="font-weight-bold">*</span></label>
-                                    <input type="text" class="form-control" id="inputSurname">
+                                    <input type="text" class="form-control" id="cd_surname" value="{{ user.last_name }}">
                                 </div>
                                 <div class="form-group col-md-9 col-lg-8 col-xl-6 p-0">
                                     <label for="inputPatron">Отчество <span class="font-weight-bold">*</span></label>
-                                    <input type="text" class="form-control" id="inputPatron">
+                                    <input type="text" class="form-control" id="cd_patron" value="{{ users.patronymic }}">
                                 </div>
                                 <div class="form-group col-12 col-md-12 col-lg-12 col-xl-8 p-0">
                                     <label for="inputTel">Контактный номер телефона <span class="font-weight-bold">*</span></label>
-                                    <input type="tel" class="form-control col-10 col-md-9 col-lg-8 col-xl-9 d-inline" id="inputTel">
+                                    <input type="tel" class="form-control col-10 col-md-9 col-lg-8 col-xl-9 d-inline" id="cd_phone" value="{{ users.phone }}">
                                     <span class="notice col-1 col-md-6 col-lg-1 pr-0" data-toggle="tooltip" data-placement="top" title="Всплывающая подсказка">
                                         <i class="fa fa-question-circle" aria-hidden="true"></i>
                                     </span>
                                 </div>
                                 <div class="form-group col-md-9 col-lg-8 col-xl-6 p-0">
                                     <label for="inputTel">E-mail <span class="font-weight-bold">*</span></label>
-                                    <input type="text" class="form-control" id="inputTel">
+                                    <input type="text" class="form-control" id="cd_email" value="{{ user.email }}">
                                 </div>
                                 <div class="form-group col-12 col-md-12 col-lg-12 col-xl-8 p-0">
                                     <label for="inputAddr">Адрес для отправки</label><br class="d-md-block d-lg-block d-xl-block">
-                                    <input type="text" class="form-control col-10 col-md-9 col-lg-8 col-xl-9 d-inline" id="inputAddr">
+                                    <input type="text" class="form-control col-10 col-md-9 col-lg-8 col-xl-9 d-inline" id="cd_address" value="{{ users.adress }}">
                                     <span class="notice col-1 col-md-6 col-lg-1 pr-0" data-toggle="tooltip" data-placement="top" title="Всплывающая подсказка">
                                         <i class="fa fa-question-circle" aria-hidden="true"></i>
                                     </span>
@@ -63,15 +63,15 @@
                                 <div class="change-pass_blk mt-2" id="change-pass_blk">
                                     <div class="form-group col-md-9 col-lg-8 col-xl-6 p-0">
                                         <label for="inputOldPass">Старый пароль <span class="font-weight-bold">*</span></label>
-                                        <input type="password" class="form-control" id="inputOldPass">
+                                        <input type="password" class="form-control" id="cd_pass1">
                                     </div>
                                     <div class="form-group col-md-9 col-lg-8 col-xl-6 p-0">
                                         <label for="inputNewPass">Новый пароль <span class="font-weight-bold">*</span></label>
-                                        <input type="password" class="form-control" id="inputNewPass">
+                                        <input type="password" class="form-control" id="cd_pass2">
                                     </div>
                                     <div class="form-group col-md-9 col-lg-8 col-xl-6 p-0">
                                         <label for="inputRepPass">Повторите новый пароль <span class="font-weight-bold">*</span></label>
-                                        <input type="password" class="form-control" id="inputRepPass">
+                                        <input type="password" class="form-control" id="cd_pass3">
                                     </div>
                                 </div>
 
@@ -80,7 +80,7 @@
                                     <hr class="hr-divider">
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12 d-flex flex-wrap justify-content-md-start align-items-center p-0 mt-4">
-                                    <button type="submit" class="btn save-btn mx-auto mx-md-0">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
+                                    <button type="button" class="btn save-btn mx-auto mx-md-0" id="btn_change_contact_details">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
                                 </div>
                             </form>
                         </div>

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import *
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.core.files.storage import FileSystemStorage
-import xlrd, xlwt, json, re, hashlib
+import xlrd, xlwt, json, re, hashlib, random
 from django.contrib.auth import authenticate, login, logout, hashers
 from django.core.validators import validate_email
 from django.db import transaction
@@ -10,24 +10,53 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 import os
+from django.conf import settings
 
-def get_user_id(request):
-    user=request.session.get('username',False)
-    if user:
-        try:
-            user=AuthUser.objects.get(username=user).id
-        except:
-            user=False
-    return user
 
-def func_contact():
+def global_function(request):
     number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
     email = Contact.objects.filter(is_main=True, contact_id=4)[0].text
-    return number, email
+
+    basket = 0
+    ses = request.session.get(settings.CART_SESSION_ID)
+    if ses:
+        for i in ses.values():
+            basket += int(i['price'])
+
+    result_dict = {
+        'number': number,
+        'email': email,
+        'basket': basket
+    }
+    return result_dict
+
+
+def get_user_id(request):
+    user = request.session.get('username', False)
+    if user:
+        try:
+            user = AuthUser.objects.get(username=user).id
+        except:
+            user = False
+    print('user')
+    print(user)
+    return user
 
 
 def Main(request):
-    number, email = func_contact()
+    print(request.session.get('username', False))
+    # inc=0;
+    # pr=Product.objects.all()
+    # for i in pr:
+    #     i.main_photo='uploads/test_7.png'
+    #     i.price=random.randrange(100,20000,10)
+    #     i.artikul=random.randrange(11111111,99999999)
+    #     i.count=random.randrange(1,100)
+    #     i.save()
+    #     inc+=1
+    #     print(inc)
+
+    dic = global_function(request)
     slide_first = Slider.objects.all()[0]
     slide = Slider.objects.all()[1:]
     main_block = MainBlock.objects.all()
@@ -36,24 +65,24 @@ def Main(request):
         face = Product.objects.order_by('-id').filter(category__name='Для лица')
     else:
         face = Product.objects.order_by('-id').filter(category__name='Для лица')[0:10]
-    print(face)
+    # print(face)
     hair_count = Product.objects.order_by('-id').filter(category__name='Для волос').count()
     if hair_count < 10:
         hair = Product.objects.order_by('-id').filter(category__name='Для волос')
     else:
         hair = Product.objects.order_by('-id').filter(category__name='Для волос')[0:10]
-    print(hair)
+    # print(hair)
     body_count = Product.objects.order_by('-id').filter(category__name='Для тела').count()
     if body_count < 10:
         body = Product.objects.order_by('-id').filter(category__name='Для тела')
     else:
         body = Product.objects.order_by('-id').filter(category__name='Для тела')[0:10]
-    print(body)
+    # print(body)
     return render(request, 'Main/Main.html', locals())
 
 
 def Dev(request):
-    number, email = func_contact()
+    dic = global_function(request)
     return render(request, 'Main/Dev.html', locals())
 
 
@@ -75,7 +104,7 @@ def Save_excel_file(request):
                     print(categ)
                     res = ResourceType.objects.filter(category=categ[0]).filter(name=v[9])
                     if res.count() == 0:
-                        res=ResourceType(category=categ[0],name=v[9])
+                        res = ResourceType(category=categ[0], name=v[9])
                         res.save()
                         res = ResourceType.objects.filter(category=categ[0]).filter(name=v[9])
                     print(res)
@@ -133,11 +162,11 @@ def Save_excel_file(request):
                                     product_need.save()
                             print(2)
                             if v[13] != "" and v[13] != " ":
-                                tones=v[13]
-                                list_tone=tones.split('; ')
+                                tones = v[13]
+                                list_tone = tones.split('; ')
                                 if list_tone != "" and list_tone.count != 0:
                                     for t in list_tone:
-                                        product_tone=ProductTone(product=product,name=t)
+                                        product_tone = ProductTone(product=product, name=t)
                                         product_tone.save()
                         else:
                             product = product[0]
@@ -159,40 +188,25 @@ def Save_excel_file(request):
 #     number, email = func_contact()
 #     return render(request, 'Main/../templates/News/News_details.html', locals())
 
-def Search_results(request):
-    number, email = func_contact()
-    return render(request, 'Main/Search_results.html', locals())
-
-
-
+# def Search_results(request):
+#     dic = global_function(request)
+#     return render(request, 'Main/Search_results.html', locals())
 
 
 def Log_in(request):
-    number, email = func_contact()
-    if get_user_id:
+    dic = global_function(request)
+    if get_user_id(request):
         return HttpResponseRedirect(reverse('Main'))
     else:
         return render(request, 'Main/Log_in.html', locals())
 
 
 def Registration(request):
-    number, email = func_contact()
-    if get_user_id:
+    dic = global_function(request)
+    if get_user_id(request):
         return HttpResponseRedirect(reverse('Main'))
     else:
         return render(request, 'Main/Registration.html', locals())
-
-def Orders_history(request):
-    number, email = func_contact()
-    return render(request, 'Main/Orders_history.html', locals())
-
-def Delivery_address(request):
-    number, email = func_contact()
-    return render(request, 'Main/Delivery_address.html', locals())
-
-def Contact_details(request):
-    number, email = func_contact()
-    return render(request, 'Main/Contact_details.html', locals())
 
 
 def check_login(request):
@@ -231,8 +245,6 @@ def check_register(request):
         adress = request.GET.get('adress')
         pass1 = request.GET.get('pass1')
         pass2 = request.GET.get('pass2')
-        # print(pass1)
-        # print(pass2)
         pass3 = pass1
 
         if AuthUser.objects.filter(email=email).exists():
@@ -241,7 +253,7 @@ def check_register(request):
         try:
             check_email = validate_email(email)
         except:
-            check_email = False
+            # check_email = False
             return HttpResponse(json.dumps('Email введён неверно!'))
 
         if len(name) == 0 or len(surename) == 0 or len(patronymic) == 0 or len(phone) == 0:
@@ -260,7 +272,7 @@ def check_register(request):
         # print(check_pass)
         if not check_pass:
             return HttpResponse(json.dumps(
-                'Пароль должен быть не менее 8 символов, содержать только латинские буквы, как минимум одну заглавную букву и цифру!'))
+                'Пароль должен быть не менее 8 символов, содержать только латинские буквы, и как минимум одну заглавную букву и цифру!'))
 
         with transaction.atomic():
             # print(user.email)

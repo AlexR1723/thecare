@@ -39,12 +39,12 @@
                                         <p class="price text-center m-0">{{ i.price }} руб</p>
                                     </div>
                                     <div class="col-6 col-md-3 col-lg-3 col-xl-3 my-auto">
-                                        <div class="items-counter text-center">
-                                            <button class="minus btn_cart_minus" data-slug="{{ i.slug }}">
+                                        <div class="items-counter text-center" data-slug="{{ i.slug }}">
+                                            <button class="minus btn_cart_minus">
                                                 <i class="fa fa-minus" aria-hidden="true"></i>
                                             </button>
-                                            <input type="number" value="{{ prod_ses|get_prod_count:i.slug }}"/>
-                                            <button class="plus btn_cart_plus" data-slug="{{ i.slug }}">
+                                            <input class="cart_item_input" type="number" value="{{ prod_ses|get_prod_count:i.slug }}"/>
+                                            <button class="plus btn_cart_plus" >
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                             </button>
                                         </div>

@@ -6,6 +6,9 @@ body {
     background-color: #fff;
     font-family: 'Comfortaa', cursive;
 }
+button:active, button:focus {
+  outline: none;
+}
 .h_vh{
     height: 70vh;
 }
