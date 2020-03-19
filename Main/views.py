@@ -72,23 +72,18 @@ def Save_excel_file(request):
             for v in vals:
                 if v[1] != "" and v[1] != "Привязка к позиции":
                     categ = CategoryType.objects.filter(name=v[8])
-                    print(categ)
                     res = ResourceType.objects.filter(category=categ[0]).filter(name=v[9])
                     if res.count() == 0:
                         res=ResourceType(category=categ[0],name=v[9])
                         res.save()
                         res = ResourceType.objects.filter(category=categ[0]).filter(name=v[9])
-                    print(res)
                     brand = Brands_model.objects.filter(name=v[2])
                     if brand.count() == 0:
                         brand = Brands_model(name=v[2])
                         brand.save()
                     else:
                         brand = Brands_model.objects.get(name=v[2])
-                    print(brand)
-                    print(v[12])
                     size = Size.objects.filter(name=v[12])
-                    print(size)
                     product = Product.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(shot_description=v[4])
                     if categ.count() > 0 and res.count() > 0 and size.count() > 0:
                         if product.count() == 0:
@@ -96,53 +91,42 @@ def Save_excel_file(request):
                             product = Product(title=v[3], shot_description=v[4], description=v[5], note=v[6],
                                               components=v[7],
                                               category=categ[0], resource=res[0], brand=brand)
-                            # product = Product(title=v[3], shot_description=v[4], description=v[5], note=v[6],
-                            #                   components=v[7],
-                            #                   category=categ, resource=res, artikul=v[13], price=v[15], brand=brand[0])
                             product.save()
-                            needs = v[10]
-                            list_need = needs.split(', ')
-                            if list_need.count == 0:
-                                need = NeedType.objects.filter(name=needs)
-                                if need.count() == 0:
-                                    need = NeedType(name=needs, category=categ[0])
-                                    need.save()
-                                    need = NeedType.objects.filter(name=needs)
-                                #     product_need = ProductNeed(product=product, need=need[0])
-                                #     product_need.save()
-                                # else:
-                                #     need = NeedType(name=needs, category=categ[0])
-                                #     need.save()
-                                #     need = NeedType.objects.filter(name=needs)
-                                product_need = ProductNeed(product=product, need=need[0])
-                                product_need.save()
-                            else:
-                                for n in list_need:
-                                    need = NeedType.objects.filter(name=n)
-                                    if need.count() == 0:
-                                        need = NeedType(name=needs, category=categ[0])
-                                        need.save()
-                                        need = NeedType.objects.filter(name=needs)
-                                    #     product_need = ProductNeed(product=product, need=need[0])
-                                    #     product_need.save()
-                                    # else:
-                                    #     need = NeedType(name=needs, category=categ[0])
-                                    #     need.save()
-                                    #     need = NeedType.objects.filter(name=needs)
-                                    product_need = ProductNeed(product=product, need=need[0])
-                                    product_need.save()
-                            print(2)
-                            if v[13] != "" and v[13] != " ":
-                                tones=v[13]
-                                list_tone=tones.split('; ')
-                                if list_tone != "" and list_tone.count != 0:
-                                    for t in list_tone:
-                                        product_tone=ProductTone(product=product,name=t)
-                                        product_tone.save()
                         else:
                             product = product[0]
+                        needs = v[10]
+                        list_need = needs.split(', ')
+                        print(list_need)
+                        if list_need.count == 1:
+                            need = NeedType.objects.filter(name=needs)
+                            if need.count() == 0:
+                                need = NeedType(name=needs, category=categ[0])
+                                need.save()
+                                need = NeedType.objects.filter(name=needs)
+                            product_need = ProductNeed.objects.filter(need=need[0]).filter(product=product)
+                            if product_need.count() == 0:
+                                product_need = ProductNeed(product=product, need=need[0])
+                                product_need.save()
+                        else:
+                            for n in list_need:
+                                need = NeedType.objects.filter(name=n)
+                                if need.count() == 0:
+                                    need = NeedType(name=n, category=categ[0])
+                                    need.save()
+                                    need = NeedType.objects.filter(name=n)
+                                product_need = ProductNeed.objects.filter(need=need[0]).filter(product=product)
+                                if product_need.count() == 0:
+                                    product_need = ProductNeed(product=product, need=need[0])
+                                    product_need.save()
+                        print(2)
+                        if v[13] != "" and v[13] != " ":
+                            tones = v[13]
+                            list_tone = tones.split('; ')
+                            if list_tone != "" and list_tone.count != 0:
+                                for t in list_tone:
+                                    product_tone = ProductTone(product=product, name=t)
+                                    product_tone.save()
                         product_size = ProductSize.objects.filter(size=size[0]).filter(product=product)
-                        print(product_size)
                         if product_size.count() == 0:
                             product_size = ProductSize(product=product, size=size[0])
                             product_size.save()
