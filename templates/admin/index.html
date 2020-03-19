@@ -42,6 +42,13 @@
                 btn.click();
              }
         });
+        $('input#image-file-admin').on('change', function () {
+            var fileName = $(this).val();
+            if (fileName) {
+                var btn=$('#submit-image-file-admin');
+                btn.click();
+             }
+        });
     }
     </script>
     <div>
@@ -53,9 +60,23 @@
             <input type="file" class="mb-1 form-control prof-file d-none" name="excel-file" id="excel-file-admin">
             <label for="excel-file-admin" class="btn btn-tertiary js-labelFile">
                  <i class="fas fa-upload" aria-hidden="true"></i>
-                 <span class="js-fileName">Загрузить файлы</span>
+                 <span class="js-fileName">Загрузить файл</span>
             </label>
             <button type="submit" id="submit-excel-file-admin" class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить</button>
+             </form>
+    </div>
+
+    <div class="upload-file">
+
+        <form class="w-100" action="{% url 'Product_image_save' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+            <label class="text">Выборите изображения для добавления к товарам:</label>
+            <input type="file" class="mb-1 form-control prof-file d-none" name="image-file" id="image-file-admin" multiple="multiple">
+            <label for="image-file-admin" class="btn btn-tertiary js-labelFile">
+                 <i class="fas fa-upload" aria-hidden="true"></i>
+                 <span class="js-fileName">Загрузить изображения</span>
+            </label>
+            <button type="submit" id="submit-image-file-admin" class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить</button>
              </form>
     </div>
 {##}

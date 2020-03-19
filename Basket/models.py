@@ -95,7 +95,7 @@ class Product(models.Model):
     title = models.CharField(max_length=500, blank=True, null=True, verbose_name="Наименование")
     shot_description = models.TextField(blank=True, null=True, verbose_name="Краткое описание")
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
-    main_photo = models.ImageField(upload_to='uploads/', blank=True, null=True, verbose_name="Фото")
+    main_photo = models.ImageField(upload_to='uploads/product/', max_length=500, blank=True, null=True, verbose_name="Фото")
     price = models.IntegerField(blank=True, null=True, verbose_name="Стоимость")
     artikul = models.IntegerField(blank=True, null=True, verbose_name="Артикул")
     note = models.TextField(blank=True, null=True, verbose_name="Примечание")

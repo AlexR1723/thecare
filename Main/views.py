@@ -183,6 +183,20 @@ def Save_excel_file(request):
                         print(product)
     return HttpResponseRedirect("/admin")
 
+def Product_image_save(request):
+    print('Save_image_file')
+    if request.method == 'POST':
+        doc = request.FILES
+        if (doc):
+            for d in doc.getlist('image-file'):
+                name=d.name.split('.')[0]
+                product=Product.objects.filter(id=name)
+                print(product)
+                if product.count() > 0:
+                    product = Product.objects.get(id=name)
+                    product.main_photo = d
+                    product.save()
+    return HttpResponseRedirect("/admin")
 
 # def News(request):
 #     number, email = func_contact()
