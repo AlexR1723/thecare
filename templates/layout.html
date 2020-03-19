@@ -157,6 +157,11 @@
                                     <li class="nav-item">
                                         <a class="nav-link " href="{% url 'Contacts' %}">Контакты</a>
                                     </li>
+                                    {%  if dic|get_dict:'is_auth' %}
+                                        <li class="nav-item">
+                                            <a class="nav-link " href="{% url 'Orders_history' %}">Личный кабинет</a>
+                                        </li>
+                                    {% endif %}
                                 </ul>
                             </div>
                             <div class="col-9 col-md-4 col-lg-3 mx-auto mx-lg-0">
