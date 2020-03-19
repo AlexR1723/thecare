@@ -11,14 +11,24 @@ def global_function(request):
 
     basket = 0
     ses = request.session.get(settings.CART_SESSION_ID)
-    if ses:
+    if ses and ses is not None:
         for i in ses.values():
             basket += int(i['price'])
+
+    is_auth = request.user.is_authenticated
+    if is_auth:
+        is_auth = request.session.get('username', False)
+
+    user_name = ''
+    if is_auth:
+        user_name = AuthUser.objects.get(username=is_auth).first_name
 
     result_dict = {
         'number': number,
         'email': email,
-        'basket': basket
+        'basket': basket,
+        'is_auth': is_auth,
+        'user_name': user_name
     }
     return result_dict
 
@@ -246,6 +256,10 @@ def get_url(url, rec=False):
 
 
 def left_filter(url_page, head, filter=False, prod=False):
+    # print('url_page')
+    # print(url_page)
+    # print('head')
+    # print(head)
     if head == 'Поиск':
         names = str(url_page).lower().split('_')
         qname = Q()
@@ -268,6 +282,9 @@ def left_filter(url_page, head, filter=False, prod=False):
         resource = ResourceType.objects.filter(category__name__icontains=head).order_by('name')
         need = NeedType.objects.filter(category__name__icontains=head).order_by('name')
         brands = Brands_model.objects.all().order_by('name')
+        # print(resource)
+        # print(need)
+        # print(brands)
         if prod != False and prod.count() == 0:
             return resource, need, brands, prod
 

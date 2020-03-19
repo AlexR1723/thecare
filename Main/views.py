@@ -19,14 +19,24 @@ def global_function(request):
 
     basket = 0
     ses = request.session.get(settings.CART_SESSION_ID)
-    if ses:
+    if ses and ses is not None:
         for i in ses.values():
             basket += int(i['price'])
+
+    is_auth = request.user.is_authenticated
+    if is_auth:
+        is_auth = request.session.get('username', False)
+
+    user_name = ''
+    if is_auth:
+        user_name = AuthUser.objects.get(username=is_auth).first_name
 
     result_dict = {
         'number': number,
         'email': email,
-        'basket': basket
+        'basket': basket,
+        'is_auth': is_auth,
+        'user_name': user_name
     }
     return result_dict
 
@@ -38,13 +48,13 @@ def get_user_id(request):
             user = AuthUser.objects.get(username=user).id
         except:
             user = False
-    print('user')
-    print(user)
+    # print('user')
+    # print(user)
     return user
 
 
 def Main(request):
-    print(request.session.get('username', False))
+    # print(request.session.get('username', False))
     # inc=0;
     # pr=Product.objects.all()
     # for i in pr:
@@ -179,7 +189,7 @@ def Save_excel_file(request):
 
 def Log_in(request):
     dic = global_function(request)
-    if get_user_id(request):
+    if get_user_id(request) or request.user.is_authenticated:
         return HttpResponseRedirect(reverse('Main'))
     else:
         return render(request, 'Main/Log_in.html', locals())
@@ -187,7 +197,7 @@ def Log_in(request):
 
 def Registration(request):
     dic = global_function(request)
-    if get_user_id(request):
+    if get_user_id(request) or request.user.is_authenticated:
         return HttpResponseRedirect(reverse('Main'))
     else:
         return render(request, 'Main/Registration.html', locals())
@@ -210,8 +220,10 @@ def check_login(request):
         if user is None:
             return HttpResponse(json.dumps('Логин или пароль введены неверно!'))
         else:
+            # ses = request.session.get(settings.CART_SESSION_ID)
             login(request, user)
             request.session['username'] = AuthUser.objects.get(id=user.id).username
+            # request.session[settings.CART_SESSION_ID] = ses
             request.session.modified = True
             return HttpResponse(json.dumps(True))
     except:
@@ -274,7 +286,7 @@ def check_register(request):
             user1.save()
 
             # print(user2.id)
-            us = Users(user_id=user1.id, patronymic=patronymic, phone=phone, adress=adress)
+            us = Users(user_id=user1.id, patronymic=patronymic, phone=phone, city=adress, house='', street='', flat='')
             us.save()
             return HttpResponse(json.dumps(True))
     except:

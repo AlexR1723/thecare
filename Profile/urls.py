@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^contact_details/$', views.Contact_details, name="Contact_details"),
     url(r'^logout/$', views.Logout, name="Logout"),
     url(r'change_contact_details', views.change_contact_details, name="change_contact_details"),
+    url(r'change_address', views.change_address, name="change_address"),
 ]

@@ -310,6 +310,10 @@ class Users(models.Model):
     patronymic = models.TextField(blank=True, null=True)
     phone = models.TextField(blank=True, null=True)
     adress = models.TextField(blank=True, null=True)
+    city = models.TextField(blank=True, null=True)
+    street = models.TextField(blank=True, null=True)
+    house = models.TextField(blank=True, null=True)
+    flat = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False

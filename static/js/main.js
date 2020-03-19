@@ -472,9 +472,9 @@ $('#btn_change_contact_details').click(function () {
     let name = document.getElementById('cd_name').value
     let surname =  document.getElementById('cd_surname').value
     let patron =  document.getElementById('cd_patron').value
-    let email =  document.getElementById('cd_email').value
+    // let email =  document.getElementById('cd_email').value
     let phone =  document.getElementById('cd_phone').value
-    let address =  document.getElementById('cd_address').value
+    // let address =  document.getElementById('cd_address').value
     let pass1 =  document.getElementById('cd_pass1').value
     let pass2 =  document.getElementById('cd_pass2').value
     let pass3 =  document.getElementById('cd_pass3').value
@@ -487,12 +487,76 @@ $('#btn_change_contact_details').click(function () {
             name: name,
             surname: surname,
             patron: patron,
-            email: email,
+            // email: email,
             phone: phone,
-            address: address,
+            // address: address,
             pass1: pass1,
             pass2: pass2,
             pass3: pass3
+        },
+        success: function (data) {
+            if (data !== false) {
+                notice(data)
+                // document.getElementById('user_basket_total').innerText = data + ' руб.'
+                // notice('Добавлено в корзину')
+            } else {
+                // notice('Произошла ошибка, попробуйте позже!')
+                window.location.href='/log_in'
+            }
+        },
+        error: function (data) {
+            alert('error')
+        }
+    })
+})
+
+$('#btn_change_address').click(function () {
+    let city = document.getElementById('da_city').value
+    let street = document.getElementById('da_street').value
+    let house = document.getElementById('da_house').value
+    let flat = document.getElementById('da_flat').value
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        async: false,
+        url: '/profile/change_address',
+        data: {
+            city: city,
+            street: street,
+            house: house,
+            flat: flat
+        },
+        success: function (data) {
+            if (data !== false) {
+                notice(data)
+                // document.getElementById('user_basket_total').innerText = data + ' руб.'
+                // notice('Добавлено в корзину')
+            } else {
+                // notice('Произошла ошибка, попробуйте позже!')
+                window.location.href='/log_in'
+            }
+        },
+        error: function (data) {
+            alert('error')
+        }
+    })
+})
+
+$('#btn_buy_products').click(function () {
+    let city = document.getElementById('da_city').value
+    let street = document.getElementById('da_street').value
+    let house = document.getElementById('da_house').value
+    let flat = document.getElementById('da_flat').value
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        async: false,
+        url: '/basket/buy_products',
+        data: {
+            city: city,
+            street: street,
+            house: house,
+            flat: flat
         },
         success: function (data) {
             if (data !== false) {

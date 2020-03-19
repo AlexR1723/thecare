@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import *
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.core.files.storage import FileSystemStorage
-import xlrd, xlwt, json, re, hashlib
+import xlrd, xlwt, json, re, hashlib,random
 from django.contrib.auth import authenticate, login, logout, hashers
 from django.core.validators import validate_email
 from django.db import transaction
@@ -20,14 +20,24 @@ def global_function(request):
 
     basket = 0
     ses = request.session.get(settings.CART_SESSION_ID)
-    if ses:
+    if ses and ses is not None:
         for i in ses.values():
             basket += int(i['price'])
+
+    is_auth = request.user.is_authenticated
+    if is_auth:
+        is_auth = request.session.get('username', False)
+
+    user_name = ''
+    if is_auth:
+        user_name = AuthUser.objects.get(username=is_auth).first_name
 
     result_dict = {
         'number': number,
         'email': email,
-        'basket': basket
+        'basket': basket,
+        'is_auth': is_auth,
+        'user_name': user_name
     }
     return result_dict
 
@@ -67,18 +77,26 @@ def check_product_exist(request):
 
 # Create your views here.
 def Cart(request):
-    # number, email = func_contact()
     dic = global_function(request)
     prod_ses = request.session.get(settings.CART_SESSION_ID)
     check_product_exist(request)
-    print(prod_ses)
-    # print(sorted(prod_ses))
-    all_prices = 0
-    for i in prod_ses.values():
-        all_prices += int(i['price'])
-    products = Product.objects.filter(slug__in=prod_ses.keys())
 
-    # print(list(prod_ses))
+
+
+    # inc=0
+    # prods=Product.objects.all()
+    # for i in prods:
+    #     i.price=random.randrange(500,12000,10)
+    #     i.main_photo='uploads/test_7.png'
+    #     i.save()
+    #     inc+=1
+    #     print(inc)
+
+    all_prices = 0
+    if prod_ses is not None:
+        for i in prod_ses.values():
+            all_prices += int(i['price'])
+        products = Product.objects.filter(slug__in=prod_ses.keys())
     return render(request, 'Main/Cart.html', locals())
 
 
@@ -95,7 +113,9 @@ def create_cart_session(request):
     try:
         ses = request.session.get(settings.CART_SESSION_ID)
         if not ses:
+            print('not ses')
             request.session[settings.CART_SESSION_ID] = {}
+            print(request.session.get(settings.CART_SESSION_ID))
             return request.session.get(settings.CART_SESSION_ID)
         else:
             return ses
@@ -104,74 +124,77 @@ def create_cart_session(request):
 
 
 def add_product(request):
-    try:
-        ses = create_cart_session(request)
-        if ses != False:
-            slug = request.GET.get('slug')
-            count = request.GET.get('count')
-            minus = request.GET.get('minus')
-            is_del = request.GET.get('del')
-            is_cart = request.GET.get('is_cart')
+    # try:
+    ses = create_cart_session(request)
+    if ses != False:
+        slug = request.GET.get('slug')
+        count = request.GET.get('count')
+        minus = request.GET.get('minus')
+        is_del = request.GET.get('del')
+        is_cart = request.GET.get('is_cart')
 
-            is_plus_minus = False
-            if minus or not count:
-                is_plus_minus = True
-            # print('count')
-            # print(count)
-            if not count or int(count) < 1:
-                # print('count = 1')
-                count = 1
-            # if int(count)<0:
-            #     print(count)
-            #     count=int(count)*(-1)
-            product = Product.objects.get(slug=slug)
-            if slug not in ses:
-                ses[slug] = {'count': count, 'price': int(product.price) * int(count)}
-            else:
-                if is_del:
-                    del ses[slug]
-                    session_save(request, ses)
-                    all_prices = 0
-                    for i in request.session.get(settings.CART_SESSION_ID).values():
-                        all_prices += int(i['price'])
-                    return HttpResponse(json.dumps(all_prices))
+        is_plus_minus = False
+        if minus or not count:
+            is_plus_minus = True
+        # print('count')
+        # print(count)
+        if not count or int(count) < 1:
+            # print('count = 1')
+            count = 1
+        # if int(count)<0:
+        #     print(count)
+        #     count=int(count)*(-1)
 
-                # print(int(product.price))
-                # print(int(count))
-                if minus:
-                    if ses[slug]['count'] > 1:
-                        ses[slug]['count'] = int(ses[slug]['count']) - int(count)
-                else:
-                    # print('here')
-                    if is_cart:
-                        ses[slug]['count'] = int(count)
-                    else:
-                        ses[slug]['count'] = int(ses[slug]['count']) + int(count)
-                ses[slug]['price'] = int(product.price) * ses[slug]['count']
-            session_save(request, ses)
-            print('last ses')
-            print(request.session.get(settings.CART_SESSION_ID))
-            all_prices = 0
-            for i in request.session.get(settings.CART_SESSION_ID).values():
-                all_prices += int(i['price'])
-            if is_plus_minus or is_cart:
-                return HttpResponse(json.dumps([request.session.get(settings.CART_SESSION_ID)[slug]['price'],
-                                                request.session.get(settings.CART_SESSION_ID)[slug]['count'],
-                                                all_prices]))
-            else:
-                return HttpResponse(json.dumps(all_prices))
+        product = Product.objects.get(slug=slug)
+        print(product.price)
+        print(count)
+        if slug not in ses:
+            ses[slug] = {'count': count, 'price': int(product.price) * int(count)}
         else:
-            return HttpResponse(json.dumps(False))
-    except:
-        return HttpResponse(json.dumps(False))
+            if is_del:
+                del ses[slug]
+                session_save(request, ses)
+                all_prices = 0
+                for i in request.session.get(settings.CART_SESSION_ID).values():
+                    all_prices += int(i['price'])
+                return HttpResponse(json.dumps(all_prices))
 
-# def cart_item_plus(request):
-#     try:
-#         ses = request.session.get(settings.CART_SESSION_ID)
-#         if not ses:
-#             request.session[settings.CART_SESSION_ID] = {}
-#             return request.session.get(settings.CART_SESSION_ID)
-#         else:
-#             return ses
-#     except:
-#         return False
+            # print(int(product.price))
+            # print(int(count))
+            if minus:
+                if ses[slug]['count'] > 1:
+                    ses[slug]['count'] = int(ses[slug]['count']) - int(count)
+            else:
+                # print('here')
+                if is_cart:
+                    ses[slug]['count'] = int(count)
+                else:
+                    ses[slug]['count'] = int(ses[slug]['count']) + int(count)
+            ses[slug]['price'] = int(product.price) * ses[slug]['count']
+        session_save(request, ses)
+        print('last ses')
+        print(request.session.get(settings.CART_SESSION_ID))
+        all_prices = 0
+        for i in request.session.get(settings.CART_SESSION_ID).values():
+            all_prices += int(i['price'])
+        if is_plus_minus or is_cart:
+            return HttpResponse(json.dumps([request.session.get(settings.CART_SESSION_ID)[slug]['price'],
+                                            request.session.get(settings.CART_SESSION_ID)[slug]['count'],
+                                            all_prices]))
+        else:
+            return HttpResponse(json.dumps(all_prices))
+    else:
+        return HttpResponse(json.dumps(False))
+    # except:
+    #     return HttpResponse(json.dumps(False))
+
+def buy_products(request):
+    try:
+        ses = request.session.get(settings.CART_SESSION_ID)
+        if not ses:
+            request.session[settings.CART_SESSION_ID] = {}
+            return request.session.get(settings.CART_SESSION_ID)
+        else:
+            return ses
+    except:
+        return False
