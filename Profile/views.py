@@ -23,10 +23,13 @@ def global_function(request):
         for i in ses.values():
             basket += int(i['price'])
 
+    is_auth=request.session.get('username',False)
+
     result_dict = {
         'number': number,
         'email': email,
-        'basket': basket
+        'basket': basket,
+        'is_auth':is_auth
     }
     return result_dict
 
@@ -58,7 +61,7 @@ def Delivery_address(request):
 @login_required()
 def Contact_details(request):
     dic = global_function(request)
-
+    print(request.session.get('username',False))
     id=get_user_id(request)
     user=AuthUser.objects.get(id=id)
     users=Users.objects.get(user_id=id)
@@ -92,6 +95,7 @@ def change_contact_details(request):
             return HttpResponse(json.dumps('Заполните все необходимые поля!'))
         try:
             check_email = validate_email(email)
+
         except:
             return HttpResponse(json.dumps('Неверно заполнен E-mail!'))
 
@@ -101,6 +105,10 @@ def change_contact_details(request):
         user1.email=email
         user1.username=email
         user1.save()
+        user3 = authenticate(username=email, password=AuthUser.objects.get(id=user).password)
+        login(request, user3)
+        request.session['username'] = AuthUser.objects.get(id=user3.id).username
+        request.session.modified = True
 
         user2=Users.objects.get(user_id=user)
         user2.patronymic=patron
