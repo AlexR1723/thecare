@@ -100,21 +100,21 @@ class Product(models.Model):
     title = models.CharField(max_length=500, blank=True, null=True, verbose_name="Наименование")
     shot_description = models.TextField(blank=True, null=True, verbose_name="Краткое описание")
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
-    main_photo = models.ImageField(upload_to='uploads/', blank=True, null=True, verbose_name="Фото")
-    price = models.IntegerField(blank=True, null=True, verbose_name="Стоимость")
-    artikul = models.IntegerField(blank=True, null=True, verbose_name="Артикул")
+    main_photo = models.ImageField(upload_to='uploads/product/', max_length=500, blank=True, null=True, verbose_name="Фото")
+    price = models.IntegerField(blank=True, null=True, verbose_name="Стоимость", default=0)
+    artikul = models.TextField(blank=True, null=True, verbose_name="Артикул")
     note = models.TextField(blank=True, null=True, verbose_name="Примечание")
     components = models.TextField(blank=True, null=True, verbose_name="Состав")
     category = models.ForeignKey('CategoryType', models.DO_NOTHING, blank=True, null=True, verbose_name="Категория")
     resource = models.ForeignKey('ResourceType', models.DO_NOTHING, blank=True, null=True, verbose_name="Средство")
     brand = models.ForeignKey('Brands_model', models.DO_NOTHING, blank=True, null=True)
     slug = models.TextField(blank=True, null=True, verbose_name="Ссылка")
-    sale = models.IntegerField(blank=True, null=True)
+    sale = models.IntegerField(blank=True, null=True, default=0)
     sale_is_number = models.BooleanField(blank=True, null=True)
-    sale_price = models.IntegerField(blank=True, null=True)
+    sale_price = models.IntegerField(blank=True, null=True, default=0)
     date = models.DateField(blank=True, null=True)
-    artikul_brand = models.IntegerField(blank=True, null=True)
-    count = models.IntegerField(blank=True, null=True)
+    artik_brand = models.TextField(blank=True, null=True)
+    count = models.IntegerField(blank=True, null=True, default=0)
 
     class Meta:
         managed = False
@@ -162,6 +162,8 @@ class Size(models.Model):
 class ProductSize(models.Model):
     product = models.ForeignKey(Product, models.DO_NOTHING, blank=True, null=True)
     size = models.ForeignKey('Size', models.DO_NOTHING, blank=True, null=True)
+    price = models.IntegerField(blank=True, null=True, verbose_name="Стоимость", default=0)
+    count = models.IntegerField(blank=True, null=True, default=0)
 
     class Meta:
         managed = False

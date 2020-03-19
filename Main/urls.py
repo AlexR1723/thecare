@@ -19,6 +19,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.Main, name="Main"),
     url(r'^save_excel-file/$',views.Save_excel_file, name="Save_excel_file"),
+    url(r'^save_product-image/$', views.Product_image_save, name='Product_image_save'),
     url(r'^dev/$', views.Dev, name="Dev"),
     # url(r'^brands/$', views.Brands, name="Brands"),
     # url(r'^news/$', views.News, name="News"),

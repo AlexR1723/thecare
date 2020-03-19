@@ -223,7 +223,7 @@ class Product(models.Model):
     title = models.CharField(max_length=500, blank=True, null=True)
     shot_description = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    main_photo = models.TextField(blank=True, null=True)
+    main_photo = models.ImageField(upload_to='uploads/product/', max_length=500, blank=True, null=True, verbose_name="Фото")
     price = models.IntegerField(blank=True, null=True)
     artikul = models.IntegerField(blank=True, null=True)
     note = models.TextField(blank=True, null=True)
@@ -236,7 +236,7 @@ class Product(models.Model):
     sale_is_number = models.BooleanField(blank=True, null=True)
     sale_price = models.IntegerField(blank=True, null=True)
     date = models.DateField(blank=True, null=True)
-    artikul_brand = models.IntegerField(blank=True, null=True)
+    artik_brand = models.IntegerField(blank=True, null=True)
     count = models.IntegerField(blank=True, null=True)
 
     class Meta:

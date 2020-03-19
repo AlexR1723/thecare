@@ -229,6 +229,14 @@ $('#excel-file-admin').on('change', function () {
     }
 
 });
+$('#image-file-admin').on('change', function () {
+    var fileName = $(this).val();
+    if (fileName) {
+        var btn = $('#submit-image-file-admin');
+        btn.click();
+    }
+
+});
 
 function set_footer() {
     let body = document.getElementsByTagName('body')[0].getBoundingClientRect().height
