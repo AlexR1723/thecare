@@ -122,9 +122,9 @@
                     <div class="slider multiple-items w-100">
                         {% for b in body %}
                         <div class="card">
-{#                        {% if b.main_photo != null and b.main_photo != "" %}#}
+                        {% if b.main_photo != null and b.main_photo != "" %}
                             <img src="{{MEDIA_URL}}{{ b.main_photo.url }}" class="card-img-top" alt="...">
-{#                            {% endif %}#}
+                            {% endif %}
                             <div class="card-body">
                                 <h5 class="card-title mb-1">{{b.price}} руб</h5>
                                 <a href="{{ b.get_absolute_url }}">

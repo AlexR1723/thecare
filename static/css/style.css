@@ -1184,7 +1184,7 @@ footer .contact-list {
     right: 1.5rem;
     background: rgba(255,255,255,1);
     border-radius: .3rem;
-    opacity: 0;
+    display: none;
     border:2px solid rgb(225,48,117);
     transition: .3s;
 }
@@ -1244,7 +1244,7 @@ a.up{
     cursor: pointer;
 }
 .active-info{
-    opacity: 1 !important;
+    display: inline-block !important;
     transition: .3s;
     z-index: 9999;
 }
