@@ -17,5 +17,9 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-
+    url(r'^$', views.Orders_history, name="Orders_history"),
+    url(r'^delivery_address/$', views.Delivery_address, name="Delivery_address"),
+    url(r'^contact_details/$', views.Contact_details, name="Contact_details"),
+    url(r'^logout/$', views.Logout, name="Logout"),
+    url(r'change_contact_details', views.change_contact_details, name="change_contact_details"),
 ]

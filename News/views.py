@@ -3,11 +3,23 @@ from .models import *
 import datetime, traceback
 from uuslug import slugify
 
-
-def func_contact():
+from django.conf import settings
+def global_function(request):
     number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
     email = Contact.objects.filter(is_main=True, contact_id=4)[0].text
-    return number, email
+
+    basket = 0
+    ses = request.session.get(settings.CART_SESSION_ID)
+    if ses:
+        for i in ses.values():
+            basket += int(i['price'])
+
+    result_dict = {
+        'number': number,
+        'email': email,
+        'basket': basket
+    }
+    return result_dict
 
 
 def f_pages(page, queryset,count_item):
@@ -62,7 +74,7 @@ def f_pages(page, queryset,count_item):
 
 
 def News(request):
-    number, email = func_contact()
+    dic = global_function(request)
     # news = News_model.objects.all()[:10]
 
     # nws= News_model.objects.all()
@@ -113,7 +125,7 @@ def News(request):
 
 
 def News_page(request, page):
-    number, email = func_contact()
+    dic = global_function(request)
     try:
         page=int(page)
     except:
@@ -131,7 +143,7 @@ def News_page(request, page):
     return render(request, 'News/News.html', locals())
 
 def News_detail(request, slug):
-    number, email = func_contact()
+    dic = global_function(request)
 
     slug=str(slug)
     slug = slug.split('-')

@@ -4,11 +4,23 @@ from uuslug import slugify
 from django.db.models import Q
 import random
 
-
-def func_contact():
+from django.conf import settings
+def global_function(request):
     number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
     email = Contact.objects.filter(is_main=True, contact_id=4)[0].text
-    return number, email
+
+    basket = 0
+    ses = request.session.get(settings.CART_SESSION_ID)
+    if ses:
+        for i in ses.values():
+            basket += int(i['price'])
+
+    result_dict = {
+        'number': number,
+        'email': email,
+        'basket': basket
+    }
+    return result_dict
 
 
 def f_pages(page, queryset, count_item):
@@ -304,13 +316,13 @@ def left_filter(url_page, head, filter=False, prod=False):
 
 
 def Items_catalog(request):
-    number, email = func_contact()
+    dic = global_function(request)
 
     return render(request, 'Catalog/Items_catalog.html', locals())
 
 
 def Face(request):
-    number, email = func_contact()
+    dic = global_function(request)
 
     head = 'Средства для лица'
     product = Product.objects.all()
@@ -422,7 +434,7 @@ def Face(request):
 
 
 def Catalog(request, head_url):
-    number, email = func_contact()
+    dic = global_function(request)
 
     # head = 'Для мужчин'
     # url_page = 'for_men'
@@ -458,7 +470,7 @@ def Catalog(request, head_url):
 
 
 def Catalog_filter(request, head_url, filter):
-    number, email = func_contact()
+    dic = global_function(request)
 
     # head = 'Для мужчин'
     # url_page = 'for_men'
@@ -490,7 +502,7 @@ def Catalog_filter(request, head_url, filter):
 
 
 def Catalog_page(request, head_url, page):
-    number, email = func_contact()
+    dic = global_function(request)
 
     # head = 'Для мужчин'
     # url_page = 'for_men'
@@ -526,7 +538,7 @@ def Catalog_page(request, head_url, page):
 
 
 def Catalog_page_filter(request, head_url, page, filter):
-    number, email = func_contact()
+    dic = global_function(request)
 
     # head = 'Для мужчин'
     # url_page = 'for_men'
@@ -560,7 +572,7 @@ def Catalog_page_filter(request, head_url, page, filter):
 
 
 def Catalog_search(request, head_url, text):
-    number, email = func_contact()
+    dic = global_function(request)
 
     # head = 'Для мужчин'
     # url_page = 'for_men'
@@ -593,7 +605,7 @@ def Catalog_search(request, head_url, text):
 
 
 def Catalog_search_filter(request, head_url, text, filter):
-    number, email = func_contact()
+    dic = global_function(request)
 
     # head = 'Для мужчин'
     # url_page = 'for_men'
@@ -624,7 +636,7 @@ def Catalog_search_filter(request, head_url, text, filter):
 
 
 def Catalog_search_page(request, head_url, text, page):
-    number, email = func_contact()
+    dic = global_function(request)
 
     # head = 'Для мужчин'
     # url_page = 'for_men'
@@ -660,7 +672,7 @@ def Catalog_search_page(request, head_url, text, page):
 
 
 def Catalog_search_page_filter(request, head_url, text, page, filter):
-    number, email = func_contact()
+    dic = global_function(request)
 
     # head = 'Для мужчин'
     # url_page = 'for_men'
@@ -696,7 +708,7 @@ def Catalog_search_page_filter(request, head_url, text, page, filter):
 
 
 def Item_card(request, slug):
-    number, email = func_contact()
+    dic = global_function(request)
     slug = str(slug)
     slug = slug.split('-')
     try:

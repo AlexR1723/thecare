@@ -4,14 +4,27 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.core.validators import validate_email
 import json,requests,geocoder
 
-def func_contact():
+from django.conf import settings
+def global_function(request):
     number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
-    email=Contact.objects.filter(is_main=True,contact_id=4)[0].text
-    return number, email
+    email = Contact.objects.filter(is_main=True, contact_id=4)[0].text
+
+    basket = 0
+    ses = request.session.get(settings.CART_SESSION_ID)
+    if ses:
+        for i in ses.values():
+            basket += int(i['price'])
+
+    result_dict = {
+        'number': number,
+        'email': email,
+        'basket': basket
+    }
+    return result_dict
 
 
 def Contacts(request):
-    number,email=func_contact()
+    dic = global_function(request)
 
     list = Contact.objects.all()
     numbers=list.filter(contact_id=2)

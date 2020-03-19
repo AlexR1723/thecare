@@ -253,6 +253,14 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 })
 
+$('.custom-control-input').change(function () {
+    if ($(this).is(':checked')) {
+        $('.change-pass_blk').fadeIn(100);
+    } else {
+        $('.change-pass_blk').fadeOut(200);
+    }
+});
+
 function check_login() {
     let email = document.getElementById('login_email').value
     let password = document.getElementById('login_password').value
@@ -327,7 +335,7 @@ $('#btn_add_to_cart').click(function () {
     $.ajax({
         type: "GET",
         dataType: "json",
-        async: true,
+        async: false,
         url: '/cart/add_product',
         data: {
             slug: slug,
@@ -336,7 +344,8 @@ $('#btn_add_to_cart').click(function () {
         success: function (data) {
             if (data !== false) {
                 // notice(data)
-                document.getElementById('user_basket_total').innerText = 'Корзина ' + data + ' руб.'
+                document.getElementById('user_basket_total').innerText = data + ' руб.'
+                notice('Добавлено в корзину')
             } else {
                 notice(data)
             }
@@ -347,13 +356,13 @@ $('#btn_add_to_cart').click(function () {
     })
 })
 $('.btn_cart_minus').on('click', function () {
-    let elem=this
-    let slug = elem.dataset.slug
+    let elem = this
+    let slug = elem.parentElement.dataset.slug
     let minus = 1
     $.ajax({
         type: "GET",
         dataType: "json",
-        async: true,
+        async: false,
         url: '/cart/add_product',
         data: {
             slug: slug,
@@ -361,9 +370,9 @@ $('.btn_cart_minus').on('click', function () {
         },
         success: function (data) {
             if (data[0] !== false) {
-                elem.nextSibling.value=data[1]
-                document.getElementById('item_'+slug).innerText=data[0]+ ' руб.'
-                document.getElementById('user_basket_total').innerText = 'Корзина ' + data[2] + ' руб.'
+                elem.nextSibling.value = data[1]
+                document.getElementById('item_' + slug).innerText = data[0] + ' руб.'
+                document.getElementById('user_basket_total').innerText = data[2] + ' руб.'
                 document.getElementById('cart_total_price').innerText = data[2] + ' руб.'
             } else {
                 notice(data)
@@ -375,12 +384,12 @@ $('.btn_cart_minus').on('click', function () {
     })
 })
 $('.btn_cart_plus').on('click', function () {
-    let elem=this
-    let slug = elem.dataset.slug
+    let elem = this
+    let slug = elem.parentElement.dataset.slug
     $.ajax({
         type: "GET",
         dataType: "json",
-        async: true,
+        async: false,
         url: '/cart/add_product',
         data: {
             slug: slug
@@ -388,9 +397,9 @@ $('.btn_cart_plus').on('click', function () {
         },
         success: function (data) {
             if (data[0] !== false) {
-                elem.previousSibling.value=data[1]
-                document.getElementById('item_'+slug).innerText=data[0]+ ' руб.'
-                document.getElementById('user_basket_total').innerText = 'Корзина ' + data[2] + ' руб.'
+                elem.previousSibling.value = data[1]
+                document.getElementById('item_' + slug).innerText = data[0] + ' руб.'
+                document.getElementById('user_basket_total').innerText = data[2] + ' руб.'
                 document.getElementById('cart_total_price').innerText = data[2] + ' руб.'
             } else {
                 notice(data)
@@ -403,27 +412,96 @@ $('.btn_cart_plus').on('click', function () {
 })
 
 $('.btn_cart_del_item').on('click', function () {
-    let elem=this
+    let elem = this
     let slug = elem.dataset.slug
     $.ajax({
         type: "GET",
         dataType: "json",
-        async: true,
+        async: false,
         url: '/cart/add_product',
         data: {
             slug: slug,
-            del:1
-            // minus: minus
+            del: 1
         },
         success: function (data) {
             if (data !== false) {
-                document.getElementById('carditem_'+slug).remove()
-                // elem.previousSibling.value=data[1]
-                // document.getElementById('item_'+slug).innerText=data[0]+ ' руб.'
-                document.getElementById('user_basket_total').innerText = 'Корзина ' + data + ' руб.'
+                document.getElementById('carditem_' + slug).remove()
+                document.getElementById('user_basket_total').innerText = data + ' руб.'
                 document.getElementById('cart_total_price').innerText = data + ' руб.'
             } else {
                 notice(data)
+            }
+        },
+        error: function (data) {
+            alert('error')
+        }
+    })
+})
+$('.cart_item_input').on('keyup', function () {
+    let elem = this
+    let slug = elem.parentElement.dataset.slug
+    let count = this.value
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        async: false,
+        url: '/cart/add_product',
+        data: {
+            slug: slug,
+            count: count,
+            is_cart: 1
+        },
+        success: function (data) {
+            if (data !== false) {
+                // elem.previousSibling.value=data[1]
+                elem.innerText = data[1]
+                document.getElementById('item_' + slug).innerText = data[0] + ' руб.'
+                document.getElementById('user_basket_total').innerText = data[2] + ' руб.'
+                document.getElementById('cart_total_price').innerText = data[2] + ' руб.'
+            } else {
+                notice(data)
+            }
+        },
+        error: function (data) {
+            alert('error')
+        }
+    })
+})
+
+$('#btn_change_contact_details').click(function () {
+    let name = document.getElementById('cd_name').value
+    let surname =  document.getElementById('cd_surname').value
+    let patron =  document.getElementById('cd_patron').value
+    let email =  document.getElementById('cd_email').value
+    let phone =  document.getElementById('cd_phone').value
+    let address =  document.getElementById('cd_address').value
+    let pass1 =  document.getElementById('cd_pass1').value
+    let pass2 =  document.getElementById('cd_pass2').value
+    let pass3 =  document.getElementById('cd_pass3').value
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        async: false,
+        url: '/profile/change_contact_details',
+        data: {
+            name: name,
+            surname: surname,
+            patron: patron,
+            email: email,
+            phone: phone,
+            address: address,
+            pass1: pass1,
+            pass2: pass2,
+            pass3: pass3
+        },
+        success: function (data) {
+            if (data !== false) {
+                notice(data)
+                // document.getElementById('user_basket_total').innerText = data + ' руб.'
+                // notice('Добавлено в корзину')
+            } else {
+                // notice('Произошла ошибка, попробуйте позже!')
+                window.location.href='/log_in'
             }
         },
         error: function (data) {
