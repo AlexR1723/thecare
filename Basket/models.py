@@ -108,7 +108,7 @@ class Product(models.Model):
     sale_is_number = models.BooleanField(blank=True, null=True)
     sale_price = models.IntegerField(blank=True, null=True)
     date = models.DateField(blank=True, null=True)
-    artikul_brand = models.IntegerField(blank=True, null=True)
+    artik_brand = models.IntegerField(blank=True, null=True)
     count = models.IntegerField(blank=True, null=True)
 
     class Meta:
