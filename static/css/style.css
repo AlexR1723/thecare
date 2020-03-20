@@ -551,8 +551,19 @@ a:hover {
     color: #ffffff;
     font-weight: 600;
     background: #E7B9CB;
-    writing-mode: vertical-rl;
-    text-orientation: upright;
+    /*writing-mode: vertical-rl;*/
+    /*text-orientation: upright;*/
+    z-index: 1;
+}
+.items-list_catalog .card-deck .sale-card .wrap span.null-count {
+    position: absolute;
+    padding: .5rem;
+    margin-left: 1rem;
+    color: #000000;
+    font-weight: 400;
+    background: rgb(238,238,238);
+    /*writing-mode: vertical-rl;*/
+    /*text-orientation: upright;*/
     z-index: 1;
 }
 .items-list_catalog .card-deck .sale-card .old-price {
