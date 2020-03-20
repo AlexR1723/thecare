@@ -32,4 +32,13 @@ def Brands(request):
     dic = global_function(request)
 
     items=Brands_model.objects.all().order_by('name')
+    letter=[]
+    for i in items:
+        if not i.name in letter:
+            t=[]
+            t.append(i.name[0])
+            brand=Brands_model.objects.filter(name__istartswith=i.name[0])
+            t.append(brand)
+            letter.append(t)
+    print(letter)
     return render(request, 'Brands/Brands.html', locals())

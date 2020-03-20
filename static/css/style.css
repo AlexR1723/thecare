@@ -1,7 +1,25 @@
 html {
     scroll-behavior: smooth;
 }
-
+.fix-top {
+    z-index: 100;
+    position: sticky;
+    top: 0;
+    min-height: 2em;
+    background: white;
+}
+.fix-top-brand {
+    z-index: 100;
+    position: sticky;
+    top: 55px;
+    min-height: 2em;
+    background: #444;
+}
+@media(max-width: 769px){
+    .fix-top-brand{
+        top:56px!important;
+    }
+}
 body {
     background-color: #fff;
     font-family: 'Comfortaa', cursive;
@@ -161,6 +179,25 @@ a:hover {
     margin-right: 1.5rem;
     color: #000000;
 }
+@media(max-width: 1400px)
+{
+    .nav_block .nav-item .nav-link{
+        margin-right: 0.5rem!important;
+    }
+}
+
+@media(max-width: 1053px)
+{
+    .nav_block .nav-item .nav-link{
+        margin-right: 0.2rem!important;
+    }
+}
+@media(max-width: 1025px)
+{
+    .nav_block .nav-item .nav-link{
+        margin-right: 0rem!important;
+    }
+}
 
 .nav_block .dropdown-menu .dropdown-item {
     color: #000000;
@@ -189,8 +226,6 @@ a:hover {
     width: 100%;
 }
 
-/*.nav_block .nav-item .nav-link:hover,*/
-/*.nav_block .dropdown-menu .dropdown-item:hover*/
 .nav_block .nav-item .nav-link:hover,
 .nav_block .dropdown-menu .dropdown-item:hover {
     color: #000000;
@@ -1173,7 +1208,28 @@ footer .contact-list {
     border-color: rgba(0,0,0,1) !important;
 }
 
-
+.back-brand{
+    background: #444;
+}
+.back-brand-light{
+    background: white;
+}
+.brand-letter{
+    font-weight: 800;
+    font-size: .8rem;
+    color: white;
+}
+.brand-letter:hover {
+    color: white;
+    text-decoration: none;
+}
+.brand-letter-block{
+    background: rgb(238,238,238);
+    font-weight: 800;
+}
+.brand-name:hover{
+    cursor: pointer;
+}
 
 /*----------wrapper-------------*/
 .send{
@@ -1269,3 +1325,5 @@ a.up{
     transition: .3s;
     z-index: 9999;
 }
+
+/*----------end wrapper--------------*/
