@@ -100,9 +100,9 @@ class Product(models.Model):
     title = models.CharField(max_length=500, blank=True, null=True, verbose_name="Наименование")
     shot_description = models.TextField(blank=True, null=True, verbose_name="Краткое описание")
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
-    main_photo = models.ImageField(upload_to='uploads/product/', max_length=500, blank=True, null=True,
+    main_photo = models.ImageField(upload_to='uploads/product/', blank=True, null=True,
                                    verbose_name="Фото")
-    artikul = models.IntegerField(blank=True, null=True, verbose_name="Артикул")
+    artikul = models.TextField(blank=True, null=True, max_length=20, verbose_name="Артикул")
     note = models.TextField(blank=True, null=True, verbose_name="Примечание")
     components = models.TextField(blank=True, null=True, verbose_name="Состав")
     category = models.ForeignKey('CategoryType', models.DO_NOTHING, blank=True, null=True, verbose_name="Категория")
@@ -110,7 +110,7 @@ class Product(models.Model):
     brand = models.ForeignKey('Brands_model', models.DO_NOTHING, blank=True, null=True)
     slug = models.TextField(blank=True, null=True, verbose_name="Ссылка")
     date = models.DateField(blank=True, null=True)
-    artik_brand = models.IntegerField(blank=True, null=True)
+    artik_brand = models.TextField(blank=True, null=True, max_length=20)
 
     class Meta:
         managed = False
