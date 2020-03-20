@@ -189,9 +189,19 @@ a:hover {
     width: 100%;
 }
 
+/*.nav_block .nav-item .nav-link:hover,*/
+/*.nav_block .dropdown-menu .dropdown-item:hover*/
 .nav_block .nav-item .nav-link:hover,
 .nav_block .dropdown-menu .dropdown-item:hover {
     color: #000000;
+}
+
+div.dropdown-menu label:hover, div.dropdown-menu label:focus {
+    text-decoration: none !important;
+    background-color: #f8f9fa !important;
+}
+.dropdown-item.active, .dropdown-item:active{
+    background: none !important;
 }
 
 .items_hdr_bg {
