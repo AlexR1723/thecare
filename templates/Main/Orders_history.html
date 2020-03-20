@@ -113,5 +113,83 @@
             </div>
         </div>
     </div>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Запустить модальное окно
+    </button>
+    <div class="modal fade bd-example-modal-xl" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Наименование заказа</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row m-0 justify-content-start align-items-center mb-2">
+                        <p class="price-product-one text-center m-0">* стоимость товаров может меняться</p>
+                    </div>
+                    <div class="row m-0 justify-content-start align-items-center">
+                        <div class="col-12 p-0 mb-3 mt-md-2" id="carditem_{{ i.slug }}">
+                            <div class="row no-gutters m-0">
+                                <div class="col-12 col-md-2 col-lg-2 col-xl-1 d-none d-md-block my-auto">
+                                    <img src="{% static 'image/face-item_1.png' %}" class="card-img img-fluid"
+                                         alt="">
+                                </div>
+                                <div class="col-7 col-md-3 col-lg-4 col-xl-6 my-3 my-md-auto pl-2">
+                                    <a href="#" class="item-name">Наименование товара</a>
+                                </div>
+                                <div class="col-5 col-md-2 col-lg-2 col-xl-1 my-auto">
+                                    <p class="price-product-one text-center m-0">1000 руб</p>
+                                </div>
+                                <div class="col-6 col-md-3 col-lg-3 col-xl-1 my-auto">
+                                    <p class="price-product-one text-center m-0">10 шт</p>
+                                </div>
+                                <div class="col-5 col-md-2 col-lg-1 col-xl-3 my-auto">
+                                    <p class="price-product-all text-center m-0"
+                                       id="item_">10000 руб</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 p-0 mb-3 mt-md-2" id="carditem_{{ i.slug }}">
+                            <div class="row no-gutters m-0">
+                                <div class="col-12 col-md-2 col-lg-2 col-xl-1 d-none d-md-block my-auto">
+                                    <img src="{% static 'image/face-item_1.png' %}" class="card-img img-fluid"
+                                         alt="">
+                                </div>
+                                <div class="col-7 col-md-3 col-lg-4 col-xl-6 my-3 my-md-auto pl-2">
+                                    <a href="#" class="item-name">Наименование товара</a>
+                                </div>
+                                <div class="col-5 col-md-2 col-lg-2 col-xl-1 my-auto">
+                                    <p class="price-product-one text-center m-0">1000 руб</p>
+                                </div>
+                                <div class="col-6 col-md-3 col-lg-3 col-xl-1 my-auto">
+                                    <p class="price-product-one text-center m-0">10 шт</p>
+                                </div>
+                                <div class="col-5 col-md-2 col-lg-1 col-xl-3 my-auto">
+                                    <p class="price-product-all text-center m-0"
+                                       id="item_">10000 руб</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-0">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 mx-auto mb-md-2">
+                            <hr class="">
+                        </div>
+                    </div>
+                    <div class="row m-0 justify-content-end">
+                        <div class="col-5 col-md-2 col-lg-1 col-xl-3 my-auto">
+                            <p class="price-product-all text-center m-0"
+                               id="item_">10000 руб</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

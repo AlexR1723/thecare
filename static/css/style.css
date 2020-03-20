@@ -979,23 +979,23 @@ div.dropdown-menu label:hover, div.dropdown-menu label:focus {
     border-bottom: 1px solid #4F4F4F;
     transition: .5s;
 }
-.cart_blk .card .price,
+.cart_blk .card .price, .price-product-one,
 .cart_blk .card .price-text {
     font-weight: bold;
     font-size: 1rem;
     line-height: 20px;
 }
-.cart_blk .card .price,
+.cart_blk .card .price, .price-product-one,
 .order_history .order-price {
     color: rgba(0, 0, 0, 0.5);
 }
-.cart_blk .price-text,
+.cart_blk .price-text, .price-product-all,
 .cart_blk .card .price-text,
 .items-list_catalog .card-deck .sale-card i,
 .order_history .order-status {
     color: #E13075;
 }
-.cart_blk .price-text {
+.cart_blk .price-text , .price-product-all{
     font-weight: bold;
     font-size: 1.3rem;
     line-height: 25px;
