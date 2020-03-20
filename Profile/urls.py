@@ -18,6 +18,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.Orders_history, name="Orders_history"),
+    url(r'^(?P<page>[0-9]+)/$', views.Orders_history_page, name="Orders_history_page"),
     url(r'^delivery_address/$', views.Delivery_address, name="Delivery_address"),
     url(r'^contact_details/$', views.Contact_details, name="Contact_details"),
     url(r'^logout/$', views.Logout, name="Logout"),

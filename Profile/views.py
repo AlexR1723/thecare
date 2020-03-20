@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import *
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.core.files.storage import FileSystemStorage
-import xlrd, xlwt, json, re, hashlib
+import xlrd, xlwt, json, re, hashlib,random
 from django.contrib.auth import authenticate, login, logout, hashers
 from django.core.validators import validate_email
 from django.db import transaction
@@ -52,11 +52,124 @@ def get_user_id(request):
     return user
 
 
+def f_pages(page, queryset, count_item):
+    # print(list(queryset.values_list('id',flat=True)))
+    try:
+        cnt_pgs = queryset.count()
+    except:
+        return True, [], 0, 0, 0, []
+
+    try:
+        page = int(page) - 1
+        count_pages = int(cnt_pgs / count_item) + (cnt_pgs % count_item > 0)
+        if page < 0 or page > count_pages:
+            # print('exep 1')
+            return False, [], 0, 0, 0, []
+        else:
+            pgs = page * count_item
+    except:
+        # print('exep 2')
+        return False, [], 0, 0, 0, []
+    # print(list(queryset.values_list('id',flat=True)))
+    if pgs == 0:
+        query_res = queryset[:count_item]
+    else:
+        # print(pgs)
+        # print(count_item)
+        # print(query_res)
+        query_res = queryset[pgs:pgs + count_item]
+    # print(pgs)
+    # print(count_item)
+    # print(queryset)
+    # print('after cut')
+    # print(list(query_res.values_list('id',flat=True)))
+    pages = []
+    if page >= 3:
+        pages.append(1)
+    if page >= 4:
+        pages.append('')
+    if page - 2 >= 0:
+        pages.append(page - 2 + 1)
+    if page - 1 >= 0:
+        pages.append(page - 1 + 1)
+    if count_pages != 1:
+        pages.append(page + 1)
+    chs = len(pages)
+    if page + 1 < count_pages:
+        pages.append(page + 1 + 1)
+    if page + 2 < count_pages:
+        pages.append(page + 2 + 1)
+    if count_pages - page > 4:
+        pages.append('')
+    if count_pages - page > 3:
+        pages.append(count_pages)
+
+    if page - 1 >= 0:
+        prev = page - 1 + 1
+    else:
+        prev = False
+    if page + 1 < count_pages:
+        next = page + 1 + 1
+    else:
+        next = False
+
+    return True, pages, chs, prev, next, query_res
+
+
 # Create your views here.
 @login_required()
 def Orders_history(request):
     dic = global_function(request)
+    id = get_user_id(request)
+
+
+    # inc=0
+    # for i in range(400):
+    #     obj=UserOrders(user_id=id,date=datetime.date.today(),status_id=1,summ=random.randrange(1000,200000,50))
+    #     obj.save()
+    #     inc+=1
+    #     print(inc)
+
+
+    orders = UserOrders.objects.filter(user_id=id).order_by('-date')
+    page = 1
+    status, pages, chs, prev, next, query_res = f_pages(page, orders, 20)
+    if status == False:
+        # вывод страницы 404
+        print('catalog for_men error')
+    else:
+        orders = query_res
+
+    return render(request, 'Main/Orders_history.html', locals())
+
+
+@login_required()
+def Orders_history_page(request,page):
+    try:
+        page = int(page)
+    except:
+        # вывод страницы 404
+        print('news pages error')
+
+    dic = global_function(request)
     # print(get_user_id(request))
+    id = get_user_id(request)
+    # orders = UserOrders.objects.filter(user_id=id).order_by('-date')
+    orders = UserOrders.objects.filter(user_id=id).order_by('-id')
+
+    # print(page)
+    # print(orders.count())
+    # print(orders)
+    # print(UserOrders.objects.filter(user_id=id))
+    # queryset = queryset.order_by('-id')
+    status, pages, chs, prev, next, query_res = f_pages(page, orders, 20)
+    # print(resource[0])
+    if status == False:
+        # вывод страницы 404
+        print('catalog for_men error')
+    else:
+        orders = query_res
+
     return render(request, 'Main/Orders_history.html', locals())
 
 

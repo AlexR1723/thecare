@@ -12,7 +12,7 @@
                                                                                       aria-hidden="true"></i></a></li>
                             <li class="breadcrumb-item active" aria-current="page">
                                 Поиск
-{#                                <a href="{% url 'Catalog' head_url %}">{{ head }}</a>#}
+                                {#                                <a href="{% url 'Catalog' head_url %}">{{ head }}</a>#}
                             </li>
                         </ol>
                     </nav>
@@ -274,169 +274,214 @@
 
                     <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9 p-md-0 items-list_catalog">
                         <div class="row">
-                        {% if products %}
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-md-0 my-md-5">
-                                <div class="row m-0 justify-content-start align-items-center">
-                                    <div class="card-deck mb-5 ml-md-2 w-100" id="products">
-                                        {% for p in products %}
-                                            {#                                            <a href="{{ p.get_absolute_url }}" style="">#}
-                                            <div class="card col-lg-4 col-xl-3"
-                                                 data-price="{{ p.price }}"
-                                                 data-name="{{ p.title }}"
-                                                 data-num="{{ forloop.counter }}"
-                                            >
-                                                {% if p.main_photo != None and p.main_photo != "" %}
-                                                    <img src="{{ MEDIA_URL }}{{ p.main_photo.url }}"
-                                                         class="card-img-top" alt="...">
-                                                {% endif %}
-                                                <div class="card-body">
-                                                    <h5 class="card-title">{{ p.title }}</h5>
-                                                    <p class="card-text">{{ p.shot_description }}</p>
-                                                    <a href="{{ p.get_absolute_url }}">
-                                                        <button type="submit" class="btn btn-buy mx-auto">Купить
-                                                        </button>
-                                                    </a>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <hr>
-                                                    <small class="text-muted">{{ p.price }} руб {{ p.sale_price }}</small>
-                                                </div>
-                                            </div>
-                                            {#                                            </a>#}
-                                        {% endfor %}
-                                    </div>
-                                </div>
+                            {% if products %}
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-md-0 my-md-5">
+                                    <div class="row m-0 justify-content-start align-items-center">
+                                        <div class="card-deck mb-5 ml-md-2 w-100" id="products">
+                                            {% for p in products %}
+                                                <div class="card {% if p.get_price.sale %}sale-card{% endif %} col-lg-4 col-xl-3"
+                                                     data-price="{{ p.price }}" data-name="{{ p.title }}"
+                                                     data-num="{{ forloop.counter }}">
 
-                                <div class="row m-0 justify-content-center align-items-center nav_blk">
-                                    <nav aria-label="Page navigation">
-                                        <ul class="pagination">
+                                                    {% if p.get_price.sale %}
+                                                        <div class="wrap">
+                                                            <span>SALE</span>
+                                                            {% if p.main_photo != None and p.main_photo != "" %}
+                                                                <img src="{{ MEDIA_URL }}{{ p.main_photo.url }}"
+                                                                     class="card-img-top" alt="...">
+                                                            {% endif %}
+                                                        </div>
+                                                    {% else %}
+                                                        {% if p.main_photo != None and p.main_photo != "" %}
+                                                            <img src="{{ MEDIA_URL }}{{ p.main_photo.url }}"
+                                                                 class="card-img-top" alt="...">
+                                                        {% endif %}
+                                                    {% endif %}
 
-                                            {% if prev %}
-                                                <li class="page-item">
-                                                    {% if is_search and not is_filter %}
-                                                        <a class="page-link"
-                                                           href="{% url 'Catalog_search_page' url_page text prev %}"
-                                                           aria-label="Previous">
-                                                            <span aria-hidden="true"><i class="fa fa-angle-left"
-                                                                                        aria-hidden="true"></i></span></a>
-                                                    {% endif %}
-                                                    {% if is_filter and not is_search %}
-                                                        <a class="page-link"
-                                                           href="{% url 'Catalog_page_filter' url_page prev filter %}"
-                                                           aria-label="Previous">
-                                                            <span aria-hidden="true"><i class="fa fa-angle-left"
-                                                                                        aria-hidden="true"></i></span></a>
-                                                    {% endif %}
-                                                    {% if is_filter and  is_search %}
-                                                        <a class="page-link"
-                                                           href="{% url 'Catalog_search_page_filter' url_page text prev filter %}"
-                                                           aria-label="Previous">
-                                                            <span aria-hidden="true"><i class="fa fa-angle-left"
-                                                                                        aria-hidden="true"></i></span></a>
-                                                    {% endif %}
-                                                    {% if not is_filter and  not is_search %}
-                                                        <a class="page-link"
-                                                           href="{% url 'Catalog_page' url_page prev %}"
-                                                           aria-label="Previous">
-                                                            <span aria-hidden="true"><i class="fa fa-angle-left"
-                                                                                        aria-hidden="true"></i></span></a>
-                                                    {% endif %}
-                                                </li>
-                                            {% endif %}
-
-                                            {% for i in pages %}
-                                                {% if not i %}
-                                                    <a class="page-link" href="">...</a>
-                                                {% else %}
-                                                    <li class="page-item">
-                                                        {% if forloop.counter == chs %}
-                                                            {% if is_search and not is_filter %}
-                                                                <a class="page-link"
-                                                                   href="{% url 'Catalog_search_page' url_page text i %}"
-                                                                   style="color: #E7B9CB;"><b>{{ i }}</b></a>
-                                                            {% endif %}
-                                                            {% if is_filter and not is_search %}
-                                                                <a class="page-link"
-                                                                   href="{% url 'Catalog_page_filter' url_page i filter %}"
-                                                                   style="color: #E7B9CB;"><b>{{ i }}</b></a>
-                                                            {% endif %}
-                                                            {% if is_filter and  is_search %}
-                                                                <a class="page-link"
-                                                                   href="{% url 'Catalog_search_page_filter' url_page text i filter %}"
-                                                                   style="color: #E7B9CB;"><b>{{ i }}</b></a>
-                                                            {% endif %}
-                                                            {% if not is_filter and  not is_search %}
-                                                                <a class="page-link"
-                                                                   href="{% url 'Catalog_page' url_page i %}"
-                                                                   style="color: #E7B9CB;"><b>{{ i }}</b></a>
-                                                            {% endif %}
-
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ p.title }}</h5>
+                                                        <p class="card-text">{{ p.shot_description }}</p>
+                                                        <a href="{{ p.get_absolute_url }}">
+                                                            <button type="submit" class="btn btn-buy mx-auto">Купить
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <hr>
+                                                        {% if p.get_price.sale %}
+                                                            <div class="row">
+                                                                <div class="col-12 col-lg-4 pl-lg-0 pr-lg-0 pl-xl-3 pr-xl-0">
+                                                                    <small class="old-price">{{ p.get_price.old_price }}
+                                                                        руб</small>
+                                                                </div>
+                                                                <div class="col-12 col-lg-8 text-lg-right">
+                                                                    <i class="fa fa-tag" aria-hidden="true"></i>
+                                                                    <small class="text-muted">{{ p.get_price.price }}
+                                                                        руб</small>
+                                                                </div>
+                                                            </div>
                                                         {% else %}
-                                                            {% if is_search and not is_filter %}
-                                                                <a class="page-link"
-                                                                   href="{% url 'Catalog_search_page' url_page text i %}"
-                                                                >{{ i }}</a>
-                                                            {% endif %}
-                                                            {% if is_filter and not is_search %}
-                                                                <a class="page-link"
-                                                                   href="{% url 'Catalog_page_filter' url_page i filter %}"
-                                                                >{{ i }}</a>
-                                                            {% endif %}
-                                                            {% if is_filter and  is_search %}
-                                                                <a class="page-link"
-                                                                   href="{% url 'Catalog_search_page_filter' url_page text i filter %}"
-                                                                >{{ i }}</a>
-                                                            {% endif %}
-                                                            {% if not is_filter and  not is_search %}
-                                                                <a class="page-link"
-                                                                   href="{% url 'Catalog_page' url_page i %}"
-                                                                >{{ i }}</a>
-                                                            {% endif %}
+                                                            <small class="text-muted">{{ p.get_price.price }}
+                                                                руб.</small>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                {#                                            <div class="card col-lg-4 col-xl-3"#}
+                                                {#                                                 data-price="{{ p.price }}"#}
+                                                {#                                                 data-name="{{ p.title }}"#}
+                                                {#                                                 data-num="{{ forloop.counter }}"#}
+                                                {#                                            >#}
+                                                {#                                                {% if p.main_photo != None and p.main_photo != "" %}#}
+                                                {#                                                    <img src="{{ MEDIA_URL }}{{ p.main_photo.url }}"#}
+                                                {#                                                         class="card-img-top" alt="...">#}
+                                                {#                                                {% endif %}#}
+                                                {#                                                <div class="card-body">#}
+                                                {#                                                    <h5 class="card-title">{{ p.title }}</h5>#}
+                                                {#                                                    <p class="card-text">{{ p.shot_description }}</p>#}
+                                                {#                                                    <a href="{{ p.get_absolute_url }}">#}
+                                                {#                                                        <button type="submit" class="btn btn-buy mx-auto">Купить#}
+                                                {#                                                        </button>#}
+                                                {#                                                    </a>#}
+                                                {#                                                </div>#}
+                                                {#                                                <div class="card-footer">#}
+                                                {#                                                    <hr>#}
+                                                {#                                                    <small class="text-muted">{{ p.price }} руб {{ p.sale_price }}</small>#}
+                                                {#                                                </div>#}
+                                                {#                                            </div>#}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
 
+                                    <div class="row m-0 justify-content-center align-items-center nav_blk">
+                                        <nav aria-label="Page navigation">
+                                            <ul class="pagination">
+
+                                                {% if prev %}
+                                                    <li class="page-item">
+                                                        {% if is_search and not is_filter %}
+                                                            <a class="page-link"
+                                                               href="{% url 'Catalog_search_page' url_page text prev %}"
+                                                               aria-label="Previous">
+                                                            <span aria-hidden="true"><i class="fa fa-angle-left"
+                                                                                        aria-hidden="true"></i></span></a>
+                                                        {% endif %}
+                                                        {% if is_filter and not is_search %}
+                                                            <a class="page-link"
+                                                               href="{% url 'Catalog_page_filter' url_page prev filter %}"
+                                                               aria-label="Previous">
+                                                            <span aria-hidden="true"><i class="fa fa-angle-left"
+                                                                                        aria-hidden="true"></i></span></a>
+                                                        {% endif %}
+                                                        {% if is_filter and  is_search %}
+                                                            <a class="page-link"
+                                                               href="{% url 'Catalog_search_page_filter' url_page text prev filter %}"
+                                                               aria-label="Previous">
+                                                            <span aria-hidden="true"><i class="fa fa-angle-left"
+                                                                                        aria-hidden="true"></i></span></a>
+                                                        {% endif %}
+                                                        {% if not is_filter and  not is_search %}
+                                                            <a class="page-link"
+                                                               href="{% url 'Catalog_page' url_page prev %}"
+                                                               aria-label="Previous">
+                                                            <span aria-hidden="true"><i class="fa fa-angle-left"
+                                                                                        aria-hidden="true"></i></span></a>
                                                         {% endif %}
                                                     </li>
                                                 {% endif %}
-                                            {% endfor %}
 
-                                            {% if next %}
-                                                <li class="page-item">
-                                                    {% if is_search and not is_filter %}
-                                                        <a class="page-link"
-                                                           href="{% url 'Catalog_search_page' url_page text next %}"
-                                                           aria-label="Next">
+                                                {% for i in pages %}
+                                                    {% if not i %}
+                                                        <a class="page-link" href="">...</a>
+                                                    {% else %}
+                                                        <li class="page-item">
+                                                            {% if forloop.counter == chs %}
+                                                                {% if is_search and not is_filter %}
+                                                                    <a class="page-link"
+                                                                       href="{% url 'Catalog_search_page' url_page text i %}"
+                                                                       style="color: #E7B9CB;"><b>{{ i }}</b></a>
+                                                                {% endif %}
+                                                                {% if is_filter and not is_search %}
+                                                                    <a class="page-link"
+                                                                       href="{% url 'Catalog_page_filter' url_page i filter %}"
+                                                                       style="color: #E7B9CB;"><b>{{ i }}</b></a>
+                                                                {% endif %}
+                                                                {% if is_filter and  is_search %}
+                                                                    <a class="page-link"
+                                                                       href="{% url 'Catalog_search_page_filter' url_page text i filter %}"
+                                                                       style="color: #E7B9CB;"><b>{{ i }}</b></a>
+                                                                {% endif %}
+                                                                {% if not is_filter and  not is_search %}
+                                                                    <a class="page-link"
+                                                                       href="{% url 'Catalog_page' url_page i %}"
+                                                                       style="color: #E7B9CB;"><b>{{ i }}</b></a>
+                                                                {% endif %}
+
+                                                            {% else %}
+                                                                {% if is_search and not is_filter %}
+                                                                    <a class="page-link"
+                                                                       href="{% url 'Catalog_search_page' url_page text i %}"
+                                                                    >{{ i }}</a>
+                                                                {% endif %}
+                                                                {% if is_filter and not is_search %}
+                                                                    <a class="page-link"
+                                                                       href="{% url 'Catalog_page_filter' url_page i filter %}"
+                                                                    >{{ i }}</a>
+                                                                {% endif %}
+                                                                {% if is_filter and  is_search %}
+                                                                    <a class="page-link"
+                                                                       href="{% url 'Catalog_search_page_filter' url_page text i filter %}"
+                                                                    >{{ i }}</a>
+                                                                {% endif %}
+                                                                {% if not is_filter and  not is_search %}
+                                                                    <a class="page-link"
+                                                                       href="{% url 'Catalog_page' url_page i %}"
+                                                                    >{{ i }}</a>
+                                                                {% endif %}
+
+                                                            {% endif %}
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                {% if next %}
+                                                    <li class="page-item">
+                                                        {% if is_search and not is_filter %}
+                                                            <a class="page-link"
+                                                               href="{% url 'Catalog_search_page' url_page text next %}"
+                                                               aria-label="Next">
                                                             <span aria-hidden="true"><i class="fa fa-angle-right"
                                                                                         aria-hidden="true"></i></span></a>
-                                                    {% endif %}
-                                                    {% if is_filter and not is_search %}
-                                                        <a class="page-link"
-                                                           href="{% url 'Catalog_page_filter' url_page next filter %}"
-                                                           aria-label="Next">
+                                                        {% endif %}
+                                                        {% if is_filter and not is_search %}
+                                                            <a class="page-link"
+                                                               href="{% url 'Catalog_page_filter' url_page next filter %}"
+                                                               aria-label="Next">
                                                             <span aria-hidden="true"><i class="fa fa-angle-right"
                                                                                         aria-hidden="true"></i></span></a>
-                                                    {% endif %}
-                                                    {% if is_filter and  is_search %}
-                                                        <a class="page-link"
-                                                           href="{% url 'Catalog_search_page_filter' url_page text next filter %}"
-                                                           aria-label="Next">
+                                                        {% endif %}
+                                                        {% if is_filter and  is_search %}
+                                                            <a class="page-link"
+                                                               href="{% url 'Catalog_search_page_filter' url_page text next filter %}"
+                                                               aria-label="Next">
                                                             <span aria-hidden="true"><i class="fa fa-angle-right"
                                                                                         aria-hidden="true"></i></span></a>
-                                                    {% endif %}
-                                                    {% if not is_filter and  not is_search %}
-                                                        <a class="page-link"
-                                                           href="{% url 'Catalog_page' url_page next %}"
-                                                           aria-label="Next">
+                                                        {% endif %}
+                                                        {% if not is_filter and  not is_search %}
+                                                            <a class="page-link"
+                                                               href="{% url 'Catalog_page' url_page next %}"
+                                                               aria-label="Next">
                                                             <span aria-hidden="true"><i class="fa fa-angle-right"
                                                                                         aria-hidden="true"></i></span></a>
-                                                    {% endif %}
-                                                </li>
-                                            {% endif %}
-                                        </ul>
-                                    </nav>
+                                                        {% endif %}
+                                                    </li>
+                                                {% endif %}
+                                            </ul>
+                                        </nav>
+                                    </div>
                                 </div>
-                            </div>
-                        {% else %}
-                        <h2 class="p-3">Товаров по указанным фильтрам не найдено.</h2>
-                        {% endif %}
+                            {% else %}
+                                <h2 class="p-3">Товаров по указанным фильтрам не найдено.</h2>
+                            {% endif %}
                         </div>
 
                     </div>

@@ -7,14 +7,24 @@ def global_function(request):
 
     basket = 0
     ses = request.session.get(settings.CART_SESSION_ID)
-    if ses:
+    if ses and ses is not None:
         for i in ses.values():
             basket += int(i['price'])
+
+    is_auth = request.user.is_authenticated
+    if is_auth:
+        is_auth = request.session.get('username', False)
+
+    user_name = ''
+    if is_auth:
+        user_name = AuthUser.objects.get(username=is_auth).first_name
 
     result_dict = {
         'number': number,
         'email': email,
-        'basket': basket
+        'basket': basket,
+        'is_auth': is_auth,
+        'user_name': user_name
     }
     return result_dict
 

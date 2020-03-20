@@ -42,7 +42,7 @@
                                     <div class="card-body">
                                         <p class="card-text">{{ item.description }}</p>
                                         <p class="card-text text-center text-md-left">
-                                            <span class="price-text">{{ item.price }} руб</span>
+                                            <span class="price-text">{{ item.get_price.price }} руб</span>
                                         </p>
                                         <p class="card-text text-center text-md-left">Объем: <b>{{ sizes }} мл</b></p>
                                         <div class="items-counter mb-4 text-center text-md-left">

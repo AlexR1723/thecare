@@ -551,20 +551,20 @@ $('#btn_change_address').click(function () {
 })
 
 $('#btn_buy_products').click(function () {
-    let city = document.getElementById('da_city').value
-    let street = document.getElementById('da_street').value
-    let house = document.getElementById('da_house').value
-    let flat = document.getElementById('da_flat').value
+    // let city = document.getElementById('da_city').value
+    // let street = document.getElementById('da_street').value
+    // let house = document.getElementById('da_house').value
+    // let flat = document.getElementById('da_flat').value
     $.ajax({
         type: "GET",
         dataType: "json",
         async: false,
-        url: '/basket/buy_products',
+        url: '/cart/buy_products',
         data: {
-            city: city,
-            street: street,
-            house: house,
-            flat: flat
+            // city: city,
+            // street: street,
+            // house: house,
+            // flat: flat
         },
         success: function (data) {
             if (data !== false) {

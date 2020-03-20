@@ -99,22 +99,17 @@ class Product(models.Model):
     title = models.CharField(max_length=500, blank=True, null=True, verbose_name="Наименование")
     shot_description = models.TextField(blank=True, null=True, verbose_name="Краткое описание")
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
-    main_photo = models.ImageField(upload_to='uploads/product/', max_length=500, blank=True, null=True, verbose_name="Фото")
-    price = models.IntegerField(blank=True, null=True, verbose_name="Стоимость")
+    main_photo = models.ImageField(upload_to='uploads/product/', max_length=500, blank=True, null=True,
+                                   verbose_name="Фото")
     artikul = models.IntegerField(blank=True, null=True, verbose_name="Артикул")
     note = models.TextField(blank=True, null=True, verbose_name="Примечание")
     components = models.TextField(blank=True, null=True, verbose_name="Состав")
     category = models.ForeignKey('CategoryType', models.DO_NOTHING, blank=True, null=True, verbose_name="Категория")
     resource = models.ForeignKey('ResourceType', models.DO_NOTHING, blank=True, null=True, verbose_name="Средство")
-    size = models.IntegerField(blank=True, null=True, verbose_name="Объем")
     brand = models.ForeignKey('Brands_model', models.DO_NOTHING, blank=True, null=True)
     slug = models.TextField(blank=True, null=True, verbose_name="Ссылка")
-    sale = models.IntegerField(blank=True, null=True)
-    sale_is_number = models.BooleanField(blank=True, null=True)
-    sale_price = models.IntegerField(blank=True, null=True)
     date = models.DateField(blank=True, null=True)
     artik_brand = models.IntegerField(blank=True, null=True)
-    count = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -148,3 +143,20 @@ class ProductForNews(models.Model):
         db_table = 'product_for_news'
         verbose_name = _("Продукт к новости")
         verbose_name_plural = _("Продукты к новостям")
+
+
+class AuthUser(models.Model):
+    password = models.CharField(max_length=128)
+    last_login = models.DateTimeField(blank=True, null=True)
+    is_superuser = models.BooleanField()
+    username = models.CharField(unique=True, max_length=150)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=150)
+    email = models.CharField(max_length=254)
+    is_staff = models.BooleanField()
+    is_active = models.BooleanField()
+    date_joined = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user'

@@ -5,6 +5,8 @@ from django.db.models import Q
 import random
 
 from django.conf import settings
+
+
 def global_function(request):
     number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
     email = Contact.objects.filter(is_main=True, contact_id=4)[0].text
@@ -186,7 +188,7 @@ def search(text, is_search=False):
 
     qname = Q()
     # if is_search and is_search!='Brands':
-    if is_search =='Поиск':
+    if is_search == 'Поиск':
         # print('is search')
         # print(is_search)
         names = str(is_search).lower().split('_')
@@ -204,10 +206,9 @@ def search(text, is_search=False):
         if is_search == 'New_products':
             # print('news')
             dat = datetime.datetime.today() + datetime.timedelta(days=-30)
-            product=product.filter(date__gte=dat)
+            product = product.filter(date__gte=dat)
     else:
         product = Product.objects.filter(id=0)
-
 
     # ids=list(prod.values_list('id',flat=True))
     # need = NeedType.objects.filter(productneed__product__id__in=ids).distinct('id').order_by('id','name')
@@ -316,8 +317,8 @@ def left_filter(url_page, head, filter=False, prod=False):
                 queryset = prod.order_by(get_filter(filter))
             else:
                 queryset = prod.order_by('-id')
-        if url_page=='New_products':
-            dat=datetime.datetime.today()+datetime.timedelta(days=-30)
+        if url_page == 'New_products':
+            dat = datetime.datetime.today() + datetime.timedelta(days=-30)
             # queryset=Product.objects.filter(date__gte=dat)
             # print(prod)
             if filter and not prod:

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import *
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.core.files.storage import FileSystemStorage
-import xlrd, xlwt, json, re, hashlib,random
+import xlrd, xlwt, json, re, hashlib,random,datetime
 from django.contrib.auth import authenticate, login, logout, hashers
 from django.core.validators import validate_email
 from django.db import transaction
@@ -189,12 +189,23 @@ def add_product(request):
     #     return HttpResponse(json.dumps(False))
 
 def buy_products(request):
-    try:
-        ses = request.session.get(settings.CART_SESSION_ID)
-        if not ses:
-            request.session[settings.CART_SESSION_ID] = {}
-            return request.session.get(settings.CART_SESSION_ID)
-        else:
-            return ses
-    except:
-        return False
+    user=get_user_id(request)
+    if user:
+        ids=ProductSize.objects.all().values_list('id',flat=True)
+        # print(ids)
+        # print(list(ids))
+        random.shuffle(list(ids))
+        print(ids)
+        us_or=UserOrders(user_id=user,date=datetime.date.today(),status_id=1,summ=55555)
+        # us_or.save()
+        inc=0
+        for i in range(10):
+            item=ids[i]
+            count=random.randrange(1,5)
+            order_prods=OrdersProducts(order_id=us_or.id,product_id=item,count=count)
+            # order_prods.save()
+            inc+=1
+            print(inc)
+        return HttpResponse(json.dumps(True))
+    else:
+        return HttpResponse(json.dumps(True))
