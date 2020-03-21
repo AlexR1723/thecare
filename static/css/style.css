@@ -616,6 +616,14 @@ div.dropdown-menu label:hover, div.dropdown-menu label:focus {
     text-decoration: line-through;
     text-decoration-color: #E13075;
 }
+.old-price-card{
+    text-decoration: line-through;
+    text-decoration-color: #E13075;
+    font-size: 1rem;
+}
+.card-price-block i.fa-tag{
+    color: #E13075;
+}
 .items-list_catalog .card-deck .sale-card .wrap img {
     z-index: 10;
 }

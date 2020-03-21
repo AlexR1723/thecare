@@ -54,9 +54,18 @@
                                             <p class="card-text text-center text-md-left d-inline-block">Объем:</p>
                                                 <b>{{ sizename}} мл</b>
                                         {% endif %}
-                                        <p class="card-text text-center text-md-left">
-                                            <span class="price-text" id="product_price">{{ item.get_price.price }} руб</span>
-                                        </p>
+                                        <div class="card-price-block row m-0 align-items-center mb-3">
+                                            <div class="d-inline-block mr-5">
+                                                <i class="fa fa-tag" aria-hidden="true"></i>
+                                                <small class="old-price-card">10000 руб</small>
+                                            </div>
+                                            <div class="d-inline-block card-text text-center text-md-left">
+                                                    <span class="price-text" id="product_price">{{ item.get_price.price }} руб</span>
+
+                                            </div>
+                                        </div>
+
+
                                         <div class="items-counter mb-4 text-center text-md-left">
                                             <button class="minus"><i class="fa fa-minus" aria-hidden="true"></i>
                                             </button>
