@@ -1019,6 +1019,10 @@ div.dropdown-menu label:hover, div.dropdown-menu label:focus {
     font-size: 1.2rem;
     color: #c4c4c4;
 }
+.btn_cart_del_item {
+    background-color: transparent;
+    border: none;
+}
 .cart_blk .btn,
 .login-btn {
     width: 25%;
