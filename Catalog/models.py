@@ -208,7 +208,8 @@ class Product(models.Model):
 
 
 class Size(models.Model):
-    name = models.IntegerField(blank=True, null=True)
+    str_name = models.TextField(blank=True, null=True)
+    float_name = models.FloatField(blank=True, null=True)
 
     class Meta:
         managed = False

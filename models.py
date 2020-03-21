@@ -290,7 +290,8 @@ class ResourceType(models.Model):
 
 
 class Size(models.Model):
-    name = models.CharField(max_length=10, blank=True, null=True)
+    str_name = models.TextField(blank=True, null=True)
+    float_name = models.FloatField(blank=True, null=True)
 
     class Meta:
         managed = False
