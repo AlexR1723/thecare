@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import *
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.core.files.storage import FileSystemStorage
-import xlrd, xlwt, json, re, hashlib,random,datetime
+import xlrd, xlwt, json, re, hashlib, random, datetime
 from django.contrib.auth import authenticate, login, logout, hashers
 from django.core.validators import validate_email
 from django.db import transaction
@@ -22,7 +22,7 @@ def global_function(request):
     ses = request.session.get(settings.CART_SESSION_ID)
     if ses and ses is not None:
         for i in ses.values():
-            basket += int(i['price'])
+            basket += int(i['total'])
 
     is_auth = request.user.is_authenticated
     if is_auth:
@@ -79,9 +79,8 @@ def check_product_exist(request):
 def Cart(request):
     dic = global_function(request)
     prod_ses = request.session.get(settings.CART_SESSION_ID)
-    check_product_exist(request)
-
-
+    print(prod_ses)
+    # check_product_exist(request)
 
     # inc=0
     # prods=Product.objects.all()
@@ -95,14 +94,24 @@ def Cart(request):
     all_prices = 0
     if prod_ses is not None:
         for i in prod_ses.values():
-            all_prices += int(i['price'])
-        products = Product.objects.filter(slug__in=prod_ses.keys())
+            all_prices += int(i['total'])
+        # products = Product.objects.filter(slug__in=prod_ses.keys())
+        products = ProductSize.objects.filter(id__in=prod_ses.keys())
     return render(request, 'Main/Cart.html', locals())
 
 
 def session_save(request, obj):
     try:
         request.session[settings.CART_SESSION_ID] = obj
+        request.session.modified = True
+        return True
+    except:
+        return False
+
+
+def session_delete(request, obj):
+    try:
+        del request.session[obj]
         request.session.modified = True
         return True
     except:
@@ -124,78 +133,109 @@ def create_cart_session(request):
 
 
 def add_product(request):
-    # try:
-    ses = create_cart_session(request)
-    if ses != False:
-        slug = request.GET.get('slug')
-        count = request.GET.get('count')
-        minus = request.GET.get('minus')
-        is_del = request.GET.get('del')
-        is_cart = request.GET.get('is_cart')
-        size_id = request.GET.get('size_id')
-
-        is_plus_minus = False
-        if minus or not count:
-            is_plus_minus = True
-        if not count or int(count) < 1:
-            count = 1
-        product = Product.objects.get(slug=slug)
-        # print(product.price)
-        # print(count)
-        if slug not in ses:
-            ses[slug] = {'count': count, 'price': int(product.price) * int(count)}
-        else:
-            if is_del:
-                del ses[slug]
-                session_save(request, ses)
-                all_prices = 0
-                for i in request.session.get(settings.CART_SESSION_ID).values():
-                    all_prices += int(i['price'])
-                return HttpResponse(json.dumps(all_prices))
-
-            if minus:
-                if ses[slug]['count'] > 1:
-                    ses[slug]['count'] = int(ses[slug]['count']) - int(count)
+    try:
+        ses = create_cart_session(request)
+        if ses != False:
+            count = int(request.GET.get('count'))
+            prod_size = int(request.GET.get('prod_size'))
+            pr_sz = ProductSize.objects.get(id=int(prod_size))
+            item = str(pr_sz.id)
+            if item not in ses:
+                ses[item] = {'count': count, 'total': pr_sz.price * count}
             else:
-                if is_cart:
-                    ses[slug]['count'] = int(count)
-                else:
-                    ses[slug]['count'] = int(ses[slug]['count']) + int(count)
-            ses[slug]['price'] = int(product.price) * ses[slug]['count']
-        session_save(request, ses)
-        print('last ses')
-        print(request.session.get(settings.CART_SESSION_ID))
-        all_prices = 0
-        for i in request.session.get(settings.CART_SESSION_ID).values():
-            all_prices += int(i['price'])
-        if is_plus_minus or is_cart:
-            return HttpResponse(json.dumps([request.session.get(settings.CART_SESSION_ID)[slug]['price'],
-                                            request.session.get(settings.CART_SESSION_ID)[slug]['count'],
-                                            all_prices]))
+                ses[item] = {'count': ses[item]['count'] + count,
+                             'total': pr_sz.price * (ses[item]['count'] + count)}
+            session_save(request, ses)
+            total_price = 0
+            print(request.session.get(settings.CART_SESSION_ID))
+            for i in request.session.get(settings.CART_SESSION_ID).values():
+                total_price += int(i['total'])
+            return HttpResponse(json.dumps((total_price)))
         else:
-            return HttpResponse(json.dumps(all_prices))
-    else:
-        return HttpResponse(json.dumps(False))
-    # except:
-    #     return HttpResponse(json.dumps(False))
+            return HttpResponse(json.dumps((False)))
+    except:
+        return HttpResponse(json.dumps((False)))
+
+
+def plus_minus_product(request):
+    try:
+        ses = create_cart_session(request)
+        if ses != False:
+            slug = int(request.GET.get('slug'))
+            minus = request.GET.get('minus')
+            count = request.GET.get('count')
+            pr_sz = ProductSize.objects.get(id=int(slug))
+            item = str(pr_sz.id)
+            if minus:
+                print('minus')
+                ses[item] = {'count': int(ses[item]['count']) - 1,
+                             'total': int(pr_sz.price) * (int(ses[item]['count']) - 1)}
+            else:
+                if count:
+                    print('change')
+                    ses[item] = {'count': int(count), 'total': int(pr_sz.price) * int(count)}
+                else:
+                    print('plus')
+                    ses[item] = {'count': int(ses[item]['count']) + 1,
+                                 'total': int(pr_sz.price) * (int(ses[item]['count']) + 1)}
+            session_save(request, ses)
+            total_price = 0
+            print(request.session.get(settings.CART_SESSION_ID))
+            ses = request.session.get(settings.CART_SESSION_ID)
+            for i in ses.values():
+                total_price += int(i['total'])
+            res = {
+                'prod_count': ses[item]['count'],
+                'product_total': ses[item]['total'],
+                'total': total_price
+            }
+            return HttpResponse(json.dumps((res)))
+        else:
+            return HttpResponse(json.dumps((False)))
+    except:
+        return HttpResponse(json.dumps((False)))
+
+
+def del_product(request):
+    try:
+        ses = create_cart_session(request)
+        if ses != False:
+            slug = int(request.GET.get('slug'))
+            pr_sz = ProductSize.objects.get(id=int(slug))
+            item = str(pr_sz.id)
+            if item in ses:
+                del ses[item]
+                session_save(request, ses)
+            else:
+                return HttpResponse(json.dumps((False)))
+            total_price = 0
+            print(request.session.get(settings.CART_SESSION_ID))
+            for i in request.session.get(settings.CART_SESSION_ID).values():
+                total_price += int(i['total'])
+            return HttpResponse(json.dumps((total_price)))
+        else:
+            return HttpResponse(json.dumps((False)))
+    except:
+        return HttpResponse(json.dumps((False)))
+
 
 def buy_products(request):
-    user=get_user_id(request)
+    user = get_user_id(request)
     if user:
-        ids=ProductSize.objects.all().values_list('id',flat=True)
+        ids = ProductSize.objects.all().values_list('id', flat=True)
         # print(ids)
         # print(list(ids))
         random.shuffle(list(ids))
         print(ids)
-        us_or=UserOrders(user_id=user,date=datetime.date.today(),status_id=1,summ=55555)
+        us_or = UserOrders(user_id=user, date=datetime.date.today(), status_id=1, summ=55555)
         # us_or.save()
-        inc=0
+        inc = 0
         for i in range(10):
-            item=ids[i]
-            count=random.randrange(1,5)
-            order_prods=OrdersProducts(order_id=us_or.id,product_id=item,count=count)
+            item = ids[i]
+            count = random.randrange(1, 5)
+            order_prods = OrdersProducts(order_id=us_or.id, product_id=item, count=count)
             # order_prods.save()
-            inc+=1
+            inc += 1
             print(inc)
         return HttpResponse(json.dumps(True))
     else:

@@ -13,7 +13,7 @@ def global_function(request):
     ses = request.session.get(settings.CART_SESSION_ID)
     if ses and ses is not None:
         for i in ses.values():
-            basket += int(i['price'])
+            basket += int(i['total'])
 
     is_auth = request.user.is_authenticated
     if is_auth:

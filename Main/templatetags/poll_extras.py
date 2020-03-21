@@ -5,12 +5,12 @@ register = template.Library()
 
 @register.filter
 def get_prod_count(dic, item):
-    return dic[item]['count']
+    return dic[str(item)]['count']
 
 
 @register.filter
 def get_prod_price(dic, item):
-    return dic[item]['price']
+    return dic[str(item)]['total']
 
 @register.filter
 def make_search_url(value, arg):

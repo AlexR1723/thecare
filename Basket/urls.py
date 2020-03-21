@@ -19,6 +19,8 @@ from . import views
 urlpatterns = [
     url(r'^$', views.Cart, name="Cart"),
     url(r'add_product', views.add_product, name="add_product"),
+    url(r'plus_minus_product', views.plus_minus_product, name="plus_minus_product"),
+    url(r'del_product', views.del_product, name="del_product"),
     url(r'buy_products', views.buy_products, name="buy_products"),
 
 ]

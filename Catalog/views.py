@@ -17,7 +17,7 @@ def global_function(request):
     ses = request.session.get(settings.CART_SESSION_ID)
     if ses and ses is not None:
         for i in ses.values():
-            basket += int(i['price'])
+            basket += int(i['total'])
 
     is_auth = request.user.is_authenticated
     if is_auth:
@@ -731,7 +731,7 @@ def Item_card(request, slug):
     dic = global_function(request)
     slug = str(slug)
     slug = slug.split('-')
-    print(slug)
+    # print(slug)
     try:
         s_id = int(slug[0])
         s_name = '-'.join(slug[1:])
@@ -761,13 +761,14 @@ def Item_card(request, slug):
 
     # sizes = ProductSize.objects.filter(product_id=item.id).values_list('size__name', flat=True)
     sizes = ProductSize.objects.filter(product_id=item.id)
+    # print(sizes.values())
     if sizes.count() == 1:
         if sizes[0].size.float_name:
             sizename = sizes[0].size.float_name
         if sizes[0].size.str_name:
             sizename = sizes[0].size.str_name
 
-    sizes = sizes.values_list('size_id', 'size__float_name', 'size__str_name').order_by('size__float_name')
+    sizes = sizes.values_list('id', 'size__float_name', 'size__str_name','price').order_by('size__float_name')
     lst = []
     for i in sizes:
         # el=list(i)
@@ -777,10 +778,7 @@ def Item_card(request, slug):
             ls.append(i[1])
         if i[2]:
             ls.append(i[2])
-        # try:
-        #     ls.append(int(float(i[1])))
-        # except:
-        #     ls.append(i[1])
+        ls.append(i[3])
         lst.append(ls)
 
     # for i in sizes:
@@ -790,7 +788,8 @@ def Item_card(request, slug):
     #         i['size_id'] = Size.objects.get(id=i['size_id']).name
     #     lst.append(i)
     # sizes = sorted(lst, key=lambda sz: sz[1])
-    print(sizes)
+    # print(sizes)
+    # print(lst)
     # sizes = ', '.join(sizes)
     # sz = ProductSize.objects.filter(product_id=item.id)
     return render(request, 'Catalog/Item_card.html', locals())
