@@ -1230,7 +1230,12 @@ footer .contact-list {
 .brand-name:hover{
     cursor: pointer;
 }
-
+.select-product-sizes{
+    padding: .3rem 1rem;
+    border: 2px solid #E7B9CB;
+    border-radius: 5px;
+    font-weight: bolder;
+}
 /*----------wrapper-------------*/
 .send{
     position: fixed;
