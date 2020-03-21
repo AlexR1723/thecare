@@ -202,6 +202,9 @@ class Product(models.Model):
         return prods
 
     def get_price(self):
+        # print(self.slug)
+        # print(ProductSize.objects.filter(product=self))
+        # print(ProductSize.objects.filter(product=self).order_by('size__float_name','size__str_name'))
         sizes=ProductSize.objects.filter(product=self).order_by('size__float_name','size__str_name')[0]
         # print(ProductSize.objects.filter(product=self).order_by('size__float_name','size__str_name').values('size__float_name','price'))
 

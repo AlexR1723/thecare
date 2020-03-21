@@ -93,7 +93,7 @@ def f_pages(page, queryset, count_item):
 
 
 def get_filter(text):
-    filter_dict = {'new': '-id', 'price_up': 'price', 'price_down': '-price', 'name': 'title'}
+    filter_dict = {'new': '-id', 'price_up': 'productsize__price', 'price_down': '-productsize__price', 'name': 'title'}
     # try:
     # filt = filter_dict[str(text)]
     filt = filter_dict.get(str(text))
@@ -763,8 +763,11 @@ def Item_card(request, slug):
     sizes = ProductSize.objects.filter(product_id=item.id)
     # print(sizes.values())
     if sizes.count() == 1:
-        if sizes[0].size.float_name:
+
+        if sizes[0].size.float_name!=0.0:
             sizename = sizes[0].size.float_name
+        else:
+            not_size=True
         if sizes[0].size.str_name:
             sizename = sizes[0].size.str_name
 

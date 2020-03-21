@@ -43,19 +43,24 @@
                                     <div class="card-body">
                                         <p class="card-text">{{ item.description }}</p>
 
-                                        {% if not sizename %}
-                                            <p class="card-text text-center text-md-left d-inline-block">Объемы:</p>
-                                            <select name="" id="select_product_sizes" class="select-product-sizes">
-                                                {% for i in lst %}
-                                                    <option value="{{ i.0 }}" data-price="{{ i.2 }}">{{ i.1 }} мл.</option>
-                                                {% endfor %}
-                                            </select>
-                                        {% else %}
-                                            <p class="card-text text-center text-md-left d-inline-block">Объем:</p>
-                                                <b>{{ sizename}} мл</b>
+                                        {% if not not_size %}
+                                            {% if not sizename %}
+                                                <p class="card-text text-center text-md-left d-inline-block">Объемы:</p>
+                                                <select name="" id="select_product_sizes" class="select-product-sizes">
+                                                    {% for i in lst %}
+                                                        <option value="{{ i.0 }}" data-price="{{ i.2 }}">{{ i.1 }} мл.
+                                                        </option>
+                                                    {% endfor %}
+                                                </select>
+                                            {% else %}
+                                                <p class="card-text text-center text-md-left d-inline-block">Объем:</p>
+                                                <b>{{ sizename }} мл</b>
+                                            {% endif %}
                                         {% endif %}
+
                                         <p class="card-text text-center text-md-left">
-                                            <span class="price-text" id="product_price">{{ item.get_price.price }} руб</span>
+                                            <span class="price-text"
+                                                  id="product_price">{{ item.get_price.price }} руб</span>
                                         </p>
                                         <div class="items-counter mb-4 text-center text-md-left">
                                             <button class="minus"><i class="fa fa-minus" aria-hidden="true"></i>
@@ -156,7 +161,8 @@
                                                     </div>
                                                     <div class="card-footer">
                                                         <hr>
-                                                        <small class="text-muted">{{ i.product.get_price.price }} руб</small>
+                                                        <small class="text-muted">{{ i.product.get_price.price }}
+                                                            руб</small>
                                                     </div>
                                                 </div>
                                             </a>

@@ -52,12 +52,6 @@ def get_user_id(request):
     return user
 
 
-# def func_contact():
-#     number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
-#     email = Contact.objects.filter(is_main=True, contact_id=4)[0].text
-#     return number, email
-
-
 def check_product_exist(request):
     try:
         ses = request.session.get(settings.CART_SESSION_ID)
@@ -80,16 +74,6 @@ def Cart(request):
     dic = global_function(request)
     prod_ses = request.session.get(settings.CART_SESSION_ID)
     print(prod_ses)
-    # check_product_exist(request)
-
-    # inc=0
-    # prods=Product.objects.all()
-    # for i in prods:
-    #     i.price=random.randrange(500,12000,10)
-    #     i.main_photo='uploads/test_7.png'
-    #     i.save()
-    #     inc+=1
-    #     print(inc)
 
     all_prices = 0
     if prod_ses is not None:
