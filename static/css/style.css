@@ -345,7 +345,7 @@ div.dropdown-menu label:hover, div.dropdown-menu label:focus {
 .shop-items_blk .card-text:after {
     background-color: #E13075;
     display: block;
-    margin-top: 1%;
+    /*margin-top: 1%;*/
     content: "";
     height: 2px;
     width: 0;
