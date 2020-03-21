@@ -122,9 +122,8 @@ def Save_excel_file(request):
                         brand.save()
                     else:
                         brand = Brands_model.objects.get(name=v[2])
-                    size = Size.objects.filter(name=v[12])
                     product = Product.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(shot_description=v[4])
-                    if categ.count() > 0 and res.count() > 0 and size.count() > 0:
+                    if categ.count() > 0 and res.count() > 0:
                         if product.count() == 0:
                             print(1)
                             product = Product(title=v[3], shot_description=v[4], description=v[5], note=v[6], components=v[7],
@@ -175,21 +174,58 @@ def Save_excel_file(request):
                                 for t in list_tone:
                                     product_tone = ProductTone(product=product, name=t)
                                     product_tone.save()
-                        product_size = ProductSize.objects.filter(size=size[0]).filter(product=product)
-                        count = 0
-                        price = 0
-                        if v[16] != "":
-                            count = v[16]
-                        if v[17] != "":
-                            price = v[17]
-                        if product_size.count() == 0:
-                            product_size = ProductSize(product=product, size=size[0],price=price, count=count)
-                            product_size.save()
-                        else:
-                            product_size=product_size[0]
-                            product_size.price = price
-                            product_size.count = count
-                            product_size.save()
+                        if v[12] != "":
+                            size_name=v[12]
+                            print(size_name)
+                            try:
+                                size_name=float(size_name)
+                                size = Size.objects.filter(float_name=size_name)
+                                if size.count() == 0:
+                                    size=Size(float_name=size_name)
+                                    size.save()
+                                else:
+                                    size=size[0]
+                            except:
+                                size = Size.objects.filter(str_name=size_name)
+                                if size.count() == 0:
+                                    size=Size(str_name=size_name)
+                                    size.save()
+                                else:
+                                    size=size[0]
+                            product_size = ProductSize.objects.filter(size=size).filter(product=product)
+                            count = 0
+                            price = 0
+                            sale=0
+                            if v[16] != "":
+                                count = v[16]
+                            if v[17] != "":
+                                price = v[17]
+                            if v[19] != "" and v[19] != 0:
+                                sale=int(v[19])
+                            print(sale)
+                            if product_size.count() == 0:
+                                if(sale == 0):
+                                    product_size = ProductSize(product=product, size=size,price=price, count=count)
+                                else:
+                                    new_price = price - (price*sale/100)
+                                    print(new_price)
+                                    product_size = ProductSize(product=product, size=size, old_price=price, count=count, sale=sale, price=new_price)
+                                product_size.save()
+                            else:
+                                if (sale == 0):
+                                    product_size=product_size[0]
+                                    product_size.price = price
+                                    product_size.count = count
+                                    product_size.sale=0
+                                    product_size.old_price=0
+                                else:
+                                    new_price = price - (price * sale / 100)
+                                    product_size = product_size[0]
+                                    product_size.price = new_price
+                                    product_size.count = count
+                                    product_size.sale = sale
+                                    product_size.old_price = price
+                                product_size.save()
                         print(product)
     return HttpResponseRedirect("/admin")
 
