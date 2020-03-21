@@ -40,3 +40,4 @@ urlpatterns = [
     # url(r'^items_catalog/$', views.Items_catalog, name="Items_catalog"),
     # url(r'^face/$', views.Face, name="Face"),
 ]
+
