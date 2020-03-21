@@ -379,7 +379,12 @@ $('#search_input').keyup(function () {
 
 $('#btn_add_to_cart').click(function () {
     let count = document.getElementById('item_count').value
-    let prod_size=document.getElementById('select_product_sizes').value
+    let prod_size=document.getElementById('select_product_sizes')
+    if (prod_size){
+        prod_size=prod_size.value
+    }else {
+        prod_size=this.dataset.slug
+    }
     $.ajax({
         type: "GET",
         dataType: "json",

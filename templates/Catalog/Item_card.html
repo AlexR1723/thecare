@@ -58,13 +58,14 @@
                                             {% endif %}
                                         {% endif %}
                                         <div class="card-price-block row m-0 align-items-center mb-3">
-                                            <div class="d-inline-block mr-5">
+                                            {% if item.get_price.sale %}
+                                            <div class="d-inline-block mr-5" id="is_sale_prod">
                                                 <i class="fa fa-tag" aria-hidden="true"></i>
-                                                <small class="old-price-card">{{ item.get_price.old_price }} руб</small>
+                                                <small class="old-price-card" id="product_sale">{{ item.get_price.old_price }} руб.</small>
                                             </div>
+                                            {% endif %}
                                             <div class="d-inline-block card-text text-center text-md-left">
-                                                    <span class="price-text" id="product_price">{{ item.get_price.price }} руб</span>
-
+                                                <span class="price-text" id="product_price">{{ item.get_price.price }} руб.</span>
                                             </div>
                                         </div>
 
@@ -76,7 +77,7 @@
                                             <button class="plus"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                         </div>
                                         <div class="text-center text-md-left">
-                                            <button class="btn" data-slug="{{ item.slug }}" id="btn_add_to_cart">В
+                                            <button class="btn" data-slug="{{ item.get_price.id }}" id="btn_add_to_cart">В
                                                 корзину
                                             </button>
                                         </div>
