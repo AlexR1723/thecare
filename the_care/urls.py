@@ -18,6 +18,7 @@ from django.urls import path
 from django.conf.urls import url, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.static import serve
 
 
 urlpatterns = [
@@ -31,4 +32,6 @@ urlpatterns = [
     url(r'brands/', include('Brands.urls')),
     url(r'cart/', include('Basket.urls')),
     url(r'profile/', include('Profile.urls')),
+    url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+handler404 = 'Main.views.error404'
