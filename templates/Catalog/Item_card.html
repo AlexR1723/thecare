@@ -46,8 +46,8 @@
                                         {% if not sizename %}
                                             <p class="card-text text-center text-md-left d-inline-block">Объемы:</p>
                                             <select name="" id="select_product_sizes" class="select-product-sizes">
-                                                {% for i in sizes %}
-                                                    <option value="{{ i.0 }}">{{ i.1 }} мл.</option>
+                                                {% for i in lst %}
+                                                    <option value="{{ i.0 }}" data-price="{{ i.2 }}">{{ i.1 }} мл.</option>
                                                 {% endfor %}
                                             </select>
                                         {% else %}
