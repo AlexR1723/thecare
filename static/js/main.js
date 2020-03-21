@@ -100,7 +100,6 @@ $('#send_feedback').click(function () {
 
 
 function notice(text) {
-    // function generate(text) {
     new Noty({
         text: text,
         // type: type,
@@ -110,33 +109,7 @@ function notice(text) {
         layout: 'bottomCenter',
         theme: 'relax'
     }).show();
-    // }
-
-    // let el = document.createElement('div')
-    // el.setAttribute('class','')
-    // el.setAttribute('style','z-index:999;width:30%;height:20%;transform: translate(50%, 50%);')
-    //
-    // let p = document.createElement('p')
-    // p.setAttribute('style','text-align:center')
-    //
-    // el.appendChild(p)
-
-    // let el = document.getElementById('notice_style')
-    // el.innerHTML = text;
-    // document.getElementById('notice_style').getBoundingClientRect.top = 90 %
-    //     $("#notice_style").fadeIn(1000).delay(2000).fadeOut(1000)
-
-
 }
-
-// var total_wheel=0;
-// window.onwheel= function(e){
-//     console.clear()
-//     console.log(e.deltaY)
-//     total_wheel+=e.deltaY
-//     console.log(total_wheel)
-//
-// }
 
 $('.items-counter').ready(function () {
     $('.minus').click(function () {
@@ -148,9 +121,17 @@ $('.items-counter').ready(function () {
         return false;
     });
     $('.plus').click(function () {
-        var $input = $(this).parent().find('input');
-        $input.val(parseInt($input.val()) + 1);
-        $input.change();
+        // var $input = $(this).parent().find('input');
+        // if ($input[0].max <= parseInt($input.val()) + 1) {
+        //     $input.val(parseInt($input.val()) + 1);
+        //     $input.change();
+        // }
+        let input = this.previousElementSibling
+        let max = input.max
+        let val = parseInt(input.value)
+        if (max >= val + 1) {
+            input.value = val + 1
+        }
         return false;
     });
 });
@@ -248,8 +229,30 @@ function set_footer() {
 
 $('#select_product_sizes').change(function () {
     // alert(this.selectedOptions[0].value)
-    let id=this.value
-    document.getElementById('product_price').innerText=this.selectedOptions[0].dataset.price+' руб.'
+    let id = this.value
+
+    document.getElementById('item_count').max = this.selectedOptions[0].dataset.count
+    if (parseInt(this.selectedOptions[0].dataset.sale) > 0) {
+            document.getElementById('is_sale_prod').removeAttribute('class', 'd-none')
+            document.getElementById('is_sale_prod').setAttribute('class', 'd-inline-block mr-5')
+            document.getElementById('product_sale').innerText = this.selectedOptions[0].dataset.sale
+        } else {
+            document.getElementById('is_sale_prod').removeAttribute('class', 'd-inline-block')
+            document.getElementById('is_sale_prod').setAttribute('class', 'd-none mr-5')
+            document.getElementById('product_sale').innerText = 0
+        }
+    if (parseInt(this.selectedOptions[0].dataset.count) > 0) {
+        document.getElementById('item_count').value = 1
+        document.getElementById('product_price').innerText = this.selectedOptions[0].dataset.price + ' руб.'
+        document.getElementById('prod_input').style.display='block'
+        document.getElementById('prod_button').style.display='block'
+    } else {
+        // document.getElementById('item_count').value = 0
+        document.getElementById('product_price').innerText = 'К сожалению, товара нет в наличии.'
+        document.getElementById('prod_input').style.display='none'
+        document.getElementById('prod_button').style.display='none'
+    }
+
     // let price=0
     // for (let i=0;i<prod_sizes.length;i++){
     //     if(prod_sizes[i].size_id==id){
@@ -379,11 +382,11 @@ $('#search_input').keyup(function () {
 
 $('#btn_add_to_cart').click(function () {
     let count = document.getElementById('item_count').value
-    let prod_size=document.getElementById('select_product_sizes')
-    if (prod_size){
-        prod_size=prod_size.value
-    }else {
-        prod_size=this.dataset.slug
+    let prod_size = document.getElementById('select_product_sizes')
+    if (prod_size) {
+        prod_size = prod_size.value
+    } else {
+        prod_size = this.dataset.slug
     }
     $.ajax({
         type: "GET",

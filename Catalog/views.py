@@ -305,13 +305,13 @@ def left_filter(url_page, head, filter=False, prod=False):
         brands = Brands_model.objects.all().order_by('name')
         if url_page == 'Sale':
             if filter and not prod:
-                queryset = Product.objects.filter(sale__gt=0).order_by(get_filter(filter))
+                queryset = Product.objects.filter(productsize__sale__gt=0).order_by(get_filter(filter))
             if not filter and not prod:
-                queryset = Product.objects.filter(sale__gt=0).order_by('-id')
+                queryset = Product.objects.filter(productsize__sale__gt=0).order_by('-id')
             if filter and prod:
-                queryset = prod.filter(sale__gt=0).order_by(get_filter(filter))
+                queryset = prod.filter(productsize__sale__gt=0).order_by(get_filter(filter))
             if not filter and prod:
-                queryset = prod.filter(sale__gt=0).order_by('-id')
+                queryset = prod.filter(productsize__sale__gt=0).order_by('-id')
 
         if url_page == 'Brands':
             # print(prod)
@@ -771,17 +771,21 @@ def Item_card(request, slug):
         if sizes[0].size.str_name:
             sizename = sizes[0].size.str_name
 
-    sizes = sizes.values_list('id', 'size__float_name', 'size__str_name','price').order_by('size__float_name')
+    # sizes = sizes.values_list('id', 'size__float_name', 'size__str_name','price').order_by('size__float_name')
+    sizes = sizes.order_by('size__float_name')
     lst = []
     for i in sizes:
         # el=list(i)
         ls = []
-        ls.append(i[0])
-        if i[1]:
-            ls.append(i[1])
-        if i[2]:
-            ls.append(i[2])
-        ls.append(i[3])
+        ls.append(i.id)
+        if i.size.float_name:
+            ls.append(i.size.float_name)
+        if i.size.str_name:
+            ls.append(i.size.str_name)
+        ls.append(i.price)
+        ls.append(i.old_price)
+        ls.append(i.count)
+        ls.append(i.sale)
         lst.append(ls)
 
     # for i in sizes:

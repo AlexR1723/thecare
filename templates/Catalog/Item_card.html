@@ -48,7 +48,12 @@
                                                 <p class="card-text text-center text-md-left d-inline-block">Объемы:</p>
                                                 <select name="" id="select_product_sizes" class="select-product-sizes">
                                                     {% for i in lst %}
-                                                        <option value="{{ i.0 }}" data-price="{{ i.2 }}">{{ i.1 }} мл.
+                                                        <option
+                                                                value="{{ i.0 }}"
+                                                                data-price="{{ i.2 }}"
+                                                                data-sale="{{ i.3 }}"
+                                                                data-count="{{ i.4 }}">{{ i.1 }} мл. {% if i.3 %}
+                                                            <span style="color: red">-{{ i.5 }}%</span>{% endif %}
                                                         </option>
                                                     {% endfor %}
                                                 </select>
@@ -59,10 +64,11 @@
                                         {% endif %}
                                         <div class="card-price-block row m-0 align-items-center mb-3">
                                             {% if item.get_price.sale %}
-                                            <div class="d-inline-block mr-5" id="is_sale_prod">
-                                                <i class="fa fa-tag" aria-hidden="true"></i>
-                                                <small class="old-price-card" id="product_sale">{{ item.get_price.old_price }} руб.</small>
-                                            </div>
+                                                <div class="d-inline-block mr-5" id="is_sale_prod">
+                                                    <i class="fa fa-tag" aria-hidden="true"></i>
+                                                    <small class="old-price-card"
+                                                           id="product_sale">{{ item.get_price.old_price }} руб.</small>
+                                                </div>
                                             {% endif %}
                                             <div class="d-inline-block card-text text-center text-md-left">
                                                 <span class="price-text" id="product_price">{{ item.get_price.price }} руб.</span>
@@ -70,15 +76,16 @@
                                         </div>
 
 
-                                        <div class="items-counter mb-4 text-center text-md-left">
+                                        <div class="items-counter mb-4 text-center text-md-left" id="prod_input">
                                             <button class="minus"><i class="fa fa-minus" aria-hidden="true"></i>
                                             </button>
-                                            <input type="number" value="1" min="1" id="item_count"/>
+                                            <input type="number" value="1" min="1" id="item_count"
+                                                   max="{{ item.get_price.count }}"/>
                                             <button class="plus"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                         </div>
-                                        <div class="text-center text-md-left">
-                                            <button class="btn" data-slug="{{ item.get_price.id }}" id="btn_add_to_cart">В
-                                                корзину
+                                        <div class="text-center text-md-left" id="prod_button">
+                                            <button class="btn" data-slug="{{ item.get_price.id }}"
+                                                    id="btn_add_to_cart">В корзину
                                             </button>
                                         </div>
                                     </div>
