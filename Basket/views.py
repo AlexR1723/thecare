@@ -115,7 +115,7 @@ def create_cart_session(request):
         if not ses:
             print('not ses')
             request.session[settings.CART_SESSION_ID] = {}
-            print(request.session.get(settings.CART_SESSION_ID))
+            # print(request.session.get(settings.CART_SESSION_ID))
             return request.session.get(settings.CART_SESSION_ID)
         else:
             return ses
@@ -132,22 +132,16 @@ def add_product(request):
         minus = request.GET.get('minus')
         is_del = request.GET.get('del')
         is_cart = request.GET.get('is_cart')
+        size_id = request.GET.get('size_id')
 
         is_plus_minus = False
         if minus or not count:
             is_plus_minus = True
-        # print('count')
-        # print(count)
         if not count or int(count) < 1:
-            # print('count = 1')
             count = 1
-        # if int(count)<0:
-        #     print(count)
-        #     count=int(count)*(-1)
-
         product = Product.objects.get(slug=slug)
-        print(product.price)
-        print(count)
+        # print(product.price)
+        # print(count)
         if slug not in ses:
             ses[slug] = {'count': count, 'price': int(product.price) * int(count)}
         else:
@@ -159,13 +153,10 @@ def add_product(request):
                     all_prices += int(i['price'])
                 return HttpResponse(json.dumps(all_prices))
 
-            # print(int(product.price))
-            # print(int(count))
             if minus:
                 if ses[slug]['count'] > 1:
                     ses[slug]['count'] = int(ses[slug]['count']) - int(count)
             else:
-                # print('here')
                 if is_cart:
                     ses[slug]['count'] = int(count)
                 else:

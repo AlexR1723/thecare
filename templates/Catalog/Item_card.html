@@ -13,8 +13,9 @@
                                                                                       aria-hidden="true"></i></a></li>
                             <li class="breadcrumb-item active" aria-current="page"><a
                                     href="{% url 'Catalog' category %}">{{ head }}</a></li>
-                            <li class="breadcrumb-item active d-none d-md-block" aria-current="page"><a
-                                    href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>
+                            <li class="breadcrumb-item active d-none d-md-block" aria-current="page">
+                                <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+                            </li>
                         </ol>
                     </nav>
                 </div>
@@ -41,10 +42,21 @@
                                 <div class="col-12 col-md-7 col-lg-8">
                                     <div class="card-body">
                                         <p class="card-text">{{ item.description }}</p>
+
+                                        {% if not sizename %}
+                                            <p class="card-text text-center text-md-left">Объемы:</p>
+                                            <select name="" id="select_product_sizes">
+                                                {% for i in sizes %}
+                                                    <option value="{{ i.0 }}">{{ i.1 }} мл.</option>
+                                                {% endfor %}
+                                            </select>
+                                        {% else %}
+                                            <p class="card-text text-center text-md-left">Объем:
+                                                <b>{{ sizename}} мл</b></p>
+                                        {% endif %}
                                         <p class="card-text text-center text-md-left">
-                                            <span class="price-text">{{ item.get_price.price }} руб</span>
+                                            <span class="price-text" id="product_price">{{ item.get_price.price }} руб</span>
                                         </p>
-                                        <p class="card-text text-center text-md-left">Объем: <b>{{ sizes }} мл</b></p>
                                         <div class="items-counter mb-4 text-center text-md-left">
                                             <button class="minus"><i class="fa fa-minus" aria-hidden="true"></i>
                                             </button>
@@ -52,7 +64,9 @@
                                             <button class="plus"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                         </div>
                                         <div class="text-center text-md-left">
-                                            <button class="btn" data-slug="{{ item.slug }}" id="btn_add_to_cart">В корзину</button>
+                                            <button class="btn" data-slug="{{ item.slug }}" id="btn_add_to_cart">В
+                                                корзину
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -123,16 +137,16 @@
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-md-0 my-md-4">
                             <div class="row m-0 justify-content-start align-items-center">
-{#                                <div class="card-deck ml-md-2">#}
-                            <div class="card-deck slider multiple-items w-100">
+                                {#                                <div class="card-deck ml-md-2">#}
+                                <div class="card-deck slider multiple-items w-100">
 
-                                {% for i in prods %}
+                                    {% for i in prods %}
                                         <div class="card">
                                             <a href="{{ i.product.get_absolute_url }}">
                                                 <div class="card-wrap">
                                                     {% if i.product.main_photo %}
-                                                    <img src="{{ MEDIA_URL }}{{ i.product.main_photo.url }}"
-                                                         class="card-img-top" alt="...">
+                                                        <img src="{{ MEDIA_URL }}{{ i.product.main_photo.url }}"
+                                                             class="card-img-top" alt="...">
                                                     {% endif %}
                                                     <div class="card-body">
                                                         <h5 class="card-title">{{ i.product.title }}</h5>
@@ -142,84 +156,12 @@
                                                     </div>
                                                     <div class="card-footer">
                                                         <hr>
-                                                        <small class="text-muted">{{ i.product.price }} руб</small>
+                                                        <small class="text-muted">{{ i.product.get_price.price }} руб</small>
                                                     </div>
                                                 </div>
                                             </a>
                                         </div>
                                     {% endfor %}
-
-
-{#                                    {% for i in prods %}#}
-{#                                        <div class="card col-lg-4 col-xl-3 mx-auto">#}
-{#                                            {% if i.product.main_photo %}#}
-{#                                                <img src="{{ MEDIA_URL }}{{ i.product.main_photo.url }}"#}
-{#                                                     class="card-img-top" alt="...">#}
-{#                                            {% endif %}#}
-{##}
-{#                                            <div class="card-body">#}
-{#                                                <h5 class="card-title">{{ i.product.title }}</h5>#}
-{#                                                <p class="card-text">{{ i.product.shot_description }}</p>#}
-{#                                                <a href="{{ i.product.get_absolute_url }}">#}
-{#                                                    <button type="submit" class="btn btn-buy mx-auto">Купить</button>#}
-{#                                                </a>#}
-{#                                            </div>#}
-{#                                            <div class="card-footer">#}
-{#                                                <hr>#}
-{#                                                <small class="text-muted">{{ i.product.price }} руб</small>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                    {% endfor %}#}
-
-
-                                    {#                                    <div class="card col-lg-4 col-xl-3 mx-auto">#}
-                                    {#                                        <img src="/static/image/image-27.png" class="card-img-top" alt="...">#}
-                                    {#                                        <div class="card-body">#}
-                                    {#                                            <h5 class="card-title">3Lab Увлажняющий крем для лица</h5>#}
-                                    {#                                            <p class="card-text">Идельно подойдет для ежедневного использования</p>#}
-                                    {#                                            <button type="submit" class="btn btn-buy mx-auto">Купить</button>#}
-                                    {#                                        </div>#}
-                                    {#                                        <div class="card-footer">#}
-                                    {#                                            <hr>#}
-                                    {#                                            <small class="text-muted">3 200 руб</small>#}
-                                    {#                                        </div>#}
-                                    {#                                    </div>#}
-                                    {#                                    <div class="card col-lg-4 col-xl-3 mx-auto">#}
-                                    {#                                        <img src="/static/image/image-28.png" class="card-img-top" alt="...">#}
-                                    {#                                        <div class="card-body">#}
-                                    {#                                            <h5 class="card-title">3Lab Очищающий скраб для лица</h5>#}
-                                    {#                                            <p class="card-text">Предназначен для глубокого очищения кожи</p>#}
-                                    {#                                            <button type="submit" class="btn btn-buy mx-auto">Купить</button>#}
-                                    {#                                        </div>#}
-                                    {#                                        <div class="card-footer">#}
-                                    {#                                            <hr>#}
-                                    {#                                            <small class="text-muted">1 660 руб</small>#}
-                                    {#                                        </div>#}
-                                    {#                                    </div>#}
-                                    {#                                    <div class="card col-lg-4 col-xl-3 mx-auto">#}
-                                    {#                                        <img src="/static/image/image-29.png" class="card-img-top" alt="...">#}
-                                    {#                                        <div class="card-body">#}
-                                    {#                                            <h5 class="card-title">3Lab Очищающий гель для лица</h5>#}
-                                    {#                                            <p class="card-text">Обеспечивает бережный и тщательный уход</p>#}
-                                    {#                                            <button type="submit" class="btn btn-buy mx-auto">Купить</button>#}
-                                    {#                                        </div>#}
-                                    {#                                        <div class="card-footer">#}
-                                    {#                                            <hr>#}
-                                    {#                                            <small class="text-muted">1 530 руб</small>#}
-                                    {#                                        </div>#}
-                                    {#                                    </div>#}
-                                    {#                                    <div class="card col-lg-4 col-xl-3 mx-auto">#}
-                                    {#                                        <img src="/static/image/image-27.png" class="card-img-top" alt="...">#}
-                                    {#                                        <div class="card-body">#}
-                                    {#                                            <h5 class="card-title">3Lab Увлажняющий крем для лица</h5>#}
-                                    {#                                            <p class="card-text">Идельно подойдет для ежедневного использования</p>#}
-                                    {#                                            <button type="submit" class="btn btn-buy mx-auto">Купить</button>#}
-                                    {#                                        </div>#}
-                                    {#                                        <div class="card-footer">#}
-                                    {#                                            <hr>#}
-                                    {#                                            <small class="text-muted">3 200 руб</small>#}
-                                    {#                                        </div>#}
-                                    {#                                    </div>#}
                                 </div>
                             </div>
                         </div>
@@ -228,5 +170,4 @@
             </div>
         </div>
     </div>
-
 {% endblock %}

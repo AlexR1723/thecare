@@ -246,12 +246,53 @@ function set_footer() {
     }
 }
 
+$('#select_product_sizes').change(function () {
+    // alert(this.selectedOptions[0].value)
+    let id=this.value
+    // let price=0
+    for (let i=0;i<prod_sizes.length;i++){
+        if(prod_sizes[i].size_id==id){
+            document.getElementById('product_price').innerText=prod_sizes[i].price
+        }
+    }
+})
+
+var prod_sizes
+function get_prod_sizes(){
+    let slug = document.getElementById('btn_add_to_cart').dataset.slug
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            async: true,
+            url: 'get_product_sizes',
+            data: {
+                slug: slug
+            },
+            success: function (data) {
+                if (data !== false) {
+                    prod_sizes=data
+                } else {
+                    alert('false')
+                }
+            },
+            error: function (data) {
+                alert('error')
+            }
+        })
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     set_footer()
+    if (document.getElementById('btn_add_to_cart')) {
+        get_prod_sizes()
+    }
 });
 window.onload = function () {
-
     set_footer()
+
+    // if (document.getElementById('btn_add_to_cart')) {
+    //     get_prod_sizes()
+    // }
 
 }
 
@@ -338,6 +379,7 @@ $('#search_input').keyup(function () {
 $('#btn_add_to_cart').click(function () {
     let slug = this.dataset.slug
     let count = document.getElementById('item_count').value
+    let size_id=document.getElementById('select_product_sizes').value
     $.ajax({
         type: "GET",
         dataType: "json",
@@ -345,7 +387,8 @@ $('#btn_add_to_cart').click(function () {
         url: '/cart/add_product',
         data: {
             slug: slug,
-            count: count
+            count: count,
+            size_id: size_id
         },
         success: function (data) {
             if (data !== false) {
@@ -476,14 +519,14 @@ $('.cart_item_input').on('keyup', function () {
 
 $('#btn_change_contact_details').click(function () {
     let name = document.getElementById('cd_name').value
-    let surname =  document.getElementById('cd_surname').value
-    let patron =  document.getElementById('cd_patron').value
+    let surname = document.getElementById('cd_surname').value
+    let patron = document.getElementById('cd_patron').value
     // let email =  document.getElementById('cd_email').value
-    let phone =  document.getElementById('cd_phone').value
+    let phone = document.getElementById('cd_phone').value
     // let address =  document.getElementById('cd_address').value
-    let pass1 =  document.getElementById('cd_pass1').value
-    let pass2 =  document.getElementById('cd_pass2').value
-    let pass3 =  document.getElementById('cd_pass3').value
+    let pass1 = document.getElementById('cd_pass1').value
+    let pass2 = document.getElementById('cd_pass2').value
+    let pass3 = document.getElementById('cd_pass3').value
     $.ajax({
         type: "GET",
         dataType: "json",
@@ -507,7 +550,7 @@ $('#btn_change_contact_details').click(function () {
                 // notice('Добавлено в корзину')
             } else {
                 // notice('Произошла ошибка, попробуйте позже!')
-                window.location.href='/log_in'
+                window.location.href = '/log_in'
             }
         },
         error: function (data) {
@@ -539,7 +582,7 @@ $('#btn_change_address').click(function () {
                 // notice('Добавлено в корзину')
             } else {
                 // notice('Произошла ошибка, попробуйте позже!')
-                window.location.href='/log_in'
+                window.location.href = '/log_in'
             }
         },
         error: function (data) {
@@ -571,7 +614,7 @@ $('#btn_buy_products').click(function () {
                 // notice('Добавлено в корзину')
             } else {
                 // notice('Произошла ошибка, попробуйте позже!')
-                window.location.href='/log_in'
+                window.location.href = '/log_in'
             }
         },
         error: function (data) {
