@@ -44,15 +44,15 @@
                                         <p class="card-text">{{ item.description }}</p>
 
                                         {% if not sizename %}
-                                            <p class="card-text text-center text-md-left">Объемы:</p>
-                                            <select name="" id="select_product_sizes">
+                                            <p class="card-text text-center text-md-left d-inline-block">Объемы:</p>
+                                            <select name="" id="select_product_sizes" class="select-product-sizes">
                                                 {% for i in sizes %}
                                                     <option value="{{ i.0 }}">{{ i.1 }} мл.</option>
                                                 {% endfor %}
                                             </select>
                                         {% else %}
-                                            <p class="card-text text-center text-md-left">Объем:
-                                                <b>{{ sizename}} мл</b></p>
+                                            <p class="card-text text-center text-md-left d-inline-block">Объем:</p>
+                                                <b>{{ sizename}} мл</b>
                                         {% endif %}
                                         <p class="card-text text-center text-md-left">
                                             <span class="price-text" id="product_price">{{ item.get_price.price }} руб</span>
