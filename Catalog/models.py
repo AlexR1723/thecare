@@ -202,7 +202,7 @@ class Product(models.Model):
         return prods
 
     def get_price(self):
-        sizes=ProductSize.objects.filter(product=self)[0]
+        sizes=ProductSize.objects.filter(product=self).order_by('size__name')[0]
         return sizes
 
 

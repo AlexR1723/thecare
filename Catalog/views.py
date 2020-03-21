@@ -3,6 +3,8 @@ from .models import *
 from uuslug import slugify
 from django.db.models import Q
 import random
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+import xlrd, xlwt, json, re, hashlib, random, datetime
 
 from django.conf import settings
 
@@ -755,7 +757,46 @@ def Item_card(request, slug):
     prods.reverse()
     if len(prods) > 8:
         prods = prods[:8]
-    sizes = ProductSize.objects.filter(product_id=item.id).values_list('size__name', flat=True)
-    sizes = ', '.join(sizes)
-    sz = ProductSize.objects.filter(product_id=item.id)
+
+    # sizes = ProductSize.objects.filter(product_id=item.id).values_list('size__name', flat=True)
+    sizes = ProductSize.objects.filter(product_id=item.id)
+    if sizes.count()==1:
+        sizename=sizes[0].size.name
+
+    sizes=sizes.values_list('size_id','size__name')
+    lst = []
+    for i in sizes:
+        # el=list(i)
+        ls=[]
+        ls.append(i[0])
+        try:
+            ls.append(int(float(i[1])))
+        except:
+            ls.append(i[1])
+        lst.append(ls)
+
+    # for i in sizes:
+    #     try:
+    #         i['size_id'] = float(Size.objects.get(id=i['size_id']).name)
+    #     except:
+    #         i['size_id'] = Size.objects.get(id=i['size_id']).name
+    #     lst.append(i)
+    sizes = sorted(lst, key=lambda sz: sz[1])
+    print(sizes)
+    # sizes = ', '.join(sizes)
+    # sz = ProductSize.objects.filter(product_id=item.id)
     return render(request, 'Catalog/Item_card.html', locals())
+
+
+def get_product_sizes(request):
+    slug = request.GET.get('slug')
+    sizes = list(ProductSize.objects.filter(product__slug=slug).values())
+    # lst = []
+    # for i in sizes:
+    #     try:
+    #         i['size_id'] = float(Size.objects.get(id=i['size_id']).name)
+    #     except:
+    #         i['size_id'] = Size.objects.get(id=i['size_id']).name
+    #     lst.append(i)
+    # ls1 = sorted(lst, key=lambda sz: sz['size_id'])
+    return HttpResponse(json.dumps(sizes))
