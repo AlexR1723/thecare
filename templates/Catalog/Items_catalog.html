@@ -162,19 +162,82 @@
                                                     <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
                                                          data-parent="#accordion1">
                                                         <div class="card-body pt-0" id="card_resources">
-                                                            {% for r in resource %}
-                                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                                                    <input type="checkbox" class="custom-control-input"
-                                                                           id="res{{ forloop.counter }}"
-                                                                           data-res="{{ r.id }}"
-                                                                            {% if r.id in resources_id %}
-                                                                           checked
-                                                                            {% endif %}
-                                                                    >
-                                                                    <label class="custom-control-label"
-                                                                           for="res{{ forloop.counter }}">{{ r.name }}</label>
-                                                                </div>
-                                                            {% endfor %}
+                                                            {% if spec %}
+                                                                {% for r in resource %}
+                                                                    {% if spec == 'sale' %}
+                                                                        {% if r.get_res_items_sale.count > 0 %}
+                                                                            <p style="color: blue">{{ r.name }}</p>
+                                                                            {% for items in r.get_res_items_sale %}
+                                                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                                                    <input type="checkbox"
+                                                                                           class="custom-control-input"
+                                                                                           id="res{{ items.id }}"
+                                                                                           data-res="{{ items.id }}"
+                                                                                            {% if items.id in resources_id %}
+                                                                                           checked
+                                                                                            {% endif %}
+                                                                                    >
+                                                                                    <label class="custom-control-label"
+                                                                                           for="res{{ items.id }}">{{ items.name }}</label>
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                    {% if spec == 'new' %}
+                                                                        {% if r.get_res_items_new.count > 0 %}
+                                                                            <p style="color: blue">{{ r.name }}</p>
+                                                                            {% for items in r.get_res_items_new %}
+                                                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                                                    <input type="checkbox"
+                                                                                           class="custom-control-input"
+                                                                                           id="res{{ items.id }}"
+                                                                                           data-res="{{ items.id }}"
+                                                                                            {% if items.id in resources_id %}
+                                                                                           checked
+                                                                                            {% endif %}
+                                                                                    >
+                                                                                    <label class="custom-control-label"
+                                                                                           for="res{{ items.id }}">{{ items.name }}</label>
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                    {% if spec == 'brands' %}
+                                                                        {% if r.get_res_items_brands.count > 0 %}
+                                                                            <p style="color: blue">{{ r.name }}</p>
+                                                                            {% for items in r.get_res_items_brands %}
+                                                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                                                    <input type="checkbox"
+                                                                                           class="custom-control-input"
+                                                                                           id="res{{ items.id }}"
+                                                                                           data-res="{{ items.id }}"
+                                                                                            {% if items.id in resources_id %}
+                                                                                           checked
+                                                                                            {% endif %}
+                                                                                    >
+                                                                                    <label class="custom-control-label"
+                                                                                           for="res{{ items.id }}">{{ items.name }}</label>
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            {% else %}
+                                                                {% for r in resource %}
+                                                                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                                        <input type="checkbox"
+                                                                               class="custom-control-input"
+                                                                               id="res{{ forloop.counter }}"
+                                                                               data-res="{{ r.id }}"
+                                                                                {% if r.id in resources_id %}
+                                                                               checked
+                                                                                {% endif %}
+                                                                        >
+                                                                        <label class="custom-control-label"
+                                                                               for="res{{ forloop.counter }}">{{ r.name }}</label>
+                                                                    </div>
+                                                                {% endfor %}
+                                                            {% endif %}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -195,19 +258,86 @@
                                                     <div id="collapseTwo" class="collapse active show"
                                                          aria-labelledby="headingTwo" data-parent="#accordion2">
                                                         <div class="card-body pt-0" id="card_needs">
-                                                            {% for n in need %}
-                                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                                                    <input type="checkbox" class="custom-control-input"
-                                                                           id="need{{ forloop.counter }}"
-                                                                           data-res="{{ n.id }}"
-                                                                            {% if n.id in needs_id %}
-                                                                           checked
-                                                                            {% endif %}
-                                                                    >
-                                                                    <label class="custom-control-label"
-                                                                           for="need{{ forloop.counter }}">{{ n.name }}</label>
-                                                                </div>
-                                                            {% endfor %}
+                                                            {% if spec %}
+                                                                {% for n in need %}
+                                                                    {% if spec == 'sale' %}
+                                                                        {% if n.get_need_items_sale.count > 0 %}
+                                                                            <p style="color: blue">{{ n.name }}</p>
+                                                                            {% for items in n.get_need_items_sale %}
+
+                                                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                                                    <input type="checkbox"
+                                                                                           class="custom-control-input"
+                                                                                           id="need{{ items.id }}"
+                                                                                           data-res="{{ items.id }}"
+                                                                                            {% if items.id in needs_id %}
+                                                                                           checked
+                                                                                            {% endif %}
+                                                                                    >
+                                                                                    <label class="custom-control-label"
+                                                                                           for="need{{ items.id }}">{{ items.name }}</label>
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                    {% if spec == 'new' %}
+                                                                        {% if n.get_need_items_new.count > 0 %}
+                                                                            <p style="color: blue">{{ n.name }}</p>
+                                                                            {% for items in n.get_need_items_new %}
+
+                                                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                                                    <input type="checkbox"
+                                                                                           class="custom-control-input"
+                                                                                           id="need{{ items.id }}"
+                                                                                           data-res="{{ items.id }}"
+                                                                                            {% if items.id in needs_id %}
+                                                                                           checked
+                                                                                            {% endif %}
+                                                                                    >
+                                                                                    <label class="custom-control-label"
+                                                                                           for="need{{ items.id }}">{{ items.name }}</label>
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                    {% if spec == 'brands' %}
+                                                                        {% if n.get_need_items_brands.count > 0 %}
+                                                                            <p style="color: blue">{{ n.name }}</p>
+                                                                            {% for items in n.get_need_items_brands %}
+
+                                                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                                                    <input type="checkbox"
+                                                                                           class="custom-control-input"
+                                                                                           id="need{{ items.id }}"
+                                                                                           data-res="{{ items.id }}"
+                                                                                            {% if items.id in needs_id %}
+                                                                                           checked
+                                                                                            {% endif %}
+                                                                                    >
+                                                                                    <label class="custom-control-label"
+                                                                                           for="need{{ items.id }}">{{ items.name }}</label>
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                                {#                                                        {% endwith %}#}
+                                                            {% else %}
+                                                                {% for n in need %}
+                                                                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                                                        <input type="checkbox"
+                                                                               class="custom-control-input"
+                                                                               id="need{{ forloop.counter }}"
+                                                                               data-res="{{ n.id }}"
+                                                                                {% if n.id in needs_id %}
+                                                                               checked
+                                                                                {% endif %}
+                                                                        >
+                                                                        <label class="custom-control-label"
+                                                                               for="need{{ forloop.counter }}">{{ n.name }}</label>
+                                                                    </div>
+                                                                {% endfor %}
+                                                            {% endif %}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -246,11 +376,6 @@
 
                                                     <div class="card-body p-0 mt-3">
                                                         <div class="card-footer text-center p-0">
-                                                            {#                                                            <a href="#}
-                                                            {#{% if is_page and not is_filter %}#}
-                                                            {##}
-                                                            {#{% endif %}#}
-                                                            {#">#}
                                                             <button type="button" id="btn_filter" class="btn my-1"
                                                                     data-page="{{ url_page }}"
                                                                     data-filter="{{ filter }}"
@@ -277,39 +402,13 @@
                                     <div class="row m-0 justify-content-start align-items-center">
                                         <div class="card-deck mb-5 ml-md-2 w-100" id="products">
 
-
-                                            {#                                            <div class="card sale-card col-lg-4 col-xl-3">#}
-                                            {#                                                <div class="wrap">#}
-                                            {#                                                    <span>SALE</span>#}
-                                            {#                                                    <img src="/media/uploads/9.jpg" class="card-img-top" alt="...">#}
-                                            {#                                                </div>#}
-                                            {#                                                <div class="card-body">#}
-                                            {#                                                    <h5 class="card-title">3Lab Увлажняющий крем для лица</h5>#}
-                                            {#                                                    <p class="card-text">Идельно подойдет для ежедневного#}
-                                            {#                                                        использования</p>#}
-                                            {#                                                    <button type="submit" class="btn btn-buy mx-auto">Купить</button>#}
-                                            {#                                                </div>#}
-                                            {#                                                <div class="card-footer">#}
-                                            {#                                                    <hr>#}
-                                            {#                                                    <div class="row">#}
-                                            {#                                                        <div class="col-12 col-lg-4 pl-lg-0 pr-lg-0 pl-xl-3 pr-xl-0">#}
-                                            {#                                                            <small class="old-price">1 660 руб</small>#}
-                                            {#                                                        </div>#}
-                                            {#                                                        <div class="col-12 col-lg-8 text-lg-right">#}
-                                            {#                                                            <i class="fa fa-tag" aria-hidden="true"></i>#}
-                                            {#                                                            <small class="text-muted">1 160 руб</small>#}
-                                            {#                                                        </div>#}
-                                            {#                                                    </div>#}
-                                            {#                                                </div>#}
-                                            {#                                            </div>#}
-
-
                                             {% for p in products %}
-                                                <div class="card {% if p.get_price.sale %}sale-card{% endif %} col-lg-4 col-xl-3"
+                                                <div class="card {% if p.get_sale %}sale-card{% endif %} col-lg-4 col-xl-3"
                                                      data-price="{{ p.price }}" data-name="{{ p.title }}"
-                                                     data-num="{{ forloop.counter }}">
+                                                        {#                                                     data-num="{{ forloop.counter }}"#}
+                                                >
 
-                                                    {% if p.get_price.sale %}
+                                                    {% if p.get_sale %}
                                                         <div class="wrap">
                                                             <span>SALE</span>
                                                             {% if p.main_photo != None and p.main_photo != "" %}
@@ -334,22 +433,22 @@
                                                     </div>
                                                     <div class="card-footer">
                                                         <hr>
-                                                        {% if p.get_price.sale %}
-                                                            <div class="row">
-                                                                <div class="col-12 col-lg-4 pl-lg-0 pr-lg-0 pl-xl-3 pr-xl-0">
-                                                                    <small class="old-price">{{ p.get_price.old_price }}
-                                                                        руб</small>
-                                                                </div>
-                                                                <div class="col-12 col-lg-8 text-lg-right">
-                                                                    <i class="fa fa-tag" aria-hidden="true"></i>
-                                                                    <small class="text-muted">{{ p.get_price.price }}
-                                                                        руб</small>
-                                                                </div>
-                                                            </div>
-                                                        {% else %}
-                                                            <small class="text-muted">{{ p.get_price.price }}
-                                                                руб.</small>
-                                                        {% endif %}
+                                                        {#                                                        {% if p.get_price.sale %}#}
+                                                        {#                                                            <div class="row">#}
+                                                        {#                                                                <div class="col-12 col-lg-4 pl-lg-0 pr-lg-0 pl-xl-3 pr-xl-0">#}
+                                                        {#                                                                    <small class="old-price">{{ p.get_price.old_price }}#}
+                                                        {#                                                                        руб</small>#}
+                                                        {#                                                                </div>#}
+                                                        {#                                                                <div class="col-12 col-lg-8 text-lg-right">#}
+                                                        {#                                                                    <i class="fa fa-tag" aria-hidden="true"></i>#}
+                                                        {#                                                                    <small class="text-muted">{{ p.get_price.price }}#}
+                                                        {#                                                                        руб</small>#}
+                                                        {#                                                                </div>#}
+                                                        {#                                                            </div>#}
+                                                        {#                                                        {% else %}#}
+                                                        <small class="text-muted">{{ p.get_price.price }}
+                                                            руб.</small>
+                                                        {#                                                        {% endif %}#}
                                                     </div>
                                                 </div>
                                             {% endfor %}

@@ -88,6 +88,36 @@ class CategoryType(models.Model):
     def __str__(self):
         return self.name
 
+    def get_res_items_sale(self):
+        items = ResourceType.objects.filter(category_id=self.id).order_by('id', 'name').filter(
+            product__productsize__sale__gt=0).distinct('id')
+        return items
+
+    def get_need_items_sale(self):
+        items = NeedType.objects.filter(productneed__product__category=self).filter(
+            productneed__product__productsize__sale__gt=0).order_by('id', 'name').distinct('id')
+        return items
+
+    def get_res_items_new(self):
+        dat = datetime.datetime.today() + datetime.timedelta(days=-30)
+        items = ResourceType.objects.filter(category_id=self.id).order_by('id', 'name').filter(
+            product__date__gte=dat).distinct('id')
+        return items
+
+    def get_need_items_new(self):
+        dat = datetime.datetime.today() + datetime.timedelta(days=-30)
+        items = NeedType.objects.filter(productneed__product__category=self).filter(
+            productneed__product__date__gte=dat).order_by('id', 'name').distinct('id')
+        return items
+
+    def get_res_items_brands(self):
+        items = ResourceType.objects.filter(category_id=self.id).order_by('id', 'name').distinct('id')
+        return items
+
+    def get_need_items_brands(self):
+        items = NeedType.objects.filter(productneed__product__category=self).order_by('id', 'name').distinct('id')
+        return items
+
 
 class DjangoAdminLog(models.Model):
     action_time = models.DateTimeField()
@@ -154,7 +184,7 @@ class Brands_model(models.Model):
     class Meta:
         managed = False
         db_table = 'brands'
-        ordering=['name']
+        ordering = ['name']
         verbose_name = _("Бренд")
         verbose_name_plural = _("Бренды")
 
@@ -191,25 +221,23 @@ class Product(models.Model):
         else:
             string = str(self.id) + '-' + self.title
         self.slug = slugify(string)
-        self.date =datetime.datetime.today()
+        self.date = datetime.datetime.today()
         super(Product, self).save(*args, **kwargs)
 
     def __str__(self):
         return str(self.id) + ' ' + self.title
 
     def needed(self):
-        prods=ProductNeed.objects.filter(product_id=self.id)
+        prods = ProductNeed.objects.filter(product_id=self.id)
         return prods
 
     def get_price(self):
-        # print(self.slug)
-        # print(ProductSize.objects.filter(product=self))
-        # print(ProductSize.objects.filter(product=self).order_by('size__float_name','size__str_name'))
-        sizes=ProductSize.objects.filter(product=self).order_by('size__float_name','size__str_name')[0]
-        # print(ProductSize.objects.filter(product=self).order_by('size__float_name','size__str_name').values('size__float_name','price'))
-
+        sizes = ProductSize.objects.filter(product=self).order_by('size__float_name', 'size__str_name')[0]
         return sizes
 
+    def get_sale(self):
+        sale = ProductSize.objects.filter(product_id=self.id).filter(sale__gt=0).exists()
+        return sale
 
 
 class Size(models.Model):
@@ -219,8 +247,6 @@ class Size(models.Model):
     class Meta:
         managed = False
         db_table = 'size'
-
-
 
 
 class ProductSize(models.Model):
@@ -236,7 +262,6 @@ class ProductSize(models.Model):
         db_table = 'product_size'
 
 
-
 class ProductNeed(models.Model):
     product = models.ForeignKey(Product, models.DO_NOTHING, blank=True, null=True)
     need = models.ForeignKey(NeedType, models.DO_NOTHING, blank=True, null=True, verbose_name="Наименование")
@@ -248,7 +273,6 @@ class ProductNeed(models.Model):
         verbose_name_plural = _("Потребности")
 
 
-
 class ProductTone(models.Model):
     product = models.ForeignKey(Product, models.DO_NOTHING, blank=True, null=True)
     name = models.CharField(max_length=100, blank=True, null=True)
@@ -256,7 +280,6 @@ class ProductTone(models.Model):
     class Meta:
         managed = False
         db_table = 'product_tone'
-
 
 
 class ResourceType(models.Model):

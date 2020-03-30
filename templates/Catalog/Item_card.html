@@ -45,6 +45,14 @@
 
                                         {% if not not_size %}
                                             {% if not sizename %}
+                                                <p class="card-text text-center text-md-left d-inline-block"
+                                                   style="color: red">Скидка!</p>
+                                                {% for i in lst %}
+                                                    {% if i.5 > 0 %}
+                                                        <p class="card-text text-center text-md-left d-inline-block
+                                                        w-100">{{ i.1|convert_to_int }} мл. -{{ i.5 }}%</p>
+                                                    {% endif %}
+                                                {% endfor %}
                                                 <p class="card-text text-center text-md-left d-inline-block">Объемы:</p>
                                                 <select name="" id="select_product_sizes" class="select-product-sizes">
                                                     {% for i in lst %}
@@ -52,8 +60,9 @@
                                                                 value="{{ i.0 }}"
                                                                 data-price="{{ i.2 }}"
                                                                 data-sale="{{ i.3 }}"
-                                                                data-count="{{ i.4 }}">{{ i.1 }} мл. {% if i.3 %}
-                                                            <span style="color: red">-{{ i.5 }}%</span>{% endif %}
+                                                                data-count="{{ i.4 }}">{{ i.1|convert_to_int }} мл.
+                                                            {% if i.3 %}
+                                                                <span style="color: red">-{{ i.5 }}%</span>{% endif %}
                                                         </option>
                                                     {% endfor %}
                                                 </select>
@@ -63,14 +72,16 @@
                                             {% endif %}
                                         {% endif %}
                                         <div class="card-price-block row m-0 align-items-center mb-3">
-                                            {% if item.get_price.sale %}
-                                                <div class="d-inline-block mr-5" id="is_sale_prod">
+
+                                            <div class="d-inline-block" id="is_sale_prod">
+                                                {% if item.get_price.sale %}
                                                     <i class="fa fa-tag" aria-hidden="true"></i>
                                                     <small class="old-price-card"
                                                            id="product_sale">{{ item.get_price.old_price }} руб.</small>
-                                                </div>
-                                            {% endif %}
-                                            <div class="d-inline-block card-text text-center text-md-left">
+                                                {% endif %}
+                                            </div>
+
+                                            <div class="d-inline-block card-text text-center text-md-left ml-3">
                                                 <span class="price-text" id="product_price">{{ item.get_price.price }} руб.</span>
                                             </div>
                                         </div>

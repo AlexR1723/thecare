@@ -233,24 +233,46 @@ $('#select_product_sizes').change(function () {
 
     document.getElementById('item_count').max = this.selectedOptions[0].dataset.count
     if (parseInt(this.selectedOptions[0].dataset.sale) > 0) {
-            document.getElementById('is_sale_prod').removeAttribute('class', 'd-none')
-            document.getElementById('is_sale_prod').setAttribute('class', 'd-inline-block mr-5')
-            document.getElementById('product_sale').innerText = this.selectedOptions[0].dataset.sale
-        } else {
-            document.getElementById('is_sale_prod').removeAttribute('class', 'd-inline-block')
-            document.getElementById('is_sale_prod').setAttribute('class', 'd-none mr-5')
-            document.getElementById('product_sale').innerText = 0
-        }
+        // try {
+        //     document.getElementById('is_sale_prod').removeAttribute('class', 'd-none')
+        // } catch (e) {
+        //
+        // }
+        $("#is_sale_prod").toggleClass('d-none', false).toggleClass('d-inline-block', true);
+        // $( "#is_sale_prod" ).toggleClass( 'd-inline-block' );
+
+        // document.getElementById('is_sale_prod').setAttribute('class', 'd-inline-block')
+        let i = document.createElement('i')
+        i.setAttribute('class', 'fa fa-tag')
+        i.setAttribute('aria-hidden', 'true')
+        let small = document.createElement('small')
+        small.setAttribute('class', 'old-price-card')
+        small.setAttribute('id', 'product_sale')
+        document.getElementById('is_sale_prod').appendChild(i)
+        document.getElementById('is_sale_prod').appendChild(small)
+        document.getElementById('product_sale').innerText = this.selectedOptions[0].dataset.sale + ' руб.'
+    } else {
+        // try {
+        //     document.getElementById('is_sale_prod').removeAttribute('class', 'd-inline-block')
+        // } catch (e) {
+        //
+        // }
+        //
+        // document.getElementById('is_sale_prod').setAttribute('class', 'd-none mr-5')
+        $("#is_sale_prod").toggleClass('d-none', true).toggleClass('d-inline-block', false);
+        document.getElementById('is_sale_prod').innerHTML = ''
+        // document.getElementById('product_sale').innerText = 0
+    }
     if (parseInt(this.selectedOptions[0].dataset.count) > 0) {
         document.getElementById('item_count').value = 1
         document.getElementById('product_price').innerText = this.selectedOptions[0].dataset.price + ' руб.'
-        document.getElementById('prod_input').style.display='block'
-        document.getElementById('prod_button').style.display='block'
+        document.getElementById('prod_input').style.display = 'block'
+        document.getElementById('prod_button').style.display = 'block'
     } else {
         // document.getElementById('item_count').value = 0
         document.getElementById('product_price').innerText = 'К сожалению, товара нет в наличии.'
-        document.getElementById('prod_input').style.display='none'
-        document.getElementById('prod_button').style.display='none'
+        document.getElementById('prod_input').style.display = 'none'
+        document.getElementById('prod_button').style.display = 'none'
     }
 
     // let price=0
@@ -261,29 +283,6 @@ $('#select_product_sizes').change(function () {
     // }
 })
 
-// var prod_sizes
-// function get_prod_sizes(){
-//     let slug = document.getElementById('btn_add_to_cart').dataset.slug
-//         $.ajax({
-//             type: "GET",
-//             dataType: "json",
-//             async: true,
-//             url: 'get_product_sizes',
-//             data: {
-//                 slug: slug
-//             },
-//             success: function (data) {
-//                 if (data !== false) {
-//                     prod_sizes=data
-//                 } else {
-//                     alert('false')
-//                 }
-//             },
-//             error: function (data) {
-//                 alert('error')
-//             }
-//         })
-// }
 
 document.addEventListener("DOMContentLoaded", () => {
     set_footer()
