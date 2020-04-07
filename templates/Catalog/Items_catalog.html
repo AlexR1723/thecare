@@ -396,14 +396,14 @@
                     </div>
 
                     <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9 p-md-0 items-list_catalog">
-                        <div class="row">
+                        <div class="row m-0">
                             {% if products %}
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-md-0 my-md-5">
                                     <div class="row m-0 justify-content-start align-items-center">
                                         <div class="card-deck mb-5 ml-md-2 w-100" id="products">
-
+                                            <div class="row">
                                             {% for p in products %}
-                                                <div class="card {% if p.get_sale %}sale-card{% endif %} col-lg-4 col-xl-3"
+                                                <div class="card {% if p.get_sale %}sale-card{% endif %} col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3"
                                                      data-price="{{ p.price }}" data-name="{{ p.title }}"
                                                         {#                                                     data-num="{{ forloop.counter }}"#}
                                                 >
@@ -452,6 +452,7 @@
                                                     </div>
                                                 </div>
                                             {% endfor %}
+                                            </div>
                                         </div>
                                     </div>
 
