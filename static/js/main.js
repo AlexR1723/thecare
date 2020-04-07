@@ -31,7 +31,7 @@ jQuery("document").ready(function ($) {
     }
 
 
-    setTimeout(() => showSendBox(), 3000);
+    setTimeout(() => showSendBox(), 5000);
 });
 
 $('.multiple-items').slick({

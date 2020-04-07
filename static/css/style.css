@@ -1341,6 +1341,7 @@ a.up{
     display: inline-block !important;
     transition: .3s;
     z-index: 9999;
+    opacity: 1;
 }
 
 /*----------end wrapper--------------*/
