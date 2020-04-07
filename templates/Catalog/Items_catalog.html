@@ -166,7 +166,7 @@
                                                                 {% for r in resource %}
                                                                     {% if spec == 'sale' %}
                                                                         {% if r.get_res_items_sale.count > 0 %}
-                                                                            <p style="color: blue">{{ r.name }}</p>
+                                                                            <p class="need-block mb-0 mt-3">{{ r.name }}</p>
                                                                             {% for items in r.get_res_items_sale %}
                                                                                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
                                                                                     <input type="checkbox"
@@ -185,7 +185,7 @@
                                                                     {% endif %}
                                                                     {% if spec == 'new' %}
                                                                         {% if r.get_res_items_new.count > 0 %}
-                                                                            <p style="color: blue">{{ r.name }}</p>
+                                                                            <p class="need-block mb-0 mt-3">{{ r.name }}</p>
                                                                             {% for items in r.get_res_items_new %}
                                                                                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
                                                                                     <input type="checkbox"
@@ -204,7 +204,7 @@
                                                                     {% endif %}
                                                                     {% if spec == 'brands' %}
                                                                         {% if r.get_res_items_brands.count > 0 %}
-                                                                            <p style="color: blue">{{ r.name }}</p>
+                                                                            <p class="need-block mb-0 mt-3">{{ r.name }}</p>
                                                                             {% for items in r.get_res_items_brands %}
                                                                                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
                                                                                     <input type="checkbox"
@@ -262,7 +262,7 @@
                                                                 {% for n in need %}
                                                                     {% if spec == 'sale' %}
                                                                         {% if n.get_need_items_sale.count > 0 %}
-                                                                            <p style="color: blue">{{ n.name }}</p>
+                                                                            <p class="need-block mb-0 mt-3">{{ n.name }}</p>
                                                                             {% for items in n.get_need_items_sale %}
 
                                                                                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
@@ -282,7 +282,7 @@
                                                                     {% endif %}
                                                                     {% if spec == 'new' %}
                                                                         {% if n.get_need_items_new.count > 0 %}
-                                                                            <p style="color: blue">{{ n.name }}</p>
+                                                                            <p class="need-block mb-0 mt-3">{{ n.name }}</p>
                                                                             {% for items in n.get_need_items_new %}
 
                                                                                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
@@ -302,7 +302,7 @@
                                                                     {% endif %}
                                                                     {% if spec == 'brands' %}
                                                                         {% if n.get_need_items_brands.count > 0 %}
-                                                                            <p style="color: blue">{{ n.name }}</p>
+                                                                            <p class="need-block mb-0 mt-3">{{ n.name }}</p>
                                                                             {% for items in n.get_need_items_brands %}
 
                                                                                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
