@@ -240,7 +240,7 @@ div.dropdown-menu label:hover, div.dropdown-menu label:focus {
 }
 
 .items_hdr_bg {
-    height: 20rem;
+    height: 25rem;
     min-height: 10rem;
 }
 
@@ -267,7 +267,7 @@ div.dropdown-menu label:hover, div.dropdown-menu label:focus {
 .item_hdr_bg_layout {
     height: 100%;
     width: 100%;
-    background: rgba(51, 51, 51, 0.5);
+    background: rgba(51, 51, 51, 0.3);
     border: 2px solid white;
 }
 
