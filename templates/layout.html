@@ -155,9 +155,6 @@
                                         </div>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link " href="{% url 'News' %}">Новости</a>
-                                    </li>
-                                    <li class="nav-item">
                                         <a class="nav-link " href="{% url 'Deliveries' %}">Доставка</a>
                                         {#                                        </a>#}
                                     </li>
@@ -166,6 +163,9 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link " href="{% url 'Contacts' %}">Контакты</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " href="{% url 'News' %}">Новости</a>
                                     </li>
                                     {%  if dic|get_dict:'is_auth' %}
                                         <li class="nav-item">
