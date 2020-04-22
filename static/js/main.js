@@ -40,14 +40,18 @@ $('.multiple-items').slick({
     nextArrow: '<i class="fa fa-angle-right next" aria-hidden="true"></i>',
     prevArrow: '<i class="fa fa-angle-left prev" aria-hidden="true"></i>',
     speed: 300,
+    //количество отображаемых слайдов
     slidesToShow: 4,
-    slidesToScroll: 4,
+    //сколько слайдов отображать за раз при прокручивании
+    slidesToScroll: 1,
+    lazyLoad: 'ondemand',
     responsive: [
         {
             breakpoint: 1024,
             settings: {
+                lazyLoad: 'ondemand',
                 slidesToShow: 3,
-                slidesToScroll: 3,
+                slidesToScroll: 1,
                 infinite: true,
                 dots: false
             }
@@ -55,14 +59,16 @@ $('.multiple-items').slick({
         {
             breakpoint: 600,
             settings: {
+                lazyLoad: 'ondemand',
                 slidesToShow: 2,
-                slidesToScroll: 2
+                slidesToScroll: 1
             }
         },
         {
             breakpoint: 480,
             settings: {
-                slidesToShow: 1,
+                lazyLoad: 'ondemand',
+                slidesToShow: 2,
                 slidesToScroll: 1
             }
         }

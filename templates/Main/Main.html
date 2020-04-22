@@ -65,7 +65,7 @@
                         {% for f in face %}
                             <div class="card">
                             {% if f.main_photo != null and f.main_photo != "" %}
-                                <img src="{{MEDIA_URL}}{{ f.main_photo.url }}" class="card-img-top" alt="...">
+                                <img data-lazy="{{MEDIA_URL}}{{ f.main_photo.url }}" class="card-img-top" alt="...">
                                 {%  endif %}
                                 <div class="card-body">
                                     <h5 class="card-title mb-1">{{f.price}} руб</h5>
@@ -94,7 +94,7 @@
                         {% for h in hair %}
                         <div class="card">
                         {% if h.main_photo != null and h.main_photo != "" %}
-                            <img src="{{MEDIA_URL}}{{ h.main_photo.url }}" class="card-img-top" alt="...">
+                            <img data-lazy="{{MEDIA_URL}}{{ h.main_photo.url }}" class="card-img-top" alt="...">
                             {% endif %}
                             <div class="card-body">
                                 <h5 class="card-title mb-1">{{h.price}} руб</h5>
@@ -123,7 +123,7 @@
                         {% for b in body %}
                         <div class="card">
                         {% if b.main_photo != null and b.main_photo != "" %}
-                            <img src="{{MEDIA_URL}}{{ b.main_photo.url }}" class="card-img-top" alt="...">
+                            <img data-lazy="{{MEDIA_URL}}{{ b.main_photo.url }}" class="card-img-top" alt="...">
                             {% endif %}
                             <div class="card-body">
                                 <h5 class="card-title mb-1">{{b.price}} руб</h5>
