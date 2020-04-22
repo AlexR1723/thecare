@@ -36,7 +36,7 @@ jQuery("document").ready(function ($) {
 
 $('.multiple-items').slick({
     dots: false,
-    infinite: false,
+    infinite: true,
     nextArrow: '<i class="fa fa-angle-right next" aria-hidden="true"></i>',
     prevArrow: '<i class="fa fa-angle-left prev" aria-hidden="true"></i>',
     speed: 300,
@@ -45,11 +45,15 @@ $('.multiple-items').slick({
     //сколько слайдов отображать за раз при прокручивании
     slidesToScroll: 1,
     lazyLoad: 'ondemand',
+    pauseOnHover: true,
+    autoplay: true,
     responsive: [
         {
             breakpoint: 1024,
             settings: {
                 lazyLoad: 'ondemand',
+                pauseOnHover: true,
+                autoplay: true,
                 slidesToShow: 3,
                 slidesToScroll: 1,
                 infinite: true,
@@ -60,6 +64,9 @@ $('.multiple-items').slick({
             breakpoint: 600,
             settings: {
                 lazyLoad: 'ondemand',
+                pauseOnHover: true,
+                autoplay: true,
+                infinite: true,
                 slidesToShow: 2,
                 slidesToScroll: 1
             }
@@ -68,6 +75,9 @@ $('.multiple-items').slick({
             breakpoint: 480,
             settings: {
                 lazyLoad: 'ondemand',
+                pauseOnHover: true,
+                autoplay: true,
+                infinite: true,
                 slidesToShow: 2,
                 slidesToScroll: 1
             }

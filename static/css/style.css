@@ -296,6 +296,20 @@ div.dropdown-menu label:hover, div.dropdown-menu label:focus {
 .shop-items_blk .card {
     border-radius: 0;
 }
+/*.clearfix {*/
+/*  zoom: 1;*/
+/*}*/
+
+/*.clearfix:before,*/
+/*.clearfix:after {*/
+/*  display: table;*/
+/*  line-height: 0;*/
+/*  content: "";*/
+/*}*/
+
+/*.clearfix:after {*/
+/*  clear: both;*/
+/*}*/
 
 .shop-items_blk .slider .slick-slide:hover {
     box-shadow: 0 0 20px 5px rgba(221, 221, 221, 1);
