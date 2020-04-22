@@ -295,6 +295,7 @@ div.dropdown-menu label:hover, div.dropdown-menu label:focus {
 
 .shop-items_blk .card {
     border-radius: 0;
+    border: none;
 }
 /*.clearfix {*/
 /*  zoom: 1;*/
