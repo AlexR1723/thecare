@@ -1,6 +1,10 @@
 html {
     scroll-behavior: smooth;
 }
+.card-img-top{
+    height: 300px !important;
+    width: auto !important;
+}
 .fix-top {
     z-index: 100;
     position: sticky;
