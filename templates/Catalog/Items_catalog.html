@@ -148,6 +148,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        {% if head_url != 'Dyes_for_hair' %}
                                         <div class="accordion" id="accordion1">
                                             <div class="card-body filter-body_form">
                                                 <div class="row">
@@ -344,6 +345,8 @@
 
                                             </div>
                                         </div>
+
+                                        {% endif %}
                                         <div class="accordion" id="accordion3">
                                             <div class="card-body filter-body_form">
                                                 <div class="row">
@@ -425,7 +428,7 @@
 
                                                     <div class="card-body">
                                                         <h5 class="card-title">{{ p.title }}</h5>
-                                                        <p class="card-text">{{ p.shot_description }}</p>
+                                                        <p class="card-text d-none d-sm-none d-md-inline-block">{{ p.shot_description }}</p>
                                                         <a href="{{ p.get_absolute_url }}">
                                                             <button type="submit" class="btn btn-buy mx-auto">Купить
                                                             </button>

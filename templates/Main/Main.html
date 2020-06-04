@@ -83,7 +83,7 @@
                     {% for f in face %}
                     <div class="card">
                         {% if f.main_photo != null and f.main_photo != "" %}
-                        <img data-lazy="{{MEDIA_URL}}{{ f.main_photo.url }}" class="card-img-top" alt="...">
+                        <img data-lazy="{{MEDIA_URL}}{{ f.main_photo.url }}" class="card-img-top-main" alt="...">
                         {% endif %}
                         <div class="card-body">
                             <h5 class="card-title mb-1">{{f.price}} руб</h5>
@@ -112,7 +112,7 @@
                     {% for h in hair %}
                     <div class="card">
                         {% if h.main_photo != null and h.main_photo != "" %}
-                        <img data-lazy="{{MEDIA_URL}}{{ h.main_photo.url }}" class="card-img-top" alt="...">
+                        <img data-lazy="{{MEDIA_URL}}{{ h.main_photo.url }}" class="card-img-top-main" alt="...">
                         {% endif %}
                         <div class="card-body">
                             <h5 class="card-title mb-1">{{h.price}} руб</h5>
@@ -141,7 +141,7 @@
                     {% for b in body %}
                     <div class="card">
                         {% if b.main_photo != null and b.main_photo != "" %}
-                        <img data-lazy="{{MEDIA_URL}}{{ b.main_photo.url }}" class="card-img-top" alt="...">
+                        <img data-lazy="{{MEDIA_URL}}{{ b.main_photo.url }}" class="card-img-top-main" alt="...">
                         {% endif %}
                         <div class="card-body">
                             <h5 class="card-title mb-1">{{b.price}} руб</h5>
@@ -151,81 +151,81 @@
                         </div>
                     </div>
                     {% endfor %}
-                    {#
-                    <div class="card">#}
-                        {# <img src="/static/image/face-item_2.png" class="card-img-top" alt="...">#}
-                        {#
-                        <div class="card-body">#}
-                            {# <h5 class="card-title mb-1">10000 руб</h5>#}
-                            {# <a href="#">#}
-                                {# <p class="card-text">Средство для демакияжа области глаз двухфазное</p>#}
-                                {# </a>#}
-                            {#
-                        </div>
-                        #}
-                        {#
-                    </div>
-                    #}
-                    {#
-                    <div class="card">#}
-                        {# <img src="/static/image/face-item_3.png" class="card-img-top" alt="...">#}
-                        {#
-                        <div class="card-body">#}
-                            {# <h5 class="card-title mb-1">10000 руб</h5>#}
-                            {# <a href="#">#}
-                                {# <p class="card-text">Средство для демакияжа области глаз двухфазное</p>#}
-                                {# </a>#}
-                            {#
-                        </div>
-                        #}
-                        {#
-                    </div>
-                    #}
-                    {#
-                    <div class="card">#}
-                        {# <img src="/static/image/face-item_4.png" class="card-img-top" alt="...">#}
-                        {#
-                        <div class="card-body">#}
-                            {# <h5 class="card-title mb-1">10000 руб</h5>#}
-                            {# <a href="#">#}
-                                {# <p class="card-text">Средство для демакияжа области глаз двухфазное</p>#}
-                                {# </a>#}
-                            {#
-                        </div>
-                        #}
-                        {#
-                    </div>
-                    #}
-                    {#
-                    <div class="card">#}
-                        {# <img src="/static/image/face-item_1.png" class="card-img-top" alt="...">#}
-                        {#
-                        <div class="card-body">#}
-                            {# <h5 class="card-title mb-1">10000 руб</h5>#}
-                            {# <a href="#">#}
-                                {# <p class="card-text">Средство для демакияжа области глаз двухфазное</p>#}
-                                {# </a>#}
-                            {#
-                        </div>
-                        #}
-                        {#
-                    </div>
-                    #}
-                    {#
-                    <div class="card">#}
-                        {# <img src="/static/image/face-item_2.png" class="card-img-top" alt="...">#}
-                        {#
-                        <div class="card-body">#}
-                            {# <h5 class="card-title mb-1">10000 руб</h5>#}
-                            {# <a href="#">#}
-                                {# <p class="card-text">Средство для демакияжа области глаз двухфазное</p>#}
-                                {# </a>#}
-                            {#
-                        </div>
-                        #}
-                        {#
-                    </div>
-                    #}
+<!--                    {#-->
+<!--                    <div class="card">#}-->
+<!--                        {# <img src="/static/image/face-item_2.png" class="card-img-top" alt="...">#}-->
+<!--                        {#-->
+<!--                        <div class="card-body">#}-->
+<!--                            {# <h5 class="card-title mb-1">10000 руб</h5>#}-->
+<!--                            {# <a href="#">#}-->
+<!--                                {# <p class="card-text">Средство для демакияжа области глаз двухфазное</p>#}-->
+<!--                                {# </a>#}-->
+<!--                            {#-->
+<!--                        </div>-->
+<!--                        #}-->
+<!--                        {#-->
+<!--                    </div>-->
+<!--                    #}-->
+<!--                    {#-->
+<!--                    <div class="card">#}-->
+<!--                        {# <img src="/static/image/face-item_3.png" class="card-img-top" alt="...">#}-->
+<!--                        {#-->
+<!--                        <div class="card-body">#}-->
+<!--                            {# <h5 class="card-title mb-1">10000 руб</h5>#}-->
+<!--                            {# <a href="#">#}-->
+<!--                                {# <p class="card-text">Средство для демакияжа области глаз двухфазное</p>#}-->
+<!--                                {# </a>#}-->
+<!--                            {#-->
+<!--                        </div>-->
+<!--                        #}-->
+<!--                        {#-->
+<!--                    </div>-->
+<!--                    #}-->
+<!--                    {#-->
+<!--                    <div class="card">#}-->
+<!--                        {# <img src="/static/image/face-item_4.png" class="card-img-top" alt="...">#}-->
+<!--                        {#-->
+<!--                        <div class="card-body">#}-->
+<!--                            {# <h5 class="card-title mb-1">10000 руб</h5>#}-->
+<!--                            {# <a href="#">#}-->
+<!--                                {# <p class="card-text">Средство для демакияжа области глаз двухфазное</p>#}-->
+<!--                                {# </a>#}-->
+<!--                            {#-->
+<!--                        </div>-->
+<!--                        #}-->
+<!--                        {#-->
+<!--                    </div>-->
+<!--                    #}-->
+<!--                    {#-->
+<!--                    <div class="card">#}-->
+<!--                        {# <img src="/static/image/face-item_1.png" class="card-img-top" alt="...">#}-->
+<!--                        {#-->
+<!--                        <div class="card-body">#}-->
+<!--                            {# <h5 class="card-title mb-1">10000 руб</h5>#}-->
+<!--                            {# <a href="#">#}-->
+<!--                                {# <p class="card-text">Средство для демакияжа области глаз двухфазное</p>#}-->
+<!--                                {# </a>#}-->
+<!--                            {#-->
+<!--                        </div>-->
+<!--                        #}-->
+<!--                        {#-->
+<!--                    </div>-->
+<!--                    #}-->
+<!--                    {#-->
+<!--                    <div class="card">#}-->
+<!--                        {# <img src="/static/image/face-item_2.png" class="card-img-top" alt="...">#}-->
+<!--                        {#-->
+<!--                        <div class="card-body">#}-->
+<!--                            {# <h5 class="card-title mb-1">10000 руб</h5>#}-->
+<!--                            {# <a href="#">#}-->
+<!--                                {# <p class="card-text">Средство для демакияжа области глаз двухфазное</p>#}-->
+<!--                                {# </a>#}-->
+<!--                            {#-->
+<!--                        </div>-->
+<!--                        #}-->
+<!--                        {#-->
+<!--                    </div>-->
+<!--                    #}-->
                 </div>
             </div>
         </div>

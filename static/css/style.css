@@ -2,8 +2,15 @@ html {
     scroll-behavior: smooth;
 }
 .card-img-top{
+    /*height: 300px !important;*/
+    /*width: auto !important;*/
+    margin: auto !important;
+    width: 100% !important;
+}
+.card-img-top-main{
     height: 300px !important;
     width: auto !important;
+    margin: auto !important;
 }
 .fix-top {
     z-index: 100;
@@ -11,6 +18,9 @@ html {
     top: 0;
     min-height: 2em;
     background: white;
+}
+.sub-btn{
+    font-size: .8rem !important;
 }
 .fix-top-brand {
     z-index: 100;
