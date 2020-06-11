@@ -115,7 +115,7 @@ def Save_excel_file(request):
             # rb = xlrd.open_workbook(default_storage.location + file.file.name)
             url = default_storage.url(file.file.name)
             # rb = xlrd.open_workbook(settings.MEDIA_ROOT + '/' + file.file.name)
-            wb = load_workbook(file.file.name)
+            wb = load_workbook(file.file.url)
             # rb = xlrd.open_workbook(url)
             # sheet = rb.sheet_by_index(0)
             # vals = [sheet.row_values(rownum) for rownum in range(sheet.nrows)]
