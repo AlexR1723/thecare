@@ -108,7 +108,7 @@ def Save_excel_file(request):
             print(doc['excel-file'])
             file = Files(file=doc['excel-file'])
             file.save()
-            print(file.file.path)
+            print(file.file.url)
             rb = xlrd.open_workbook(settings.MEDIA_ROOT + file.file.url)
             sheet = rb.sheet_by_index(0)
             vals = [sheet.row_values(rownum) for rownum in range(sheet.nrows)]
