@@ -108,21 +108,23 @@ def Save_excel_file(request):
             print(doc['excel-file'])
             file = Files(file=doc['excel-file'])
             file.save()
-            print(file.file.path)
+            # print(file.file.path)
             rb = xlrd.open_workbook(file.file.path)
             sheet = rb.sheet_by_index(0)
             vals = [sheet.row_values(rownum) for rownum in range(sheet.nrows)]
             for v in vals:
                 try:
+                    print('----------------------------------------------------------------------------')
                     print(v)
                     if v[1] != "" and v[1] != "Привязка к позиции":
                         categ = CategoryType.objects.filter(name=v[8])
+                        print(categ)
                         res = ResourceType.objects.filter(category=categ[0]).filter(name=v[9])
                         if res.count() == 0:
                             res = ResourceType(category=categ[0], name=v[9])
                             res.save()
                             res = ResourceType.objects.filter(category=categ[0]).filter(name=v[9])
-                        brand = Brands_model.objects.filter(name_iexact=v[2])
+                        brand = Brands_model.objects.filter(name__iexact=v[2])
                         if brand.count() == 0:
                             brand = Brands_model(name=v[2])
                             brand.save()
@@ -130,13 +132,14 @@ def Save_excel_file(request):
                             brand = Brands_model.objects.get(name=v[2])
                         product = Product.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(
                             shot_description=v[4])
+                        print(product)
                         if categ.count() > 0 and res.count() > 0:
                             if product.count() == 0:
                                 print(1)
-                                product = Product(title=v[3], shot_description=v[4], description=v[5], note=v[6],
+                                product = Product_str(title=v[3], shot_description=v[4], description=v[5], note=v[6],
                                                   components=v[7],
                                                   category=categ[0], resource=res[0], brand=brand, artikul=v[14],
-                                                  artik_brand=v[15], main_photo="uploads" / +v[11])
+                                                  artik_brand=v[15], main_photo="uploads/" +v[11])
                                 product.save()
                             else:
                                 product = product[0]
@@ -148,12 +151,13 @@ def Save_excel_file(request):
                                 product.brand = brand
                                 product.artikul = v[14]
                                 product.artik_brand = v[15]
+                                product.main_photo="uploads/" +v[11]
                                 product.save()
 
                             needs = v[10]
                             list_need = needs.split(', ')
                             print(list_need)
-                            if list_need.count == 1:
+                            if len(list_need) == 1:
                                 need = NeedType.objects.filter(name__iexact=needs).filter(category=categ[0])
                                 if need.count() == 0:
                                     need = NeedType(name=needs, category=categ[0])
@@ -170,6 +174,7 @@ def Save_excel_file(request):
                                         need = NeedType(name=n, category=categ[0])
                                         need.save()
                                         need = NeedType.objects.filter(name=n).filter(category=categ[0])
+                                    print(need)
                                     product_need = ProductNeed.objects.filter(need=need[0]).filter(product=product)
                                     if product_need.count() == 0:
                                         product_need = ProductNeed(product=product, need=need[0])
