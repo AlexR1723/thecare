@@ -111,7 +111,8 @@ def Save_excel_file(request):
             file.save()
             # print(file.file.url)
             # rb = xlrd.open_workbook(file.file.path)
-            rb = xlrd.open_workbook(default_storage.location + file.file.name)
+            # rb = xlrd.open_workbook(default_storage.location + file.file.name)
+            rb = xlrd.open_workbook('https://www.dropbox.com/home/the_care/uploads/' + file.file.name)
             sheet = rb.sheet_by_index(0)
             vals = [sheet.row_values(rownum) for rownum in range(sheet.nrows)]
             for v in vals:
