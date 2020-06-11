@@ -122,19 +122,21 @@ def Save_excel_file(request):
                             res = ResourceType(category=categ[0], name=v[9])
                             res.save()
                             res = ResourceType.objects.filter(category=categ[0]).filter(name=v[9])
-                        brand = Brands_model.objects.filter(name=v[2])
+                        brand = Brands_model.objects.filter(name_iexact=v[2])
                         if brand.count() == 0:
                             brand = Brands_model(name=v[2])
                             brand.save()
                         else:
                             brand = Brands_model.objects.get(name=v[2])
-                        product = Product.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(shot_description=v[4])
+                        product = Product.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(
+                            shot_description=v[4])
                         if categ.count() > 0 and res.count() > 0:
                             if product.count() == 0:
                                 print(1)
-                                product = Product(title=v[3], shot_description=v[4], description=v[5], note=v[6], components=v[7],
+                                product = Product(title=v[3], shot_description=v[4], description=v[5], note=v[6],
+                                                  components=v[7],
                                                   category=categ[0], resource=res[0], brand=brand, artikul=v[14],
-                                                  artik_brand=v[15])
+                                                  artik_brand=v[15], main_photo="uploads" / +v[11])
                                 product.save()
                             else:
                                 product = product[0]
@@ -152,7 +154,7 @@ def Save_excel_file(request):
                             list_need = needs.split(', ')
                             print(list_need)
                             if list_need.count == 1:
-                                need = NeedType.objects.filter(name=needs).filter(category=categ[0])
+                                need = NeedType.objects.filter(name__iexact=needs).filter(category=categ[0])
                                 if need.count() == 0:
                                     need = NeedType(name=needs, category=categ[0])
                                     need.save()
@@ -163,7 +165,7 @@ def Save_excel_file(request):
                                     product_need.save()
                             else:
                                 for n in list_need:
-                                    need = NeedType.objects.filter(name=n).filter(category=categ[0])
+                                    need = NeedType.objects.filter(name_iexact=n).filter(category=categ[0])
                                     if need.count() == 0:
                                         need = NeedType(name=n, category=categ[0])
                                         need.save()
@@ -181,54 +183,55 @@ def Save_excel_file(request):
                                         product_tone = ProductTone(product=product, name=t)
                                         product_tone.save()
                             if v[12] == "":
-                                size_name=0
+                                size_name = 0
                             else:
-                                size_name=v[12]
+                                size_name = v[12]
                                 print(size_name)
                             try:
-                                size_name=float(size_name)
+                                size_name = float(size_name)
                                 size = Size.objects.filter(float_name=size_name)
                                 if size.count() == 0:
-                                    size=Size(float_name=size_name)
+                                    size = Size(float_name=size_name)
                                     size.save()
                                 else:
-                                    size=size[0]
+                                    size = size[0]
                             except:
                                 size = Size.objects.filter(str_name=size_name)
                                 if size.count() == 0:
-                                    size=Size(str_name=size_name)
+                                    size = Size(str_name=size_name)
                                     size.save()
                                 else:
-                                    size=size[0]
+                                    size = size[0]
                             product_size = ProductSize.objects.filter(size=size).filter(product=product)
                             count = 0
                             price = 0
-                            sale=0
+                            sale = 0
                             if v[16] != "":
                                 count = v[16]
                             if v[17] != "":
                                 price = v[17]
                             try:
                                 if v[19] != "" and v[19] != 0:
-                                    sale=int(v[19])
+                                    sale = int(v[19])
                             except:
                                 print('except')
                             print(sale)
                             if product_size.count() == 0:
-                                if(sale == 0):
-                                    product_size = ProductSize(product=product, size=size,price=price, count=count)
+                                if (sale == 0):
+                                    product_size = ProductSize(product=product, size=size, price=price, count=count)
                                 else:
-                                    new_price = price - (price*sale/100)
+                                    new_price = price - (price * sale / 100)
                                     print(new_price)
-                                    product_size = ProductSize(product=product, size=size, old_price=price, count=count, sale=sale, price=new_price)
+                                    product_size = ProductSize(product=product, size=size, old_price=price, count=count,
+                                                               sale=sale, price=new_price)
                                 product_size.save()
                             else:
                                 if (sale == 0):
-                                    product_size=product_size[0]
+                                    product_size = product_size[0]
                                     product_size.price = price
                                     product_size.count = count
-                                    product_size.sale=0
-                                    product_size.old_price=0
+                                    product_size.sale = 0
+                                    product_size.old_price = 0
                                 else:
                                     new_price = price - (price * sale / 100)
                                     product_size = product_size[0]
@@ -242,20 +245,22 @@ def Save_excel_file(request):
                     print('ex1')
     return HttpResponseRedirect("/admin")
 
+
 def Product_image_save(request):
     print('Save_image_file')
     if request.method == 'POST':
         doc = request.FILES
         if (doc):
             for d in doc.getlist('image-file'):
-                name=d.name.split('.')[0]
-                product=Product.objects.filter(id=name)
+                name = d.name.split('.')[0]
+                product = Product.objects.filter(id=name)
                 print(product)
                 if product.count() > 0:
                     product = Product.objects.get(id=name)
                     product.main_photo = d
                     product.save()
     return HttpResponseRedirect("/admin")
+
 
 # def News(request):
 #     number, email = func_contact()
