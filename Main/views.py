@@ -109,7 +109,7 @@ def Save_excel_file(request):
             file = Files(file=doc['excel-file'])
             file.save()
             print(file.file.url)
-            rb = xlrd.open_workbook(settings.MEDIA_ROOT + file.file.url)
+            rb = xlrd.open_workbook(file.file.url)
             sheet = rb.sheet_by_index(0)
             vals = [sheet.row_values(rownum) for rownum in range(sheet.nrows)]
             for v in vals:
