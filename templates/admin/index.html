@@ -3,88 +3,128 @@
 {% load staticfiles %}
 
 {% block breadcrumbs %}
-    <style>
-    .d-none{
+<style>
+    .d-none {
         display: none;
     }
+
     .prof-file {
         border: 0;
         padding-left: 0;
     }
+
     .upload-file .btn-tertiary {
         color: #555;
         padding: 0;
         line-height: 40px;
         font-size: 1rem;
     }
+
     .upload-file .btn-tertiary:hover {
         color: #888;
         cursor: pointer;
     }
-    .upload-file{
+
+    .upload-file {
         margin-left: 40px;
         margin-top: 20px;
     }
-    .text{
+
+    .text {
         font-size: 1rem;
         color: black;
     }
-    </style>
-    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+</style>
+<link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
-    <script>
+<script>
     window.onload = function () {
         $('input#excel-file-admin').on('change', function () {
             var fileName = $(this).val();
             if (fileName) {
-                var btn=$('#submit-excel-file-admin');
+                var btn = $('#submit-excel-file-admin');
                 btn.click();
-             }
+            }
         });
         $('input#image-file-admin').on('change', function () {
             var fileName = $(this).val();
             if (fileName) {
-                var btn=$('#submit-image-file-admin');
+                var btn = $('#submit-image-file-admin');
                 btn.click();
-             }
+            }
+        });
+        $(document).ready(function () {
+            var textarea = document.getElementById('product_list');
+            if (textarea) {
+                var count = Number(textarea.value);
+                if (count > 0) {
+                    for (var i = 0; i < count; i++) {
+                        $.ajax({
+                            type: "GET",
+                            dataType: "json",
+                            async: true,
+                            url: 'save_product',
+                            data: {
+                                i: i
+                            },
+                            success: function (data) {
+                                console.log('ok')
+                            },
+                            error: function (data) {
+                                alert(i)
+                            }
+                        })
+                    }
+                }
+            }
         });
     }
-    </script>
-    <div>
+</script>
+<div>
     <div class="upload-file">
-
+        <textarea id="product_list" cols="30" rows="10">{{list_count}}</textarea>
         <form class="w-100" action="{% url 'Save_excel_file' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+            {% csrf_token %}
             <label class="text">Выборите Excel файл для добавления товаров:</label>
             <input type="file" class="mb-1 form-control prof-file d-none" name="excel-file" id="excel-file-admin">
             <label for="excel-file-admin" class="btn btn-tertiary js-labelFile">
-                 <i class="fas fa-upload" aria-hidden="true"></i>
-                 <span class="js-fileName">Загрузить файл</span>
+                <i class="fas fa-upload" aria-hidden="true"></i>
+                <span class="js-fileName">Загрузить файл</span>
             </label>
-            <button type="submit" id="submit-excel-file-admin" class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить</button>
-             </form>
+            <button type="submit" id="submit-excel-file-admin"
+                    class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить
+            </button>
+        </form>
     </div>
 
     <div class="upload-file">
 
         <form class="w-100" action="{% url 'Product_image_save' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+            {% csrf_token %}
             <label class="text">Выборите изображения для добавления к товарам:</label>
-            <input type="file" class="mb-1 form-control prof-file d-none" name="image-file" id="image-file-admin" multiple="multiple">
+            <input type="file" class="mb-1 form-control prof-file d-none" name="image-file" id="image-file-admin"
+                   multiple="multiple">
             <label for="image-file-admin" class="btn btn-tertiary js-labelFile">
-                 <i class="fas fa-upload" aria-hidden="true"></i>
-                 <span class="js-fileName">Загрузить изображения</span>
+                <i class="fas fa-upload" aria-hidden="true"></i>
+                <span class="js-fileName">Загрузить изображения</span>
             </label>
-            <button type="submit" id="submit-image-file-admin" class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить</button>
-             </form>
+            <button type="submit" id="submit-image-file-admin"
+                    class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить
+            </button>
+        </form>
     </div>
-{##}
-{#        <input type="file" class="mb-1 form-control prof-file" name="excel-file" id="excel-file-admin">#}
-{#        <button type="submit" id="submit-excel-file-admin" class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить</button>#}
-{#         <a href="#">#}
-{#             <label class="head-label">Кнопка</label>#}
-{#         </a>#}
+    {##}
+    {# <input type="file" class="mb-1 form-control prof-file" name="excel-file" id="excel-file-admin">#}
+    {#
+    <button type="submit" id="submit-excel-file-admin"
+            class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить
+    </button>
+    #}
+    {# <a href="#">#}
+    {# <label class="head-label">Кнопка</label>#}
+    {# </a>#}
 
-    </div>
+</div>
 {% endblock %}

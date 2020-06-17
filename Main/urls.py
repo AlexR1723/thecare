@@ -32,6 +32,8 @@ urlpatterns = [
     url(r'check_login', views.check_login, name='check_login'),
     url(r'check_register', views.check_register, name='check_register'),
 
+    url(r'save_product', views.save_product, name='save_product'),
+
     # url(r'^$', views.Main, name="Main"),
     # url(r'^dev/$', views.Dev, name="Dev"),
     # url(r'^delivery/$', views.Deliveries, name="Deliveries"),
