@@ -142,6 +142,7 @@ def get_product_count(request):
 def save_product(request):
     print('save_product')
     i=int(request.GET.get('i'))
+    print('-----------------------------------')
     v=list[i]
     print(v)
     if v[1] != "" and v[1] != "Привязка к позиции":
@@ -152,12 +153,14 @@ def save_product(request):
             res = ResourceType(category=categ[0], name=v[9])
             res.save()
             res = ResourceType.objects.filter(category=categ[0]).filter(name=v[9])
+        print(res)
         brand = Brands_model.objects.filter(name__iexact=v[2])
         if brand.count() == 0:
             brand = Brands_model(name=v[2])
             brand.save()
         else:
             brand = Brands_model.objects.get(name=v[2])
+        print(brand)
         product = Product.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(
             shot_description=v[4])
         print(product)
@@ -219,7 +222,7 @@ def save_product(request):
                 size_name = 0
             else:
                 size_name = v[12]
-                print(size_name)
+            print(size_name)
             try:
                 size_name = float(size_name)
                 size = Size.objects.filter(float_name=size_name)
