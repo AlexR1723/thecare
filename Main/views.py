@@ -108,7 +108,7 @@ def Save_excel_file(request):
     if request.method == 'POST':
         doc = request.FILES
         if (doc):
-            settings.DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+            # settings.DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
             print(doc['excel-file'])
             file = Files(file=doc['excel-file'])
             file.save()
@@ -130,7 +130,7 @@ def Save_excel_file(request):
 
                 except:
                     print('ex1')
-            settings.DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+            # settings.DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
             list_count=len(list)
             print(list_count)
     return HttpResponseRedirect("/admin")
@@ -167,11 +167,12 @@ def save_product(request):
         if categ.count() > 0 and res.count() > 0:
             if product.count() == 0:
                 print(1)
-                product = Product_str(title=v[3], shot_description=v[4], description=v[5], note=v[6],
+                product_str = Product_str(title=v[3], shot_description=v[4], description=v[5], note=v[6],
                                   components=v[7],
                                   category=categ[0], resource=res[0], brand=brand, artikul=v[14],
                                   artik_brand=v[15], main_photo="uploads/product/" +v[11])
-                product.save()
+                product_str.save()
+                product=Product.objects.get(id=product_str.id)
             else:
                 product = product[0]
                 product.description = v[5]
@@ -190,17 +191,20 @@ def save_product(request):
             print(list_need)
             if len(list_need) == 1:
                 need = NeedType.objects.filter(name__iexact=needs).filter(category=categ[0])
+                print(need)
                 if need.count() == 0:
                     need = NeedType(name=needs, category=categ[0])
                     need.save()
                     need = NeedType.objects.filter(name=needs).filter(category=categ[0])
-                product_need = ProductNeed.objects.filter(need=need[0]).filter(product=product)
+                print(need[0])
+                product_need = ProductNeed.objects.filter(product=product).filter(need=need[0])
                 if product_need.count() == 0:
                     product_need = ProductNeed(product=product, need=need[0])
                     product_need.save()
             else:
                 for n in list_need:
                     need = NeedType.objects.filter(name_iexact=n).filter(category=categ[0])
+                    print(need)
                     if need.count() == 0:
                         need = NeedType(name=n, category=categ[0])
                         need.save()
