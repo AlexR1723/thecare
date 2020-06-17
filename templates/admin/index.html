@@ -60,7 +60,7 @@
             $.ajax({
                 type: "GET",
                 dataType: "json",
-                async: true,
+                async: false,
                 url: 'get_product_count',
                 success: function (data) {
                     count = data;
