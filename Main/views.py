@@ -141,8 +141,9 @@ def get_product_count(request):
 
 def save_product(request):
     print('save_product')
-    i=request.GET.get('i')
+    i=int(request.GET.get('i'))
     v=list[i]
+    print(v)
     if v[1] != "" and v[1] != "Привязка к позиции":
         categ = CategoryType.objects.filter(name=v[8])
         print(categ)
