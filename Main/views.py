@@ -123,9 +123,10 @@ def Save_excel_file(request):
             vals = [sheet.row_values(rownum) for rownum in range(sheet.nrows)]
             for v in vals:
                 try:
-                    print('----------------------------------------------------------------------------')
-                    print(v)
+                    # print('----------------------------------------------------------------------------')
+                    # print(v)
                     list.append(v)
+
                     # if v[1] != "" and v[1] != "Привязка к позиции":
                     #     categ = CategoryType.objects.filter(name=v[8])
                     #     print(categ)
@@ -259,7 +260,7 @@ def Save_excel_file(request):
                 except:
                     print('ex1')
             settings.DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
-            print(list)
+            print(len(list))
     return HttpResponseRedirect("/admin")
 
 
