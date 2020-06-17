@@ -108,7 +108,7 @@ def Save_excel_file(request):
     if request.method == 'POST':
         doc = request.FILES
         if (doc):
-            # settings.DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+            settings.DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
             print(doc['excel-file'])
             file = Files(file=doc['excel-file'])
             file.save()
@@ -130,7 +130,7 @@ def Save_excel_file(request):
 
                 except:
                     print('ex1')
-            # settings.DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+            settings.DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
             list_count=len(list)
             print(list_count)
     return HttpResponseRedirect("/admin")
