@@ -72,24 +72,24 @@
             });
 
             if (count > 0) {
-                console.log(count)
-                // for (var i = 0; i < count; i++) {
-                //     $.ajax({
-                //         type: "GET",
-                //         dataType: "json",
-                //         async: true,
-                //         url: 'save_product',
-                //         data: {
-                //             i: i
-                //         },
-                //         success: function (data) {
-                //             console.log('ok')
-                //         },
-                //         error: function (data) {
-                //             alert(i)
-                //         }
-                //     })
-                // }
+                console.log(count);
+                for (var i = 0; i < count; i++) {
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        async: false,
+                        url: 'save_product',
+                        data: {
+                            i: i
+                        },
+                        success: function (data) {
+                            console.log('ok')
+                        },
+                        error: function (data) {
+                            alert(i)
+                        }
+                    })
+                }
             }
         });
     }
