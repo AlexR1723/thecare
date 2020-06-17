@@ -148,7 +148,7 @@ def Save_excel_file(request):
                                 product = Product_str(title=v[3], shot_description=v[4], description=v[5], note=v[6],
                                                   components=v[7],
                                                   category=categ[0], resource=res[0], brand=brand, artikul=v[14],
-                                                  artik_brand=v[15], main_photo="uploads/" +v[11])
+                                                  artik_brand=v[15], main_photo="uploads/product/" +v[11])
                                 product.save()
                             else:
                                 product = product[0]
@@ -160,7 +160,7 @@ def Save_excel_file(request):
                                 product.brand = brand
                                 product.artikul = v[14]
                                 product.artik_brand = v[15]
-                                product.main_photo="uploads/" +v[11]
+                                product.main_photo="uploads/product/" +v[11]
                                 product.save()
 
                             needs = v[10]
