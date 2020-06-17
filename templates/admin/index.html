@@ -64,32 +64,32 @@
                 url: 'get_product_count',
                 success: function (data) {
                     count = data;
-                    alert(data);
-                    alert(count);
+                    console.log(count);
                 },
                 error: function (data) {
-                    alert(i)
+                    alert('error')
                 }
             });
 
             if (count > 0) {
-                for (var i = 0; i < count; i++) {
-                    $.ajax({
-                        type: "GET",
-                        dataType: "json",
-                        async: true,
-                        url: 'save_product',
-                        data: {
-                            i: i
-                        },
-                        success: function (data) {
-                            console.log('ok')
-                        },
-                        error: function (data) {
-                            alert(i)
-                        }
-                    })
-                }
+                console.log(count)
+                // for (var i = 0; i < count; i++) {
+                //     $.ajax({
+                //         type: "GET",
+                //         dataType: "json",
+                //         async: true,
+                //         url: 'save_product',
+                //         data: {
+                //             i: i
+                //         },
+                //         success: function (data) {
+                //             console.log('ok')
+                //         },
+                //         error: function (data) {
+                //             alert(i)
+                //         }
+                //     })
+                // }
             }
         });
     }
