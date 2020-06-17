@@ -15,6 +15,8 @@ from openpyxl import load_workbook
 import os
 from django.conf import settings
 
+list=[]
+list_count=0
 
 def global_function(request):
     number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
@@ -101,8 +103,6 @@ def Dev(request):
     dic = global_function(request)
     return render(request, 'Main/Dev.html', locals())
 
-list=[]
-list_count=0
 def Save_excel_file(request):
     print('Save_excel_file')
     if request.method == 'POST':
@@ -261,8 +261,8 @@ def Save_excel_file(request):
                 except:
                     print('ex1')
             settings.DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
-            print(len(list))
             list_count=len(list)
+            print(list_count)
     return HttpResponseRedirect("/admin")
 
 

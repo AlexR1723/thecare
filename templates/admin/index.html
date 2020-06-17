@@ -83,8 +83,8 @@
     }
 </script>
 <div>
+    <input type="text" id="product_list" value="{{list_count}}"/>
     <div class="upload-file">
-        <textarea id="product_list" cols="30" rows="10">{{list_count}}</textarea>
         <form class="w-100" action="{% url 'Save_excel_file' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <label class="text">Выборите Excel файл для добавления товаров:</label>
@@ -115,16 +115,16 @@
             </button>
         </form>
     </div>
-    {##}
-    {# <input type="file" class="mb-1 form-control prof-file" name="excel-file" id="excel-file-admin">#}
-    {#
-    <button type="submit" id="submit-excel-file-admin"
-            class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить
-    </button>
-    #}
-    {# <a href="#">#}
-    {# <label class="head-label">Кнопка</label>#}
-    {# </a>#}
+<!--    {##}-->
+<!--    {# <input type="file" class="mb-1 form-control prof-file" name="excel-file" id="excel-file-admin">#}-->
+<!--    {#-->
+<!--    <button type="submit" id="submit-excel-file-admin"-->
+<!--            class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить-->
+<!--    </button>-->
+<!--    #}-->
+<!--    {# <a href="#">#}-->
+<!--    {# <label class="head-label">Кнопка</label>#}-->
+<!--    {# </a>#}-->
 
 </div>
 {% endblock %}
