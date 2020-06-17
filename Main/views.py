@@ -136,6 +136,9 @@ def Save_excel_file(request):
     return HttpResponseRedirect("/admin")
 
 
+def get_product_count(request):
+    return HttpResponse(json.dumps(list_count))
+
 def save_product(request):
     print('save_product')
     i=request.GET.get('i')

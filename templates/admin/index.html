@@ -56,34 +56,46 @@
             }
         });
         $(document).ready(function () {
-            var textarea = document.getElementById('product_list');
-            if (textarea) {
-                var count = Number(textarea.value);
-                if (count > 0) {
-                    for (var i = 0; i < count; i++) {
-                        $.ajax({
-                            type: "GET",
-                            dataType: "json",
-                            async: true,
-                            url: 'save_product',
-                            data: {
-                                i: i
-                            },
-                            success: function (data) {
-                                console.log('ok')
-                            },
-                            error: function (data) {
-                                alert(i)
-                            }
-                        })
-                    }
+            var count = 0;
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                async: true,
+                url: 'get_product_count',
+                success: function (data) {
+                    count = data;
+                    alert(data);
+                    alert(count);
+                },
+                error: function (data) {
+                    alert(i)
+                }
+            });
+
+            if (count > 0) {
+                for (var i = 0; i < count; i++) {
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        async: true,
+                        url: 'save_product',
+                        data: {
+                            i: i
+                        },
+                        success: function (data) {
+                            console.log('ok')
+                        },
+                        error: function (data) {
+                            alert(i)
+                        }
+                    })
                 }
             }
         });
     }
 </script>
 <div>
-    <input type="text" id="product_list" value="{{list_count}}"/>
+    <!--    <input type="text" id="product_list" value="{{list_count}}"/>-->
     <div class="upload-file">
         <form class="w-100" action="{% url 'Save_excel_file' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -115,16 +127,16 @@
             </button>
         </form>
     </div>
-<!--    {##}-->
-<!--    {# <input type="file" class="mb-1 form-control prof-file" name="excel-file" id="excel-file-admin">#}-->
-<!--    {#-->
-<!--    <button type="submit" id="submit-excel-file-admin"-->
-<!--            class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить-->
-<!--    </button>-->
-<!--    #}-->
-<!--    {# <a href="#">#}-->
-<!--    {# <label class="head-label">Кнопка</label>#}-->
-<!--    {# </a>#}-->
+    <!--    {##}-->
+    <!--    {# <input type="file" class="mb-1 form-control prof-file" name="excel-file" id="excel-file-admin">#}-->
+    <!--    {#-->
+    <!--    <button type="submit" id="submit-excel-file-admin"-->
+    <!--            class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить-->
+    <!--    </button>-->
+    <!--    #}-->
+    <!--    {# <a href="#">#}-->
+    <!--    {# <label class="head-label">Кнопка</label>#}-->
+    <!--    {# </a>#}-->
 
 </div>
 {% endblock %}
