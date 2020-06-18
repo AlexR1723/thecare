@@ -56,72 +56,86 @@
             }
         });
         $(document).ready(function () {
-            var count = 0;
-            var list=[];
+            // var count = 0;
+            // var list=[];
+            // // $.ajax({
+            // //     type: "GET",
+            // //     dataType: "json",
+            // //     async: false,
+            // //     url: 'get_product_count',
+            // //     success: function (data) {
+            // //         count = data;
+            // //         console.log(count);
+            // //     },
+            // //     error: function (data) {
+            // //         alert('error')
+            // //     }
+            // // });
             // $.ajax({
             //     type: "GET",
             //     dataType: "json",
             //     async: false,
-            //     url: 'get_product_count',
+            //     url: 'get_product_list',
             //     success: function (data) {
-            //         count = data;
-            //         console.log(count);
+            //         list = data;
+            //         // console.log(count);
             //     },
             //     error: function (data) {
             //         alert('error')
             //     }
             // });
+            // count=list.length;
+            // if (count > 0) {
+            //     console.log(count);
+            //     for (var i = 0; i < count; i++) {
+            //         console.log(list[i])
+            //         $.ajax({
+            //             type: "GET",
+            //             dataType: "json",
+            //             async: false,
+            //             url: 'save_product',
+            //             data: {
+            //                 v: list[i]
+            //             },
+            //             success: function (data) {
+            //                 console.log('ok')
+            //             },
+            //             error: function (data) {
+            //                 console.log('ERROR: '+i)
+            //             }
+            //         })
+            //         // $.ajax({
+            //         //     type: "GET",
+            //         //     dataType: "json",
+            //         //     async: false,
+            //         //     url: 'save_product',
+            //         //     data: {
+            //         //         i: i
+            //         //     },
+            //         //     success: function (data) {
+            //         //         console.log('ok')
+            //         //     },
+            //         //     error: function (data) {
+            //         //         console.log('ERROR: '+i)
+            //         //     }
+            //         // })
+            //     }
+            //     window.location='/admin';
+            // }
             $.ajax({
                 type: "GET",
                 dataType: "json",
                 async: false,
-                url: 'get_product_list',
+                url: 'save_product_list',
                 success: function (data) {
-                    list = data;
+                    // list = data;
                     // console.log(count);
+                    window.location='/admin';
                 },
                 error: function (data) {
                     alert('error')
                 }
             });
-            count=list.length;
-            if (count > 0) {
-                console.log(count);
-                for (var i = 0; i < count; i++) {
-                    console.log(list[i])
-                    $.ajax({
-                        type: "GET",
-                        dataType: "json",
-                        async: false,
-                        url: 'save_product',
-                        data: {
-                            v: list[i]
-                        },
-                        success: function (data) {
-                            console.log('ok')
-                        },
-                        error: function (data) {
-                            console.log('ERROR: '+i)
-                        }
-                    })
-                    // $.ajax({
-                    //     type: "GET",
-                    //     dataType: "json",
-                    //     async: false,
-                    //     url: 'save_product',
-                    //     data: {
-                    //         i: i
-                    //     },
-                    //     success: function (data) {
-                    //         console.log('ok')
-                    //     },
-                    //     error: function (data) {
-                    //         console.log('ERROR: '+i)
-                    //     }
-                    // })
-                }
-                window.location='/admin';
-            }
         });
     }
 </script>
