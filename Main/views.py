@@ -110,7 +110,7 @@ def Save_excel_file(request):
     if request.method == 'POST':
         doc = request.FILES
         if (doc):
-            list.clear()
+            list = ''
             settings.DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
             print(doc['excel-file'])
             file = Files(file=doc['excel-file'])
