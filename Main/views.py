@@ -15,7 +15,7 @@ from openpyxl import load_workbook
 import os
 from django.conf import settings
 
-list = []
+list = ''
 list_count = 0
 
 
@@ -138,7 +138,8 @@ def Save_excel_file(request):
             for l in list:
                 print(l)
             print(len(list))
-    return HttpResponseRedirect("/admin")
+    return HttpResponse(json.dumps(list))
+    # return HttpResponseRedirect("/admin")
 
 
 def get_product_count(request):
@@ -212,7 +213,7 @@ def save_product(request):
                     product_need.save()
             else:
                 for n in list_need:
-                    need = NeedType.objects.filter(name_iexact=n).filter(category=categ[0])
+                    need = NeedType.objects.filter(name__iexact=n).filter(category=categ[0])
                     print(need)
                     if need.count() == 0:
                         need = NeedType(name=n, category=categ[0])
