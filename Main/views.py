@@ -133,7 +133,7 @@ def Save_excel_file(request):
                     print('ex1')
             settings.DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
             list_count=len(list)
-            print(list_count)
+            print(list)
     return HttpResponseRedirect("/admin")
 
 
@@ -144,6 +144,7 @@ def save_product(request):
     print('save_product')
     i=int(request.GET.get('i'))
     print('-----------------------------------')
+    print(i)
     v=list[i]
     print(v)
     if v[1] != "" and v[1] != "Привязка к позиции":
