@@ -15,7 +15,7 @@ from openpyxl import load_workbook
 import os
 from django.conf import settings
 
-list = ''
+list = []
 list_count = 0
 
 
@@ -110,7 +110,7 @@ def Save_excel_file(request):
     if request.method == 'POST':
         doc = request.FILES
         if (doc):
-            list = ''
+            list.clear()
             settings.DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
             print(doc['excel-file'])
             file = Files(file=doc['excel-file'])
@@ -129,15 +129,15 @@ def Save_excel_file(request):
                 try:
                     # print('----------------------------------------------------------------------------')
                     # print(v)
-                    list.append(v)
-
+                    # list.append(v)
+                    settings.PROD_LIST.append(v)
                 except:
                     print('ex1')
             settings.DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
-            list_count = len(list)
-            for l in list:
+            list_count = len(settings.PROD_LIST)
+            for l in settings.PROD_LIST:
                 print(l)
-            print(len(list))
+            print(len(settings.PROD_LIST))
     # return HttpResponse(json.dumps(list))
     return HttpResponseRedirect("/admin")
 
@@ -150,9 +150,10 @@ def save_product(request):
     print('save_product')
     i = int(request.GET.get('i'))
     print('-----------------------------------')
-    print('LEN: ' + str(len(list)))
+    print('LEN: ' + str(len(settings.PROD_LIST)))
     print('ID: ' + str(i))
-    v = list[i]
+    # v = list[i]
+    v = settings.PROD_LIST[i]
     print(v)
     if v[1] != "" and v[1] != "Привязка к позиции":
         categ = CategoryType.objects.filter(name=v[8])

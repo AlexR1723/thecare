@@ -148,3 +148,5 @@ MEDIA_URL = '/media/'
 
 CART_SESSION_ID = 'cart'
 LOGIN_URL='/log_in'
+
+PROD_LIST=[]
