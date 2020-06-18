@@ -15,8 +15,9 @@ from openpyxl import load_workbook
 import os
 from django.conf import settings
 
-list=[]
-list_count=0
+list = []
+list_count = 0
+
 
 def global_function(request):
     number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
@@ -103,6 +104,7 @@ def Dev(request):
     dic = global_function(request)
     return render(request, 'Main/Dev.html', locals())
 
+
 def Save_excel_file(request):
     print('Save_excel_file')
     if request.method == 'POST':
@@ -132,20 +134,24 @@ def Save_excel_file(request):
                 except:
                     print('ex1')
             settings.DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
-            list_count=len(list)
-            print(list)
+            list_count = len(list)
+            for l in list:
+                print(l)
+            print(len(list))
     return HttpResponseRedirect("/admin")
 
 
 def get_product_count(request):
     return HttpResponse(json.dumps(len(list)))
 
+
 def save_product(request):
     print('save_product')
-    i=int(request.GET.get('i'))
+    i = int(request.GET.get('i'))
     print('-----------------------------------')
-    print(i)
-    v=list[i]
+    print('LEN: ' + len(list))
+    print('ID: ' + i)
+    v = list[i]
     print(v)
     if v[1] != "" and v[1] != "Привязка к позиции":
         categ = CategoryType.objects.filter(name=v[8])
@@ -170,9 +176,9 @@ def save_product(request):
             if product_str.count() == 0:
                 print(1)
                 product_str = Product_str(title=v[3], shot_description=v[4], description=v[5], note=v[6],
-                                  components=v[7],
-                                  category=categ[0], resource=res[0], brand=brand, artikul=v[14],
-                                  artik_brand=v[15], main_photo="uploads/product/" +v[11])
+                                          components=v[7],
+                                          category=categ[0], resource=res[0], brand=brand, artikul=v[14],
+                                          artik_brand=v[15], main_photo="uploads/product/" + v[11])
                 product_str.save()
             else:
                 product_str = product_str[0]
@@ -184,7 +190,7 @@ def save_product(request):
                 product_str.brand = brand
                 product_str.artikul = v[14]
                 product_str.artik_brand = v[15]
-                product_str.main_photo="uploads/product/" +v[11]
+                product_str.main_photo = "uploads/product/" + v[11]
                 product_str.save()
 
             product = Product.objects.get(id=product_str.id)
