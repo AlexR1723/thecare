@@ -150,8 +150,8 @@ def get_product_list(request):
     return HttpResponse(json.dumps(settings.PROD_LIST))
 
 
-def save_product_list(request):
-    print('save_product_list')
+def product_list_save(request):
+    print('product_list_save')
     # i = int(request.GET.get('i'))
     print('LEN: '+str(len(settings.PROD_LIST)))
     if len(settings.PROD_LIST) > 0:
