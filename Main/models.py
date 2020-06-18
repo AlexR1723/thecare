@@ -256,3 +256,13 @@ class Product_str(models.Model):
         db_table = 'product'
         verbose_name = _("товар")
         verbose_name_plural = _("Товары")
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            super(Product_str, self).save(*args, **kwargs)
+            string = str(self.id) + '-' + self.title
+        else:
+            string = str(self.id) + '-' + self.title
+        self.slug = slugify(string)
+        self.date = datetime.datetime.today()
+        super(Product_str, self).save(*args, **kwargs)
