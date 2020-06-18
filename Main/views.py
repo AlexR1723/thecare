@@ -138,8 +138,8 @@ def Save_excel_file(request):
             for l in list:
                 print(l)
             print(len(list))
-    return HttpResponse(json.dumps(list))
-    # return HttpResponseRedirect("/admin")
+    # return HttpResponse(json.dumps(list))
+    return HttpResponseRedirect("/admin")
 
 
 def get_product_count(request):
