@@ -57,14 +57,28 @@
         });
         $(document).ready(function () {
             var count = 0;
+            var list=[];
+            // $.ajax({
+            //     type: "GET",
+            //     dataType: "json",
+            //     async: false,
+            //     url: 'get_product_count',
+            //     success: function (data) {
+            //         count = data;
+            //         console.log(count);
+            //     },
+            //     error: function (data) {
+            //         alert('error')
+            //     }
+            // });
             $.ajax({
                 type: "GET",
                 dataType: "json",
                 async: false,
-                url: 'get_product_count',
+                url: 'get_product_list',
                 success: function (data) {
-                    count = data;
-                    console.log(count);
+                    list = data;
+                    // console.log(count);
                 },
                 error: function (data) {
                     alert('error')
