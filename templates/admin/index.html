@@ -142,14 +142,31 @@
         if (count > 0) {
             console.log(count);
             for (var i = 0; i < count; i++) {
-                console.log(list[i])
+                console.log(list[i]);
                 $.ajax({
                     type: "GET",
                     dataType: "json",
                     async: false,
                     url: 'save_product',
                     data: {
-                        list: list[i]
+                        position: list[i][1],
+                        brand: list[i][2],
+                        name: list[i][3],
+                        short_desc: list[i][4],
+                        desc: list[i][5],
+                        note: list[i][6],
+                        components: list[i][7],
+                        category: list[i][8],
+                        resource: list[i][9],
+                        need: list[i][10],
+                        photo: list[i][11],
+                        size: list[i][12],
+                        color: list[i][13],
+                        artikul: list[i][14],
+                        artikul_brand: list[i][15],
+                        count: list[i][16],
+                        price: list[i][17],
+                        sale: list[i][19]
                     },
                     success: function (data) {
                         console.log('ok')
