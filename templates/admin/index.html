@@ -123,38 +123,41 @@
             //     window.location='/admin';
             // }
             var count = 0;
+            var list = [];
             $.ajax({
                 type: "GET",
                 dataType: "json",
                 async: false,
-                url: 'get_product_count',
+                url: 'get_product_list',
                 success: function (data) {
-                    count = data;
-                    console.log(count);
+                    list = data;
+                    // console.log(count);
                 },
                 error: function (data) {
                     alert('error')
                 }
             });
             if (count > 0) {
-                $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    async: false,
-                    url: 'product_list_save',
-                    success: function (data) {
-                        // list = data;
-                        // console.log(count);
-                        console.log('ok')
-                    },
-                    error: function (data) {
-                        alert('error')
-                    }
-                });
-
-                window.location = '/admin';
-            }
-        });
+                console.log(count);
+                for (var i = 0; i < count; i++) {
+                    console.log(list[i])
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        async: false,
+                        url: 'save_product',
+                        data: {
+                            list: list[i]
+                        },
+                        success: function (data) {
+                            console.log('ok')
+                        },
+                        error: function (data) {
+                            console.log('ERROR: ' + i)
+                        }
+                    })
+                }
+            );
     }
 </script>
 <div>
