@@ -149,8 +149,8 @@ def save_product(request):
     print('save_product')
     i = int(request.GET.get('i'))
     print('-----------------------------------')
-    print('LEN: ' + len(list))
-    print('ID: ' + i)
+    print('LEN: ' + str(len(list)))
+    print('ID: ' + str(i))
     v = list[i]
     print(v)
     if v[1] != "" and v[1] != "Привязка к позиции":
