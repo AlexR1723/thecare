@@ -143,7 +143,7 @@ def Save_excel_file(request):
 
 
 def get_product_count(request):
-    return HttpResponse(json.dumps(len(list)))
+    return HttpResponse(json.dumps(len(settings.PROD_LIST)))
 
 
 def save_product(request):
