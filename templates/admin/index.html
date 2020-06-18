@@ -122,22 +122,38 @@
             //     }
             //     window.location='/admin';
             // }
+            var count = 0;
             $.ajax({
                 type: "GET",
                 dataType: "json",
                 async: false,
-                url: 'product_list_save',
+                url: 'get_product_count',
                 success: function (data) {
-                    // list = data;
-                    // console.log(count);
-                    console.log('ok')
+                    count = data;
+                    console.log(count);
                 },
                 error: function (data) {
                     alert('error')
                 }
             });
+            if (count > 0) {
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    async: false,
+                    url: 'product_list_save',
+                    success: function (data) {
+                        // list = data;
+                        // console.log(count);
+                        console.log('ok')
+                    },
+                    error: function (data) {
+                        alert('error')
+                    }
+                });
 
-            window.location='/admin';
+                window.location = '/admin';
+            }
         });
     }
 </script>
