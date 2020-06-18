@@ -108,6 +108,7 @@ def Save_excel_file(request):
     if request.method == 'POST':
         doc = request.FILES
         if (doc):
+            list.clear()
             settings.DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
             print(doc['excel-file'])
             file = Files(file=doc['excel-file'])
@@ -161,7 +162,7 @@ def save_product(request):
         else:
             brand = Brands_model.objects.get(name=v[2])
         print(brand)
-        product_str = Product_srt.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(
+        product_str = Product_str.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(
             shot_description=v[4])
         print(product_str)
         if categ.count() > 0 and res.count() > 0:
