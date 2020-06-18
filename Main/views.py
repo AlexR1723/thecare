@@ -311,7 +311,7 @@ def save_product(request):
     # print('ID: ' + str(i))
     # v = list[i]
     # v = settings.PROD_LIST[i]
-    v = request.GET.getlist('list')
+    v = request.GET.get('list')
     print(v)
     if len(v) > 0:
         if v[1] != "" and v[1] != "Привязка к позиции":
