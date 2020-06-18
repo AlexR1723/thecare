@@ -150,7 +150,7 @@ def get_product_list(request):
 
 def save_product(request):
     print('save_product')
-    i = int(request.GET.get('i'))
+    # i = int(request.GET.get('i'))
     print('-----------------------------------')
     # print('LEN: ' + str(len(settings.PROD_LIST)))
     # print('ID: ' + str(i))
