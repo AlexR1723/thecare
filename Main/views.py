@@ -152,10 +152,11 @@ def save_product(request):
     print('save_product')
     i = int(request.GET.get('i'))
     print('-----------------------------------')
-    print('LEN: ' + str(len(settings.PROD_LIST)))
-    print('ID: ' + str(i))
+    # print('LEN: ' + str(len(settings.PROD_LIST)))
+    # print('ID: ' + str(i))
     # v = list[i]
-    v = settings.PROD_LIST[i]
+    # v = settings.PROD_LIST[i]
+    v=request.GET.getlist('v')
     print(v)
     if v[1] != "" and v[1] != "Привязка к позиции":
         categ = CategoryType.objects.filter(name=v[8])

@@ -94,7 +94,7 @@
                         async: false,
                         url: 'save_product',
                         data: {
-                            i: i
+                            v: list[i]
                         },
                         success: function (data) {
                             console.log('ok')
@@ -103,6 +103,21 @@
                             console.log('ERROR: '+i)
                         }
                     })
+                    // $.ajax({
+                    //     type: "GET",
+                    //     dataType: "json",
+                    //     async: false,
+                    //     url: 'save_product',
+                    //     data: {
+                    //         i: i
+                    //     },
+                    //     success: function (data) {
+                    //         console.log('ok')
+                    //     },
+                    //     error: function (data) {
+                    //         console.log('ERROR: '+i)
+                    //     }
+                    // })
                 }
                 window.location='/admin';
             }
