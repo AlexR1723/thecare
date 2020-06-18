@@ -161,30 +161,31 @@ def save_product(request):
         else:
             brand = Brands_model.objects.get(name=v[2])
         print(brand)
-        product = Product.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(
+        product_str = Product_srt.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(
             shot_description=v[4])
-        print(product)
+        print(product_str)
         if categ.count() > 0 and res.count() > 0:
-            if product.count() == 0:
+            if product_str.count() == 0:
                 print(1)
                 product_str = Product_str(title=v[3], shot_description=v[4], description=v[5], note=v[6],
                                   components=v[7],
                                   category=categ[0], resource=res[0], brand=brand, artikul=v[14],
                                   artik_brand=v[15], main_photo="uploads/product/" +v[11])
                 product_str.save()
-                product=Product.objects.get(id=product_str.id)
             else:
-                product = product[0]
-                product.description = v[5]
-                product.note = v[6]
-                product.components = v[7]
-                product.category = categ[0]
-                product.resource = res[0]
-                product.brand = brand
-                product.artikul = v[14]
-                product.artik_brand = v[15]
-                product.main_photo="uploads/product/" +v[11]
-                product.save()
+                product_str = product_str[0]
+                product_str.description = v[5]
+                product_str.note = v[6]
+                product_str.components = v[7]
+                product_str.category = categ[0]
+                product_str.resource = res[0]
+                product_str.brand = brand
+                product_str.artikul = v[14]
+                product_str.artik_brand = v[15]
+                product_str.main_photo="uploads/product/" +v[11]
+                product_str.save()
+
+            product = Product.objects.get(id=product_str.id)
 
             needs = v[10]
             list_need = needs.split(', ')
