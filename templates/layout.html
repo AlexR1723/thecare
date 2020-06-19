@@ -35,7 +35,7 @@
                 <div class="col-6 col-md-4 text-center text-md-left phone-hdr mb-0">
                     <div class="row justify-content-start pl-3 d-none d-sm-none d-md-none d-lg-block d-xl-block">
                         <a href="tel:88004001212">
-                            <img src="{% static 'image/phone.png' %}" alt="" class="mb-1">
+                            <img src="{% static 'image/phone.png' %}" alt="" class="mb-1" style="height: 20px;">
                             <!--                        <i class="fa fa-phone" aria-hidden="true"></i>-->
                             <span class="d-none d-sm-none d-md-inline-block d-lg-inline-block d-xl-inline-block">{{ dic|get_dict:'number' }}</span>
                         </a>
@@ -65,7 +65,7 @@
 
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 pt-0 pb-0 pb-md-0">
             <div class="row justify-content-between">
-                <div class="col-4 col-md-4 phone-hdr pt-2 pt-md-4">
+                <div class="col-4 col-md-4 phone-hdr pt-2 pt-md-4 pb-md-4">
                     <hr class="">
                 </div>
                 <div class="col-4 col-md-3 text-center">
@@ -73,7 +73,7 @@
                         <img src="{% static 'image/main_logo.png' %}" alt="" class="img-fluid">
                     </a>
                 </div>
-                <div class="col-4 col-md-4 pt-2 pt-md-4">
+                <div class="col-4 col-md-4 pt-2 pt-md-4 pb-md-4">
                     <hr class="">
                 </div>
             </div>
@@ -156,7 +156,6 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link " href="{% url 'Deliveries' %}">Доставка</a>
-                                        {#                                        </a>#}
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link " href="{% url 'Payments' %}">Оплата</a>
@@ -182,10 +181,6 @@
                                         <button type="submit" style="background: none;border: none;padding: 0"><i
                                                 class="fa fa-search" aria-hidden="true"></i></button>
                                     </div>
-                                    {#
-                                    <div class="input-group-text"><a href="#"><i class="fa fa-search"
-                                                                                 aria-hidden="true"></i></a></div>
-                                    #}
                                 </form>
                             </div>
                         </div>
@@ -279,12 +274,6 @@
                 x
             </button>
         </div>
-        {#
-        <div class="row m-0">#}
-            {# <label>Бесплатная консультация <br> от наших специалистов</label>#}
-            {#
-        </div>
-        #}
         <div class="row m-0">
             <a class="sub-btn w-100 btn login-btn" href="whatsapp://send?phone=79160034747">
                 получить консультацию
