@@ -22,46 +22,48 @@
 
 </head>
 <body>
-{#<div style="position: absolute; background-color: black; transform: translate(50% 50%);"></div>#}
-{#шапка#}
+
+<div style="position: absolute; background-color: black; transform: translate(50% 50%);"></div>
+
+<!--{#шапка#}-->
 <a id="up"></a>
 <div class="container-fluid p-0 header">
     <div class="row m-0 justify-content-center"
          style="background: url({% static 'image/тиснение.png' %});background-size: contain">
-        <div class="col-10 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0 pt-3 pb-0 pb-md-0">
+        <div class="col-10 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0 pt-0 pt-lg-3 pb-2 pb-md-0">
             <div class="row justify-content-md-between align-items-center">
                 <div class="col-6 col-md-4 text-center text-md-left phone-hdr mb-0">
-                    <div class="row justify-content-start pl-3">
+                    <div class="row justify-content-start pl-3 d-none d-sm-none d-md-none d-lg-block d-xl-block">
                         <a href="tel:88004001212">
-                            <img src="{% static 'image/telephone1.png' %}" alt="" class="mb-1">
+                            <img src="{% static 'image/phone.png' %}" alt="" class="mb-1">
                             <!--                        <i class="fa fa-phone" aria-hidden="true"></i>-->
                             <span class="d-none d-sm-none d-md-inline-block d-lg-inline-block d-xl-inline-block">{{ dic|get_dict:'number' }}</span>
                         </a>
                     </div>
                 </div>
                 <div class="col-6 col-md-4 text-center text-md-right mb-0">
-                    <div class="row justify-content-end pr-3">
+                    <div class="row justify-content-end pr-3 d-none d-sm-none d-md-none d-lg-block d-xl-block">
                         {% if not dic|get_dict:'is_auth' %}
-                            <a href="{% url 'Log_in' %}">
-                                <img src="{% static 'image/user1.png' %}" alt=""
-                                     class="mb-1 d-inline-block d-sm-inline-block d-md-none d-lg-none d-xl-none">
-                                <!--                        <i class="fa fa-phone" aria-hidden="true"></i>-->
-                                <span class="d-none d-sm-none d-md-block d-lg-block d-xl-block">Вход/Регистрация</span>
-                            </a>
+                        <a href="{% url 'Log_in' %}">
+                            <img src="{% static 'image/user1.png' %}" alt=""
+                                 class="mb-1 d-inline-block d-sm-inline-block d-md-none d-lg-none d-xl-none">
+                            <!--                        <i class="fa fa-phone" aria-hidden="true"></i>-->
+                            <span class="d-none d-sm-none d-md-block d-lg-block d-xl-block">Вход/Регистрация</span>
+                        </a>
                         {% else %}
-                            <a href="{% url 'Orders_history' %}">
-                                <img src="{% static 'image/user1.png' %}" alt=""
-                                     class="mb-1 d-inline-block d-sm-inline-block d-md-none d-lg-none d-xl-none">
-                                <!--                        <i class="fa fa-phone" aria-hidden="true"></i>-->
-                                <span class="d-none d-sm-none d-md-block d-lg-block d-xl-block">{{ dic|get_dict:'user_name' }}</span>
-                            </a>
+                        <a href="{% url 'Orders_history' %}">
+                            <img src="{% static 'image/user1.png' %}" alt=""
+                                 class="mb-1 d-inline-block d-sm-inline-block d-md-none d-lg-none d-xl-none">
+                            <!--                        <i class="fa fa-phone" aria-hidden="true"></i>-->
+                            <span class="d-none d-sm-none d-md-block d-lg-block d-xl-block">{{ dic|get_dict:'user_name' }}</span>
+                        </a>
                         {% endif %}
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 pt-0 pb-3 pb-md-0">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 pt-0 pb-0 pb-md-0">
             <div class="row justify-content-between">
                 <div class="col-4 col-md-4 phone-hdr pt-2 pt-md-4">
                     <hr class="">
@@ -78,16 +80,14 @@
         </div>
 
 
-        <div class="col-11 col-sm-12 col-md-11 col-lg-11 col-xl-11 pt-0 pb-3 cart-hdr">
-            <div class="row justify-content-end align-items-center">
-{#                <div class="col-10 col-md-5 col-lg-4 col-xl-3">#}
-                    <a href="{% url 'Cart' %}">
-                        <p class="text-right mb-0 mb-md-3">
-                            <i class="fa fa-shopping-basket mr-3" aria-hidden="true"></i>Корзина: <span class="cart-sum"
-                                                                                                        id="user_basket_total">{{ dic|get_dict:'basket' }} руб.</span>
-                        </p>
-                    </a>
-{#                </div>#}
+        <div class="col-11 col-sm-12 col-md-11 col-lg-11 col-xl-11 pt-0 pb-2 cart-hdr">
+            <div class="row justify-content-end align-items-center d-none d-sm-none d-md-none d-lg-block d-xl-block">
+                <a href="{% url 'Cart' %}">
+                    <p class="text-right mb-0 mb-md-3">
+                        <i class="fa fa-shopping-basket mr-3" aria-hidden="true"></i>Корзина: <span class="cart-sum"
+                                                                                                    id="user_basket_total">{{ dic|get_dict:'basket' }} руб.</span>
+                    </p>
+                </a>
             </div>
         </div>
     </div>
@@ -97,11 +97,11 @@
     <div class="row m-0 justify-content-center">
         <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-0 ">
             <div class="row m-0 justify-content-between align-items-center">
-                <div class="col-12 px-0">
+                <div class="col-auto col-sm-auto col-md-auto col-lg-12 col-xl-12 px-0">
                     <nav id="top-a" class="navbar navbar-expand-lg navbar-light px-md-0 p-lg-0">
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02"
-                                aria-expanded="false" aria-label="Toggle navigation">Меню
+                                aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse justify-content-start px-0" id="navbarTogglerDemo02">
@@ -167,10 +167,10 @@
                                     <li class="nav-item">
                                         <a class="nav-link " href="{% url 'News' %}">Новости</a>
                                     </li>
-                                    {%  if dic|get_dict:'is_auth' %}
-                                        <li class="nav-item">
-                                            <a class="nav-link " href="{% url 'Orders_history' %}">Личный кабинет</a>
-                                        </li>
+                                    {% if dic|get_dict:'is_auth' %}
+                                    <li class="nav-item">
+                                        <a class="nav-link " href="{% url 'Orders_history' %}">Личный кабинет</a>
+                                    </li>
                                     {% endif %}
                                 </ul>
                             </div>
@@ -182,11 +182,27 @@
                                         <button type="submit" style="background: none;border: none;padding: 0"><i
                                                 class="fa fa-search" aria-hidden="true"></i></button>
                                     </div>
-                                    {#                                    <div class="input-group-text"><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></div>#}
+                                    {#
+                                    <div class="input-group-text"><a href="#"><i class="fa fa-search"
+                                                                                 aria-hidden="true"></i></a></div>
+                                    #}
                                 </form>
                             </div>
                         </div>
                     </nav>
+                </div>
+                <div class="col-auto">
+                    <div class="row justify-content-end">
+                                <a href="tel:88004001212" class="d-block d-sm-block d-md-block d-lg-none d-xl-none mr-3 ml-3">
+                                    <img src="{% static 'image/phone.png' %}" alt="" class="mb-1"  style="height: 23px;">
+                                </a>
+                                <a href="{% url 'Cart' %}" class=" d-block d-sm-block d-md-block d-lg-none d-xl-none mr-3 ml-3">
+                                    <img src="{% static 'image/basket.png' %}" alt="" class="mb-1" style="height: 23px;">
+                                </a>
+                                <a href="{% url 'Orders_history' %}" class=" d-block d-sm-block d-md-block d-lg-none d-xl-none mr-3 ml-3">
+                                    <img src="{% static 'image/user1.png' %}" alt="" class="mb-1" style="height: 23px;">
+                                </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -263,9 +279,12 @@
                 x
             </button>
         </div>
-{#        <div class="row m-0">#}
-{#            <label>Бесплатная консультация <br> от наших специалистов</label>#}
-{#        </div>#}
+        {#
+        <div class="row m-0">#}
+            {# <label>Бесплатная консультация <br> от наших специалистов</label>#}
+            {#
+        </div>
+        #}
         <div class="row m-0">
             <a class="sub-btn w-100 btn login-btn" href="whatsapp://send?phone=79160034747">
                 получить консультацию
@@ -280,10 +299,14 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
-{#<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>#}
-{#<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"#}
-{#        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"#}
-{#        crossorigin="anonymous"></script>#}
+{#
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+#}
+{#
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" #}
+        {# integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" #}
+        {# crossorigin="anonymous"></script>
+#}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
