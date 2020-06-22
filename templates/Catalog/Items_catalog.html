@@ -108,7 +108,7 @@
             <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-md-0 sort_col">
 
                 <div class="row">
-                    <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 p-0 items_catalog my-5">
+                    <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 p-0 items_catalog mt-5 mb-0 collapse d-lg-inline-block d-xl-inline-block" id="collapseFilter">
                         <div class="row m-0 justify-content-start align-items-center">
                             <div class="col">
                                 <div class="card filter_form">
@@ -250,13 +250,13 @@
                                                 <div class="row">
                                                     <div class="col-12 d-flex justify-content-between align-items-baseline">
                                                         <h5 class="card-title">Потребности</h5>
-                                                        <button class="btn btn-link {% if prev %} collapsed {%  endif %}" type="button"
+                                                        <button class="btn btn-link collapsed " type="button"
                                                                 data-toggle="collapse" data-target="#collapseTwo"
                                                                 aria-expanded="false" aria-controls="collapseTwo"><i
                                                                 class="fa fa-chevron-up" aria-hidden="true"></i>
                                                         </button>
                                                     </div>
-                                                    <div id="collapseTwo" class="collapse {% if prev != True %}active show {% endif %}"
+                                                    <div id="collapseTwo" class="collapse"
                                                          aria-labelledby="headingTwo" data-parent="#accordion2">
                                                         <div class="card-body pt-0" id="card_needs">
                                                             {% if spec %}
@@ -398,7 +398,7 @@
                         </div>
                     </div>
 
-                    <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9 p-md-0 items-list_catalog">
+                    <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9 p-md-0 items-list_catalog my-3 ">
                         <div class="row m-0">
                             {% if products %}
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-md-0 my-md-5">
