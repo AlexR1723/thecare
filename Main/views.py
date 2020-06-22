@@ -115,7 +115,7 @@ def Save_excel_file(request):
             print(doc['excel-file'])
             file = Files(file=doc['excel-file'])
             file.save()
-            print(file.file.path)
+            # print(file.file.path)
             rb = xlrd.open_workbook(file.file.path)
             # rb = xlrd.open_workbook(default_storage.location + file.file.name)
             # url = default_storage.url(file.file.name)
