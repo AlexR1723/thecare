@@ -1,17 +1,15 @@
-from django.shortcuts import render
-from .models import *
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from django.core.files.storage import FileSystemStorage
-import xlrd, xlwt, json, re, hashlib, random, datetime
-from django.contrib.auth import authenticate, login, logout, hashers
-from django.core.validators import validate_email
-from django.db import transaction
-from django.contrib.auth.models import User
-from django.urls import reverse
-from decimal import Decimal
+import datetime
+import json
+import random
+
 from django.conf import settings
+from django.http import HttpResponse
+from django.shortcuts import render
+
+from .models import *
+
+
 # from shop.models import Product
-import os
 
 
 def global_function(request):
@@ -224,3 +222,15 @@ def buy_products(request):
         return HttpResponse(json.dumps(True))
     else:
         return HttpResponse(json.dumps(True))
+
+
+def pay_result(request):
+    return HttpResponse(json.dumps('OK'))
+
+
+def pay_success(request):
+    return HttpResponse(json.dumps('success'))
+
+
+def pay_fail(request):
+    return HttpResponse(json.dumps('fail'))
