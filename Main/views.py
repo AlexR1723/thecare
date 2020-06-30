@@ -306,6 +306,8 @@ def product_list_save(request):
 def save_product(request):
     # добавить выборку каждой переменной
     print('save_product')
+    i = request.GET.get('i')
+    print(i)
     i = int(request.GET.get('i'))
     print(settings.PROD_LIST[i])
     print('-----------------------------------')
@@ -316,7 +318,7 @@ def save_product(request):
     # v = request.GET.get('list')
     # print(v)
     # if len(v) > 0:
-    
+
     # position=request.GET.get('position')
     # brand=request.GET.get('brand')
     # name=request.GET.get('name')
