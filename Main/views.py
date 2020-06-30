@@ -306,7 +306,8 @@ def product_list_save(request):
 def save_product(request):
     # добавить выборку каждой переменной
     print('save_product')
-    # i = int(request.GET.get('i'))
+    i = int(request.GET.get('i'))
+    print(settings.PROD_LIST[i])
     print('-----------------------------------')
     # print('LEN: ' + str(len(settings.PROD_LIST)))
     # print('ID: ' + str(i))
@@ -315,161 +316,162 @@ def save_product(request):
     # v = request.GET.get('list')
     # print(v)
     # if len(v) > 0:
-    position=request.GET.get('position')
-    brand=request.GET.get('brand')
-    name=request.GET.get('name')
-    short_desc=request.GET.get('short_desc')
-    desc=request.GET.get('desc')
-    note=request.GET.get('note')
-    components=request.GET.get('components')
-    category=request.GET.get('category')
-    resource=request.GET.get('resource')
-    need=request.GET.get('need')
-    photo=request.GET.get('photo')
-    size=request.GET.get('size')
-    color=request.GET.get('color')
-    artikul=request.GET.get('artikul')
-    artikul_brand=request.GET.get('artikul_brand')
-    count=request.GET.get('count')
-    price=request.GET.get('price')
-    sale=request.GET.get('sale')
-    if position != "" and position != "Привязка к позиции":
-        categ = CategoryType.objects.filter(name=category)
-        print(categ)
-        res = ResourceType.objects.filter(category=categ[0]).filter(name=resource)
-        if res.count() == 0:
-            res = ResourceType(category=categ[0], name=resource)
-            res.save()
-            res = ResourceType.objects.filter(category=categ[0]).filter(name=resource)
-        print(res)
-        brand = Brands_model.objects.filter(name__iexact=brand)
-        if brand.count() == 0:
-            brand = Brands_model(name=brand)
-            brand.save()
-        else:
-            brand = Brands_model.objects.get(name=brand)
-        print(brand)
-        product_str = Product_str.objects.filter(title=name).filter(brand__name=brand).filter(
-                shot_description=short_desc)
-        print(product_str)
-        if categ.count() > 0 and res.count() > 0:
-            if product_str.count() == 0:
-                print(1)
-                product_str = Product_str(title=name, shot_description=short_desc, description=desc, note=note,
-                                              components=components,
-                                              category=categ[0], resource=res[0], brand=brand, artikul=artikul,
-                                              artik_brand=artikul_brand, main_photo="uploads/product/" + photo)
-                product_str.save()
-            else:
-                product_str = product_str[0]
-                product_str.description = desc
-                product_str.note = note
-                product_str.components = components
-                product_str.category = categ[0]
-                product_str.resource = res[0]
-                product_str.brand = brand
-                product_str.artikul = artikul
-                product_str.artik_brand = artikul_brand
-                product_str.main_photo = "uploads/product/" + photo
-                product_str.save()
-
-            product = Product.objects.get(id=product_str.id)
-
-            needs = need
-            list_need = needs.split(', ')
-            print(list_need)
-            if len(list_need) == 1:
-                need = NeedType.objects.filter(name__iexact=needs).filter(category=categ[0])
-                print(need)
-                if need.count() == 0:
-                    need = NeedType(name=needs, category=categ[0])
-                    need.save()
-                    need = NeedType.objects.filter(name=needs).filter(category=categ[0])
-                print(need[0])
-                product_need = ProductNeed.objects.filter(product=product).filter(need=need[0])
-                if product_need.count() == 0:
-                    product_need = ProductNeed(product=product, need=need[0])
-                    product_need.save()
-            else:
-                for n in list_need:
-                    need = NeedType.objects.filter(name__iexact=n).filter(category=categ[0])
-                    print(need)
-                    if need.count() == 0:
-                        need = NeedType(name=n, category=categ[0])
-                        need.save()
-                        need = NeedType.objects.filter(name=n).filter(category=categ[0])
-                    print(need)
-                    product_need = ProductNeed.objects.filter(need=need[0]).filter(product=product)
-                    if product_need.count() == 0:
-                        product_need = ProductNeed(product=product, need=need[0])
-                        product_need.save()
-
-            if color != "" and color != " ":
-                tones = color
-                list_tone = tones.split('; ')
-                if list_tone != "" and list_tone.count != 0:
-                    for t in list_tone:
-                        product_tone = ProductTone(product=product, name=t)
-                        product_tone.save()
-            if size == "":
-                size_name = 0
-            else:
-                size_name = size
-            print(size_name)
-            try:
-                size_name = float(size_name)
-                size = Size.objects.filter(float_name=size_name)
-                if size.count() == 0:
-                    size = Size(float_name=size_name)
-                    size.save()
-                else:
-                    size = size[0]
-            except:
-                size = Size.objects.filter(str_name=size_name)
-                if size.count() == 0:
-                    size = Size(str_name=size_name)
-                    size.save()
-                else:
-                    size = size[0]
-            product_size = ProductSize.objects.filter(size=size).filter(product=product)
-            count = 0
-            price = 0
-            sale = 0
-            if count != "":
-                count = count
-            if price != "":
-                price = price
-            try:
-                if sale != "" and sale != 0:
-                    sale = int(sale)
-            except:
-                print('except')
-            print(sale)
-            if product_size.count() == 0:
-                if (sale == 0):
-                    product_size = ProductSize(product=product, size=size, price=price, count=count)
-                else:
-                    new_price = price - (price * sale / 100)
-                    print(new_price)
-                    product_size = ProductSize(product=product, size=size, old_price=price, count=count,
-                                                   sale=sale, price=new_price)
-                product_size.save()
-            else:
-                if (sale == 0):
-                    product_size = product_size[0]
-                    product_size.price = price
-                    product_size.count = count
-                    product_size.sale = 0
-                    product_size.old_price = 0
-                else:
-                    new_price = price - (price * sale / 100)
-                    product_size = product_size[0]
-                    product_size.price = new_price
-                    product_size.count = count
-                    product_size.sale = sale
-                    product_size.old_price = price
-                product_size.save()
-            print(product)
+    
+    # position=request.GET.get('position')
+    # brand=request.GET.get('brand')
+    # name=request.GET.get('name')
+    # # short_desc=request.GET.get('short_desc')
+    # # desc=request.GET.get('desc')
+    # # note=request.GET.get('note')
+    # # components=request.GET.get('components')
+    # # category=request.GET.get('category')
+    # # resource=request.GET.get('resource')
+    # # need=request.GET.get('need')
+    # # photo=request.GET.get('photo')
+    # # size=request.GET.get('size')
+    # # color=request.GET.get('color')
+    # # artikul=request.GET.get('artikul')
+    # # artikul_brand=request.GET.get('artikul_brand')
+    # # count=request.GET.get('count')
+    # # price=request.GET.get('price')
+    # # sale=request.GET.get('sale')
+    # if position != "" and position != "Привязка к позиции":
+    #     categ = CategoryType.objects.filter(name=category)
+    #     print(categ)
+    #     res = ResourceType.objects.filter(category=categ[0]).filter(name=resource)
+    #     if res.count() == 0:
+    #         res = ResourceType(category=categ[0], name=resource)
+    #         res.save()
+    #         res = ResourceType.objects.filter(category=categ[0]).filter(name=resource)
+    #     print(res)
+    #     brand = Brands_model.objects.filter(name__iexact=brand)
+    #     if brand.count() == 0:
+    #         brand = Brands_model(name=brand)
+    #         brand.save()
+    #     else:
+    #         brand = Brands_model.objects.get(name=brand)
+    #     print(brand)
+    #     product_str = Product_str.objects.filter(title=name).filter(brand__name=brand).filter(
+    #             shot_description=short_desc)
+    #     print(product_str)
+    #     if categ.count() > 0 and res.count() > 0:
+    #         if product_str.count() == 0:
+    #             print(1)
+    #             product_str = Product_str(title=name, shot_description=short_desc, description=desc, note=note,
+    #                                           components=components,
+    #                                           category=categ[0], resource=res[0], brand=brand, artikul=artikul,
+    #                                           artik_brand=artikul_brand, main_photo="uploads/product/" + photo)
+    #             product_str.save()
+    #         else:
+    #             product_str = product_str[0]
+    #             product_str.description = desc
+    #             product_str.note = note
+    #             product_str.components = components
+    #             product_str.category = categ[0]
+    #             product_str.resource = res[0]
+    #             product_str.brand = brand
+    #             product_str.artikul = artikul
+    #             product_str.artik_brand = artikul_brand
+    #             product_str.main_photo = "uploads/product/" + photo
+    #             product_str.save()
+    #
+    #         product = Product.objects.get(id=product_str.id)
+    #
+    #         needs = need
+    #         list_need = needs.split(', ')
+    #         print(list_need)
+    #         if len(list_need) == 1:
+    #             need = NeedType.objects.filter(name__iexact=needs).filter(category=categ[0])
+    #             print(need)
+    #             if need.count() == 0:
+    #                 need = NeedType(name=needs, category=categ[0])
+    #                 need.save()
+    #                 need = NeedType.objects.filter(name=needs).filter(category=categ[0])
+    #             print(need[0])
+    #             product_need = ProductNeed.objects.filter(product=product).filter(need=need[0])
+    #             if product_need.count() == 0:
+    #                 product_need = ProductNeed(product=product, need=need[0])
+    #                 product_need.save()
+    #         else:
+    #             for n in list_need:
+    #                 need = NeedType.objects.filter(name__iexact=n).filter(category=categ[0])
+    #                 print(need)
+    #                 if need.count() == 0:
+    #                     need = NeedType(name=n, category=categ[0])
+    #                     need.save()
+    #                     need = NeedType.objects.filter(name=n).filter(category=categ[0])
+    #                 print(need)
+    #                 product_need = ProductNeed.objects.filter(need=need[0]).filter(product=product)
+    #                 if product_need.count() == 0:
+    #                     product_need = ProductNeed(product=product, need=need[0])
+    #                     product_need.save()
+    #
+    #         if color != "" and color != " ":
+    #             tones = color
+    #             list_tone = tones.split('; ')
+    #             if list_tone != "" and list_tone.count != 0:
+    #                 for t in list_tone:
+    #                     product_tone = ProductTone(product=product, name=t)
+    #                     product_tone.save()
+    #         if size == "":
+    #             size_name = 0
+    #         else:
+    #             size_name = size
+    #         print(size_name)
+    #         try:
+    #             size_name = float(size_name)
+    #             size = Size.objects.filter(float_name=size_name)
+    #             if size.count() == 0:
+    #                 size = Size(float_name=size_name)
+    #                 size.save()
+    #             else:
+    #                 size = size[0]
+    #         except:
+    #             size = Size.objects.filter(str_name=size_name)
+    #             if size.count() == 0:
+    #                 size = Size(str_name=size_name)
+    #                 size.save()
+    #             else:
+    #                 size = size[0]
+    #         product_size = ProductSize.objects.filter(size=size).filter(product=product)
+    #         count = 0
+    #         price = 0
+    #         sale = 0
+    #         if count != "":
+    #             count = count
+    #         if price != "":
+    #             price = price
+    #         try:
+    #             if sale != "" and sale != 0:
+    #                 sale = int(sale)
+    #         except:
+    #             print('except')
+    #         print(sale)
+    #         if product_size.count() == 0:
+    #             if (sale == 0):
+    #                 product_size = ProductSize(product=product, size=size, price=price, count=count)
+    #             else:
+    #                 new_price = price - (price * sale / 100)
+    #                 print(new_price)
+    #                 product_size = ProductSize(product=product, size=size, old_price=price, count=count,
+    #                                                sale=sale, price=new_price)
+    #             product_size.save()
+    #         else:
+    #             if (sale == 0):
+    #                 product_size = product_size[0]
+    #                 product_size.price = price
+    #                 product_size.count = count
+    #                 product_size.sale = 0
+    #                 product_size.old_price = 0
+    #             else:
+    #                 new_price = price - (price * sale / 100)
+    #                 product_size = product_size[0]
+    #                 product_size.price = new_price
+    #                 product_size.count = count
+    #                 product_size.sale = sale
+    #                 product_size.old_price = price
+    #             product_size.save()
+    #         print(product)
     return HttpResponse(json.dumps(True))
 
 
