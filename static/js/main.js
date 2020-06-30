@@ -401,7 +401,7 @@ $('#btn_add_to_cart').click(function () {
                 document.getElementById('user_basket_total').innerText = data + ' руб.'
                 notice('Добавлено в корзину')
             } else {
-                notice('Не удалось добавить в корзину, попробйте позже!')
+                notice('Не удалось добавить в корзину, попробуйте позже!')
             }
         },
         error: function (data) {
@@ -428,7 +428,7 @@ $('.btn_cart_minus').on('click', function () {
                 document.getElementById('user_basket_total').innerText = data.total + ' руб.'
                 document.getElementById('cart_total_price').innerText = data.total + ' руб.'
             } else {
-                notice('Произошла ошибка, попробйте позже!')
+                notice('Произошла ошибка, попробуйте позже!')
             }
         },
         error: function (data) {
@@ -454,7 +454,7 @@ $('.btn_cart_plus').on('click', function () {
                 document.getElementById('user_basket_total').innerText = data.total + ' руб.'
                 document.getElementById('cart_total_price').innerText = data.total + ' руб.'
             } else {
-                notice('Произошла ошибка, попробйте позже!')
+                notice('Произошла ошибка, попробуйте позже!')
             }
         },
         error: function (data) {
@@ -479,7 +479,7 @@ $('.btn_cart_del_item').on('click', function () {
                 document.getElementById('user_basket_total').innerText = data + ' руб.'
                 document.getElementById('cart_total_price').innerText = data + ' руб.'
             } else {
-                notice('Произошла ошибка, попробйте позже!')
+                notice('Произошла ошибка, попробуйте позже!')
             }
         },
         error: function (data) {
@@ -507,7 +507,7 @@ $('.cart_item_input').on('keyup', function () {
                 document.getElementById('user_basket_total').innerText = data.total + ' руб.'
                 document.getElementById('cart_total_price').innerText = data.total + ' руб.'
             } else {
-                notice('Произошла ошибка, попробйте позже!')
+                notice('Произошла ошибка, попробуйте позже!')
             }
         },
         error: function (data) {

@@ -80,14 +80,14 @@
 
         <div class="col-11 col-sm-12 col-md-11 col-lg-11 col-xl-11 pt-0 pb-3 cart-hdr">
             <div class="row justify-content-end align-items-center">
-{#                <div class="col-10 col-md-5 col-lg-4 col-xl-3">#}
-                    <a href="{% url 'Cart' %}">
-                        <p class="text-right mb-0 mb-md-3">
-                            <i class="fa fa-shopping-basket mr-3" aria-hidden="true"></i>Корзина: <span class="cart-sum"
-                                                                                                        id="user_basket_total">{{ dic|get_dict:'basket' }} руб.</span>
-                        </p>
-                    </a>
-{#                </div>#}
+                {#                <div class="col-10 col-md-5 col-lg-4 col-xl-3">#}
+                <a href="{% url 'Cart' %}">
+                    <p class="text-right mb-0 mb-md-3">
+                        <i class="fa fa-shopping-basket mr-3" aria-hidden="true"></i>
+                        Корзина: <span class="cart-sum" id="user_basket_total">{{ dic|get_dict:'basket' }} руб.</span>
+                    </p>
+                </a>
+                {#                </div>#}
             </div>
         </div>
     </div>
@@ -167,7 +167,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link " href="{% url 'Contacts' %}">Контакты</a>
                                     </li>
-                                    {%  if dic|get_dict:'is_auth' %}
+                                    {% if dic|get_dict:'is_auth' %}
                                         <li class="nav-item">
                                             <a class="nav-link " href="{% url 'Orders_history' %}">Личный кабинет</a>
                                         </li>
