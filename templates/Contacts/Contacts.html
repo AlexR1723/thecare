@@ -2,159 +2,179 @@
 {% load staticfiles %}
 {% block content %}
 
-    <div class="container-fluid p-0">
-        <div class="row m-0 justify-content-center">
-            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 mt-3">
+<div class="container-fluid p-0">
+    <div class="row m-0 justify-content-center">
+        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 mt-3">
+            <div class="row m-0 justify-content-start align-items-center">
+                <nav aria-label="breadcrumb">
+                    <ol class="custom-breadcrumb breadcrumb px-0">
+                        <li class="breadcrumb-item"><a href="{% url 'Main' %}"><i class="fa fa-home home-icon"
+                                                                                  aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><a href="#">Контакты</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 payment_blk head_blk mb-5">
+            <div class="row m-0 justify-content-start align-items-center">
                 <div class="row m-0 justify-content-start align-items-center">
-                    <nav aria-label="breadcrumb">
-                        <ol class="custom-breadcrumb breadcrumb px-0">
-                            <li class="breadcrumb-item"><a href="{% url 'Main' %}"><i class="fa fa-home home-icon"
-                                                                                      aria-hidden="true"></i></a></li>
-                            <li class="breadcrumb-item active" aria-current="page"><a href="#">Контакты</a></li>
-                        </ol>
-                    </nav>
+                    <h1>Контакты</h1>
                 </div>
             </div>
 
-            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 payment_blk head_blk mb-5">
-                <div class="row m-0 justify-content-start align-items-center">
-                    <div class="row m-0 justify-content-start align-items-center">
-                        <h1>Контакты</h1>
+            <div class="row m-0 justify-content-center align-items-start mt-4">
+                <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4 p-0 mt-3">
+                    <div class="row m-0 justify-content-center align-items-center">
+                        <div class="text-center">
+                            <img src="/static/image/map_1.png" class="" alt="Map icon">
+                            <div class="mt-3">
+                                {% for i in adress %}
+                                <p class="card-text mx-2">{{ i.text }}</p>
+                                {% endfor %}
+                                {# <p class="card-text mt-5">г. Москва, ул. _________</p>#}
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="row m-0 justify-content-center align-items-start mt-4">
-                    <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4 p-0 mt-3">
-                        <div class="row m-0 justify-content-center align-items-center">
-                            <div class="text-center">
-                                <img src="/static/image/map_1.png" class="" alt="Map icon">
-                                <div class="mt-3">
-                                    {% for i in adress %}
-                                        <p class="card-text mx-2">{{ i.text }}</p>
-                                    {% endfor %}
-                                    {#                                <p class="card-text mt-5">г. Москва, ул. _________</p>#}
-                                </div>
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 p-0  mt-5 mt-md-3">
+                    <div class="row m-0 justify-content-center align-items-center">
+                        <div class="text-center">
+                            <img src="/static/image/telephone_3.png" class="img-fluid" alt="Phone icon">
+                            <div class="mt-3">
+                                {% for i in numbers %}
+                                <p class="card-text mx-2">{{ i.text }}</p>
+                                {% endfor %}
+                                {# <p class="card-text mt-5">8 (800) 400-12-12</p>#}
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 p-0  mt-5 mt-md-3">
-                        <div class="row m-0 justify-content-center align-items-center">
-                            <div class="text-center">
-                                <img src="/static/image/telephone_3.png" class="img-fluid" alt="Phone icon">
-                                <div class="mt-3">
-                                    {% for i in numbers %}
-                                        <p class="card-text mx-2">{{ i.text }}</p>
-                                    {% endfor %}
-                                    {#                                <p class="card-text mt-5">8 (800) 400-12-12</p>#}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 p-0 mt-5 mt-md-3">
-                        <div class="row m-0 justify-content-center align-items-center">
-                            <div class="text-center">
-                                <img src="/static/image/clock_1.png" alt="Clock icon">
-                                <div class="mt-3">
-                                    {% for i in grafic %}
-                                        <p class="card-text mx-2">{{ i.text }}</p>
-                                    {% endfor %}
-                                    {#                                <p class="card-text mt-4">Пн. - Пт. 10:00 - 19:00 <br> Сб. 12:00 - 17:00</p>#}
-                                </div>
+                </div>
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 p-0 mt-5 mt-md-3">
+                    <div class="row m-0 justify-content-center align-items-center">
+                        <div class="text-center">
+                            <img src="/static/image/clock_1.png" alt="Clock icon">
+                            <div class="mt-3">
+                                {% for i in grafic %}
+                                <p class="card-text mx-2">{{ i.text }}</p>
+                                {% endfor %}
+                                {# <p class="card-text mt-4">Пн. - Пт. 10:00 - 19:00 <br> Сб. 12:00 - 17:00</p>#}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="row justify-content-center">
+                <table class="table table-borderless">
+                    <tbody>
+                    <tr>
+                        <th scope="row">Наименование</th>
+                        <td>ИП НЕЧИПУРЕНКО ЕЛИЗАВЕТА АЛЕКСЕЕВНА</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ИНН</th>
+                        <td>610113134463</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 map_blk mb-5">
-                <div class="row m-0 justify-content-center align-items-center mt-4">
-                    <div class="col-12 col-sm-12 col-md-10 col-lg-6 col-xl-6 p-0 mt-3">
+        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 map_blk mb-5">
+            <div class="row m-0 justify-content-center align-items-center mt-4">
+                <div class="col-12 col-sm-12 col-md-10 col-lg-6 col-xl-6 p-0 mt-3">
 
-                        {% autoescape off %}
-                            {{ map }}
-                        {% endautoescape %}
-{##}
-{#                        <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A8cae44439ec970d04a4f057704378b27e97e1424ab7af1e348827a8dd6f2b1b6&amp;source=constructor"#}
-{#                                width="500" height="490" frameborder="0"></iframe>#}
-{#                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2667.798749158786!2d37.77782971589438!3d48.036913566145344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40e09aa573ed3bf7%3A0xb887fc79b5357d1a!2z0YPQuy4g0JDRgNGC0LXQvNCwLCAxNTAsINCU0L7QvdC10YbQuiwg0JTQvtC90LXRhtC60LDRjyDQvtCx0LvQsNGB0YLRjCwgODMwMDA!5e0!3m2!1sru!2sua!4v1578695005177!5m2!1sru!2sua" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen=""></iframe>#}
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 p-0 pt-3 px-1 px-md-5">
-                        <form class="feedback-form">
-                            <h2 class="text-center mb-4">Напишите нам</h2>
-                            <div class="form-group">
-                                <label for="FormControlInput1">Имя <span>*</span></label>
-                                <input type="text" class="form-control" id="feedback_name" placeholder=""
-                                       maxlength="100">
-                            </div>
-                            <div class="form-group">
-                                <label for="FormControlInput1">E-mail <span>*</span></label>
-                                <input type="email" class="form-control" id="feedback_email" placeholder=""
-                                       maxlength="200">
-                            </div>
-                            <div class="form-group">
-                                <label for="FormControlInput3">Тема сообщения</label>
-                                <input type="text" class="form-control" id="feedback_subject" placeholder=""
-                                       maxlength="300">
-                            </div>
-                            <div class="form-group">
-                                <label for="FormControlTextarea1">Сообщение <span>*</span></label>
-                                <textarea class="form-control" id="feedback_text" rows="3"></textarea>
-                            </div>
-                            <div class="form-group text-center text-lg-right">
-                                <button type="button" id="send_feedback" class="btn mb-2 w-50 py-2">Отправить</button>
-                            </div>
-                        </form>
-                    </div>
+                    {% autoescape off %}
+                    {{ map }}
+                    {% endautoescape %}
+                    {##}
+                    {#
+                    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A8cae44439ec970d04a4f057704378b27e97e1424ab7af1e348827a8dd6f2b1b6&amp;source=constructor"
+                            #}
+                            {# width="500" height="490" frameborder="0"></iframe>
+                    #}
+                    {#
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2667.798749158786!2d37.77782971589438!3d48.036913566145344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40e09aa573ed3bf7%3A0xb887fc79b5357d1a!2z0YPQuy4g0JDRgNGC0LXQvNCwLCAxNTAsINCU0L7QvdC10YbQuiwg0JTQvtC90LXRhtC60LDRjyDQvtCx0LvQsNGB0YLRjCwgODMwMDA!5e0!3m2!1sru!2sua!4v1578695005177!5m2!1sru!2sua"
+                            width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+                    #}
+                </div>
+                <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 p-0 pt-3 px-1 px-md-5">
+                    <form class="feedback-form">
+                        <h2 class="text-center mb-4">Напишите нам</h2>
+                        <div class="form-group">
+                            <label for="FormControlInput1">Имя <span>*</span></label>
+                            <input type="text" class="form-control" id="feedback_name" placeholder=""
+                                   maxlength="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="FormControlInput1">E-mail <span>*</span></label>
+                            <input type="email" class="form-control" id="feedback_email" placeholder=""
+                                   maxlength="200">
+                        </div>
+                        <div class="form-group">
+                            <label for="FormControlInput3">Тема сообщения</label>
+                            <input type="text" class="form-control" id="feedback_subject" placeholder=""
+                                   maxlength="300">
+                        </div>
+                        <div class="form-group">
+                            <label for="FormControlTextarea1">Сообщение <span>*</span></label>
+                            <textarea class="form-control" id="feedback_text" rows="3"></textarea>
+                        </div>
+                        <div class="form-group text-center text-lg-right">
+                            <button type="button" id="send_feedback" class="btn mb-2 w-50 py-2">Отправить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 social_blk mb-5">
+            <div class="row justify-content-between">
+                <div class="col-2 col-md-2 col-lg-2 col-xl-3">
+                    <hr class="">
+                </div>
+                <div class="col-7 col-md-7 col-lg-7 col-xl-6 text-center p-0">
+                    <h3>Ищите нас в социальных сетях</h3>
+                </div>
+                <div class="col-2 col-md-2 col-lg-2 col-xl-3">
+                    <hr class="">
                 </div>
             </div>
 
-            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 social_blk mb-5">
-                <div class="row justify-content-between">
-                    <div class="col-2 col-md-2 col-lg-2 col-xl-3">
-                        <hr class="">
-                    </div>
-                    <div class="col-7 col-md-7 col-lg-7 col-xl-6 text-center p-0">
-                        <h3>Ищите нас в социальных сетях</h3>
-                    </div>
-                    <div class="col-2 col-md-2 col-lg-2 col-xl-3">
-                        <hr class="">
-                    </div>
+            <div class="row m-0 justify-content-center align-items-center text-center mt-4">
+                <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 p-0 mt-3">
+                    <a href="#" class="text-center">
+                        <div class="ellipse mx-auto">
+                            <img src="/static/image/vk_b.png" class="img-fluid" alt="">
+                        </div>
+                    </a>
                 </div>
-
-                <div class="row m-0 justify-content-center align-items-center text-center mt-4">
-                    <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 p-0 mt-3">
-                        <a href="#" class="text-center">
-                            <div class="ellipse mx-auto">
-                                <img src="/static/image/vk_b.png" class="img-fluid" alt="">
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 p-0 mt-3">
-                        <a href="#">
-                            <div class="ellipse mx-auto">
-                                <img src="/static/image/twit_b.png" class="img-fluid" alt="">
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 p-0 mt-5 mt-md-3">
-                        <a href="#">
-                            <div class="ellipse mx-auto">
-                                <img src="/static/image/insta_b.png" class="img-fluid" alt="">
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 p-0 mt-5 mt-md-3">
-                        <a href="#">
-                            <div class="ellipse mx-auto">
-                                <img src="/static/image/face_b.png" class="img-fluid" alt="">
-                            </div>
-                        </a>
-                    </div>
+                <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 p-0 mt-3">
+                    <a href="#">
+                        <div class="ellipse mx-auto">
+                            <img src="/static/image/twit_b.png" class="img-fluid" alt="">
+                        </div>
+                    </a>
                 </div>
-
+                <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 p-0 mt-5 mt-md-3">
+                    <a href="#">
+                        <div class="ellipse mx-auto">
+                            <img src="/static/image/insta_b.png" class="img-fluid" alt="">
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 p-0 mt-5 mt-md-3">
+                    <a href="#">
+                        <div class="ellipse mx-auto">
+                            <img src="/static/image/face_b.png" class="img-fluid" alt="">
+                        </div>
+                    </a>
+                </div>
             </div>
 
         </div>
+
     </div>
+</div>
 
 {% endblock %}
