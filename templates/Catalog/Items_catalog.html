@@ -108,7 +108,7 @@
             <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-md-0 sort_col">
 
                 <div class="row">
-                    <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 p-0 items_catalog my-5">
+                    <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 p-0 items_catalog mt-5 mb-0 collapse d-lg-inline-block d-xl-inline-block" id="collapseFilter">
                         <div class="row m-0 justify-content-start align-items-center">
                             <div class="col">
                                 <div class="card filter_form">
@@ -148,6 +148,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        {% if head_url != 'Dyes_for_hair' %}
                                         <div class="accordion" id="accordion1">
                                             <div class="card-body filter-body_form">
                                                 <div class="row">
@@ -166,7 +167,7 @@
                                                                 {% for r in resource %}
                                                                     {% if spec == 'sale' %}
                                                                         {% if r.get_res_items_sale.count > 0 %}
-                                                                            <p style="color: blue">{{ r.name }}</p>
+                                                                            <p class="need-block mb-0 mt-3">{{ r.name }}</p>
                                                                             {% for items in r.get_res_items_sale %}
                                                                                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
                                                                                     <input type="checkbox"
@@ -185,7 +186,7 @@
                                                                     {% endif %}
                                                                     {% if spec == 'new' %}
                                                                         {% if r.get_res_items_new.count > 0 %}
-                                                                            <p style="color: blue">{{ r.name }}</p>
+                                                                            <p class="need-block mb-0 mt-3">{{ r.name }}</p>
                                                                             {% for items in r.get_res_items_new %}
                                                                                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
                                                                                     <input type="checkbox"
@@ -204,7 +205,7 @@
                                                                     {% endif %}
                                                                     {% if spec == 'brands' %}
                                                                         {% if r.get_res_items_brands.count > 0 %}
-                                                                            <p style="color: blue">{{ r.name }}</p>
+                                                                            <p class="need-block mb-0 mt-3">{{ r.name }}</p>
                                                                             {% for items in r.get_res_items_brands %}
                                                                                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
                                                                                     <input type="checkbox"
@@ -249,20 +250,20 @@
                                                 <div class="row">
                                                     <div class="col-12 d-flex justify-content-between align-items-baseline">
                                                         <h5 class="card-title">Потребности</h5>
-                                                        <button class="btn btn-link" type="button"
+                                                        <button class="btn btn-link collapsed " type="button"
                                                                 data-toggle="collapse" data-target="#collapseTwo"
                                                                 aria-expanded="false" aria-controls="collapseTwo"><i
                                                                 class="fa fa-chevron-up" aria-hidden="true"></i>
                                                         </button>
                                                     </div>
-                                                    <div id="collapseTwo" class="collapse active show"
+                                                    <div id="collapseTwo" class="collapse"
                                                          aria-labelledby="headingTwo" data-parent="#accordion2">
                                                         <div class="card-body pt-0" id="card_needs">
                                                             {% if spec %}
                                                                 {% for n in need %}
                                                                     {% if spec == 'sale' %}
                                                                         {% if n.get_need_items_sale.count > 0 %}
-                                                                            <p style="color: blue">{{ n.name }}</p>
+                                                                            <p class="need-block mb-0 mt-3">{{ n.name }}</p>
                                                                             {% for items in n.get_need_items_sale %}
 
                                                                                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
@@ -282,7 +283,7 @@
                                                                     {% endif %}
                                                                     {% if spec == 'new' %}
                                                                         {% if n.get_need_items_new.count > 0 %}
-                                                                            <p style="color: blue">{{ n.name }}</p>
+                                                                            <p class="need-block mb-0 mt-3">{{ n.name }}</p>
                                                                             {% for items in n.get_need_items_new %}
 
                                                                                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
@@ -302,7 +303,7 @@
                                                                     {% endif %}
                                                                     {% if spec == 'brands' %}
                                                                         {% if n.get_need_items_brands.count > 0 %}
-                                                                            <p style="color: blue">{{ n.name }}</p>
+                                                                            <p class="need-block mb-0 mt-3">{{ n.name }}</p>
                                                                             {% for items in n.get_need_items_brands %}
 
                                                                                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
@@ -344,6 +345,8 @@
 
                                             </div>
                                         </div>
+
+                                        {% endif %}
                                         <div class="accordion" id="accordion3">
                                             <div class="card-body filter-body_form">
                                                 <div class="row">
@@ -395,15 +398,15 @@
                         </div>
                     </div>
 
-                    <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9 p-md-0 items-list_catalog">
-                        <div class="row">
+                    <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9 p-md-0 items-list_catalog my-3 ">
+                        <div class="row m-0">
                             {% if products %}
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-md-0 my-md-5">
                                     <div class="row m-0 justify-content-start align-items-center">
                                         <div class="card-deck mb-5 ml-md-2 w-100" id="products">
-
+                                            <div class="row">
                                             {% for p in products %}
-                                                <div class="card {% if p.get_sale %}sale-card{% endif %} col-lg-4 col-xl-3"
+                                                <div class="card {% if p.get_sale %}sale-card{% endif %} col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3"
                                                      data-price="{{ p.price }}" data-name="{{ p.title }}"
                                                         {#                                                     data-num="{{ forloop.counter }}"#}
                                                 >
@@ -425,7 +428,7 @@
 
                                                     <div class="card-body">
                                                         <h5 class="card-title">{{ p.title }}</h5>
-                                                        <p class="card-text">{{ p.shot_description }}</p>
+                                                        <p class="card-text d-none d-sm-none d-md-inline-block">{{ p.shot_description }}</p>
                                                         <a href="{{ p.get_absolute_url }}">
                                                             <button type="submit" class="btn btn-buy mx-auto">Купить
                                                             </button>
@@ -452,6 +455,7 @@
                                                     </div>
                                                 </div>
                                             {% endfor %}
+                                            </div>
                                         </div>
                                     </div>
 

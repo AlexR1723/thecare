@@ -9,9 +9,14 @@ from django.db import transaction
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.http import Http404
+from django.core.files.storage import default_storage
+from openpyxl import load_workbook
 
 import os
 from django.conf import settings
+
+list = []
+list_count = 0
 
 
 def global_function(request):
@@ -105,135 +110,368 @@ def Save_excel_file(request):
     if request.method == 'POST':
         doc = request.FILES
         if (doc):
+            list.clear()
+            settings.DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
             print(doc['excel-file'])
             file = Files(file=doc['excel-file'])
             file.save()
-            print(file.file.path)
+            # print(file.file.path)
             rb = xlrd.open_workbook(file.file.path)
+            # rb = xlrd.open_workbook(default_storage.location + file.file.name)
+            # url = default_storage.url(file.file.name)
+            # rb = xlrd.open_workbook(settings.MEDIA_ROOT + '/' + file.file.name)
+            # print(settings.MEDIA_ROOT + '/' + file.file.name)
+            # wb = load_workbook(settings.MEDIA_ROOT + '/' + file.file.name)
+            # rb = xlrd.open_workbook(url)
             sheet = rb.sheet_by_index(0)
             vals = [sheet.row_values(rownum) for rownum in range(sheet.nrows)]
             for v in vals:
-                if v[1] != "" and v[1] != "Привязка к позиции":
-                    categ = CategoryType.objects.filter(name=v[8])
-                    res = ResourceType.objects.filter(category=categ[0]).filter(name=v[9])
-                    if res.count() == 0:
-                        res = ResourceType(category=categ[0], name=v[9])
-                        res.save()
-                        res = ResourceType.objects.filter(category=categ[0]).filter(name=v[9])
-                    brand = Brands_model.objects.filter(name=v[2])
-                    if brand.count() == 0:
-                        brand = Brands_model(name=v[2])
-                        brand.save()
-                    else:
-                        brand = Brands_model.objects.get(name=v[2])
-                    product = Product.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(shot_description=v[4])
-                    if categ.count() > 0 and res.count() > 0:
-                        if product.count() == 0:
-                            print(1)
-                            product = Product(title=v[3], shot_description=v[4], description=v[5], note=v[6], components=v[7],
-                                              category=categ[0], resource=res[0], brand=brand, artikul=v[14],
-                                              artik_brand=v[15])
-                            product.save()
-                        else:
-                            product = product[0]
-                            product.description = v[5]
-                            product.note = v[6]
-                            product.components = v[7]
-                            product.category = categ[0]
-                            product.resource = res[0]
-                            product.brand = brand
-                            product.artikul = v[14]
-                            product.artik_brand = v[15]
-                            product.save()
+                try:
+                    # print('----------------------------------------------------------------------------')
+                    # print(v)
+                    # list.append(v)
+                    settings.PROD_LIST.append(v)
+                except:
+                    print('ex1')
+            settings.DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+            list_count = len(settings.PROD_LIST)
+            for l in settings.PROD_LIST:
+                print(l)
+            print(len(settings.PROD_LIST))
+    # return HttpResponse(json.dumps(list))
+    return HttpResponseRedirect("/admin")
 
-                        needs = v[10]
-                        list_need = needs.split(', ')
-                        print(list_need)
-                        if list_need.count == 1:
+
+def get_product_count(request):
+    return HttpResponse(json.dumps(len(settings.PROD_LIST)))
+
+
+def get_product_list(request):
+    return HttpResponse(json.dumps(settings.PROD_LIST))
+
+
+def product_list_save(request):
+    print('product_list_save')
+    # i = int(request.GET.get('i'))
+    print('LEN: '+str(len(settings.PROD_LIST)))
+    if len(settings.PROD_LIST) > 0:
+        for v in settings.PROD_LIST:
+            print('-----------------------------------')
+            # print('LEN: ' + str(len(settings.PROD_LIST)))
+            # print('ID: ' + str(i))
+            # v = list[i]
+            # v = settings.PROD_LIST[i]
+            # v = request.GET.getlist('v')
+            print(v)
+            if v[1] != "" and v[1] != "Привязка к позиции":
+                categ = CategoryType.objects.filter(name=v[8])
+                print(categ)
+                res = ResourceType.objects.filter(category=categ[0]).filter(name=v[9])
+                if res.count() == 0:
+                    res = ResourceType(category=categ[0], name=v[9])
+                    res.save()
+                    res = ResourceType.objects.filter(category=categ[0]).filter(name=v[9])
+                print(res)
+                brand = Brands_model.objects.filter(name__iexact=v[2])
+                if brand.count() == 0:
+                    brand = Brands_model(name=v[2])
+                    brand.save()
+                else:
+                    brand = Brands_model.objects.get(name=v[2])
+                print(brand)
+                product_str = Product_str.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(
+                    shot_description=v[4])
+                print(product_str)
+                if categ.count() > 0 and res.count() > 0:
+                    if product_str.count() == 0:
+                        print(1)
+                        product_str = Product_str(title=v[3], shot_description=v[4], description=v[5], note=v[6],
+                                                  components=v[7],
+                                                  category=categ[0], resource=res[0], brand=brand, artikul=v[14],
+                                                  artik_brand=v[15], main_photo="uploads/product/" + v[11])
+                        product_str.save()
+                    else:
+                        product_str = product_str[0]
+                        product_str.description = v[5]
+                        product_str.note = v[6]
+                        product_str.components = v[7]
+                        product_str.category = categ[0]
+                        product_str.resource = res[0]
+                        product_str.brand = brand
+                        product_str.artikul = v[14]
+                        product_str.artik_brand = v[15]
+                        product_str.main_photo = "uploads/product/" + v[11]
+                        product_str.save()
+
+                    product = Product.objects.get(id=product_str.id)
+
+                    needs = v[10]
+                    list_need = needs.split(', ')
+                    print(list_need)
+                    if len(list_need) == 1:
+                        need = NeedType.objects.filter(name__iexact=needs).filter(category=categ[0])
+                        print(need)
+                        if need.count() == 0:
+                            need = NeedType(name=needs, category=categ[0])
+                            need.save()
                             need = NeedType.objects.filter(name=needs).filter(category=categ[0])
+                        print(need[0])
+                        product_need = ProductNeed.objects.filter(product=product).filter(need=need[0])
+                        if product_need.count() == 0:
+                            product_need = ProductNeed(product=product, need=need[0])
+                            product_need.save()
+                    else:
+                        for n in list_need:
+                            need = NeedType.objects.filter(name__iexact=n).filter(category=categ[0])
+                            print(need)
                             if need.count() == 0:
-                                need = NeedType(name=needs, category=categ[0])
+                                need = NeedType(name=n, category=categ[0])
                                 need.save()
-                                need = NeedType.objects.filter(name=needs).filter(category=categ[0])
+                                need = NeedType.objects.filter(name=n).filter(category=categ[0])
+                            print(need)
                             product_need = ProductNeed.objects.filter(need=need[0]).filter(product=product)
                             if product_need.count() == 0:
                                 product_need = ProductNeed(product=product, need=need[0])
                                 product_need.save()
-                        else:
-                            for n in list_need:
-                                need = NeedType.objects.filter(name=n).filter(category=categ[0])
-                                if need.count() == 0:
-                                    need = NeedType(name=n, category=categ[0])
-                                    need.save()
-                                    need = NeedType.objects.filter(name=n).filter(category=categ[0])
-                                product_need = ProductNeed.objects.filter(need=need[0]).filter(product=product)
-                                if product_need.count() == 0:
-                                    product_need = ProductNeed(product=product, need=need[0])
-                                    product_need.save()
 
-                        if v[13] != "" and v[13] != " ":
-                            tones = v[13]
-                            list_tone = tones.split('; ')
-                            if list_tone != "" and list_tone.count != 0:
-                                for t in list_tone:
-                                    product_tone = ProductTone(product=product, name=t)
-                                    product_tone.save()
-                        if v[12] == "":
-                            size_name=0
+                    if v[13] != "" and v[13] != " ":
+                        tones = v[13]
+                        list_tone = tones.split('; ')
+                        if list_tone != "" and list_tone.count != 0:
+                            for t in list_tone:
+                                product_tone = ProductTone(product=product, name=t)
+                                product_tone.save()
+                    if v[12] == "":
+                        size_name = 0
+                    else:
+                        size_name = v[12]
+                    print(size_name)
+                    try:
+                        size_name = float(size_name)
+                        size = Size.objects.filter(float_name=size_name)
+                        if size.count() == 0:
+                            size = Size(float_name=size_name)
+                            size.save()
                         else:
-                            size_name=v[12]
-                            print(size_name)
-                        try:
-                            size_name=float(size_name)
-                            size = Size.objects.filter(float_name=size_name)
-                            if size.count() == 0:
-                                size=Size(float_name=size_name)
-                                size.save()
-                            else:
-                                size=size[0]
-                        except:
-                            size = Size.objects.filter(str_name=size_name)
-                            if size.count() == 0:
-                                size=Size(str_name=size_name)
-                                size.save()
-                            else:
-                                size=size[0]
-                        product_size = ProductSize.objects.filter(size=size).filter(product=product)
-                        count = 0
-                        price = 0
-                        sale=0
-                        if v[16] != "":
-                            count = v[16]
-                        if v[17] != "":
-                            price = v[17]
+                            size = size[0]
+                    except:
+                        size = Size.objects.filter(str_name=size_name)
+                        if size.count() == 0:
+                            size = Size(str_name=size_name)
+                            size.save()
+                        else:
+                            size = size[0]
+                    product_size = ProductSize.objects.filter(size=size).filter(product=product)
+                    count = 0
+                    price = 0
+                    sale = 0
+                    if v[16] != "":
+                        count = v[16]
+                    if v[17] != "":
+                        price = v[17]
+                    try:
                         if v[19] != "" and v[19] != 0:
-                            sale=int(v[19])
-                        print(sale)
-                        if product_size.count() == 0:
-                            if(sale == 0):
-                                product_size = ProductSize(product=product, size=size,price=price, count=count)
-                            else:
-                                new_price = price - (price*sale/100)
-                                print(new_price)
-                                product_size = ProductSize(product=product, size=size, old_price=price, count=count, sale=sale, price=new_price)
-                            product_size.save()
+                            sale = int(v[19])
+                    except:
+                        print('except')
+                    print(sale)
+                    if product_size.count() == 0:
+                        if (sale == 0):
+                            product_size = ProductSize(product=product, size=size, price=price, count=count)
                         else:
-                            if (sale == 0):
-                                product_size=product_size[0]
-                                product_size.price = price
-                                product_size.count = count
-                                product_size.sale=0
-                                product_size.old_price=0
-                            else:
-                                new_price = price - (price * sale / 100)
-                                product_size = product_size[0]
-                                product_size.price = new_price
-                                product_size.count = count
-                                product_size.sale = sale
-                                product_size.old_price = price
-                            product_size.save()
-                        print(product)
-    return HttpResponseRedirect("/admin")
+                            new_price = price - (price * sale / 100)
+                            print(new_price)
+                            product_size = ProductSize(product=product, size=size, old_price=price, count=count,
+                                                       sale=sale, price=new_price)
+                        product_size.save()
+                    else:
+                        if (sale == 0):
+                            product_size = product_size[0]
+                            product_size.price = price
+                            product_size.count = count
+                            product_size.sale = 0
+                            product_size.old_price = 0
+                        else:
+                            new_price = price - (price * sale / 100)
+                            product_size = product_size[0]
+                            product_size.price = new_price
+                            product_size.count = count
+                            product_size.sale = sale
+                            product_size.old_price = price
+                        product_size.save()
+                    print(product)
+    return HttpResponse(json.dumps(True))
+
+
+def save_product(request):
+    # добавить выборку каждой переменной
+    print('save_product')
+    # i = int(request.GET.get('i'))
+    print('-----------------------------------')
+    # print('LEN: ' + str(len(settings.PROD_LIST)))
+    # print('ID: ' + str(i))
+    # v = list[i]
+    # v = settings.PROD_LIST[i]
+    # v = request.GET.get('list')
+    # print(v)
+    # if len(v) > 0:
+    position=request.GET.get('position')
+    brand=request.GET.get('brand')
+    name=request.GET.get('name')
+    short_desc=request.GET.get('short_desc')
+    desc=request.GET.get('desc')
+    note=request.GET.get('note')
+    components=request.GET.get('components')
+    category=request.GET.get('category')
+    resource=request.GET.get('resource')
+    need=request.GET.get('need')
+    photo=request.GET.get('photo')
+    size=request.GET.get('size')
+    color=request.GET.get('color')
+    artikul=request.GET.get('artikul')
+    artikul_brand=request.GET.get('artikul_brand')
+    count=request.GET.get('count')
+    price=request.GET.get('price')
+    sale=request.GET.get('sale')
+    if position != "" and position != "Привязка к позиции":
+        categ = CategoryType.objects.filter(name=category)
+        print(categ)
+        res = ResourceType.objects.filter(category=categ[0]).filter(name=resource)
+        if res.count() == 0:
+            res = ResourceType(category=categ[0], name=resource)
+            res.save()
+            res = ResourceType.objects.filter(category=categ[0]).filter(name=resource)
+        print(res)
+        brand = Brands_model.objects.filter(name__iexact=brand)
+        if brand.count() == 0:
+            brand = Brands_model(name=brand)
+            brand.save()
+        else:
+            brand = Brands_model.objects.get(name=brand)
+        print(brand)
+        product_str = Product_str.objects.filter(title=name).filter(brand__name=brand).filter(
+                shot_description=short_desc)
+        print(product_str)
+        if categ.count() > 0 and res.count() > 0:
+            if product_str.count() == 0:
+                print(1)
+                product_str = Product_str(title=name, shot_description=short_desc, description=desc, note=note,
+                                              components=components,
+                                              category=categ[0], resource=res[0], brand=brand, artikul=artikul,
+                                              artik_brand=artikul_brand, main_photo="uploads/product/" + photo)
+                product_str.save()
+            else:
+                product_str = product_str[0]
+                product_str.description = desc
+                product_str.note = note
+                product_str.components = components
+                product_str.category = categ[0]
+                product_str.resource = res[0]
+                product_str.brand = brand
+                product_str.artikul = artikul
+                product_str.artik_brand = artikul_brand
+                product_str.main_photo = "uploads/product/" + photo
+                product_str.save()
+
+            product = Product.objects.get(id=product_str.id)
+
+            needs = need
+            list_need = needs.split(', ')
+            print(list_need)
+            if len(list_need) == 1:
+                need = NeedType.objects.filter(name__iexact=needs).filter(category=categ[0])
+                print(need)
+                if need.count() == 0:
+                    need = NeedType(name=needs, category=categ[0])
+                    need.save()
+                    need = NeedType.objects.filter(name=needs).filter(category=categ[0])
+                print(need[0])
+                product_need = ProductNeed.objects.filter(product=product).filter(need=need[0])
+                if product_need.count() == 0:
+                    product_need = ProductNeed(product=product, need=need[0])
+                    product_need.save()
+            else:
+                for n in list_need:
+                    need = NeedType.objects.filter(name__iexact=n).filter(category=categ[0])
+                    print(need)
+                    if need.count() == 0:
+                        need = NeedType(name=n, category=categ[0])
+                        need.save()
+                        need = NeedType.objects.filter(name=n).filter(category=categ[0])
+                    print(need)
+                    product_need = ProductNeed.objects.filter(need=need[0]).filter(product=product)
+                    if product_need.count() == 0:
+                        product_need = ProductNeed(product=product, need=need[0])
+                        product_need.save()
+
+            if color != "" and color != " ":
+                tones = color
+                list_tone = tones.split('; ')
+                if list_tone != "" and list_tone.count != 0:
+                    for t in list_tone:
+                        product_tone = ProductTone(product=product, name=t)
+                        product_tone.save()
+            if size == "":
+                size_name = 0
+            else:
+                size_name = size
+            print(size_name)
+            try:
+                size_name = float(size_name)
+                size = Size.objects.filter(float_name=size_name)
+                if size.count() == 0:
+                    size = Size(float_name=size_name)
+                    size.save()
+                else:
+                    size = size[0]
+            except:
+                size = Size.objects.filter(str_name=size_name)
+                if size.count() == 0:
+                    size = Size(str_name=size_name)
+                    size.save()
+                else:
+                    size = size[0]
+            product_size = ProductSize.objects.filter(size=size).filter(product=product)
+            count = 0
+            price = 0
+            sale = 0
+            if count != "":
+                count = count
+            if price != "":
+                price = price
+            try:
+                if sale != "" and sale != 0:
+                    sale = int(sale)
+            except:
+                print('except')
+            print(sale)
+            if product_size.count() == 0:
+                if (sale == 0):
+                    product_size = ProductSize(product=product, size=size, price=price, count=count)
+                else:
+                    new_price = price - (price * sale / 100)
+                    print(new_price)
+                    product_size = ProductSize(product=product, size=size, old_price=price, count=count,
+                                                   sale=sale, price=new_price)
+                product_size.save()
+            else:
+                if (sale == 0):
+                    product_size = product_size[0]
+                    product_size.price = price
+                    product_size.count = count
+                    product_size.sale = 0
+                    product_size.old_price = 0
+                else:
+                    new_price = price - (price * sale / 100)
+                    product_size = product_size[0]
+                    product_size.price = new_price
+                    product_size.count = count
+                    product_size.sale = sale
+                    product_size.old_price = price
+                product_size.save()
+            print(product)
+    return HttpResponse(json.dumps(True))
+
 
 def Product_image_save(request):
     print('Save_image_file')
@@ -241,14 +479,15 @@ def Product_image_save(request):
         doc = request.FILES
         if (doc):
             for d in doc.getlist('image-file'):
-                name=d.name.split('.')[0]
-                product=Product.objects.filter(id=name)
+                name = d.name.split('.')[0]
+                product = Product.objects.filter(id=name)
                 print(product)
                 if product.count() > 0:
                     product = Product.objects.get(id=name)
                     product.main_photo = d
                     product.save()
     return HttpResponseRedirect("/admin")
+
 
 # def News(request):
 #     number, email = func_contact()

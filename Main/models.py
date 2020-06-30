@@ -232,3 +232,37 @@ class MainBlock(models.Model):
         db_table = 'main_block'
         verbose_name = _("Блок")
         verbose_name_plural = _("Блоки с картинками")
+
+
+
+
+class Product_str(models.Model):
+    title = models.CharField(max_length=500, blank=True, null=True, verbose_name="Наименование")
+    shot_description = models.TextField(blank=True, null=True, verbose_name="Краткое описание")
+    description = models.TextField(blank=True, null=True, verbose_name="Описание")
+    main_photo = models.TextField(blank=True, null=True,  verbose_name="Фото")
+    artikul = models.TextField(blank=True, null=True, max_length=20, verbose_name="Артикул")
+    note = models.TextField(blank=True, null=True, verbose_name="Примечание")
+    components = models.TextField(blank=True, null=True, verbose_name="Состав")
+    category = models.ForeignKey('CategoryType', models.DO_NOTHING, blank=True, null=True, verbose_name="Категория")
+    resource = models.ForeignKey('ResourceType', models.DO_NOTHING, blank=True, null=True, verbose_name="Средство")
+    brand = models.ForeignKey('Brands_model', models.DO_NOTHING, blank=True, null=True)
+    slug = models.TextField(blank=True, null=True, verbose_name="Ссылка")
+    date = models.DateField(blank=True, null=True)
+    artik_brand = models.TextField(blank=True, null=True, max_length=20)
+
+    class Meta:
+        managed = False
+        db_table = 'product'
+        verbose_name = _("товар")
+        verbose_name_plural = _("Товары")
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            super(Product_str, self).save(*args, **kwargs)
+            string = str(self.id) + '-' + self.title
+        else:
+            string = str(self.id) + '-' + self.title
+        self.slug = slugify(string)
+        self.date = datetime.datetime.today()
+        super(Product_str, self).save(*args, **kwargs)
