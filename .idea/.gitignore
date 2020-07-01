@@ -1,5 +1,6 @@
-
-#/workspace.xml
-#/dataSources/
-#/dataSources.local.xml
+/workspace.xml
+/dataSources/
+/dataSources.local.xml
+/misc.xml
+/the_care.iml
 
