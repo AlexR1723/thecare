@@ -636,4 +636,77 @@ $('#btn_buy_products').click(function () {
             alert('error')
         }
     })
-})
+});
+$('#FIO').click(function () {
+    document.getElementById('FIO').classList.remove('is-invalid');
+    document.getElementById('FIO').classList.remove('is-valid');
+});
+$('#address').click(function () {
+    document.getElementById('address').classList.remove('is-invalid');
+    document.getElementById('address').classList.remove('is-valid');
+});
+$('#email').click(function () {
+    document.getElementById('email').classList.remove('is-invalid');
+    document.getElementById('email').classList.remove('is-valid');
+});
+$('#tel').click(function () {
+    document.getElementById('tel').classList.remove('is-invalid');
+    document.getElementById('tel').classList.remove('is-valid');
+});
+$('#conf-btn').click(function () {
+    var fio=document.getElementById('FIO').value;
+    var address=document.getElementById('address').value;
+    var email=document.getElementById('email').value;
+    var tel=document.getElementById('tel').value;
+    if(fio !== "" && address !== "" && email !== "" && tel !== "") {
+        document.getElementById('FIO').classList.add('is-valid');
+        document.getElementById('address').classList.add('is-valid');
+        document.getElementById('email').classList.add('is-valid');
+        document.getElementById('tel').classList.add('is-valid');
+        document.getElementById('conf-btn-sub').click();
+
+        // $.ajax({
+        //     type: "GET",
+        //     url: '/cart/confirm_order',
+        //     data: {
+        //         fio: fio,
+        //         address: address,
+        //         email: email,
+        //         tel: tel
+        //     },
+        //     success: function (data) {
+        //         // if (data !== false) {
+        //         //     notice(data)
+        //         //     // document.getElementById('user_basket_total').innerText = data + ' руб.'
+        //         //     // notice('Добавлено в корзину')
+        //         // } else {
+        //         //     // notice('Произошла ошибка, попробуйте позже!')
+        //         //     window.location.href = '/log_in'
+        //         // }
+        //     },
+        //     error: function (data) {
+        //         alert('error')
+        //     }
+        // })
+    }
+    else
+    {
+        if(fio !== "")
+            document.getElementById('FIO').classList.add('is-valid');
+        else
+            document.getElementById('FIO').classList.add('is-invalid');
+        if(address !== "")
+            document.getElementById('address').classList.add('is-valid');
+        else
+            document.getElementById('address').classList.add('is-invalid');
+        if(email !== "")
+            document.getElementById('email').classList.add('is-valid');
+        else
+            document.getElementById('email').classList.add('is-invalid');
+        if(tel !== "")
+            document.getElementById('tel').classList.add('is-valid');
+        else
+            document.getElementById('tel').classList.add('is-invalid');
+        notice("Заполнены не все поля");
+    }
+});

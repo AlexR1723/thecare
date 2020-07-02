@@ -221,6 +221,24 @@ def buy_products(request):
     else:
         return HttpResponse(json.dumps(True))
 
+def confirm_order(request):
+    dic = global_function(request)
+    fio=request.POST.get('fio')
+    address=request.POST.get('address')
+    email=request.POST.get('email')
+    tel=request.POST.get('tel')
+    print(fio,address,email,tel)
+    prod_ses = request.session.get(settings.CART_SESSION_ID)
+    print(prod_ses)
+
+    all_prices = 0
+    if prod_ses is not None:
+        for i in prod_ses.values():
+            all_prices += int(i['total'])
+        # products = Product.objects.filter(slug__in=prod_ses.keys())
+        products = ProductSize.objects.filter(id__in=prod_ses.keys())
+    return render(request, 'Main/Confirm_order.html', locals())
+
 
 # записывать заказ в бд
 # проверять заказ по номеру

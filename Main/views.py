@@ -73,6 +73,7 @@ def Main(request):
     #     print(inc)
 
     dic = global_function(request)
+    print(dic)
     slide_first = Slider.objects.all()[0]
     slide = Slider.objects.all()[1:]
     main_block = MainBlock.objects.all()
@@ -478,7 +479,7 @@ def Product_image_save(request):
 
 def Log_in(request):
     dic = global_function(request)
-    if get_user_id(request) or request.user.is_authenticated:
+    if get_user_id(request) and request.user.is_authenticated:
         return HttpResponseRedirect(reverse('Main'))
     else:
         return render(request, 'Main/Log_in.html', locals())

@@ -1521,3 +1521,17 @@ a.up {
 p.need-block {
     color: rgba(225, 48, 117, 1);
 }
+
+.conf-btn{
+    background: #E7B9CB;
+    border: 1px solid #E7B9CB;
+    border-radius: 5px;
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+.conf-btn:hover {
+    background: transparent;
+}
+.fw-700{
+    font-weight: 700;
+}
