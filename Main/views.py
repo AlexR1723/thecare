@@ -303,7 +303,7 @@ def save_product(request):
 
         sheet = rb.sheet_by_index(0)
         v = sheet.row_values(i)
-        # print(v[1])
+        print(v)
         # v = settings.PROD_LIST[i]
         # # print(v)
         # категория (для волос, для тела и тд)
