@@ -436,9 +436,10 @@ def save_product(request):
                         product_tone = ProductTone(product=product, name=t)
                         product_tone.save()
 
+        if i+1 == len(settings.PROD_LIST):
+            settings.PROD_LIST.clear()
 
-
-            # product_str = Product_str.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(
+        # product_str = Product_str.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(
             #     shot_description=v[4])
             # if categ.count() > 0 and res.count() > 0:
             #     if product_str.count() == 0:
