@@ -115,14 +115,9 @@ def Save_excel_file(request):
             print(doc['excel-file'])
             file = Files(file=doc['excel-file'])
             file.save()
-            # print(file.file.path)
+            print(file.file.path)
             rb = xlrd.open_workbook(file.file.path)
-            # rb = xlrd.open_workbook(default_storage.location + file.file.name)
-            # url = default_storage.url(file.file.name)
-            # rb = xlrd.open_workbook(settings.MEDIA_ROOT + '/' + file.file.name)
-            # print(settings.MEDIA_ROOT + '/' + file.file.name)
-            # wb = load_workbook(settings.MEDIA_ROOT + '/' + file.file.name)
-            # rb = xlrd.open_workbook(url)
+
             sheet = rb.sheet_by_index(0)
             vals = [sheet.row_values(rownum) for rownum in range(sheet.nrows)]
             for v in vals:
@@ -303,8 +298,14 @@ def save_product(request):
     try:
         i = int(request.GET.get('i'))
         # print(i)
-        v = settings.PROD_LIST[i]
-        # print(v)
+        file = Files.objects.last()
+        rb = xlrd.open_workbook(file.file.path)
+
+        sheet = rb.sheet_by_index(0)
+        v = sheet.row_values(i)
+        # print(v[1])
+        # v = settings.PROD_LIST[i]
+        # # print(v)
         # категория (для волос, для тела и тд)
         categ = CategoryType.objects.filter(name=v[8])
         # наименование средства
