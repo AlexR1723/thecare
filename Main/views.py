@@ -347,6 +347,96 @@ def save_product(request):
                 product_str.artik_brand = v[15]
                 product_str.main_photo = "uploads/product/" + v[11]
                 product_str.save()
+            # выбираем товар
+            product = Product.objects.get(id=product_str.id)
+
+            # потребности товара
+            # удаляем старые потребности
+            product_need=ProductNeed.objects.filter(product=product)
+            product_need.delete()
+            # выбираем новые потребности
+            needs = v[10]
+            list_need = needs.split(', ')
+            if len(list_need) == 1:
+                need = NeedType.objects.filter(name__iexact=needs).filter(category=categ[0])
+                if need.count() == 0:
+                    need = NeedType(name=needs, category=categ[0])
+                    need.save()
+                else:
+                    need=need[0]
+                product_need = ProductNeed.objects.filter(product=product).filter(need=need)
+                if product_need.count() == 0:
+                    product_need = ProductNeed(product=product, need=need)
+                    product_need.save()
+            else:
+                for n in list_need:
+                    need = NeedType.objects.filter(name__iexact=n).filter(category=categ[0])
+                    if need.count() == 0:
+                        need = NeedType(name=n, category=categ[0])
+                        need.save()
+                    else:
+                        need=need[0]
+                    product_need = ProductNeed.objects.filter(need=need).filter(product=product)
+                    if product_need.count() == 0:
+                        product_need = ProductNeed(product=product, need=need)
+                        product_need.save()
+
+            # объем
+            # удаляем старые объемы
+            # product_size = ProductSize.objects.filter(product=product)
+            # product_size.delete()
+            # выбираем новые объемы
+            if v[12] == "":
+                size_name = 0
+            else:
+                size_name = v[12]
+            try:
+                size_name = float(size_name)
+                size = Size.objects.filter(float_name=size_name)
+                if size.count() == 0:
+                    size = Size(float_name=size_name)
+                    size.save()
+                else:
+                    size = size[0]
+            except:
+                size = Size.objects.filter(str_name=size_name)
+                if size.count() == 0:
+                    size = Size(str_name=size_name)
+                    size.save()
+                else:
+                    size = size[0]
+            product_size = ProductSize.objects.filter(size=size).filter(product=product)
+            count = 0
+            price = 0
+            sale = 0
+            if v[16] != "":
+                count = v[16]
+            if v[17] != "":
+                price = v[17]
+            if v[19] != "":
+                sale = int(v[19])
+            if (sale == 0):
+                product_size = ProductSize(product=product, size=size, price=price, count=count)
+            else:
+                new_price = price - (price * sale / 100)
+                product_size = ProductSize(product=product, size=size, old_price=price, count=count,
+                                                   sale=sale, price=new_price)
+            product_size.save()
+
+            # оттенки
+            # удаляем старые оттенки
+            product_tone = ProductTone.objects.filter(product=product)
+            product_tone.delete()
+            # выбираем новые оттенки
+            if v[13] != "" and v[13] != " ":
+                tones = v[13]
+                list_tone = tones.split('; ')
+                if list_tone != "" and len(list_tone) != 0:
+                    for t in list_tone:
+                        product_tone = ProductTone(product=product, name=t)
+                        product_tone.save()
+
+
 
             # product_str = Product_str.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(
             #     shot_description=v[4])
