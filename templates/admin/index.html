@@ -141,23 +141,34 @@
         count = list.length
         if (count > 0) {
             console.log(count);
-            for (var i = 0; i < count; i++) {
+            for (var i = 1; i < count; i++) {
                 console.log(list[i]);
-                $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    async: false,
-                    url: 'save_product',
-                    data: {
-                        i:i
-                    },
-                    success: function (data) {
-                        console.log('ok')
-                    },
-                    error: function (data) {
-                        console.log('ERROR: ' + i)
-                    }
-                })
+                var answer='not save';
+               while(answer === 'not save'){
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        async: false,
+                        url: 'save_product',
+                        data: {
+                            i: i
+                        },
+                        success: function (data) {
+                            if (data === 'not save') {
+                                answer='not save';
+                            }
+                            else
+                            {
+                                answer='save';
+                                console.log('ok')
+                            }
+                        },
+                        error: function (data) {
+                            console.log('ERROR: ' + i)
+                        }
+                    })
+                }
+
             }
             // position: list[i][1],
             //             brand: list[i][2],
