@@ -298,16 +298,19 @@ def save_product(request):
     print('save_product')
     try:
         i = int(request.GET.get('i'))
+        all=int(request.GET.get('all'))
+        # print(i+1)
+        if (i + 1) >= all:
+            # print('clear')
+            settings.PROD_LIST.clear()
         # print(i)
         file = Files.objects.last()
         rb = xlrd.open_workbook(file.file.path)
 
         sheet = rb.sheet_by_index(0)
         v = sheet.row_values(i)
-        print(v)
+        # print(v)
         if v is not None:
-            # v = settings.PROD_LIST[i]
-            # # print(v)
             # категория (для волос, для тела и тд)
             categ = CategoryType.objects.filter(name=v[8])
             # наименование средства
@@ -438,8 +441,8 @@ def save_product(request):
                             product_tone = ProductTone(product=product, name=t)
                             product_tone.save()
 
-            if i+1 == len(settings.PROD_LIST):
-                settings.PROD_LIST.clear()
+            # if i+1 == len(settings.PROD_LIST):
+
             return HttpResponse(json.dumps(True))
         else:
             return HttpResponse(json.dumps('not save'))
