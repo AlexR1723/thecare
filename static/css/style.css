@@ -177,7 +177,7 @@ a:hover {
     background: #E7B9CB;
     font-size: 1.2rem;
     line-height: 22px;
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
 }
 
 .header h1 {
