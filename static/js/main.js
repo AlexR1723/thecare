@@ -44,14 +44,12 @@ $('.multiple-items').slick({
     slidesToShow: 4,
     //сколько слайдов отображать за раз при прокручивании
     slidesToScroll: 1,
-    lazyLoad: 'ondemand',
     pauseOnHover: true,
     autoplay: true,
     responsive: [
         {
             breakpoint: 1024,
             settings: {
-                lazyLoad: 'ondemand',
                 pauseOnHover: true,
                 autoplay: true,
                 slidesToShow: 3,
@@ -63,7 +61,6 @@ $('.multiple-items').slick({
         {
             breakpoint: 600,
             settings: {
-                lazyLoad: 'ondemand',
                 pauseOnHover: true,
                 autoplay: true,
                 infinite: true,
@@ -74,7 +71,6 @@ $('.multiple-items').slick({
         {
             breakpoint: 480,
             settings: {
-                lazyLoad: 'ondemand',
                 pauseOnHover: true,
                 autoplay: true,
                 infinite: true,
