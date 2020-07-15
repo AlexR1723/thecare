@@ -18,7 +18,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__) + "../../../")
 sys.path.append("..")
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -28,9 +27,7 @@ SECRET_KEY = '8p*rr(@l=6u6vc%e167+h*5-9@42v45)5l6uhu8n0lnd4%up1q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -85,7 +82,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'the_care.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -99,7 +95,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -119,7 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -133,8 +127,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-
 DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
 DROPBOX_OAUTH2_TOKEN = 'ScXC5sD_X0AAAAAAAAAATKPrbFg-32dbxGIkw-DpExBnl-SRkIJLNG7COWtnQCFB'
 DROPBOX_ROOT_PATH = '/the_care/'
@@ -146,6 +138,14 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 CART_SESSION_ID = 'cart'
-LOGIN_URL='/log_in'
+LOGIN_URL = '/log_in'
 
-PROD_LIST=[]
+PROD_LIST = []
+
+PAY_LOGIN = 'thecare'
+PAY_INV = '4500029'
+PAY_PASSWORD_1 = 'Yumbt46Uvps35bb8plFF'
+PAY_PASSWORD_2 = 'tz8VOaOG9ZSFLfk5H23e'
+PAY_TEST_PASSWORD_1 = 'ldy1yH3vsf049uwvpRpJ'
+PAY_TEST_PASSWORD_2 = 'V8nNBsOSEW3a2pvXc71J'
+

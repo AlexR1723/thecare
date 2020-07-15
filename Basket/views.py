@@ -1,6 +1,4 @@
-import datetime
-import json
-import random
+import datetime, json, random, hashlib
 
 from django.conf import settings
 from django.http import HttpResponse
@@ -223,9 +221,67 @@ def buy_products(request):
     else:
         return HttpResponse(json.dumps(True))
 
+def confirm_order(request):
+    dic = global_function(request)
+    fio=request.POST.get('fio')
+    address=request.POST.get('address')
+    email=request.POST.get('email')
+    tel=request.POST.get('tel')
+    print(fio,address,email,tel)
+    prod_ses = request.session.get(settings.CART_SESSION_ID)
+    print(prod_ses)
 
+    all_prices = 0
+    if prod_ses is not None:
+        for i in prod_ses.values():
+            all_prices += int(i['total'])
+        # products = Product.objects.filter(slug__in=prod_ses.keys())
+        products = ProductSize.objects.filter(id__in=prod_ses.keys())
+    return render(request, 'Main/Confirm_order.html', locals())
+
+
+# записывать заказ в бд
+# проверять заказ по номеру
+# сверстать страницу оплаты
+# создать таблицу в бд с товарами ???
 def pay_result(request):
+    # $out_summ = $_REQUEST["OutSum"];
+    # $inv_id = $_REQUEST["InvId"];
+    # $shp_item = $_REQUEST["Shp_item"];
+    # $crc = $_REQUEST["SignatureValue"];
+    #
+    # $crc = strtoupper($crc);
+    #
+    # $my_crc = strtoupper(md5("$out_summ:$inv_id:$mrh_pass2:Shp_item=$shp_item"));
+
+    # summ=request.GET.get('OutSum')
+    summ = '5656556'
+    login = request.GET.get('InvId')
+    hash = str(request.GET.get('SignatureValue')).upper()
+    hs = summ + settings.PAY_INV + settings.PAY_TEST_PASSWORD_2
+    new_hash = hashlib.md5(hs.encode()).hexdigest()
+    # hash = hashlib.md5(nm.encode())
+    # print(settings.PAY_INV)
+    print(new_hash)
+    print('create_hash')
+    print(create_hash(request))
     return HttpResponse(json.dumps('OK'))
+
+
+def create_hash(request):
+    # summ=request.GET.get('OutSum')
+    summ = '5656556'
+    hs = settings.PAY_LOGIN + ':' + summ + ':' + settings.PAY_INV + ':' + settings.PAY_TEST_PASSWORD_1
+    print(hs)
+    user=get_user_id(request)
+    if user:
+        hs+=':user='+str(user)
+    else:
+        hs+=':user=0'
+    print(hs)
+    new_hash = hashlib.md5(hs.encode()).hexdigest()
+    print(new_hash)
+    return True
 
 
 def pay_success(request):
