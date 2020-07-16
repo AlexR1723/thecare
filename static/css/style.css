@@ -10,8 +10,9 @@ html {
 }
 
 .card-img-top-main {
-    height: 300px !important;
-    width: auto !important;
+    /*height: 300px !important;*/
+    /*width: auto !important;*/
+    width: 100% !important;
     margin: auto !important;
 }
 
