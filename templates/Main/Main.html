@@ -74,58 +74,34 @@
         </div>
     </div>
 
-    <div class="container-fluid p-0">
-        <div class="row m-0 justify-content-center shop-items_blk face-top_blk mt-3 mb-5">
-            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
-                <div class="row m-0 justify-content-start align-items-center">
-                    <h3>Топ 10 для волос</h3>
-                </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
-                <div class="row m-0 justify-content-start align-items-center">
-                                    <div class="slider multiple-items w-100">
-                        {% for f in hair %}
-                        <div class="card">
-                            {% if f.main_photo != null and f.main_photo != "" %}
-                            <img data-lazy="{{MEDIA_URL}}{{ f.main_photo.url }}" class="card-img-top-main" alt="...">
-                            {% endif %}
-                            <div class="card-body">
-                                <h5 class="card-title mb-1">{{f.price}} руб</h5>
-                                <a href="{{ f.get_absolute_url }}">
-                                    <p class="card-text">{{f.title}}</p>
-                                </a>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-{#                    <div class="slider">#}
-{#                        <div class="slider__wrapper">#}
-{#                            {% for f in hair %}#}
-{#                            <div class="slider__item">#}
-{#                                <div class="card">#}
-{#                                    {% if f.main_photo != null and f.main_photo != "" %}#}
-{#                                        <img data-lazy="{{ MEDIA_URL }}{{ f.main_photo.url }}" class="card-img-top-main"#}
-{#                                             alt="...">#}
-{#                                    {% endif %}#}
-{#                                    <div class="card-body">#}
-{#                                        <h5 class="card-title mb-1">{{ f.price }} руб</h5>#}
-{#                                        <a href="{{ f.get_absolute_url }}">#}
-{#                                            <p class="card-text">{{ f.title }}</p>#}
-{#                                        </a>#}
-{#                                    </div>#}
-{#                                </div>#}
+{#    <div class="container-fluid p-0">#}
+{#        <div class="row m-0 justify-content-center shop-items_blk face-top_blk mt-3 mb-5">#}
+{#            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">#}
+{#                <div class="row m-0 justify-content-start align-items-center">#}
+{#                    <h3>Топ 10 для волос</h3>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">#}
+{#                <div class="row m-0 justify-content-start align-items-center">#}
+{#                                    <div class="slider multiple-items w-100">#}
+{#                        {% for f in hair %}#}
+{#                        <div class="card">#}
+{#                            {% if f.main_photo != null and f.main_photo != "" %}#}
+{#                            <img data-lazy="{{MEDIA_URL}}{{ f.main_photo.url }}" class="card-img-top-main" alt="...">#}
+{#                            {% endif %}#}
+{#                            <div class="card-body">#}
+{#                                <h5 class="card-title mb-1">{{f.price}} руб</h5>#}
+{#                                <a href="{{ f.get_absolute_url }}">#}
+{#                                    <p class="card-text">{{f.title}}</p>#}
+{#                                </a>#}
 {#                            </div>#}
-{#                            {% endfor %}#}
 {#                        </div>#}
-{#                        <!-- КНОПКИ "НАЗАД" И "ВПЕРЁД" -->#}
-{#                        <a class="slider__control slider__control_left" href="#" role="button"></a>#}
-{#                        <a class="slider__control slider__control_right slider__control_show" href="#"#}
-{#                           role="button"></a>#}
+{#                        {% endfor %}#}
 {#                    </div>#}
-                </div>
-            </div>
-        </div>
-    </div>
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 
     {##}
     {#<div class="container-fluid p-0">#}
