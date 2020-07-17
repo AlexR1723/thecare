@@ -46,12 +46,15 @@ def Brands(request):
 
     items = Brands_model.objects.all().order_by('name')
     letter = []
+    l=[]
     for i in items:
-        if not i.name in letter:
-            t = []
-            t.append(i.name[0])
-            brand = Brands_model.objects.filter(name__istartswith=i.name[0])
-            t.append(brand)
-            letter.append(t)
+        if i.name[0] not in l:
+            l.append(i.name[0])
+    for i in l:
+        t = []
+        t.append(i)
+        brand = Brands_model.objects.filter(name__istartswith=i)
+        t.append(brand)
+        letter.append(t)
     print(letter)
     return render(request, 'Brands/Brands.html', locals())
