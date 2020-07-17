@@ -101,7 +101,7 @@ def Main(request):
     #     face = Product.objects.order_by('-id').filter(category__name='Для лица')[0:10]
     # # print(face)
     # hair_count = Product.objects.order_by('-id').filter(category__name='Для волос').count()
-    # hair = Product.objects.filter(is_top=True).filter(category__name='Для волос').order_by('-id')
+    hair = Product.objects.filter(is_top=True).filter(category__name='Для волос').order_by('-id')
     # if hair_count < 10:
     #     hair = Product.objects.order_by('-id').filter(category__name='Для волос')
     # else:

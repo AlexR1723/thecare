@@ -12,13 +12,12 @@
 {#                                <div class="carousel-item active h-100"#}
 {#                                     style="background: url(#}
 {#                                             {{ MEDIA_URL }}{{ slide_first.image.url }}) no-repeat center center; background-size: cover;">#}
-{#                                    <!--                                {# <img src="{{MEDIA_URL}}{{ slide_first.image.url }}" class="d-block w-100" alt="...">#}-->#}
 {#                                </div>#}
 {#                                {% for s in slide %}#}
 {#                                    <div class="carousel-item h-100"#}
 {#                                         style="background: url(#}
 {#                                                 {{ MEDIA_URL }}{{ s.image.url }}) no-repeat center center; background-size: cover;">#}
-{#                                        <!--                                {# <img src="{{MEDIA_URL}}{{ s.image.url }}" class="d-block w-100" alt="...">#}-->#}
+{#                                        #}
 {#                                    </div>#}
 {#                                {% endfor %}#}
 {#                            </div>#}
@@ -74,34 +73,34 @@
         </div>
     </div>
 
-{#    <div class="container-fluid p-0">#}
-{#        <div class="row m-0 justify-content-center shop-items_blk face-top_blk mt-3 mb-5">#}
-{#            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">#}
-{#                <div class="row m-0 justify-content-start align-items-center">#}
-{#                    <h3>Топ 10 для волос</h3>#}
-{#                </div>#}
-{#            </div>#}
-{#            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">#}
-{#                <div class="row m-0 justify-content-start align-items-center">#}
-{#                                    <div class="slider multiple-items w-100">#}
-{#                        {% for f in hair %}#}
-{#                        <div class="card">#}
-{#                            {% if f.main_photo != null and f.main_photo != "" %}#}
-{#                            <img data-lazy="{{MEDIA_URL}}{{ f.main_photo.url }}" class="card-img-top-main" alt="...">#}
-{#                            {% endif %}#}
-{#                            <div class="card-body">#}
-{#                                <h5 class="card-title mb-1">{{f.price}} руб</h5>#}
-{#                                <a href="{{ f.get_absolute_url }}">#}
-{#                                    <p class="card-text">{{f.title}}</p>#}
-{#                                </a>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        {% endfor %}#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
+    <div class="container-fluid p-0">
+        <div class="row m-0 justify-content-center shop-items_blk face-top_blk mt-3 mb-5">
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
+                <div class="row m-0 justify-content-start align-items-center">
+                    <h3>Топ 10 для волос</h3>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
+                <div class="row m-0 justify-content-start align-items-center">
+                                    <div class="slider multiple-items w-100">
+                        {% for f in hair %}
+                        <div class="card">
+                            {% if f.main_photo != null and f.main_photo != "" %}
+                            <img data-lazy="{{MEDIA_URL}}{{ f.main_photo.url }}" class="card-img-top-main" alt="...">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title mb-1">{{f.price}} руб</h5>
+                                <a href="{{ f.get_absolute_url }}">
+                                    <p class="card-text">{{f.title}}</p>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {##}
     {#<div class="container-fluid p-0">#}
