@@ -3,40 +3,40 @@
 {% block content %}
 
     <div class="container-fluid p-0">
-        <div class="row m-0 justify-content-center">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0">
-                <div class="row m-0 justify-content-center justify-content-md-between align-items-center">
-                    <div class="col-12 col-md-12 mb-3 mb-md-0 p-0">
-                        <div id="carouselExampleControls" class="carousel slide h_vh" data-ride="carousel">
-                            <div class="carousel-inner h_vh">
-                                <div class="carousel-item active h-100"
-                                     style="background: url(
-                                             {{ MEDIA_URL }}{{ slide_first.image.url }}) no-repeat center center; background-size: cover;">
-                                    <!--                                {# <img src="{{MEDIA_URL}}{{ slide_first.image.url }}" class="d-block w-100" alt="...">#}-->
-                                </div>
-                                {% for s in slide %}
-                                    <div class="carousel-item h-100"
-                                         style="background: url(
-                                                 {{ MEDIA_URL }}{{ s.image.url }}) no-repeat center center; background-size: cover;">
-                                        <!--                                {# <img src="{{MEDIA_URL}}{{ s.image.url }}" class="d-block w-100" alt="...">#}-->
-                                    </div>
-                                {% endfor %}
-                            </div>
-                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
-                               data-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleControls" role="button"
-                               data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+{#        <div class="row m-0 justify-content-center">#}
+{#            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0">#}
+{#                <div class="row m-0 justify-content-center justify-content-md-between align-items-center">#}
+{#                    <div class="col-12 col-md-12 mb-3 mb-md-0 p-0">#}
+{#                        <div id="carouselExampleControls" class="carousel slide h_vh" data-ride="carousel">#}
+{#                            <div class="carousel-inner h_vh">#}
+{#                                <div class="carousel-item active h-100"#}
+{#                                     style="background: url(#}
+{#                                             {{ MEDIA_URL }}{{ slide_first.image.url }}) no-repeat center center; background-size: cover;">#}
+{#                                    <!--                                {# <img src="{{MEDIA_URL}}{{ slide_first.image.url }}" class="d-block w-100" alt="...">#}-->#}
+{#                                </div>#}
+{#                                {% for s in slide %}#}
+{#                                    <div class="carousel-item h-100"#}
+{#                                         style="background: url(#}
+{#                                                 {{ MEDIA_URL }}{{ s.image.url }}) no-repeat center center; background-size: cover;">#}
+{#                                        <!--                                {# <img src="{{MEDIA_URL}}{{ s.image.url }}" class="d-block w-100" alt="...">#}-->#}
+{#                                    </div>#}
+{#                                {% endfor %}#}
+{#                            </div>#}
+{#                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button"#}
+{#                               data-slide="prev">#}
+{#                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>#}
+{#                                <span class="sr-only">Previous</span>#}
+{#                            </a>#}
+{#                            <a class="carousel-control-next" href="#carouselExampleControls" role="button"#}
+{#                               data-slide="next">#}
+{#                                <span class="carousel-control-next-icon" aria-hidden="true"></span>#}
+{#                                <span class="sr-only">Next</span>#}
+{#                            </a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
 
         <div class="row m-0 justify-content-center">
             <div class="col-11 col-sm-11 col-md-12 col-lg-12 col-xl-12 p-0 my-2">
