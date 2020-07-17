@@ -768,8 +768,8 @@ $('#btn_final_pay').click(function () {
                     'OutSum: \''+data.OutSum+'\',' +
                     'Description: \'Оплата на сайте The Care\',' +
                     // 'Shp_User: \''+data.Shp_user+'\',' +
-                    'Culture: \'ru\',' +
-                    'Encoding: \'utf-8\',' +
+                    // 'Culture: \'ru\',' +
+                    // 'Encoding: \'utf-8\',' +
                     'IsTest: \'1\',' +
                     'SignatureValue: \''+data.SignatureValue+'\'})' )
                 el.click()

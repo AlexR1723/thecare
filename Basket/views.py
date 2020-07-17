@@ -421,7 +421,7 @@ def pay_check(request):
 
         dc={}
         dc['SignatureValue']=new_hash
-        dc['OutSum']=float(summ)
+        dc['OutSum']=str(float(summ))
         dc['Shp_user']=user
         dc['MerchantLogin']=settings.PAY_LOGIN
         return HttpResponse(json.dumps(dc))
