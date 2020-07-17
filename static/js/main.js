@@ -39,7 +39,7 @@ $('.multiple-items').slick({
     infinite: true,
     nextArrow: '<i class="fa fa-angle-right next" aria-hidden="true"></i>',
     prevArrow: '<i class="fa fa-angle-left prev" aria-hidden="true"></i>',
-    speed: 300,
+    speed: 1000,
     //количество отображаемых слайдов
     slidesToShow: 4,
     //сколько слайдов отображать за раз при прокручивании
@@ -80,6 +80,7 @@ $('.multiple-items').slick({
         }
     ]
 });
+
 
 $('#send_feedback').click(function () {
     let name = $('#feedback_name')[0].value
