@@ -95,6 +95,44 @@ class ResourceType(models.Model):
         return self.name
 
 
+# class Product(models.Model):
+#     title = models.CharField(max_length=500, blank=True, null=True, verbose_name="Наименование")
+#     shot_description = models.TextField(blank=True, null=True, verbose_name="Краткое описание")
+#     description = models.TextField(blank=True, null=True, verbose_name="Описание")
+#     main_photo = models.ImageField(upload_to='uploads/product/', blank=True, null=True,
+#                                    verbose_name="Фото")
+#     artikul = models.TextField(blank=True, null=True, max_length=20, verbose_name="Артикул")
+#     note = models.TextField(blank=True, null=True, verbose_name="Примечание")
+#     components = models.TextField(blank=True, null=True, verbose_name="Состав")
+#     category = models.ForeignKey('CategoryType', models.DO_NOTHING, blank=True, null=True, verbose_name="Категория")
+#     resource = models.ForeignKey('ResourceType', models.DO_NOTHING, blank=True, null=True, verbose_name="Средство")
+#     brand = models.ForeignKey('Brands_model', models.DO_NOTHING, blank=True, null=True)
+#     slug = models.TextField(blank=True, null=True, verbose_name="Ссылка")
+#     date = models.DateField(blank=True, null=True)
+#     artik_brand = models.TextField(blank=True, null=True, max_length=20)
+#
+#     class Meta:
+#         managed = False
+#         db_table = 'product'
+#         verbose_name = _("товар")
+#         verbose_name_plural = _("Товары")
+#
+#     def get_absolute_url(self):
+#         return reverse('Item_card', kwargs={'slug': self.slug})
+#
+#     def save(self, *args, **kwargs):
+#         if not self.id:
+#             super(Product, self).save(*args, **kwargs)
+#             string = str(self.id) + '-' + self.title
+#         else:
+#             string = str(self.id) + '-' + self.title
+#         self.slug = slugify(string)
+#         super(Product, self).save(*args, **kwargs)
+#         # self.text = self.text.replace('\n', '<br />')
+#
+#     def __str__(self):
+#         return str(self.id) + ' ' + self.title
+
 class Product(models.Model):
     title = models.CharField(max_length=500, blank=True, null=True, verbose_name="Наименование")
     shot_description = models.TextField(blank=True, null=True, verbose_name="Краткое описание")
@@ -111,6 +149,7 @@ class Product(models.Model):
     date = models.DateField(blank=True, null=True)
     artik_brand = models.TextField(blank=True, null=True, max_length=20)
 
+
     class Meta:
         managed = False
         db_table = 'product'
@@ -120,18 +159,51 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('Item_card', kwargs={'slug': self.slug})
 
-    def save(self, *args, **kwargs):
-        if not self.id:
-            super(Product, self).save(*args, **kwargs)
-            string = str(self.id) + '-' + self.title
-        else:
-            string = str(self.id) + '-' + self.title
-        self.slug = slugify(string)
-        super(Product, self).save(*args, **kwargs)
-        # self.text = self.text.replace('\n', '<br />')
+    # def save(self, *args, **kwargs):
+    #     if not self.id:
+    #         super(Product, self).save(*args, **kwargs)
+    #         string = str(self.id) + '-' + self.title
+    #     else:
+    #         string = str(self.id) + '-' + self.title
+    #     self.slug = slugify(string)
+    #     super(Product, self).save(*args, **kwargs)
+
+        # self.note = self.note.replace('\n', '<br />')
+        # self.description = self.description.replace('\n', '<br />')
+        # self.components = self.components.replace('\n', '<br />')
 
     def __str__(self):
         return str(self.id) + ' ' + self.title
+
+    # def needed(self):
+    #     prods = ProductNeed.objects.filter(product_id=self.id)
+    #     return prods
+    #
+    # def get_sizes(self):
+    #     sizes = ProductSize.objects.filter(product=self)
+    #     return sizes
+
+
+class Size(models.Model):
+    str_name = models.TextField(blank=True, null=True)
+    float_name = models.FloatField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'size'
+
+
+class ProductSize(models.Model):
+    product = models.ForeignKey(Product, models.DO_NOTHING, blank=True, null=True)
+    size = models.ForeignKey('Size', models.DO_NOTHING, blank=True, null=True)
+    price = models.IntegerField(blank=True, null=True, verbose_name="Стоимость", default=0)
+    count = models.IntegerField(blank=True, null=True, verbose_name="Количество", default=0)
+    sale = models.IntegerField(blank=True, null=True, verbose_name="Скидка", default=0)
+    old_price = models.IntegerField(blank=True, null=True, verbose_name="Старая цена", default=0)
+
+    class Meta:
+        managed = False
+        db_table = 'product_size'
 
 
 class ProductForNews(models.Model):
@@ -160,3 +232,5 @@ class AuthUser(models.Model):
     class Meta:
         managed = False
         db_table = 'auth_user'
+
+

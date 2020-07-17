@@ -45,8 +45,10 @@
 
                                         {% if not not_size %}
                                             {% if not sizename %}
+                                                {% if have_sale %}
                                                 <p class="card-text text-center text-md-left d-inline-block"
                                                    style="color: red">Скидка!</p>
+                                                {% endif %}
                                                 {% for i in lst %}
                                                     {% if i.5 > 0 %}
                                                         <p class="card-text text-center text-md-left d-inline-block
@@ -71,6 +73,7 @@
                                                 <b>{{ sizename }} мл</b>
                                             {% endif %}
                                         {% endif %}
+
                                         <div class="card-price-block row m-0 align-items-center mb-3">
 
                                             <div class="d-inline-block" id="is_sale_prod">
@@ -82,23 +85,33 @@
                                             </div>
 
                                             <div class="d-inline-block card-text text-center text-md-left">
+                                                 {% if lst.0.4 %}
                                                 <span class="price-text" id="product_price">{{ item.get_price.price }} руб.</span>
+                                                {% else %}
+                                                <span class="price-text" id="product_price">К сожалению, товара нет в наличии.</span>
+                                                {% endif %}
                                             </div>
                                         </div>
 
-
+                                    {% if lst.0.4 %}
                                         <div class="items-counter mb-4 text-center text-md-left" id="prod_input">
                                             <button class="minus"><i class="fa fa-minus" aria-hidden="true"></i>
                                             </button>
                                             <input type="number" value="1" min="1" id="item_count"
-                                                   max="{{ item.get_price.count }}"/>
+                                                   max="{{ item.get_price.count }}"
+                                                   onkeyup="check_input_count_prod(this)"
+                                                   onkeypress='return event.charCode >= 48 && event.charCode <= 57||event.charCode==8'
+                                            />
                                             <button class="plus"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                         </div>
+
                                         <div class="text-center text-md-left" id="prod_button">
                                             <button class="btn" data-slug="{{ item.get_price.id }}"
                                                     id="btn_add_to_cart">В корзину
                                             </button>
                                         </div>
+                                    {% endif %}
+
                                     </div>
                                 </div>
                             </div>

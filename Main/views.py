@@ -19,32 +19,43 @@ list = []
 list_count = 0
 
 
-def global_function(request):
-    number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
-    email = Contact.objects.filter(is_main=True, contact_id=4)[0].text
-
-    basket = 0
-    ses = request.session.get(settings.CART_SESSION_ID)
-    if ses and ses is not None:
-        for i in ses.values():
-            basket += int(i['total'])
-
-    is_auth = request.user.is_authenticated
-    if is_auth:
-        is_auth = request.session.get('username', False)
-
-    user_name = ''
-    if is_auth:
-        user_name = AuthUser.objects.get(username=is_auth).first_name
-
-    result_dict = {
-        'number': number,
-        'email': email,
-        'basket': basket,
-        'is_auth': is_auth,
-        'user_name': user_name
-    }
-    return result_dict
+# def global_function(request):
+#     number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
+#     email = Contact.objects.filter(is_main=True, contact_id=4)[0].text
+#
+#     ses = request.session.get(settings.CART_SESSION_ID)
+#     ids = []
+#     if ses and ses is not None:
+#         for i in ses.keys():
+#             ids.append(int(i))
+#         prods = ProductSize.objects.filter(id__in=ids)
+#         for i in ids:
+#             prod = prods.filter(id=i)[0]
+#             count = ses[str(i)]['count']
+#             ses[str(i)]['total'] = prod.price * count
+#
+#     basket = 0
+#     ses = request.session.get(settings.CART_SESSION_ID)
+#     if ses and ses is not None:
+#         for i in ses.values():
+#             basket += int(i['total'])
+#
+#     is_auth = request.user.is_authenticated
+#     if is_auth:
+#         is_auth = request.session.get('username', False)
+#
+#     user_name = ''
+#     if is_auth:
+#         user_name = AuthUser.objects.get(username=is_auth).first_name
+#
+#     result_dict = {
+#         'number': number,
+#         'email': email,
+#         'basket': basket,
+#         'is_auth': is_auth,
+#         'user_name': user_name
+#     }
+#     return result_dict
 
 
 def get_user_id(request):
@@ -72,7 +83,7 @@ def Main(request):
     #     inc+=1
     #     print(inc)
 
-    dic = global_function(request)
+    # dic = global_function(request)
     slide_first = Slider.objects.all()[0]
     slide = Slider.objects.all()[1:]
     main_block = MainBlock.objects.all()
@@ -101,7 +112,7 @@ def Main(request):
 
 
 def Dev(request):
-    dic = global_function(request)
+    # dic = global_function(request)
     return render(request, 'Main/Dev.html', locals())
 
 
@@ -485,7 +496,7 @@ def Product_image_save(request):
 
 
 def Log_in(request):
-    dic = global_function(request)
+    # dic = global_function(request)
     if get_user_id(request) or request.user.is_authenticated:
         return HttpResponseRedirect(reverse('Main'))
     else:
@@ -493,7 +504,7 @@ def Log_in(request):
 
 
 def Registration(request):
-    dic = global_function(request)
+    # dic = global_function(request)
     if get_user_id(request) or request.user.is_authenticated:
         return HttpResponseRedirect(reverse('Main'))
     else:
@@ -591,5 +602,5 @@ def check_register(request):
 
 
 def error404(request, exception):
-    dic = global_function(request)
+    # dic = global_function(request)
     return render(request, '404.html', locals())

@@ -9,32 +9,42 @@ import xlrd, xlwt, json, re, hashlib, random, datetime
 from django.conf import settings
 
 
-def global_function(request):
-    number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
-    email = Contact.objects.filter(is_main=True, contact_id=4)[0].text
-
-    basket = 0
-    ses = request.session.get(settings.CART_SESSION_ID)
-    if ses and ses is not None:
-        for i in ses.values():
-            basket += int(i['total'])
-
-    is_auth = request.user.is_authenticated
-    if is_auth:
-        is_auth = request.session.get('username', False)
-
-    user_name = ''
-    if is_auth:
-        user_name = AuthUser.objects.get(username=is_auth).first_name
-
-    result_dict = {
-        'number': number,
-        'email': email,
-        'basket': basket,
-        'is_auth': is_auth,
-        'user_name': user_name
-    }
-    return result_dict
+# def global_function(request):
+#     number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
+#     email = Contact.objects.filter(is_main=True, contact_id=4)[0].text
+#
+#     ses = request.session.get(settings.CART_SESSION_ID)
+#     ids = []
+#     for i in ses.keys():
+#         ids.append(int(i))
+#     prods = ProductSize.objects.filter(id__in=ids)
+#     for i in ids:
+#         prod = prods.filter(id=i)[0]
+#         count = ses[str(i)]['count']
+#         ses[str(i)]['total'] = prod.price * count
+#
+#     basket = 0
+#     ses = request.session.get(settings.CART_SESSION_ID)
+#     if ses and ses is not None:
+#         for i in ses.values():
+#             basket += int(i['total'])
+#
+#     is_auth = request.user.is_authenticated
+#     if is_auth:
+#         is_auth = request.session.get('username', False)
+#
+#     user_name = ''
+#     if is_auth:
+#         user_name = AuthUser.objects.get(username=is_auth).first_name
+#
+#     result_dict = {
+#         'number': number,
+#         'email': email,
+#         'basket': basket,
+#         'is_auth': is_auth,
+#         'user_name': user_name
+#     }
+#     return result_dict
 
 
 def f_pages(page, queryset, count_item):
@@ -284,13 +294,13 @@ def left_filter(url_page, head, filter=False, prod=False):
 
 
 def Items_catalog(request):
-    dic = global_function(request)
+    # dic = global_function(request)
 
     return render(request, 'Catalog/Items_catalog.html', locals())
 
 
 def Face(request):
-    dic = global_function(request)
+    # dic = global_function(request)
 
     head = 'Средства для лица'
     product = Product.objects.all()
@@ -402,7 +412,7 @@ def Face(request):
 
 
 def Catalog(request, head_url):
-    dic = global_function(request)
+    # dic = global_function(request)
 
     url_page, head = get_url(head_url)
     if not head:
@@ -424,7 +434,7 @@ def Catalog(request, head_url):
 
 
 def Catalog_filter(request, head_url, filter):
-    dic = global_function(request)
+    # dic = global_function(request)
 
     url_page, head = get_url(head_url)
     if not head:
@@ -446,7 +456,7 @@ def Catalog_filter(request, head_url, filter):
 
 
 def Catalog_page(request, head_url, page):
-    dic = global_function(request)
+    # dic = global_function(request)
 
     url_page, head = get_url(head_url)
     if not head:
@@ -472,7 +482,7 @@ def Catalog_page(request, head_url, page):
 
 
 def Catalog_page_filter(request, head_url, page, filter):
-    dic = global_function(request)
+    # dic = global_function(request)
 
     url_page, head = get_url(head_url)
     if not head:
@@ -498,7 +508,7 @@ def Catalog_page_filter(request, head_url, page, filter):
 
 
 def Catalog_search(request, head_url, text):
-    dic = global_function(request)
+    # dic = global_function(request)
 
     url_page, head = get_url(head_url)
     if not head:
@@ -521,7 +531,7 @@ def Catalog_search(request, head_url, text):
 
 
 def Catalog_search_filter(request, head_url, text, filter):
-    dic = global_function(request)
+    # dic = global_function(request)
 
     url_page, head = get_url(head_url)
     if not head:
@@ -544,7 +554,7 @@ def Catalog_search_filter(request, head_url, text, filter):
 
 
 def Catalog_search_page(request, head_url, text, page):
-    dic = global_function(request)
+    # dic = global_function(request)
 
     url_page, head = get_url(head_url)
     if not head:
@@ -572,7 +582,7 @@ def Catalog_search_page(request, head_url, text, page):
 
 
 def Catalog_search_page_filter(request, head_url, text, page, filter):
-    dic = global_function(request)
+    # dic = global_function(request)
 
     url_page, head = get_url(head_url)
     if not head:
@@ -600,7 +610,7 @@ def Catalog_search_page_filter(request, head_url, text, page, filter):
 
 
 def Item_card(request, slug):
-    dic = global_function(request)
+    # dic = global_function(request)
     slug = str(slug)
     slug = slug.split('-')
     try:
@@ -642,6 +652,7 @@ def Item_card(request, slug):
 
     sizes = sizes.order_by('size__float_name')
     lst = []
+    have_sale=False
     for i in sizes:
         ls = []
         ls.append(i.id)
@@ -653,6 +664,9 @@ def Item_card(request, slug):
         ls.append(i.old_price)
         ls.append(i.count)
         ls.append(i.sale)
+        if int(i.sale)>0:
+            print(i)
+            have_sale=True
         lst.append(ls)
     return render(request, 'Catalog/Item_card.html', locals())
 

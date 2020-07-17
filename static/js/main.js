@@ -152,6 +152,19 @@ $('.items-counter').ready(function () {
     });
 });
 
+function check_input_count_prod(elem) {
+
+    try {
+        if (parseInt(elem.value) > parseInt(elem.max)) {
+            // if (inp > parseInt(elem.max)|| !inp&&parseFloat(elem.value) != parseInt(elem.value) || !inp ) {
+            elem.value = elem.max
+        }
+    } catch (e) {
+        elem.value = elem.max
+    }
+}
+
+
 $('#btn_filter').click(function () {
 
     let arr_link = []
@@ -246,8 +259,10 @@ function set_footer() {
 $('#select_product_sizes').change(function () {
     // alert(this.selectedOptions[0].value)
     let id = this.value
+    if (document.getElementById('item_count')) {
+        document.getElementById('item_count').max = this.selectedOptions[0].dataset.count
+    }
 
-    document.getElementById('item_count').max = this.selectedOptions[0].dataset.count
     if (parseInt(this.selectedOptions[0].dataset.sale) > 0) {
         // try {
         //     document.getElementById('is_sale_prod').removeAttribute('class', 'd-none')
@@ -428,55 +443,59 @@ $('#btn_add_to_cart').click(function () {
 $('.btn_cart_minus').on('click', function () {
     let elem = this
     let slug = elem.parentElement.dataset.slug
-    $.ajax({
-        type: "GET",
-        dataType: "json",
-        async: false,
-        url: '/cart/plus_minus_product',
-        data: {
-            slug: slug,
-            minus: 1
-        },
-        success: function (data) {
-            if (data !== false) {
-                elem.nextSibling.value = data.prod_count
-                document.getElementById('item_' + slug).innerText = data.product_total + ' руб.'
-                document.getElementById('user_basket_total').innerText = data.total + ' руб.'
-                document.getElementById('cart_total_price').innerText = data.total + ' руб.'
-            } else {
-                notice('Произошла ошибка, попробуйте позже!')
+    if (parseInt(this.value) >= 1) {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            async: false,
+            url: '/cart/plus_minus_product',
+            data: {
+                slug: slug,
+                minus: 1
+            },
+            success: function (data) {
+                if (data !== false) {
+                    elem.nextSibling.value = data.prod_count
+                    document.getElementById('item_' + slug).innerText = data.product_total + ' руб.'
+                    document.getElementById('user_basket_total').innerText = data.total + ' руб.'
+                    document.getElementById('cart_total_price').innerText = data.total + ' руб.'
+                } else {
+                    notice('Произошла ошибка, попробуйте позже!')
+                }
+            },
+            error: function (data) {
+                alert('error')
             }
-        },
-        error: function (data) {
-            alert('error')
-        }
-    })
+        })
+    }
 })
 $('.btn_cart_plus').on('click', function () {
     let elem = this
     let slug = elem.parentElement.dataset.slug
-    $.ajax({
-        type: "GET",
-        dataType: "json",
-        async: false,
-        url: '/cart/plus_minus_product',
-        data: {
-            slug: slug
-        },
-        success: function (data) {
-            if (data !== false) {
-                elem.previousSibling.value = data.prod_count
-                document.getElementById('item_' + slug).innerText = data.product_total + ' руб.'
-                document.getElementById('user_basket_total').innerText = data.total + ' руб.'
-                document.getElementById('cart_total_price').innerText = data.total + ' руб.'
-            } else {
-                notice('Произошла ошибка, попробуйте позже!')
+    if (parseInt(this.value) <= parseInt(this.max)) {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            async: false,
+            url: '/cart/plus_minus_product',
+            data: {
+                slug: slug
+            },
+            success: function (data) {
+                if (data !== false) {
+                    elem.previousSibling.value = data.prod_count
+                    document.getElementById('item_' + slug).innerText = data.product_total + ' руб.'
+                    document.getElementById('user_basket_total').innerText = data.total + ' руб.'
+                    document.getElementById('cart_total_price').innerText = data.total + ' руб.'
+                } else {
+                    notice('Произошла ошибка, попробуйте позже!')
+                }
+            },
+            error: function (data) {
+                alert('error')
             }
-        },
-        error: function (data) {
-            alert('error')
-        }
-    })
+        })
+    }
 })
 
 $('.btn_cart_del_item').on('click', function () {
@@ -503,33 +522,50 @@ $('.btn_cart_del_item').on('click', function () {
         }
     })
 })
+
+// function check_input_count_prod(elem) {
+//
+//     try {
+//         if (parseInt(elem.value) > parseInt(elem.max)) {
+//             // if (inp > parseInt(elem.max)|| !inp&&parseFloat(elem.value) != parseInt(elem.value) || !inp ) {
+//             elem.value = elem.max
+//         }
+//     } catch (e) {
+//         elem.value = elem.max
+//     }
+// }
+
 $('.cart_item_input').on('keyup', function () {
     let elem = this
     let slug = elem.parentElement.dataset.slug
     let count = this.value
-    $.ajax({
-        type: "GET",
-        dataType: "json",
-        async: true,
-        url: '/cart/plus_minus_product',
-        data: {
-            slug: slug,
-            count: count
-        },
-        success: function (data) {
-            if (data !== false) {
-                elem.innerText = data.prod_count
-                document.getElementById('item_' + slug).innerText = data.product_total + ' руб.'
-                document.getElementById('user_basket_total').innerText = data.total + ' руб.'
-                document.getElementById('cart_total_price').innerText = data.total + ' руб.'
-            } else {
-                notice('Произошла ошибка, попробуйте позже!')
+    if (parseInt(this.value) <= parseInt(this.max)) {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            async: true,
+            url: '/cart/plus_minus_product',
+            data: {
+                slug: slug,
+                count: count
+            },
+            success: function (data) {
+                if (data !== false) {
+                    elem.innerText = data.prod_count
+                    document.getElementById('item_' + slug).innerText = data.product_total + ' руб.'
+                    document.getElementById('user_basket_total').innerText = data.total + ' руб.'
+                    document.getElementById('cart_total_price').innerText = data.total + ' руб.'
+                } else {
+                    notice('Произошла ошибка, попробуйте позже!')
+                }
+            },
+            error: function (data) {
+                alert('error')
             }
-        },
-        error: function (data) {
-            alert('error')
-        }
-    })
+        })
+    } else {
+        this.value=this.max
+    }
 })
 
 $('#btn_change_contact_details').click(function () {
