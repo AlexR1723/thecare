@@ -72,28 +72,36 @@ def Main(request):
     #     inc+=1
     #     print(inc)
 
+    # f = open('list_images.txt', 'w')
+    # products=Product.objects.all()
+    # for i in products:
+    #     f.write(str(i.main_photo)+';')
+    # f.close()
+
+
     dic = global_function(request)
     print(dic)
     slide_first = Slider.objects.all()[0]
     slide = Slider.objects.all()[1:]
     main_block = MainBlock.objects.all()
-    face_count = Product.objects.order_by('-id').filter(category__name='Для лица').count()
-    if face_count < 10:
-        face = Product.objects.order_by('-id').filter(category__name='Для лица')
-    else:
-        face = Product.objects.order_by('-id').filter(category__name='Для лица')[0:10]
-    # print(face)
-    hair_count = Product.objects.order_by('-id').filter(category__name='Для волос').count()
-    if hair_count < 10:
-        hair = Product.objects.order_by('-id').filter(category__name='Для волос')
-    else:
-        hair = Product.objects.order_by('-id').filter(category__name='Для волос')[0:10]
-    # print(hair)
-    body_count = Product.objects.order_by('-id').filter(category__name='Для тела').count()
-    if body_count < 10:
-        body = Product.objects.order_by('-id').filter(category__name='Для тела')
-    else:
-        body = Product.objects.order_by('-id').filter(category__name='Для тела')[0:10]
+    # face_count = Product.objects.order_by('-id').filter(category__name='Для лица').count()
+    # if face_count < 10:
+    #     face = Product.objects.order_by('-id').filter(category__name='Для лица')
+    # else:
+    #     face = Product.objects.order_by('-id').filter(category__name='Для лица')[0:10]
+    # # print(face)
+    # hair_count = Product.objects.order_by('-id').filter(category__name='Для волос').count()
+    # if hair_count < 10:
+    #     hair = Product.objects.order_by('-id').filter(category__name='Для волос')
+    # else:
+    #     hair = Product.objects.order_by('-id').filter(category__name='Для волос')[0:10]
+    # # print(hair)
+    # body_count = Product.objects.order_by('-id').filter(category__name='Для тела').count()
+    # if body_count < 10:
+    #     body = Product.objects.order_by('-id').filter(category__name='Для тела')
+    # else:
+    #     body = Product.objects.order_by('-id').filter(category__name='Для тела')[0:10]
+
     # print(body)
     # k=0
     # if k == 0:
@@ -337,6 +345,7 @@ def save_product(request):
                                               components=v[7],
                                               category=categ[0], resource=res, brand=brand, artikul=v[14],
                                               artik_brand=v[15], main_photo="uploads/product/" + v[11])
+                    print(product_str)
                     product_str.save()
                 # такой товар есть - обновили
                 else:

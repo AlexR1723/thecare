@@ -110,6 +110,7 @@ class Product(models.Model):
     slug = models.TextField(blank=True, null=True, verbose_name="Ссылка")
     date = models.DateField(blank=True, null=True)
     artik_brand = models.TextField(blank=True, null=True, max_length=20)
+    is_top = models.BooleanField(blank=True, null=True)
 
     class Meta:
         managed = False
