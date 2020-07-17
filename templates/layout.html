@@ -31,9 +31,9 @@
     <div class="row m-0 justify-content-center"
          style="background: url({% static 'image/тиснение.png' %});background-size: contain">
         <div class="col-10 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0 pt-0 pt-lg-3 pb-2 pb-md-0">
-            <div class="row justify-content-md-between align-items-center">
+            <div class="row m-0 justify-content-md-between align-items-center">
                 <div class="col-6 col-md-4 text-center text-md-left phone-hdr mb-0">
-                    <div class="row justify-content-start pl-3 d-none d-sm-none d-md-none d-lg-block d-xl-block">
+                    <div class="row m-0 justify-content-start pl-3 d-none d-sm-none d-md-none d-lg-block d-xl-block">
                         <a href="tel:88004001212">
                             <img src="{% static 'image/phone.png' %}" alt="" class="mb-1" style="height: 20px;">
 
@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 <div class="col-6 col-md-4 text-center text-md-right mb-0">
-                    <div class="row justify-content-end pr-3 d-none d-sm-none d-md-none d-lg-block d-xl-block">
+                    <div class="row m-0 justify-content-end pr-3 d-none d-sm-none d-md-none d-lg-block d-xl-block">
 {#                        {% if not dic|get_dict:'is_auth' %}#}
                         {% if not request|gf_user %}
                         <a href="{% url 'Log_in' %}">
@@ -73,7 +73,7 @@
         </div>
 
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 pt-0 pb-0 pb-md-0">
-            <div class="row justify-content-between">
+            <div class="row m-0 justify-content-between">
                 <div class="col-4 col-md-4 phone-hdr pt-2 pt-md-4 pb-md-4">
                     <hr class="">
                 </div>
@@ -158,9 +158,9 @@
                                             <label class="w-100 m-0">
                                                 <a class="dropdown-item" href="{% url 'Catalog' 'New_products' %}">Новинки</a>
                                             </label>
-                                            <label class="w-100 m-0">
-                                                <a class="dropdown-item" href="{% url 'Brands' %}">Бренды</a>
-                                            </label>
+{#                                            <label class="w-100 m-0">#}
+{#                                                <a class="dropdown-item" href="{% url 'Brands' %}">Бренды</a>#}
+{#                                            </label>#}
                                             <label class="w-100 m-0">
                                                 <a class="dropdown-item" href="{% url 'Catalog' 'For_men' %}">Для
                                                     мужчин</a>
@@ -194,6 +194,9 @@
                                                     для волос</a>
                                             </label>
                                         </div>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " href="{% url 'Brands' %}">Бренды</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link " href="{% url 'Deliveries' %}">Доставка</a>
@@ -242,7 +245,7 @@
 <div class="container-fluid p-0 mt-5" id="main_footer">
     <footer class="pt-4">
         <div class="container-fluid text-center text-md-left pb-4">
-            <div class="row">
+            <div class="row m-0">
                 <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 mx-auto p-0">
                     <ul class="list-group list-group-horizontal-md list-unstyled">
                         <li>
@@ -263,7 +266,7 @@
                     <hr class="">
                 </div>
             </div>
-            <div class="row">
+            <div class="row m-0">
                 <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 mx-auto p-0">
                     <ul class="contact-list list-group list-unstyled">
                         <li>
@@ -320,14 +323,6 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
-<!--{#-->
-<!--<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>-->
-<!--#}-->
-<!--{#-->
-<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" #}-->
-<!--        {# integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" #}-->
-<!--        {# crossorigin="anonymous"></script>-->
-<!--#}-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>

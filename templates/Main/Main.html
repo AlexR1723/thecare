@@ -2,236 +2,194 @@
 {% load staticfiles %}
 {% block content %}
 
-<div class="container-fluid p-0">
-    <div class="row m-0 justify-content-center">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0">
-            <div class="row m-0 justify-content-center justify-content-md-between align-items-center">
-                <div class="col-12 col-md-12 mb-3 mb-md-0 p-0">
-                    <div id="carouselExampleControls" class="carousel slide h_vh" data-ride="carousel">
-                        <div class="carousel-inner h_vh">
-                            <div class="carousel-item active h-100"
-                                 style="background: url({{MEDIA_URL}}{{ slide_first.image.url }}) no-repeat center center; background-size: cover;">
-<!--                                {# <img src="{{MEDIA_URL}}{{ slide_first.image.url }}" class="d-block w-100" alt="...">#}-->
+    <div class="container-fluid p-0">
+        {#        <div class="row m-0 justify-content-center">#}
+        {#            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0">#}
+        {#                <div class="row m-0 justify-content-center justify-content-md-between align-items-center">#}
+        {#                    <div class="col-12 col-md-12 mb-3 mb-md-0 p-0">#}
+        {#                        <div id="carouselExampleControls" class="carousel slide h_vh" data-ride="carousel">#}
+        {#                            <div class="carousel-inner h_vh">#}
+        {#                                <div class="carousel-item active h-100"#}
+        {#                                     style="background: url(#}
+        {#                                             {{ MEDIA_URL }}{{ slide_first.image.url }}) no-repeat center center; background-size: cover;">#}
+        {#                                </div>#}
+        {#                                {% for s in slide %}#}
+        {#                                    <div class="carousel-item h-100"#}
+        {#                                         style="background: url(#}
+        {#                                                 {{ MEDIA_URL }}{{ s.image.url }}) no-repeat center center; background-size: cover;">#}
+        {#                                        #}
+        {#                                    </div>#}
+        {#                                {% endfor %}#}
+        {#                            </div>#}
+        {#                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button"#}
+        {#                               data-slide="prev">#}
+        {#                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>#}
+        {#                                <span class="sr-only">Previous</span>#}
+        {#                            </a>#}
+        {#                            <a class="carousel-control-next" href="#carouselExampleControls" role="button"#}
+        {#                               data-slide="next">#}
+        {#                                <span class="carousel-control-next-icon" aria-hidden="true"></span>#}
+        {#                                <span class="sr-only">Next</span>#}
+        {#                            </a>#}
+        {#                        </div>#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
+
+        <div class="row m-0 justify-content-center">
+            <div class="col-11 col-sm-11 col-md-12 col-lg-12 col-xl-12 p-0 my-2">
+                <div class="row m-0 justify-content-center align-items-center">
+                    <div class="col-6 col-md-6 col-lg-3 p-0 mb-1 mb-md-0">
+                        <div class="w-100 items_hdr_bg"
+                             style="background: url({% static 'image/волосы.png' %}) center center; background-size: cover">
+                            <div class="item_hdr_bg_layout row justify-content-center align-items-center m-0">
+                                <a href="{% url 'Catalog' 'For_hair' %}">
+                                    <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-0">
+                                        <h2>Волосы</h2>
+                                    </div>
+                                </a>
                             </div>
-                            {% for s in slide %}
-                            <div class="carousel-item h-100"
-                                 style="background: url({{MEDIA_URL}}{{ s.image.url }}) no-repeat center center; background-size: cover;">
-<!--                                {# <img src="{{MEDIA_URL}}{{ s.image.url }}" class="d-block w-100" alt="...">#}-->
-                            </div>
-                            {% endfor %}
                         </div>
-                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
-                           data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleControls" role="button"
-                           data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row m-0 justify-content-center">
-        <div class="col-11 col-sm-11 col-md-12 col-lg-12 col-xl-12 p-0 my-2">
-            <div class="row m-0 justify-content-center align-items-center">
-                {% for m in main_block %}
-                <div class="col-6 col-md-6 col-lg-3 p-0 mb-1 mb-md-0">
-
-                    <div class="w-100 items_hdr_bg"
-                         style="background: url({{ MEDIA_URL }}{{ m.image.url }}) center center; background-size: cover">
-                        <div class="item_hdr_bg_layout row justify-content-center align-items-center m-0">
-                            {% if m.name == "Волосы" %}
-                            <a href="{% url 'Catalog' 'For_hair' %}">
-                                {% endif %}
-                                {% if m.name == "Лицо" %}
+                    <div class="col-6 col-md-6 col-lg-3 p-0 mb-1 mb-md-0">
+                        <div class="w-100 items_hdr_bg"
+                             style="background: url({% static 'image/лицо.png' %}) center center; background-size: cover">
+                            <div class="item_hdr_bg_layout row justify-content-center align-items-center m-0">
                                 <a href="{% url 'Catalog' 'For_face' %}">
+                                    <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-0">
+                                        <h2>Лицо</h2>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-6 col-lg-3 p-0 mb-1 mb-md-0">
+                        <div class="w-100 items_hdr_bg"
+                             style="background: url({% static 'image/тело.png' %}) center center; background-size: cover">
+                            <div class="item_hdr_bg_layout row justify-content-center align-items-center m-0">
+                                <a href="{% url 'Catalog' 'For_body' %}">
+                                    <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-0">
+                                        <h2>Тело</h2>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-6 col-lg-3 p-0 mb-1 mb-md-0">
+                        <div class="w-100 items_hdr_bg"
+                             style="background: url({% static 'image/другое.png' %}) center center; background-size: cover">
+                            <div class="item_hdr_bg_layout row justify-content-center align-items-center m-0">
+                                <a href="#!">
+                                    <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-0">
+                                        <h2>Другое</h2>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid p-0">
+        <div class="row m-0 justify-content-center shop-items_blk face-top_blk mt-3 mb-5">
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
+                <div class="row m-0 justify-content-start align-items-center">
+                    <h3>Топ 10 для лица</h3>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
+                <div class="row m-0 justify-content-start align-items-center">
+                    <div class="slider multiple-items w-100">
+                        {% for f in face %}
+                            <div class="card">
+                                <div class="card-img">
+                                    {% if f.main_photo != null and f.main_photo != "" %}
+                                        <img data-lazy="{{ MEDIA_URL }}{{ f.main_photo.url }}" class="card-img-top-main"
+                                             alt="...">
                                     {% endif %}
-                                    {% if m.name == "Тело" %}
-                                    <a href="{% url 'Catalog' 'For_body' %}">
-                                        {% endif %}
-                                        {% if m.name == "Другое" %}
-                                        <a href="#!">
-                                            {% endif %}
-                                            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-0">
-                                                <h2>{{m.name}}</h2>
-                                            </div>
-                                        </a>
-                        </div>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title mb-1">{{ f.get_price.price }} руб</h5>
+                                    <a href="{{ f.get_absolute_url }}">
+                                        <p class="card-text">{{ f.title }}</p>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
-
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container-fluid p-0">
-    <div class="row m-0 justify-content-center shop-items_blk face-top_blk mt-3 mb-5">
-        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
-            <div class="row m-0 justify-content-start align-items-center">
-                <h3>Топ 10 для лица</h3>
-            </div>
-        </div>
-        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
-            <div class="row m-0 justify-content-start align-items-center">
-                <div class="slider multiple-items w-100">
-                    {% for f in face %}
-                    <div class="card">
-                        {% if f.main_photo != null and f.main_photo != "" %}
-                        <img data-lazy="{{MEDIA_URL}}{{ f.main_photo.url }}" class="card-img-top-main" alt="...">
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title mb-1">{{f.price}} руб</h5>
-                            <a href="{{ f.get_absolute_url }}">
-                                <p class="card-text">{{f.title}}</p>
-                            </a>
-                        </div>
-                    </div>
-                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="container-fluid p-0">
-    <div class="row m-0 justify-content-center shop-items_blk hair-top_blk pt-4 pb-5 mb-4">
-        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
-            <div class="row m-0 justify-content-start align-items-center">
-                <h3>Топ 10 для волос</h3>
+
+    <div class="container-fluid p-0">
+        <div class="row m-0 justify-content-center shop-items_blk hair-top_blk pt-4 pb-5 mb-4">
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
+                <div class="row m-0 justify-content-start align-items-center">
+                    <h3>Топ 10 для волос</h3>
+                </div>
             </div>
-        </div>
-        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
-            <div class="row m-0 justify-content-start align-items-center">
-                <div class="slider multiple-items w-100">
-                    {% for h in hair %}
-                    <div class="card">
-                        {% if h.main_photo != null and h.main_photo != "" %}
-                        <img data-lazy="{{MEDIA_URL}}{{ h.main_photo.url }}" class="card-img-top-main" alt="...">
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title mb-1">{{h.price}} руб</h5>
-                            <a href="{{ h.get_absolute_url }}">
-                                <p class="card-text">{{h.title}}</p>
-                            </a>
-                        </div>
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
+                <div class="row m-0 justify-content-start align-items-center">
+                    <div class="slider multiple-items w-100">
+                        {% for h in hair %}
+                            <div class="card">
+                                <div class="card-img">
+                                    {% if h.main_photo != null and h.main_photo != "" %}
+                                        <img data-lazy="{{ MEDIA_URL }}{{ h.main_photo.url }}" class="card-img-top-main"
+                                             alt="...">
+                                    {% endif %}
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title mb-1">{{ h.get_price.price }} руб</h5>
+                                    <a href="{{ h.get_absolute_url }}">
+                                        <p class="card-text">{{ h.title }}</p>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="container-fluid p-0">
-    <div class="row m-0 justify-content-center shop-items_blk body-top_blk mt-3 mb-5">
-        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
-            <div class="row m-0 justify-content-start align-items-center">
-                <h3>Топ 10 для тела</h3>
+    <div class="container-fluid p-0">
+        <div class="row m-0 justify-content-center shop-items_blk body-top_blk mt-3 mb-5">
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
+                <div class="row m-0 justify-content-start align-items-center">
+                    <h3>Топ 10 для тела</h3>
+                </div>
             </div>
-        </div>
-        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
-            <div class="row m-0 justify-content-start align-items-center">
-                <div class="slider multiple-items w-100">
-                    {% for b in body %}
-                    <div class="card">
-                        {% if b.main_photo != null and b.main_photo != "" %}
-                        <img data-lazy="{{MEDIA_URL}}{{ b.main_photo.url }}" class="card-img-top-main" alt="...">
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title mb-1">{{b.price}} руб</h5>
-                            <a href="{{ b.get_absolute_url }}">
-                                <p class="card-text">{{b.title}}</p>
-                            </a>
-                        </div>
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
+                <div class="row m-0 justify-content-start align-items-center">
+                    <div class="slider multiple-items w-100">
+                        {% for b in body %}
+                            <div class="card">
+                                <div class="card-img">
+                                    {% if b.main_photo != null and b.main_photo != "" %}
+                                        <img data-lazy="{{ MEDIA_URL }}{{ b.main_photo.url }}" class="card-img-top-main"
+                                             alt="...">
+                                    {% endif %}
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title mb-1">{{ b.get_price.price }} руб</h5>
+                                    <a href="{{ b.get_absolute_url }}">
+                                        <p class="card-text">{{ b.title }}</p>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
-<!--                    {#-->
-<!--                    <div class="card">#}-->
-<!--                        {# <img src="/static/image/face-item_2.png" class="card-img-top" alt="...">#}-->
-<!--                        {#-->
-<!--                        <div class="card-body">#}-->
-<!--                            {# <h5 class="card-title mb-1">10000 руб</h5>#}-->
-<!--                            {# <a href="#">#}-->
-<!--                                {# <p class="card-text">Средство для демакияжа области глаз двухфазное</p>#}-->
-<!--                                {# </a>#}-->
-<!--                            {#-->
-<!--                        </div>-->
-<!--                        #}-->
-<!--                        {#-->
-<!--                    </div>-->
-<!--                    #}-->
-<!--                    {#-->
-<!--                    <div class="card">#}-->
-<!--                        {# <img src="/static/image/face-item_3.png" class="card-img-top" alt="...">#}-->
-<!--                        {#-->
-<!--                        <div class="card-body">#}-->
-<!--                            {# <h5 class="card-title mb-1">10000 руб</h5>#}-->
-<!--                            {# <a href="#">#}-->
-<!--                                {# <p class="card-text">Средство для демакияжа области глаз двухфазное</p>#}-->
-<!--                                {# </a>#}-->
-<!--                            {#-->
-<!--                        </div>-->
-<!--                        #}-->
-<!--                        {#-->
-<!--                    </div>-->
-<!--                    #}-->
-<!--                    {#-->
-<!--                    <div class="card">#}-->
-<!--                        {# <img src="/static/image/face-item_4.png" class="card-img-top" alt="...">#}-->
-<!--                        {#-->
-<!--                        <div class="card-body">#}-->
-<!--                            {# <h5 class="card-title mb-1">10000 руб</h5>#}-->
-<!--                            {# <a href="#">#}-->
-<!--                                {# <p class="card-text">Средство для демакияжа области глаз двухфазное</p>#}-->
-<!--                                {# </a>#}-->
-<!--                            {#-->
-<!--                        </div>-->
-<!--                        #}-->
-<!--                        {#-->
-<!--                    </div>-->
-<!--                    #}-->
-<!--                    {#-->
-<!--                    <div class="card">#}-->
-<!--                        {# <img src="/static/image/face-item_1.png" class="card-img-top" alt="...">#}-->
-<!--                        {#-->
-<!--                        <div class="card-body">#}-->
-<!--                            {# <h5 class="card-title mb-1">10000 руб</h5>#}-->
-<!--                            {# <a href="#">#}-->
-<!--                                {# <p class="card-text">Средство для демакияжа области глаз двухфазное</p>#}-->
-<!--                                {# </a>#}-->
-<!--                            {#-->
-<!--                        </div>-->
-<!--                        #}-->
-<!--                        {#-->
-<!--                    </div>-->
-<!--                    #}-->
-<!--                    {#-->
-<!--                    <div class="card">#}-->
-<!--                        {# <img src="/static/image/face-item_2.png" class="card-img-top" alt="...">#}-->
-<!--                        {#-->
-<!--                        <div class="card-body">#}-->
-<!--                            {# <h5 class="card-title mb-1">10000 руб</h5>#}-->
-<!--                            {# <a href="#">#}-->
-<!--                                {# <p class="card-text">Средство для демакияжа области глаз двухфазное</p>#}-->
-<!--                                {# </a>#}-->
-<!--                            {#-->
-<!--                        </div>-->
-<!--                        #}-->
-<!--                        {#-->
-<!--                    </div>-->
-<!--                    #}-->
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-</div>
+    </div>
 
 {% endblock %}

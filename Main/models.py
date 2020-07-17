@@ -111,6 +111,7 @@ class Product(models.Model):
     slug = models.TextField(blank=True, null=True, verbose_name="Ссылка")
     date = models.DateField(blank=True, null=True)
     artik_brand = models.TextField(blank=True, null=True, max_length=20)
+    is_top = models.BooleanField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -145,6 +146,14 @@ class Product(models.Model):
     def get_sizes(self):
         sizes = ProductSize.objects.filter(product=self)
         return sizes
+
+    def get_price(self):
+        sizes = ProductSize.objects.filter(product=self).order_by('size__float_name', 'size__str_name')
+        if sizes.count() > 0:
+            sizes=sizes[0]
+            return sizes
+        else:
+            return 0
 
 
 class Size(models.Model):
