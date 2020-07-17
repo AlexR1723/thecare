@@ -127,7 +127,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+# DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
 DROPBOX_OAUTH2_TOKEN = 'ScXC5sD_X0AAAAAAAAAATKPrbFg-32dbxGIkw-DpExBnl-SRkIJLNG7COWtnQCFB'
 DROPBOX_ROOT_PATH = '/the_care/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -143,7 +143,7 @@ LOGIN_URL = '/log_in'
 PROD_LIST = []
 
 PAY_LOGIN = 'thecare'
-PAY_INV = '4500029'
+# PAY_INV = '4500029'
 PAY_PASSWORD_1 = 'Yumbt46Uvps35bb8plFF'
 PAY_PASSWORD_2 = 'tz8VOaOG9ZSFLfk5H23e'
 PAY_TEST_PASSWORD_1 = 'ldy1yH3vsf049uwvpRpJ'

@@ -3,6 +3,7 @@ import datetime, json, random, hashlib
 from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.db import transaction
 
 from .models import *
 
@@ -10,32 +11,42 @@ from .models import *
 # from shop.models import Product
 
 
-def global_function(request):
-    number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
-    email = Contact.objects.filter(is_main=True, contact_id=4)[0].text
-
-    basket = 0
-    ses = request.session.get(settings.CART_SESSION_ID)
-    if ses and ses is not None:
-        for i in ses.values():
-            basket += int(i['total'])
-
-    is_auth = request.user.is_authenticated
-    if is_auth:
-        is_auth = request.session.get('username', False)
-
-    user_name = ''
-    if is_auth:
-        user_name = AuthUser.objects.get(username=is_auth).first_name
-
-    result_dict = {
-        'number': number,
-        'email': email,
-        'basket': basket,
-        'is_auth': is_auth,
-        'user_name': user_name
-    }
-    return result_dict
+# def global_function(request):
+#     number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
+#     email = Contact.objects.filter(is_main=True, contact_id=4)[0].text
+#
+#     ses = request.session.get(settings.CART_SESSION_ID)
+#     ids = []
+#     for i in ses.keys():
+#         ids.append(int(i))
+#     prods = ProductSize.objects.filter(id__in=ids)
+#     for i in ids:
+#         prod = prods.filter(id=i)[0]
+#         count = ses[str(i)]['count']
+#         ses[str(i)]['total'] = prod.price * count
+#
+#     basket = 0
+#     ses = request.session.get(settings.CART_SESSION_ID)
+#     if ses and ses is not None:
+#         for i in ses.values():
+#             basket += int(i['total'])
+#
+#     is_auth = request.user.is_authenticated
+#     if is_auth:
+#         is_auth = request.session.get('username', False)
+#
+#     user_name = ''
+#     if is_auth:
+#         user_name = AuthUser.objects.get(username=is_auth).first_name
+#
+#     result_dict = {
+#         'number': number,
+#         'email': email,
+#         'basket': basket,
+#         'is_auth': is_auth,
+#         'user_name': user_name
+#     }
+#     return result_dict
 
 
 def get_user_id(request):
@@ -67,7 +78,7 @@ def check_product_exist(request):
 
 # Create your views here.
 def Cart(request):
-    dic = global_function(request)
+    # dic = global_function(request)
     prod_ses = request.session.get(settings.CART_SESSION_ID)
     print(prod_ses)
 
@@ -77,6 +88,23 @@ def Cart(request):
             all_prices += int(i['total'])
         # products = Product.objects.filter(slug__in=prod_ses.keys())
         products = ProductSize.objects.filter(id__in=prod_ses.keys())
+
+    # prods=ProductSize.objects.all()
+    # for i in prods:
+    #     i.price=random.randrange(1000,15000,50)
+    #     i.count=random.randrange(5,23)
+    #     sl=random.randrange(1,100)
+    #     i.sale=0
+    #     i.old_price=0
+    #     if sl<40:
+    #         i.sale=random.randrange(5,40)
+    #         print(i.sale)
+    #         print(i.price*(i.sale/100))
+    #         print(i.price-i.price*(i.sale/100))
+    #         print(i.price)
+    #         i.old_price=i.price-i.price*(i.sale/100)
+    #         print('------------')
+    #     i.save()
     return render(request, 'Main/Cart.html', locals())
 
 
@@ -199,24 +227,86 @@ def del_product(request):
         return HttpResponse(json.dumps((False)))
 
 
+# @transaction.atomic()
 def buy_products(request):
-    user = get_user_id(request)
+    prod_ses = request.session.get(settings.CART_SESSION_ID)
+    # print(prod_ses)
+    # print(list(prod_ses.keys()))
+    ids = []
+    for i in prod_ses.keys():
+        ids.append(int(i))
+
+    summ = 0
+    prods = ProductSize.objects.filter(id__in=ids)
+    for i in ids:
+        prod = prods.filter(id=i)[0]
+        count = prod_ses[str(i)]['count']
+        summ+= prod.price * count
+
+    with transaction.atomic():
+        inv = int(UserOrders.objects.latest('order_number').order_number)+1
+        new_user_order=UserOrders(order_number=inv)
+        # nhash=str(datetime.datetime.now())
+        new_user_order.save()
+        # print('inv')
+        # print(inv)
+        # hs=""
+        hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(inv) + ':' + settings.PAY_TEST_PASSWORD_1
+        # print(hs)
+        user = get_user_id(request)
+        # if user:
+        #     hs += ':user=' + str(user)
+        # else:
+        #     hs += ':user=0'
+        # print(hs)
+        # new_hash = hashlib.md5(hs.encode()).hexdigest()
+        # print(new_hash)
+        # dct={}
+        # dct['login']=settings.PAY_LOGIN
+        # dct['signature']=new_hash
+        # dct['outsumm']=summ
+        # dct['inv']=inv
+        # dct['desc']='description'
+        # dct['user']=str(int(user))
+        # MerchantLogin=settings.PAY_LOGIN
+        # OutSum=summ
+
+
+        # mrh_login = "Test1999";
+    # $mrh_pass1 = "password_1";
+    # $inv_id = 678678;
+    # $inv_desc = "Товары для животных";
+    # $out_summ = "100.00";
+    # $IsTest = 1;
+    # $crc = md5("$mrh_login:$out_summ:$inv_id:$mrh_pass1");
+
+    # for i in ids:
+    #     prod = prods.filter(id=i)[0]
+    #     count = ses[str(i)]['count']
+    #     ses[str(i)]['total'] = prod.price * count
+
+    # all_prices = 0
+    # if prod_ses is not None:
+    #     for i in prod_ses.values():
+    #         all_prices += int(i['total'])
+    #     # products = Product.objects.filter(slug__in=prod_ses.keys())
+    #     products = ProductSize.objects.filter(id__in=prod_ses.keys())
     if user:
-        ids = ProductSize.objects.all().values_list('id', flat=True)
+        # ids = ProductSize.objects.all().values_list('id', flat=True)
+        # # print(ids)
+        # # print(list(ids))
+        # random.shuffle(list(ids))
         # print(ids)
-        # print(list(ids))
-        random.shuffle(list(ids))
-        print(ids)
-        us_or = UserOrders(user_id=user, date=datetime.date.today(), status_id=1, summ=55555)
-        # us_or.save()
-        inc = 0
-        for i in range(10):
-            item = ids[i]
-            count = random.randrange(1, 5)
-            order_prods = OrdersProducts(order_id=us_or.id, product_id=item, count=count)
-            # order_prods.save()
-            inc += 1
-            print(inc)
+        # us_or = UserOrders(user_id=user, date=datetime.date.today(), status_id=1, summ=55555)
+        # # us_or.save()
+        # inc = 0
+        # for i in range(10):
+        #     item = ids[i]
+        #     count = random.randrange(1, 5)
+        #     order_prods = OrdersProducts(order_id=us_or.id, product_id=item, count=count)
+        #     # order_prods.save()
+        #     inc += 1
+        #     print(inc)
         return HttpResponse(json.dumps(True))
     else:
         return HttpResponse(json.dumps(True))
@@ -268,19 +358,29 @@ def pay_result(request):
     return HttpResponse(json.dumps('OK'))
 
 
-def create_hash(request):
+def create_hash(request, summ):
     # summ=request.GET.get('OutSum')
-    summ = '5656556'
-    hs = settings.PAY_LOGIN + ':' + summ + ':' + settings.PAY_INV + ':' + settings.PAY_TEST_PASSWORD_1
-    print(hs)
-    user=get_user_id(request)
-    if user:
-        hs+=':user='+str(user)
-    else:
-        hs+=':user=0'
-    print(hs)
-    new_hash = hashlib.md5(hs.encode()).hexdigest()
-    print(new_hash)
+    # def viewfunc(request):
+    # This code executes in autocommit mode (Django's default).
+    # do_stuff()
+
+    with transaction.atomic():
+        # This code executes inside a transaction.
+        # do_more_stuff()
+        # summ = '5656556'
+        # $crc = md5("$mrh_login:$out_summ:$inv_id:$mrh_pass1");
+        inv = 0
+        hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(
+            inv) + ':' + settings.PAY_TEST_PASSWORD_1
+        print(hs)
+        user = get_user_id(request)
+        if user:
+            hs += ':user=' + str(user)
+        else:
+            hs += ':user=0'
+        print(hs)
+        new_hash = hashlib.md5(hs.encode()).hexdigest()
+        print(new_hash)
     return True
 
 

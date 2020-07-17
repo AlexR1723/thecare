@@ -236,21 +236,22 @@ class OrdersStatus(models.Model):
         db_table = 'orders_status'
 
 
-class OrdersProducts(models.Model):
-    order = models.ForeignKey('UserOrders', models.DO_NOTHING, blank=True, null=True)
-    product = models.ForeignKey('Product', models.DO_NOTHING, blank=True, null=True)
-    count = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'orders_products'
+# class OrdersProducts(models.Model):
+#     order = models.ForeignKey('UserOrders', models.DO_NOTHING, blank=True, null=True)
+#     product = models.ForeignKey('Product', models.DO_NOTHING, blank=True, null=True)
+#     count = models.IntegerField(blank=True, null=True)
+#
+#     class Meta:
+#         managed = False
+#         db_table = 'orders_products'
 
 
 class UserOrders(models.Model):
     user = models.ForeignKey('AuthUser', models.DO_NOTHING, blank=True, null=True)
-    date = models.DateField(blank=True, null=True)
+    date = models.DateTimeField(blank=True, null=True)
     status = models.ForeignKey('OrdersStatus', models.DO_NOTHING, blank=True, null=True)
-    summ = models.IntegerField(blank=True, null=True)
+    amount = models.IntegerField(blank=True, null=True)
+    order_number = models.IntegerField(unique=True, blank=True, null=True)
 
     class Meta:
         managed = False
