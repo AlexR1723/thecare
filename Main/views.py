@@ -95,6 +95,7 @@ def Main(request):
     slide = Slider.objects.all()[1:]
     main_block = MainBlock.objects.all()
     # face_count = Product.objects.order_by('-id').filter(category__name='Для лица').count()
+    face = Product.objects.filter(is_top=True).filter(category__name='Для лица').order_by('-id')
     # if face_count < 10:
     #     face = Product.objects.order_by('-id').filter(category__name='Для лица')
     # else:
@@ -108,6 +109,7 @@ def Main(request):
     #     hair = Product.objects.order_by('-id').filter(category__name='Для волос')[0:10]
     # # print(hair)
     # body_count = Product.objects.order_by('-id').filter(category__name='Для тела').count()
+    body = Product.objects.filter(is_top=True).filter(category__name='Для тела').order_by('-id')
     # if body_count < 10:
     #     body = Product.objects.order_by('-id').filter(category__name='Для тела')
     # else:
