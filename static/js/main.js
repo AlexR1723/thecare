@@ -36,7 +36,7 @@ jQuery("document").ready(function ($) {
 
 $('.multiple-items').slick({
     accessibility: true,
-    autoplay: false,
+    autoplay: true,
     arrows: true,
     dots: false,
     infinite: true,
@@ -54,7 +54,7 @@ $('.multiple-items').slick({
             breakpoint: 1024,
             settings: {
                 pauseOnHover: true,
-                autoplay: false,
+                autoplay: true,
                 slidesToShow: 3,
                 slidesToScroll: 1,
                 infinite: true,

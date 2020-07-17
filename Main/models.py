@@ -147,6 +147,10 @@ class Product(models.Model):
         sizes = ProductSize.objects.filter(product=self)
         return sizes
 
+    def get_price(self):
+        sizes = ProductSize.objects.filter(product=self).order_by('size__float_name', 'size__str_name')[0]
+        return sizes
+
 
 class Size(models.Model):
     str_name = models.TextField(blank=True, null=True)

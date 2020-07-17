@@ -349,8 +349,7 @@ def save_product(request):
                 else:
                     brand = brand[0]
                 # выбираем товар, где картинка текст
-                product_str = Product_str.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(
-                    shot_description=v[4])
+                product_str = Product_str.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(shot_description=v[4])
                 # такого товара нет - добавили
                 if product_str.count() == 0:
                     print('if')
