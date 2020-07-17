@@ -105,10 +105,12 @@
                     <div class="slider multiple-items w-100">
                         {% for f in hair %}
                             <div class="card">
-                                {% if f.main_photo != null and f.main_photo != "" %}
-                                    <img data-lazy="{{ MEDIA_URL }}{{ f.main_photo.url }}" class="card-img-top-main"
-                                         alt="...">
-                                {% endif %}
+                                <div class="card-img">
+                                    {% if f.main_photo != null and f.main_photo != "" %}
+                                        <img data-lazy="{{ MEDIA_URL }}{{ f.main_photo.url }}" class="card-img-top-main"
+                                             alt="...">
+                                    {% endif %}
+                                </div>
                                 <div class="card-body">
                                     <h5 class="card-title mb-1">{{ f.price }} руб</h5>
                                     <a href="{{ f.get_absolute_url }}">

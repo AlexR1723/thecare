@@ -12,8 +12,10 @@ html {
 .card-img-top-main {
     /*height: 300px !important;*/
     /*width: auto !important;*/
-    width: 100% !important;
+    /*width: 100% !important;*/
     margin: auto !important;
+    max-height: 100%;
+    width: auto;
 }
 
 .fix-top {
@@ -360,7 +362,10 @@ div.dropdown-menu label:hover, div.dropdown-menu label:focus {
     box-shadow: 0 0 20px 5px rgba(221, 221, 221, 1);
     transition: .5s;
 }
-
+.card-img{
+    height: 300px;
+    overflow: hidden;
+}
 .shop-items_blk .card-body {
     height: 9rem;
     background: transparent;
