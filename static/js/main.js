@@ -35,6 +35,9 @@ jQuery("document").ready(function ($) {
 });
 
 $('.multiple-items').slick({
+    accessibility: true,
+    autoplay: true,
+    arrows: true,
     dots: false,
     infinite: true,
     nextArrow: '<i class="fa fa-angle-right next" aria-hidden="true"></i>',
@@ -44,8 +47,8 @@ $('.multiple-items').slick({
     slidesToShow: 4,
     //сколько слайдов отображать за раз при прокручивании
     slidesToScroll: 1,
+    lazyLoad: 'progressive',
     pauseOnHover: true,
-    autoplay: true,
     responsive: [
         {
             breakpoint: 1024,
@@ -55,7 +58,8 @@ $('.multiple-items').slick({
                 slidesToShow: 3,
                 slidesToScroll: 1,
                 infinite: true,
-                dots: false
+                dots: false,
+                lazyLoad: 'progressive'
             }
         },
         {
@@ -65,7 +69,9 @@ $('.multiple-items').slick({
                 autoplay: true,
                 infinite: true,
                 slidesToShow: 2,
-                slidesToScroll: 1
+                slidesToScroll: 1,
+                dots: false,
+                lazyLoad: 'progressive'
             }
         },
         {
@@ -75,7 +81,9 @@ $('.multiple-items').slick({
                 autoplay: true,
                 infinite: true,
                 slidesToShow: 2,
-                slidesToScroll: 1
+                slidesToScroll: 1,
+                dots: false,
+                lazyLoad: 'progressive'
             }
         }
     ]
