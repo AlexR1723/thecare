@@ -34,11 +34,69 @@
         font-size: 1rem;
         color: black;
     }
+
+    progress {
+        background-color: #f3f3f3;
+        border: 0;
+        width: 80%;
+        height: 18px;
+        border-radius: 9px;
+    }
+
+    progress::-webkit-progress-bar {
+        background-color: #f3f3f3;
+        border-radius: 9px;
+    }
+
+    progress::-webkit-progress-value {
+        background: #cdeb8e;
+        background: -moz-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #cdeb8e), color-stop(100%, #a5c956));
+        background: -webkit-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
+        background: -o-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
+        background: -ms-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
+        background: linear-gradient(to bottom, #cdeb8e 0%, #a5c956 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cdeb8e', endColorstr='#a5c956', GradientType=0);
+        border-radius: 9px;
+    }
+
+    progress::-moz-progress-bar {
+        background: #cdeb8e;
+        background: -moz-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #cdeb8e), color-stop(100%, #a5c956));
+        background: -webkit-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
+        background: -o-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
+        background: -ms-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
+        background: linear-gradient(to bottom, #cdeb8e 0%, #a5c956 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cdeb8e', endColorstr='#a5c956', GradientType=0);
+        border-radius: 9px;
+    }
+
+    .progress-value {
+        padding: 0px 5px;
+        /*line-height: 20px;*/
+        /*margin-left: 5px;*/
+        font-size: 1rem;
+        color: #555;
+        height: 18px;
+        vertical-align: middle;
+        /*float: right;*/
+    }
+
+    .d-none {
+        display: none;
+    }
+
+    .d-block {
+        display: block;
+    }
 </style>
+
 <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
+<!--  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+<!--          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-
 <script>
     window.onload = function () {
         $('input#excel-file-admin').on('change', function () {
@@ -55,75 +113,55 @@
                 btn.click();
             }
         });
-    };
-    $(document).ready(function () {
-        // var count = 0;
-        // var list=[];
-        // // $.ajax({
-        // //     type: "GET",
-        // //     dataType: "json",
-        // //     async: false,
-        // //     url: 'get_product_count',
-        // //     success: function (data) {
-        // //         count = data;
-        // //         console.log(count);
-        // //     },
-        // //     error: function (data) {
-        // //         alert('error')
-        // //     }
-        // // });
-        // $.ajax({
-        //     type: "GET",
-        //     dataType: "json",
-        //     async: false,
-        //     url: 'get_product_list',
-        //     success: function (data) {
-        //         list = data;
-        //         // console.log(count);
-        //     },
-        //     error: function (data) {
-        //         alert('error')
-        //     }
-        // });
-        // count=list.length;
-        // if (count > 0) {
-        //     console.log(count);
-        //     for (var i = 0; i < count; i++) {
-        //         console.log(list[i])
-        //         $.ajax({
-        //             type: "GET",
-        //             dataType: "json",
-        //             async: false,
-        //             url: 'save_product',
-        //             data: {
-        //                 v: list[i]
-        //             },
-        //             success: function (data) {
-        //                 console.log('ok')
-        //             },
-        //             error: function (data) {
-        //                 console.log('ERROR: '+i)
-        //             }
-        //         })
-        //         // $.ajax({
-        //         //     type: "GET",
-        //         //     dataType: "json",
-        //         //     async: false,
-        //         //     url: 'save_product',
-        //         //     data: {
-        //         //         i: i
-        //         //     },
-        //         //     success: function (data) {
-        //         //         console.log('ok')
-        //         //     },
-        //         //     error: function (data) {
-        //         //         console.log('ERROR: '+i)
-        //         //     }
-        //         // })
-        //     }
-        //     window.location='/admin';
-        // }
+
+        var progress = document.getElementById('progressbar');
         var count = 0;
+        // var time = (1000 / (count - 1)) * 5
+        var list = get_count();
+        count = list.length;
+        if (count > 0) {
+            show_progress(count);
+            var time = (1 / (count - 1)) * 5;
+            console.log(count);
+            for (var i = 1; i < count; i++) {
+                setTimeout(setTime, time, i);
+                // console.log(list[i]);
+                // var answer = 'not save';
+                // while (answer === 'not save') {
+                //     answer = add_product(i, count);
+                //     if (answer === 'save') {
+                //         var animate = setInterval(function () {
+                //             load()
+                //         }, 1);
+                //
+                //     }
+                // }
+            }
+        }
+
+        function setTime(i) {
+            var answer = 'not save';
+            while (answer === 'not save') {
+                answer = add_product(i, count);
+                if (answer === 'save') {
+                    load();
+                }
+
+            }
+        }
+
+        function load() {
+            var progress = document.getElementById('progressbar');
+            progress.value += 1;
+            var all=count-1;
+            var x=Math.round((progress.value)*100/all);
+            $('.progress-value').html(x + '%');
+        }
+
+    };
+
+
+    function get_count() {
         var list = [];
         $.ajax({
             type: "GET",
@@ -138,47 +176,125 @@
                 alert('error')
             }
         });
-        count = list.length
-        if (count > 0) {
-            console.log(count);
-            for (var i = 0; i < count; i++) {
-                console.log(list[i]);
-                $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    async: false,
-                    url: 'save_product',
-                    data: {
-                        i:i
-                    },
-                    success: function (data) {
-                        console.log('ok')
-                    },
-                    error: function (data) {
-                        console.log('ERROR: ' + i)
-                    }
-                })
+        return list;
+    }
+
+    function show_progress(count) {
+        var progress_bl = document.getElementById('progress-block');
+        progress_bl.classList.remove('d-none');
+        var progress = document.getElementById('progressbar');
+        progress.setAttribute('max', String(count - 1));
+        progress.setAttribute('value', '0');
+    }
+
+
+    function add_product(i, count) {
+        var answer = '';
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            async: false,
+            url: 'save_product',
+            data: {
+                i: i,
+                all: count
+            },
+            success: function (data) {
+                if (data === 'not save') {
+                    answer = 'not save';
+                } else {
+                    answer = 'save';
+                }
+            },
+            error: function (data) {
+                console.log('ERROR: ' + i)
             }
-            // position: list[i][1],
-            //             brand: list[i][2],
-            //             name: list[i][3],
-            //             short_desc: list[i][4],
-            //             desc: list[i][5],
-            //             note: list[i][6],
-            //             components: list[i][7],
-            //             category: list[i][8],
-            //             resource: list[i][9],
-            //             need: list[i][10],
-            //             photo: list[i][11],
-            //             size: list[i][12],
-            //             color: list[i][13],
-            //             artikul: list[i][14],
-            //             artikul_brand: list[i][15],
-            //             count: list[i][16],
-            //             price: list[i][17],
-            //             sale: list[i][19]
-        }
+        });
+        return answer;
+    }
+
+
+    $(document).ready(function () {
+        // var count = 0;
+        // var list = [];
+        // $.ajax({
+        //     type: "GET",
+        //     dataType: "json",
+        //     async: false,
+        //     url: 'get_product_list',
+        //     success: function (data) {
+        //         list = data;
+        //         // console.log(count);
+        //     },
+        //     error: function (data) {
+        //         alert('error')
+        //     }
+        // });
+        // count = list.length;
+        // if (count > 0) {
+        //     var progress_bl=document.getElementById('progress-block');
+        //     progress_bl.classList.remove('d-none');
+        //     var progress=document.getElementById('progressbar');
+        //     // var max=progress.attributes('max');
+        //     progress.setAttribute('max', String(count-1));
+        //     progress.setAttribute('value', '0');
+        //     console.log(count);
+        //     for (var i = 1; i < count; i++) {
+        //         console.log(list[i]);
+        //         var answer='not save';
+        //        while(answer === 'not save'){
+        //             $.ajax({
+        //                 type: "GET",
+        //                 dataType: "json",
+        //                 async: false,
+        //                 url: 'save_product',
+        //                 data: {
+        //                     i: i,
+        //                     all:count
+        //                 },
+        //                 success: function (data) {
+        //                     if (data === 'not save') {
+        //                         answer='not save';
+        //                     }
+        //                     else
+        //                     {
+        //                         answer='save';
+        //                         add_count();
+        //                         console.log('ok')
+        //                     }
+        //                 },
+        //                 error: function (data) {
+        //                     console.log('ERROR: ' + i)
+        //                 }
+        //             })
+        //         }
+        //
+        //     }
+        // }
+
+
+        // var progressbar = $('#progressbar'),
+        //     max = progressbar.attr('max'),
+        //     time = (1000/max)*5,
+        //     value = progressbar.val();
+        //
+        //     var loading = function() {
+        //         value += 1;
+        //         addValue = progressbar.val(value);
+        //
+        //         $('.progress-value').html(value + '%');
+        //
+        //         if (value == max) {
+        //             clearInterval(animate);
+        //         }
+        //     };
+        //
+        //     var animate = setInterval(function() {
+        //         loading();
+        //     }, time);
     });
+
+
 </script>
 <div>
     <!--    <input type="text" id="product_list" value="{{list_count}}"/>-->
@@ -195,10 +311,14 @@
                     class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить
             </button>
         </form>
+        <div class="d-none" id="progress-block">
+            <progress id="progressbar" value="0" max="100"></progress>
+            <span class="progress-value">0%</span>
+        </div>
+
     </div>
 
     <div class="upload-file">
-
         <form class="w-100" action="{% url 'Product_image_save' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <label class="text">Выборите изображения для добавления к товарам:</label>
@@ -225,4 +345,5 @@
     <!--    {# </a>#}-->
 
 </div>
+
 {% endblock %}
