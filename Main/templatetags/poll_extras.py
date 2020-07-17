@@ -20,13 +20,14 @@ def make_search_url(value, arg):
     return arg + '=' + str(value)
 
 
-@register.filter
-def get_dict(value, arg):
-    return value[arg]
+# @register.filter
+# def get_dict(value, arg):
+#     return value[arg]
 
 
 @register.filter
 def convert_to_int(value):
+    print('convert_to_int')
     print(value)
     print(type(value))
     if value / int(value) != 1:
@@ -38,50 +39,10 @@ def convert_to_int(value):
 
 
 @register.filter
-def global_function(request):
-    # number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
-    # email = Contact.objects.filter(is_main=True, contact_id=4)[0].text
-
-    ses = request.session.get(settings.CART_SESSION_ID)
-    ids = []
-    if ses and ses is not None:
-        for i in ses.keys():
-            ids.append(int(i))
-        prods = ProductSize.objects.filter(id__in=ids)
-        for i in ids:
-            prod = prods.filter(id=i)[0]
-            count = ses[str(i)]['count']
-            ses[str(i)]['total'] = prod.price * count
-
-    # basket = 0
-    # ses = request.session.get(settings.CART_SESSION_ID)
-    # if ses and ses is not None:
-    #     for i in ses.values():
-    #         basket += int(i['total'])
-
-    # is_auth = request.user.is_authenticated
-    # if is_auth:
-    #     is_auth = request.session.get('username', False)
-    #
-    # user_name = ''
-    # if is_auth:
-    #     user_name = AuthUser.objects.get(username=is_auth).first_name
-
-    # result_dict = {
-    #     'number': number,
-    #     'email': email,
-    #     'basket': basket,
-    #     'is_auth': is_auth,
-    #     'user_name': user_name
-    # }
-    # return result_dict
-
-
-
-@register.filter
 def gf_number(request):
     number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
     return number
+
 
 @register.filter
 def gf_email(request):
@@ -105,7 +66,6 @@ def gf_busket(request):
     basket = 0
     ses = request.session.get(settings.CART_SESSION_ID)
     if ses and ses is not None:
-
         ids = []
         for i in ses.keys():
             ids.append(int(i))
@@ -120,15 +80,20 @@ def gf_busket(request):
     return basket
 
 
-# @register.filter
-# def gf_price_research(request):
-#     ses = request.session.get(settings.CART_SESSION_ID)
-#     ids = []
-#     if ses and ses is not None:
-#         for i in ses.keys():
-#             ids.append(int(i))
-#         prods = ProductSize.objects.filter(id__in=ids)
-#         for i in ids:
-#             prod = prods.filter(id=i)[0]
-#             count = ses[str(i)]['count']
-#             ses[str(i)]['total'] = prod.price * count
+@register.filter
+def gf_count_items(request):
+    itm_cnt = 0
+    ses = request.session.get(settings.CART_SESSION_ID)
+    if ses and ses is not None:
+        ids = []
+        for i in ses.keys():
+            ids.append(int(i))
+        prods = ProductSize.objects.filter(id__in=ids)
+        for i in ids:
+            prod = prods.filter(id=i)[0]
+            count = ses[str(i)]['count']
+            ses[str(i)]['total'] = prod.price * count
+
+        for i in ses.values():
+            itm_cnt += int(i['count'])
+    return itm_cnt

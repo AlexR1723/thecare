@@ -1,4 +1,4 @@
 *.bak
 *.sqlite3
 __pycache__/
-#.idea/
+.idea/

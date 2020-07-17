@@ -117,15 +117,20 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'ru'
+LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'Europe/Moscow'
 
-USE_I18N = True
+# USE_I18N = True
+#
+# USE_L10N = True
+#
+# USE_TZ = True
+USE_I18N = False
 
-USE_L10N = True
+USE_L10N = False
 
-USE_TZ = True
+USE_TZ = False
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
 DROPBOX_OAUTH2_TOKEN = 'ScXC5sD_X0AAAAAAAAAATKPrbFg-32dbxGIkw-DpExBnl-SRkIJLNG7COWtnQCFB'
@@ -138,6 +143,7 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 CART_SESSION_ID = 'cart'
+CART_ORDER_NUMBER = 'ord_num'
 LOGIN_URL = '/log_in'
 
 PROD_LIST = []
