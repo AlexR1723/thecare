@@ -36,7 +36,7 @@ jQuery("document").ready(function ($) {
 
 $('.multiple-items').slick({
     accessibility: true,
-    autoplay: true,
+    autoplay: false,
     arrows: true,
     dots: false,
     infinite: true,
@@ -47,19 +47,19 @@ $('.multiple-items').slick({
     slidesToShow: 4,
     //сколько слайдов отображать за раз при прокручивании
     slidesToScroll: 1,
-    lazyLoad: 'progressive',
+    lazyLoad: 'ondemand',
     pauseOnHover: true,
     responsive: [
         {
             breakpoint: 1024,
             settings: {
                 pauseOnHover: true,
-                autoplay: true,
+                autoplay: false,
                 slidesToShow: 3,
                 slidesToScroll: 1,
                 infinite: true,
                 dots: false,
-                lazyLoad: 'progressive'
+                lazyLoad: 'ondemand'
             }
         },
         {
