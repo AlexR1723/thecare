@@ -308,6 +308,8 @@ def pay_result(request):
     Shp_User=request.GET.get('Shp_User')
     hs = str(OutSum) + ':' + str(InvId) + ':' + settings.PAY_TEST_PASSWORD_2 + ':Shp_User=' + str(Shp_User)
     new_hash = hashlib.md5(hs.encode()).hexdigest()
+    print(new_hash)
+    print(SignatureValue)
     if str(SignatureValue).lower()==str(new_hash).lower():
         return HttpResponse(json.dumps('OK'+str(InvId)))
     else:
