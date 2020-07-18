@@ -3,100 +3,102 @@
 {% load poll_extras %}
 {% block content %}
 
-<div class="container-fluid p-0">
-    <div class="row m-0 justify-content-center">
-        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 mt-3">
-            <div class="row m-0 justify-content-start align-items-center">
-                <nav aria-label="breadcrumb">
-                    <ol class="custom-breadcrumb breadcrumb px-0">
-                        <li class="breadcrumb-item"><a href=""><i class="fa fa-home home-icon"
-                                                                  aria-hidden="true"></i></a></li>
-                        <li class="breadcrumb-item active" aria-current="page"><a href="#">Подтверждение заказа</a></li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 cart_blk head_blk mb-5">
-            <div class="row m-0 justify-content-start align-items-center">
+    <div class="container-fluid p-0">
+        <div class="row m-0 justify-content-center">
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 mt-3">
                 <div class="row m-0 justify-content-start align-items-center">
-                    <h1>Подтверждение заказа</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="custom-breadcrumb breadcrumb px-0">
+                            <li class="breadcrumb-item"><a href=""><i class="fa fa-home home-icon"
+                                                                      aria-hidden="true"></i></a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><a href="#">Подтверждение заказа</a>
+                            </li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
-            <div class="row m-0">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 p-0 pr-lg-3 pr-xl-3">
-                    <div class="row m-0 pt-2">
-                        <label class="mb-0 fw-700 pr-3">ФИО:</label>
-                        <label class="mb-0">{{fio}}</label>
-                    </div>
-                    <div class="row m-0 pt-2">
-                        <label class="mb-0 fw-700 pr-3">Адрес доставки:</label>
-                        <label class="mb-0">{{address}}</label>
-                    </div>
-                    <div class="row m-0 pt-2">
-                        <label class="mb-0 fw-700 pr-3">Email:</label>
-                        <label class="mb-0">{{email}}</label>
-                    </div>
-                    <div class="row m-0 pt-2">
-                        <label class="mb-0 fw-700 pr-3">Телефон:</label>
-                        <label class="mb-0">{{tel}}</label>
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 cart_blk head_blk mb-5">
+                <div class="row m-0 justify-content-start align-items-center">
+                    <div class="row m-0 justify-content-start align-items-center">
+                        <h1>Подтверждение заказа</h1>
                     </div>
                 </div>
-                <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 p-0 pl-lg-3 pl-xl-3">
-                    <div class="row m-0 justify-content-start align-items-center pt-2">
-                        {% for i in products %}
-                        <div class="col-12 card p-0 mb-3 mt-md-2" id="carditem_{{ i.id }}">
-                            <div class="row no-gutters">
-                                <div class="col-12 col-md-1 col-lg-1 col-xl-1 d-none d-md-block my-auto">
-                                    <img src="{{ MEDIA_URL }}{{ i.product.main_photo.url }}"
-                                         class="card-img img-fluid"
-                                         alt="">
-                                </div>
-                                <div class="col-6 col-md-6 col-lg-6 col-xl-6 my-3 my-md-auto">
-                                    <a href="{{ i.product.get_absolute_url }}"
-                                       class="item-name">{{ i.product.title }}, <b>
-                                        {% if i.size.float_name %}{{ i.size.float_name }}{% else %}
-                                        {{ i.size.str_name }}{% endif %} мл.</b></a>
-                                </div>
-                                <div class="col-6 col-md-5 col-lg-5 col-xl-5 my-auto">
-                                    <div class="row m-0">
-                                        <div class="col-5 col-md-5 col-lg-5 col-xl-5 my-auto">
-                                            <p class="price text-center m-0">{{ i.price }} руб</p>
+                <div class="row m-0">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 p-0 pr-lg-3 pr-xl-3">
+                        <div class="row m-0 pt-2">
+                            <label class="mb-0 fw-700 pr-3">ФИО:</label>
+                            <label class="mb-0">{{ fio }}</label>
+                        </div>
+                        <div class="row m-0 pt-2">
+                            <label class="mb-0 fw-700 pr-3">Адрес доставки:</label>
+                            <label class="mb-0">{{ address }}</label>
+                        </div>
+                        <div class="row m-0 pt-2">
+                            <label class="mb-0 fw-700 pr-3">Email:</label>
+                            <label class="mb-0">{{ email }}</label>
+                        </div>
+                        <div class="row m-0 pt-2">
+                            <label class="mb-0 fw-700 pr-3">Телефон:</label>
+                            <label class="mb-0">{{ tel }}</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 p-0 pl-lg-3 pl-xl-3">
+                        <div class="row m-0 justify-content-start align-items-center pt-2">
+                            {% for i in products %}
+                                <div class="col-12 card p-0 mb-3 mt-md-2" id="carditem_{{ i.id }}">
+                                    <div class="row no-gutters">
+                                        <div class="col-12 col-md-1 col-lg-1 col-xl-1 d-none d-md-block my-auto">
+                                            <img src="{{ MEDIA_URL }}{{ i.product.main_photo.url }}"
+                                                 class="card-img img-fluid"
+                                                 alt="">
                                         </div>
-                                        <div class="col-2 col-md-2 col-lg-2 col-xl-2 my-auto">
-                                            <div class="items-counter text-center" data-slug="{{ i.id }}">
-                                                <label class="cart_item_input mb-0">{{ prod_ses|get_prod_count:i.id}}</label>
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6 my-3 my-md-auto">
+                                            <a href="{{ i.product.get_absolute_url }}"
+                                               class="item-name">{{ i.product.title }}, <b>
+                                                {% if i.size.float_name %}{{ i.size.float_name }}{% else %}
+                                                    {{ i.size.str_name }}{% endif %} мл.</b></a>
+                                        </div>
+                                        <div class="col-6 col-md-5 col-lg-5 col-xl-5 my-auto">
+                                            <div class="row m-0">
+                                                <div class="col-5 col-md-5 col-lg-5 col-xl-5 my-auto">
+                                                    <p class="price text-center m-0">{{ i.price }} руб</p>
+                                                </div>
+                                                <div class="col-2 col-md-2 col-lg-2 col-xl-2 my-auto">
+                                                    <div class="items-counter text-center" data-slug="{{ i.id }}">
+                                                        <label class="cart_item_input mb-0">{{ prod_ses|get_prod_count:i.id }}</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5 col-md-5 col-lg-5 col-xl-5 my-auto">
+                                                    <p class="price-text text-center m-0"
+                                                       id="item_{{ i.id }}">{{ prod_ses|get_prod_price:i.id }} руб</p>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-5 col-md-5 col-lg-5 col-xl-5 my-auto">
-                                            <p class="price-text text-center m-0"
-                                               id="item_{{ i.id }}">{{ prod_ses|get_prod_price:i.id }} руб</p>
-                                        </div>
+
                                     </div>
                                 </div>
-
+                            {% endfor %}
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 mx-auto mb-md-2">
+                                <hr class="">
                             </div>
-                        </div>
-                        {% endfor %}
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 mx-auto mb-md-2">
-                            <hr class="">
-                        </div>
-                        <div class="col-12 col-md-11 col-lg-11 col-xl-11">
-                            <p class="price-text text-right text-md-right m-0"
-                               id="cart_total_price">{{ all_prices }} руб.</p>
+                            <div class="col-12 col-md-11 col-lg-11 col-xl-11">
+                                <p class="price-text text-right text-md-right m-0"
+                                   id="cart_total_price">{{ all_prices }} руб.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row m-0 pt-5 justify-content-end">
-                <button class="btn mx-md-0" >ОФОРМИТЬ
-                            ЗАКАЗ
-                        </button>
-            </div>
+                <div class="row m-0 pt-5 justify-content-end">
+                    <script type="text/javascript"
+                            src="https://auth.robokassa.ru/Merchant/bundle/robokassa_iframe.js"></script>
+                    <button class="btn mx-md-0" id="btn_final_pay">Оплатить</button>
+                    <input type="submit" class="d-none" id="pay_values">
+                </div>
 
 
+            </div>
         </div>
     </div>
-</div>
 
 
 {% endblock %}

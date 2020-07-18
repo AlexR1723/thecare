@@ -252,6 +252,7 @@ class UserOrders(models.Model):
     status = models.ForeignKey('OrdersStatus', models.DO_NOTHING, blank=True, null=True)
     amount = models.IntegerField(blank=True, null=True)
     order_number = models.IntegerField(unique=True, blank=True, null=True)
+    # cache_hash = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False

@@ -233,8 +233,11 @@ class Product(models.Model):
         return prods
 
     def get_price(self):
-        sizes = ProductSize.objects.filter(product=self).order_by('size__float_name', 'size__str_name')[0]
-        return sizes
+        sizes = ProductSize.objects.filter(product=self).order_by('size__float_name', 'size__str_name')
+        if sizes:
+            return sizes[0]
+        else:
+            return False
 
     def get_sale(self):
         sale = ProductSize.objects.filter(product_id=self.id).filter(sale__gt=0).exists()

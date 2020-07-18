@@ -448,7 +448,7 @@ $('#btn_add_to_cart').click(function () {
 $('.btn_cart_minus').on('click', function () {
     let elem = this
     let slug = elem.parentElement.dataset.slug
-    if (parseInt(this.value) >= 1) {
+    if (parseInt(this.nextElementSibling.value) >= 1) {
         $.ajax({
             type: "GET",
             dataType: "json",
@@ -477,7 +477,7 @@ $('.btn_cart_minus').on('click', function () {
 $('.btn_cart_plus').on('click', function () {
     let elem = this
     let slug = elem.parentElement.dataset.slug
-    if (parseInt(this.value) <= parseInt(this.max)) {
+    if (parseInt(this.previousElementSibling.value) <= parseInt(this.previousElementSibling.max)) {
         $.ajax({
             type: "GET",
             dataType: "json",
@@ -569,7 +569,7 @@ $('.cart_item_input').on('keyup', function () {
             }
         })
     } else {
-        this.value=this.max
+        this.value = this.max
     }
 })
 
@@ -695,11 +695,11 @@ $('#tel').click(function () {
     document.getElementById('tel').classList.remove('is-valid');
 });
 $('#conf-btn').click(function () {
-    var fio=document.getElementById('FIO').value;
-    var address=document.getElementById('address').value;
-    var email=document.getElementById('email').value;
-    var tel=document.getElementById('tel').value;
-    if(fio !== "" && address !== "" && email !== "" && tel !== "") {
+    var fio = document.getElementById('FIO').value;
+    var address = document.getElementById('address').value;
+    var email = document.getElementById('email').value;
+    var tel = document.getElementById('tel').value;
+    if (fio !== "" && address !== "" && email !== "" && tel !== "") {
         document.getElementById('FIO').classList.add('is-valid');
         document.getElementById('address').classList.add('is-valid');
         document.getElementById('email').classList.add('is-valid');
@@ -729,25 +729,54 @@ $('#conf-btn').click(function () {
         //         alert('error')
         //     }
         // })
-    }
-    else
-    {
-        if(fio !== "")
+    } else {
+        if (fio !== "")
             document.getElementById('FIO').classList.add('is-valid');
         else
             document.getElementById('FIO').classList.add('is-invalid');
-        if(address !== "")
+        if (address !== "")
             document.getElementById('address').classList.add('is-valid');
         else
             document.getElementById('address').classList.add('is-invalid');
-        if(email !== "")
+        if (email !== "")
             document.getElementById('email').classList.add('is-valid');
         else
             document.getElementById('email').classList.add('is-invalid');
-        if(tel !== "")
+        if (tel !== "")
             document.getElementById('tel').classList.add('is-valid');
         else
             document.getElementById('tel').classList.add('is-invalid');
         notice("Заполнены не все поля");
     }
 });
+
+$('#btn_final_pay').click(function () {
+    // let el = document.getElementById('pay_values')
+
+    // let slug = elem.parentElement.dataset.slug
+    // if (parseInt(this.previousElementSibling.value) <= parseInt(this.previousElementSibling.max)) {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            async: false,
+            url: '/cart/pay_check',
+            success: function (data) {
+                console.log(data)
+                let el=document.getElementById('pay_values')
+                el.setAttribute('onclick','Robokassa.StartPayment({' +
+                    'MerchantLogin: \''+data.MerchantLogin+'\',' +
+                    'OutSum: \''+data.OutSum+'\',' +
+                    'Description: \'Оплата на сайте The Care\',' +
+                    // 'Shp_User: \''+data.Shp_user+'\',' +
+                    // 'Culture: \'ru\',' +
+                    // 'Encoding: \'utf-8\',' +
+                    'IsTest: \'1\',' +
+                    'SignatureValue: \''+data.SignatureValue+'\'})' )
+                el.click()
+            },
+            error: function (data) {
+                alert('error')
+            }
+        })
+    // }
+})

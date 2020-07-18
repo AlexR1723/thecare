@@ -27,5 +27,6 @@ urlpatterns = [
     url(r'pay_result', views.pay_result, name="pay_result"),
     url(r'pay_success', views.pay_success, name="pay_success"),
     url(r'pay_fail', views.pay_fail, name="pay_fail"),
+    url(r'pay_check', views.pay_check, name="pay_check"),
 
 ]

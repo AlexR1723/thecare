@@ -7,48 +7,6 @@ from django.db import transaction
 
 from .models import *
 
-
-# from shop.models import Product
-
-
-# def global_function(request):
-#     number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
-#     email = Contact.objects.filter(is_main=True, contact_id=4)[0].text
-#
-#     ses = request.session.get(settings.CART_SESSION_ID)
-#     ids = []
-#     for i in ses.keys():
-#         ids.append(int(i))
-#     prods = ProductSize.objects.filter(id__in=ids)
-#     for i in ids:
-#         prod = prods.filter(id=i)[0]
-#         count = ses[str(i)]['count']
-#         ses[str(i)]['total'] = prod.price * count
-#
-#     basket = 0
-#     ses = request.session.get(settings.CART_SESSION_ID)
-#     if ses and ses is not None:
-#         for i in ses.values():
-#             basket += int(i['total'])
-#
-#     is_auth = request.user.is_authenticated
-#     if is_auth:
-#         is_auth = request.session.get('username', False)
-#
-#     user_name = ''
-#     if is_auth:
-#         user_name = AuthUser.objects.get(username=is_auth).first_name
-#
-#     result_dict = {
-#         'number': number,
-#         'email': email,
-#         'basket': basket,
-#         'is_auth': is_auth,
-#         'user_name': user_name
-#     }
-#     return result_dict
-
-
 def get_user_id(request):
     user = request.session.get('username', False)
     if user:
@@ -312,7 +270,7 @@ def buy_products(request):
         return HttpResponse(json.dumps(True))
 
 def confirm_order(request):
-    dic = global_function(request)
+    # dic = global_function(request)
     fio=request.POST.get('fio')
     address=request.POST.get('address')
     email=request.POST.get('email')
@@ -332,29 +290,63 @@ def confirm_order(request):
 
 # записывать заказ в бд
 # проверять заказ по номеру
-# сверстать страницу оплаты
-# создать таблицу в бд с товарами ???
+# создать таблицу в бд с товарами оплаченными ???
+#проверять количество заказываемого товара с количеством на складе
 def pay_result(request):
-    # $out_summ = $_REQUEST["OutSum"];
-    # $inv_id = $_REQUEST["InvId"];
-    # $shp_item = $_REQUEST["Shp_item"];
-    # $crc = $_REQUEST["SignatureValue"];
+    print('pay_result')
+    # # $out_summ = $_REQUEST["OutSum"];
+    # # $inv_id = $_REQUEST["InvId"];
+    # # $shp_item = $_REQUEST["Shp_item"];
+    # # $crc = $_REQUEST["SignatureValue"];
+    # #
+    # # $crc = strtoupper($crc);
+    # #
+    # # $my_crc = strtoupper(md5("$out_summ:$inv_id:$mrh_pass2:Shp_item=$shp_item"));
     #
-    # $crc = strtoupper($crc);
-    #
-    # $my_crc = strtoupper(md5("$out_summ:$inv_id:$mrh_pass2:Shp_item=$shp_item"));
-
-    # summ=request.GET.get('OutSum')
-    summ = '5656556'
-    login = request.GET.get('InvId')
-    hash = str(request.GET.get('SignatureValue')).upper()
-    hs = summ + settings.PAY_INV + settings.PAY_TEST_PASSWORD_2
-    new_hash = hashlib.md5(hs.encode()).hexdigest()
-    # hash = hashlib.md5(nm.encode())
-    # print(settings.PAY_INV)
-    print(new_hash)
-    print('create_hash')
-    print(create_hash(request))
+    # # summ=request.GET.get('OutSum')
+    # summ = '5656556'
+    # login = request.GET.get('InvId')
+    # hash = str(request.GET.get('SignatureValue')).upper()
+    # hs = summ + settings.PAY_INV + settings.PAY_TEST_PASSWORD_2
+    # new_hash = hashlib.md5(hs.encode()).hexdigest()
+    # # hash = hashlib.md5(nm.encode())
+    # # print(settings.PAY_INV)
+    # print(new_hash)
+    # print('create_hash')
+    # print(create_hash(request))
+    user = get_user_id(request)
+    if not user:
+        user = 0
+    print(user)
+    # prod_ses = request.session.get(settings.CART_SESSION_ID)
+    # print(prod_ses)
+    # ids = []
+    # for i in prod_ses.keys():
+    #     ids.append(int(i))
+    # summ = 0
+    # prods = ProductSize.objects.filter(id__in=ids)
+    # for i in ids:
+    #     prod = prods.filter(id=i)[0]
+    #     count = prod_ses[str(i)]['count']
+    #     summ += prod.price * count
+    with transaction.atomic():
+        # inv = int(UserOrders.objects.latest('order_number').order_number) + 1
+        # us_ord = UserOrders(amount=summ, status_id=4, date=datetime.datetime.now(), order_number=inv)
+        # if user:
+        #     us_ord.user_id = user
+        # us_ord.save()
+        ord_num = request.session.get(settings.CART_ORDER_NUMBER)['order_number']
+        summ=UserOrders.objects.filter(order_number=ord_num)[0].amount
+        hs =str(summ) + ':' + str(ord_num) + ':' + settings.PAY_TEST_PASSWORD_2 + ':Shp_User=' + str(user)
+        # OutSum: InvId:Пароль  # 2:[Пользовательские параметры].
+        print(hs)
+        new_hash = hashlib.md5(hs.encode()).hexdigest()
+        print(new_hash)
+        # dc = {}
+        # dc['SignatureValue'] = new_hash
+        # dc['OutSum'] = summ
+        # dc['Shp_user'] = user
+        # dc['MerchantLogin'] = settings.PAY_LOGIN
     return HttpResponse(json.dumps('OK'))
 
 
@@ -390,3 +382,46 @@ def pay_success(request):
 
 def pay_fail(request):
     return HttpResponse(json.dumps('fail'))
+
+def pay_check(request):
+    user=get_user_id(request)
+    if not user:
+        user=0
+    print(user)
+    prod_ses = request.session.get(settings.CART_SESSION_ID)
+    print(prod_ses)
+    ids = []
+    for i in prod_ses.keys():
+        ids.append(int(i))
+    summ = 0
+    prods = ProductSize.objects.filter(id__in=ids)
+    for i in ids:
+        prod = prods.filter(id=i)[0]
+        count = prod_ses[str(i)]['count']
+        summ += prod.price * count
+    with transaction.atomic():
+        inv = int(UserOrders.objects.latest('order_number').order_number) + 1
+        us_ord=UserOrders(amount=summ,status_id=4,date=datetime.datetime.now(),order_number=inv)
+        if user:
+            us_ord.user_id=user
+        us_ord.save()
+        # hs = settings.PAY_LOGIN + ':' + str(float(summ)) + ':' + str(us_ord.order_number) + ':' + settings.PAY_TEST_PASSWORD_1+':Shp_User='+str(user)
+        hs = settings.PAY_LOGIN + ':' + str(float(summ)) + ':' + str(us_ord.order_number) + ':' + settings.PAY_TEST_PASSWORD_1
+        print(hs)
+        new_hash = hashlib.md5(hs.encode()).hexdigest()
+        print(new_hash)
+
+
+        ses = request.session.get(settings.CART_ORDER_NUMBER)
+        if not ses:
+            print('not ses')
+            ses=request.session[settings.CART_ORDER_NUMBER] = {}
+        ses['order_number']=us_ord.order_number
+        # print(ses.keys())
+
+        dc={}
+        dc['SignatureValue']=new_hash
+        dc['OutSum']=str(float(summ))
+        dc['Shp_user']=user
+        dc['MerchantLogin']=settings.PAY_LOGIN
+        return HttpResponse(json.dumps(dc))
