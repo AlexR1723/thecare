@@ -446,6 +446,7 @@ def save_product(request):
                     new_price = price - (price * sale / 100)
                     product_size = ProductSize(product=product, size=size, old_price=price, count=count,
                                                        sale=sale, price=new_price)
+                print(product_size)
                 product_size.save()
 
                 # оттенки
