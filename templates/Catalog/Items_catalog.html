@@ -414,16 +414,20 @@
                                                     {% if p.get_sale %}
                                                         <div class="wrap">
                                                             <span>SALE</span>
+                                                        <div class="card-img-catalog">
                                                             {% if p.main_photo != None and p.main_photo != "" %}
                                                                 <img src="{{ MEDIA_URL }}{{ p.main_photo.url }}"
                                                                      class="card-img-top" alt="...">
                                                             {% endif %}
                                                         </div>
+                                                        </div>
                                                     {% else %}
+                                                        <div class="card-img-catalog">
                                                         {% if p.main_photo != None and p.main_photo != "" %}
                                                             <img src="{{ MEDIA_URL }}{{ p.main_photo.url }}"
                                                                  class="card-img-top" alt="...">
                                                         {% endif %}
+                                                        </div>
                                                     {% endif %}
 
                                                     <div class="card-body">

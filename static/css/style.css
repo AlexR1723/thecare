@@ -6,7 +6,11 @@ html {
     /*height: 300px !important;*/
     /*width: auto !important;*/
     margin: auto !important;
-    width: 100% !important;
+    /*width: 100% !important;*/
+    max-width: 100%;
+    width: auto;
+    max-height: 100%;
+    height: auto;
 }
 
 .card-img-top-main {
@@ -367,6 +371,12 @@ div.dropdown-menu label:hover, div.dropdown-menu label:focus {
 .card-img{
     height: 300px;
     overflow: hidden;
+    text-align: center;
+}
+.card-img-catalog{
+    height: 200px;
+    overflow: hidden;
+    text-align: center;
 }
 .shop-items_blk .card-body {
     height: 9rem;
