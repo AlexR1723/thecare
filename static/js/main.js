@@ -779,7 +779,7 @@ $('#btn_final_pay').click(function () {
                     'Shp_User: \''+data.Shp_user+'\',' +
                     'Culture: \'ru\',' +
                     'Encoding: \'utf-8\',' +
-                    'IsTest: \'1\',' +
+                    // 'IsTest: \'1\',' +
                     'SignatureValue: \''+data.SignatureValue+'\'})' )
                 el.click()
             },

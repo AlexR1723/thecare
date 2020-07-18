@@ -298,14 +298,6 @@ def confirm_order(request):
 #проверять количество заказываемого товара с количеством на складе
 def pay_result(request):
     print('pay_result')
-    # user = get_user_id(request)
-    # if not user:
-    #     user = 0
-    # ord_num = request.session.get(settings.CART_ORDER_NUMBER)['order_number']
-    # summ=UserOrders.objects.filter(order_number=ord_num)[0].amount
-    # hs =str(summ) + ':' + str(ord_num) + ':' + settings.PAY_TEST_PASSWORD_2 + ':Shp_User=' + str(user)
-    # new_hash = hashlib.md5(hs.encode()).hexdigest()
-
     OutSum=request.GET.get('OutSum')
     InvId=request.GET.get('InvId')
     SignatureValue=request.GET.get('SignatureValue')
@@ -321,30 +313,30 @@ def pay_result(request):
 
 
 
-def create_hash(request, summ):
-    # summ=request.GET.get('OutSum')
-    # def viewfunc(request):
-    # This code executes in autocommit mode (Django's default).
-    # do_stuff()
-
-    with transaction.atomic():
-        # This code executes inside a transaction.
-        # do_more_stuff()
-        # summ = '5656556'
-        # $crc = md5("$mrh_login:$out_summ:$inv_id:$mrh_pass1");
-        inv = 0
-        hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(
-            inv) + ':' + settings.PAY_TEST_PASSWORD_1
-        print(hs)
-        user = get_user_id(request)
-        if user:
-            hs += ':user=' + str(user)
-        else:
-            hs += ':user=0'
-        print(hs)
-        new_hash = hashlib.md5(hs.encode()).hexdigest()
-        print(new_hash)
-    return True
+# def create_hash(request, summ):
+#     # summ=request.GET.get('OutSum')
+#     # def viewfunc(request):
+#     # This code executes in autocommit mode (Django's default).
+#     # do_stuff()
+#
+#     with transaction.atomic():
+#         # This code executes inside a transaction.
+#         # do_more_stuff()
+#         # summ = '5656556'
+#         # $crc = md5("$mrh_login:$out_summ:$inv_id:$mrh_pass1");
+#         inv = 0
+#         hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(
+#             inv) + ':' + settings.PAY_TEST_PASSWORD_1
+#         print(hs)
+#         user = get_user_id(request)
+#         if user:
+#             hs += ':user=' + str(user)
+#         else:
+#             hs += ':user=0'
+#         print(hs)
+#         new_hash = hashlib.md5(hs.encode()).hexdigest()
+#         print(new_hash)
+#     return True
 
 
 def pay_success(request):
