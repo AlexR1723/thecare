@@ -332,6 +332,7 @@ def save_product(request):
         v = sheet.row_values(i)
         # print(v)
         if v is not None:
+            # print(v)
             # категория (для волос, для тела и тд)
             categ = CategoryType.objects.filter(name=v[8])
             # наименование средства
@@ -349,7 +350,10 @@ def save_product(request):
                 else:
                     brand = brand[0]
                 # выбираем товар, где картинка текст
-                product_str = Product_str.objects.filter(title=v[3]).filter(brand__name=v[2]).filter(shot_description=v[4])
+                print(v[3])
+                print(v[2])
+                print(v[4])
+                product_str = Product_str.objects.filter(title__iexact=v[3]).filter(brand__name__iexact=v[2]).filter(shot_description__iexact=v[4])
                 # такого товара нет - добавили
                 if product_str.count() == 0:
                     print('if')
@@ -374,6 +378,7 @@ def save_product(request):
                     product_str.save()
                 # выбираем товар
                 product = Product.objects.get(id=product_str.id)
+                print(product)
 
                 # потребности товара
                 # удаляем старые потребности
@@ -430,24 +435,29 @@ def save_product(request):
                         size.save()
                     else:
                         size = size[0]
-                product_size = ProductSize.objects.filter(size=size).filter(product=product)
+                print(size)
                 count = 0
                 price = 0
                 sale = 0
-                if v[16] != "":
-                    count = v[16]
-                if v[17] != "":
-                    price = v[17]
-                if v[19] != "":
+                if v[16] and v[16] != "":
+                    count = int(v[16])
+                if v[17] and v[17] != "":
+                    price = int(v[17])
+                if v[19] and v[19] != "":
                     sale = int(v[19])
-                if (sale == 0):
+                if sale == 0:
+                    print('if_size')
                     product_size = ProductSize(product=product, size=size, price=price, count=count)
+                    product_size.save()
+                    print(product_size)
                 else:
+                    print('else_size')
                     new_price = price - (price * sale / 100)
-                    product_size = ProductSize(product=product, size=size, old_price=price, count=count,
-                                                       sale=sale, price=new_price)
-                print(product_size)
-                product_size.save()
+                    product_size = ProductSize(product=product, size=size, old_price=price, count=count, sale=sale,
+                                               price=new_price)
+                    product_size.save()
+                    print(product_size)
+
 
                 # оттенки
                 # удаляем старые оттенки
