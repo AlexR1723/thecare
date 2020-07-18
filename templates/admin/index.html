@@ -3,347 +3,330 @@
 {% load staticfiles %}
 
 {% block breadcrumbs %}
-<style>
-    .d-none {
-        display: none;
-    }
-
-    .prof-file {
-        border: 0;
-        padding-left: 0;
-    }
-
-    .upload-file .btn-tertiary {
-        color: #555;
-        padding: 0;
-        line-height: 40px;
-        font-size: 1rem;
-    }
-
-    .upload-file .btn-tertiary:hover {
-        color: #888;
-        cursor: pointer;
-    }
-
-    .upload-file {
-        margin-left: 40px;
-        margin-top: 20px;
-    }
-
-    .text {
-        font-size: 1rem;
-        color: black;
-    }
-
-    progress {
-        background-color: #f3f3f3;
-        border: 0;
-        width: 80%;
-        height: 18px;
-        border-radius: 9px;
-    }
-
-    progress::-webkit-progress-bar {
-        background-color: #f3f3f3;
-        border-radius: 9px;
-    }
-
-    progress::-webkit-progress-value {
-        background: #cdeb8e;
-        background: -moz-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #cdeb8e), color-stop(100%, #a5c956));
-        background: -webkit-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
-        background: -o-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
-        background: -ms-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
-        background: linear-gradient(to bottom, #cdeb8e 0%, #a5c956 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cdeb8e', endColorstr='#a5c956', GradientType=0);
-        border-radius: 9px;
-    }
-
-    progress::-moz-progress-bar {
-        background: #cdeb8e;
-        background: -moz-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #cdeb8e), color-stop(100%, #a5c956));
-        background: -webkit-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
-        background: -o-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
-        background: -ms-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
-        background: linear-gradient(to bottom, #cdeb8e 0%, #a5c956 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cdeb8e', endColorstr='#a5c956', GradientType=0);
-        border-radius: 9px;
-    }
-
-    .progress-value {
-        padding: 0px 5px;
-        /*line-height: 20px;*/
-        /*margin-left: 5px;*/
-        font-size: 1rem;
-        color: #555;
-        height: 18px;
-        vertical-align: middle;
-        /*float: right;*/
-    }
-
-    .d-none {
-        display: none;
-    }
-
-    .d-block {
-        display: block;
-    }
-</style>
-
-<link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
-<!--  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
-<!--          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-<script>
-    window.onload = function () {
-        $('input#excel-file-admin').on('change', function () {
-            var fileName = $(this).val();
-            if (fileName) {
-                var btn = $('#submit-excel-file-admin');
-                btn.click();
-            }
-        });
-        $('input#image-file-admin').on('change', function () {
-            var fileName = $(this).val();
-            if (fileName) {
-                var btn = $('#submit-image-file-admin');
-                btn.click();
-            }
-        });
-
-        var progress = document.getElementById('progressbar');
-        var count = 0;
-        // var time = (1000 / (count - 1)) * 5
-        var list = get_count();
-        count = list.length;
-        if (count > 0) {
-            show_progress(count);
-            var time = (1 / (count - 1)) * 5;
-            console.log(count);
-            for (var i = 1; i < count; i++) {
-                setTimeout(setTime, time, i);
-                // console.log(list[i]);
-                // var answer = 'not save';
-                // while (answer === 'not save') {
-                //     answer = add_product(i, count);
-                //     if (answer === 'save') {
-                //         var animate = setInterval(function () {
-                //             load()
-                //         }, 1);
-                //
-                //     }
-                // }
-            }
+    <style>
+        .d-none {
+            display: none;
         }
 
-        function setTime(i) {
-            var answer = 'not save';
-            while (answer === 'not save') {
-                answer = add_product(i, count);
-                if (answer === 'save') {
-                    load();
+        .prof-file {
+            border: 0;
+            padding-left: 0;
+        }
+
+        .upload-file .btn-tertiary {
+            color: #555;
+            padding: 0;
+            line-height: 40px;
+            font-size: 1rem;
+        }
+
+        .upload-file .btn-tertiary:hover {
+            color: #888;
+            cursor: pointer;
+        }
+
+        .upload-file {
+            margin-left: 40px;
+            margin-top: 20px;
+        }
+
+        .text {
+            font-size: 1rem;
+            color: black;
+        }
+
+        progress {
+            background-color: #f3f3f3;
+            border: 0;
+            width: 80%;
+            height: 18px;
+            border-radius: 9px;
+        }
+
+        progress::-webkit-progress-bar {
+            background-color: #f3f3f3;
+            border-radius: 9px;
+        }
+
+        progress::-webkit-progress-value {
+            background: #cdeb8e;
+            background: -moz-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #cdeb8e), color-stop(100%, #a5c956));
+            background: -webkit-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
+            background: -o-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
+            background: -ms-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
+            background: linear-gradient(to bottom, #cdeb8e 0%, #a5c956 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cdeb8e', endColorstr='#a5c956', GradientType=0);
+            border-radius: 9px;
+        }
+
+        progress::-moz-progress-bar {
+            background: #cdeb8e;
+            background: -moz-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #cdeb8e), color-stop(100%, #a5c956));
+            background: -webkit-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
+            background: -o-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
+            background: -ms-linear-gradient(top, #cdeb8e 0%, #a5c956 100%);
+            background: linear-gradient(to bottom, #cdeb8e 0%, #a5c956 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cdeb8e', endColorstr='#a5c956', GradientType=0);
+            border-radius: 9px;
+        }
+
+        .progress-value {
+            padding: 0px 5px;
+            /*line-height: 20px;*/
+            /*margin-left: 5px;*/
+            font-size: 1rem;
+            color: #555;
+            height: 18px;
+            vertical-align: middle;
+            /*float: right;*/
+        }
+
+        .d-none {
+            display: none;
+        }
+
+        .d-block {
+            display: block;
+        }
+
+        .w-75 {
+            width: 75%;
+        }
+        .w-100{
+            width: 100%;
+            display: block;
+        }
+
+        .mt-0 {
+            margin-top: 0;
+        }
+
+        .check_picture {
+            font-size: 1rem;
+            border: 1px solid rgb(121, 174, 200);
+            color: white;
+            border-radius: 5px;
+            background: rgb(121, 174, 200);
+            padding: .3rem .8rem;
+            transition: .3s;
+        }
+
+        .check_picture:hover {
+            background: none;
+            color: black;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .text-1 {
+            font-size: 1rem;
+            color: black;
+        }
+
+        .text-2 {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .col-3 {
+            width: 25%;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .col-9 {
+            width: 70%;
+            display: inline-block;
+            vertical-align: top;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script>
+        window.onload = function () {
+            $('#check_picture').click(function () {
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    async: false,
+                    url: 'check_picture',
+                    success: function (data) {
+                        var div = document.getElementById('lst_not')
+                        while (div.firstChild) {
+                            div.removeChild(div.firstChild);
+                        }
+                        if (data.length == 0) {
+                            var label = document.createElement('label')
+                            label.setAttribute('class', 'text-2')
+                            label.innerText = 'Все картинки есть'
+                            div.append(label)
+                        } else {
+                            var label = document.createElement('label')
+                            label.setAttribute('class', 'text-1 w-100')
+                            label.innerText = 'В файловой системе отсуствуют следующие картинки:'
+                            div.append(label)
+                            for (var i = 0; i < data.length; i++) {
+                                var l = document.createElement('label')
+                                l.setAttribute('class', 'text-2 w-100')
+                                l.innerText = data[i]
+                                div.append(l)
+                            }
+                        }
+                    },
+                    error: function (data) {
+                        console.log('ERROR')
+                    }
+                });
+            })
+
+            $('input#excel-file-admin').on('change', function () {
+                var fileName = $(this).val();
+                if (fileName) {
+                    var btn = $('#submit-excel-file-admin');
+                    btn.click();
                 }
+            });
+            $('input#image-file-admin').on('change', function () {
+                var fileName = $(this).val();
+                if (fileName) {
+                    var btn = $('#submit-image-file-admin');
+                    btn.click();
+                }
+            });
 
-            }
-        }
-
-        function load() {
             var progress = document.getElementById('progressbar');
-            progress.value += 1;
-            var all=count-1;
-            var x=Math.round((progress.value)*100/all);
-            $('.progress-value').html(x + '%');
+            var count = 0;
+            // var time = (1000 / (count - 1)) * 5
+            var list = get_count();
+            count = list.length;
+            if (count > 0) {
+                show_progress(count);
+                var time = (1 / (count - 1)) * 5;
+                console.log(count);
+                for (var i = 1; i < count; i++) {
+                    setTimeout(setTime, time, i);
+                }
+            }
+
+            function setTime(i) {
+                var answer = 'not save';
+                while (answer === 'not save') {
+                    answer = add_product(i, count);
+                    if (answer === 'save') {
+                        load();
+                    }
+
+                }
+            }
+
+            function load() {
+                var progress = document.getElementById('progressbar');
+                progress.value += 1;
+                var all = count - 1;
+                var x = Math.round((progress.value) * 100 / all);
+                $('.progress-value').html(x + '%');
+            }
+
+        };
+
+
+        function get_count() {
+            var list = [];
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                async: false,
+                url: 'get_product_list',
+                success: function (data) {
+                    list = data;
+                    // console.log(count);
+                },
+                error: function (data) {
+                    alert('error')
+                }
+            });
+            return list;
         }
 
-    };
+        function show_progress(count) {
+            var progress_bl = document.getElementById('progress-block');
+            progress_bl.classList.remove('d-none');
+            var progress = document.getElementById('progressbar');
+            progress.setAttribute('max', String(count - 1));
+            progress.setAttribute('value', '0');
+        }
 
 
-    function get_count() {
-        var list = [];
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            async: false,
-            url: 'get_product_list',
-            success: function (data) {
-                list = data;
-                // console.log(count);
-            },
-            error: function (data) {
-                alert('error')
-            }
-        });
-        return list;
-    }
-
-    function show_progress(count) {
-        var progress_bl = document.getElementById('progress-block');
-        progress_bl.classList.remove('d-none');
-        var progress = document.getElementById('progressbar');
-        progress.setAttribute('max', String(count - 1));
-        progress.setAttribute('value', '0');
-    }
-
-
-    function add_product(i, count) {
-        var answer = '';
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            async: false,
-            url: 'save_product',
-            data: {
-                i: i,
-                all: count
-            },
-            success: function (data) {
-                if (data === 'not save') {
-                    answer = 'not save';
-                } else {
-                    answer = 'save';
+        function add_product(i, count) {
+            var answer = '';
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                async: false,
+                url: 'save_product',
+                data: {
+                    i: i,
+                    all: count
+                },
+                success: function (data) {
+                    if (data === 'not save') {
+                        answer = 'not save';
+                    } else {
+                        answer = 'save';
+                    }
+                },
+                error: function (data) {
+                    console.log('ERROR: ' + i)
                 }
-            },
-            error: function (data) {
-                console.log('ERROR: ' + i)
-            }
-        });
-        return answer;
-    }
+            });
+            return answer;
+        }
 
 
-    $(document).ready(function () {
-        // var count = 0;
-        // var list = [];
-        // $.ajax({
-        //     type: "GET",
-        //     dataType: "json",
-        //     async: false,
-        //     url: 'get_product_list',
-        //     success: function (data) {
-        //         list = data;
-        //         // console.log(count);
-        //     },
-        //     error: function (data) {
-        //         alert('error')
-        //     }
-        // });
-        // count = list.length;
-        // if (count > 0) {
-        //     var progress_bl=document.getElementById('progress-block');
-        //     progress_bl.classList.remove('d-none');
-        //     var progress=document.getElementById('progressbar');
-        //     // var max=progress.attributes('max');
-        //     progress.setAttribute('max', String(count-1));
-        //     progress.setAttribute('value', '0');
-        //     console.log(count);
-        //     for (var i = 1; i < count; i++) {
-        //         console.log(list[i]);
-        //         var answer='not save';
-        //        while(answer === 'not save'){
-        //             $.ajax({
-        //                 type: "GET",
-        //                 dataType: "json",
-        //                 async: false,
-        //                 url: 'save_product',
-        //                 data: {
-        //                     i: i,
-        //                     all:count
-        //                 },
-        //                 success: function (data) {
-        //                     if (data === 'not save') {
-        //                         answer='not save';
-        //                     }
-        //                     else
-        //                     {
-        //                         answer='save';
-        //                         add_count();
-        //                         console.log('ok')
-        //                     }
-        //                 },
-        //                 error: function (data) {
-        //                     console.log('ERROR: ' + i)
-        //                 }
-        //             })
-        //         }
-        //
-        //     }
-        // }
+    </script>
+    <div>
+        <div class="upload-file">
+            <form class="w-100" action="{% url 'Save_excel_file' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label class="text">Выборите Excel файл для добавления товаров:</label>
+                <input type="file" class="mb-1 form-control prof-file d-none" name="excel-file" id="excel-file-admin">
+                <label for="excel-file-admin" class="btn btn-tertiary js-labelFile">
+                    <i class="fas fa-upload" aria-hidden="true"></i>
+                    <span class="js-fileName">Загрузить файл</span>
+                </label>
+                <button type="submit" id="submit-excel-file-admin"
+                        class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить
+                </button>
+            </form>
+            <div class="d-none" id="progress-block">
+                <progress id="progressbar" value="0" max="100"></progress>
+                <span class="progress-value">0%</span>
+            </div>
 
-
-        // var progressbar = $('#progressbar'),
-        //     max = progressbar.attr('max'),
-        //     time = (1000/max)*5,
-        //     value = progressbar.val();
-        //
-        //     var loading = function() {
-        //         value += 1;
-        //         addValue = progressbar.val(value);
-        //
-        //         $('.progress-value').html(value + '%');
-        //
-        //         if (value == max) {
-        //             clearInterval(animate);
-        //         }
-        //     };
-        //
-        //     var animate = setInterval(function() {
-        //         loading();
-        //     }, time);
-    });
-
-
-</script>
-<div>
-    <!--    <input type="text" id="product_list" value="{{list_count}}"/>-->
-    <div class="upload-file">
-        <form class="w-100" action="{% url 'Save_excel_file' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <label class="text">Выборите Excel файл для добавления товаров:</label>
-            <input type="file" class="mb-1 form-control prof-file d-none" name="excel-file" id="excel-file-admin">
-            <label for="excel-file-admin" class="btn btn-tertiary js-labelFile">
-                <i class="fas fa-upload" aria-hidden="true"></i>
-                <span class="js-fileName">Загрузить файл</span>
-            </label>
-            <button type="submit" id="submit-excel-file-admin"
-                    class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить
-            </button>
-        </form>
-        <div class="d-none" id="progress-block">
-            <progress id="progressbar" value="0" max="100"></progress>
-            <span class="progress-value">0%</span>
         </div>
 
-    </div>
-
-    <div class="upload-file">
-        <form class="w-100" action="{% url 'Product_image_save' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
+        <div class="upload-file">
             <label class="text">Выборите изображения для добавления к товарам:</label>
-            <input type="file" class="mb-1 form-control prof-file d-none" name="image-file" id="image-file-admin"
-                   multiple="multiple">
-            <label for="image-file-admin" class="btn btn-tertiary js-labelFile">
-                <i class="fas fa-upload" aria-hidden="true"></i>
-                <span class="js-fileName">Загрузить изображения</span>
-            </label>
-            <button type="submit" id="submit-image-file-admin"
-                    class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить
-            </button>
-        </form>
+            <a href="https://www.dropbox.com/home/the_care/uploads/product" target="_blank"
+               class="btn btn-tertiary js-labelFile"><i class="fas fa-upload" aria-hidden="true"></i>
+                <span class="js-fileName">Загрузить изображения</span></a>
+        </div>
     </div>
-    <!--    {##}-->
-    <!--    {# <input type="file" class="mb-1 form-control prof-file" name="excel-file" id="excel-file-admin">#}-->
-    <!--    {#-->
-    <!--    <button type="submit" id="submit-excel-file-admin"-->
-    <!--            class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить-->
-    <!--    </button>-->
-    <!--    #}-->
-    <!--    {# <a href="#">#}-->
-    <!--    {# <label class="head-label">Кнопка</label>#}-->
-    <!--    {# </a>#}-->
+    <div class="upload-file mt-0">
+        <hr class="w-75">
+    </div>
+    <div class="upload-file">
+        <div class="col-3">
+            <button type="button" class="check_picture" id="check_picture">Проверить наличие картинок</button>
+        </div>
+        {#        <label class="text-1">В файловом хранилище отсуствую следующие файлы:</label>#}
+        <div id="lst_not" class="col-9">
 
-</div>
+        </div>
+    </div>
 
 {% endblock %}
