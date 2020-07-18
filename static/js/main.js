@@ -29,9 +29,17 @@ jQuery("document").ready(function ($) {
         box.addClass("active-info");
         btn.addClass('d-none');
     }
-
+    function hideSendBox() {
+        box.removeClass("active-info");
+        btn.removeClass('d-none');
+    }
 
     setTimeout(() => showSendBox(), 5000);
+
+    setInterval(() => {
+        hideSendBox();
+        setTimeout(() => showSendBox(), 60000*2);
+    }, 60000*2);
 });
 
 $('.multiple-items').slick({
