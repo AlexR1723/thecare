@@ -294,60 +294,25 @@ def confirm_order(request):
 #проверять количество заказываемого товара с количеством на складе
 def pay_result(request):
     print('pay_result')
-    # # $out_summ = $_REQUEST["OutSum"];
-    # # $inv_id = $_REQUEST["InvId"];
-    # # $shp_item = $_REQUEST["Shp_item"];
-    # # $crc = $_REQUEST["SignatureValue"];
-    # #
-    # # $crc = strtoupper($crc);
-    # #
-    # # $my_crc = strtoupper(md5("$out_summ:$inv_id:$mrh_pass2:Shp_item=$shp_item"));
-    #
-    # # summ=request.GET.get('OutSum')
-    # summ = '5656556'
-    # login = request.GET.get('InvId')
-    # hash = str(request.GET.get('SignatureValue')).upper()
-    # hs = summ + settings.PAY_INV + settings.PAY_TEST_PASSWORD_2
+    # user = get_user_id(request)
+    # if not user:
+    #     user = 0
+    # ord_num = request.session.get(settings.CART_ORDER_NUMBER)['order_number']
+    # summ=UserOrders.objects.filter(order_number=ord_num)[0].amount
+    # hs =str(summ) + ':' + str(ord_num) + ':' + settings.PAY_TEST_PASSWORD_2 + ':Shp_User=' + str(user)
     # new_hash = hashlib.md5(hs.encode()).hexdigest()
-    # # hash = hashlib.md5(nm.encode())
-    # # print(settings.PAY_INV)
-    # print(new_hash)
-    # print('create_hash')
-    # print(create_hash(request))
-    user = get_user_id(request)
-    if not user:
-        user = 0
-    print(user)
-    # prod_ses = request.session.get(settings.CART_SESSION_ID)
-    # print(prod_ses)
-    # ids = []
-    # for i in prod_ses.keys():
-    #     ids.append(int(i))
-    # summ = 0
-    # prods = ProductSize.objects.filter(id__in=ids)
-    # for i in ids:
-    #     prod = prods.filter(id=i)[0]
-    #     count = prod_ses[str(i)]['count']
-    #     summ += prod.price * count
-    with transaction.atomic():
-        # inv = int(UserOrders.objects.latest('order_number').order_number) + 1
-        # us_ord = UserOrders(amount=summ, status_id=4, date=datetime.datetime.now(), order_number=inv)
-        # if user:
-        #     us_ord.user_id = user
-        # us_ord.save()
-        ord_num = request.session.get(settings.CART_ORDER_NUMBER)['order_number']
-        summ=UserOrders.objects.filter(order_number=ord_num)[0].amount
-        hs =str(summ) + ':' + str(ord_num) + ':' + settings.PAY_TEST_PASSWORD_2 + ':Shp_User=' + str(user)
-        # OutSum: InvId:Пароль  # 2:[Пользовательские параметры].
-        print(hs)
-        new_hash = hashlib.md5(hs.encode()).hexdigest()
-        print(new_hash)
-        # dc = {}
-        # dc['SignatureValue'] = new_hash
-        # dc['OutSum'] = summ
-        # dc['Shp_user'] = user
-        # dc['MerchantLogin'] = settings.PAY_LOGIN
-    return HttpResponse(json.dumps('OK'))
+
+    OutSum=request.GET.get('OutSum')
+    InvId=request.GET.get('InvId')
+    SignatureValue=request.GET.get('SignatureValue')
+    Shp_User=request.GET.get('Shp_User')
+    hs = str(OutSum) + ':' + str(InvId) + ':' + settings.PAY_TEST_PASSWORD_2 + ':Shp_User=' + str(Shp_User)
+    new_hash = hashlib.md5(hs.encode()).hexdigest()
+    if str(SignatureValue).lower()==str(new_hash).lower():
+        return HttpResponse(json.dumps('OK'+str(InvId)))
+    else:
+        return HttpResponse(json.dumps('bad sign'))
+
 
 
 def create_hash(request, summ):
@@ -405,8 +370,8 @@ def pay_check(request):
         if user:
             us_ord.user_id=user
         us_ord.save()
-        # hs = settings.PAY_LOGIN + ':' + str(float(summ)) + ':' + str(us_ord.order_number) + ':' + settings.PAY_TEST_PASSWORD_1+':Shp_User='+str(user)
-        hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(us_ord.order_number) + ':' + settings.PAY_TEST_PASSWORD_1
+        hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(us_ord.order_number) + ':' + settings.PAY_TEST_PASSWORD_1+':Shp_User='+str(user)
+        # hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(us_ord.order_number) + ':' + settings.PAY_TEST_PASSWORD_1
         print(hs)
         new_hash = hashlib.md5(hs.encode()).hexdigest()
         print(new_hash)
@@ -424,4 +389,5 @@ def pay_check(request):
         dc['OutSum']=str(summ)
         dc['Shp_user']=user
         dc['MerchantLogin']=settings.PAY_LOGIN
+        dc['InvoiceID']=us_ord.order_number
         return HttpResponse(json.dumps(dc))

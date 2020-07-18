@@ -775,9 +775,10 @@ $('#btn_final_pay').click(function () {
                     'MerchantLogin: \''+data.MerchantLogin+'\',' +
                     'OutSum: \''+data.OutSum+'\',' +
                     'Description: \'Оплата на сайте The Care\',' +
-                    // 'Shp_User: \''+data.Shp_user+'\',' +
-                    // 'Culture: \'ru\',' +
-                    // 'Encoding: \'utf-8\',' +
+                    'InvoiceID: \''+data.InvoiceID+'\',' +
+                    'Shp_User: \''+data.Shp_user+'\',' +
+                    'Culture: \'ru\',' +
+                    'Encoding: \'utf-8\',' +
                     'IsTest: \'1\',' +
                     'SignatureValue: \''+data.SignatureValue+'\'})' )
                 el.click()
