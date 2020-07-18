@@ -378,6 +378,11 @@ div.dropdown-menu label:hover, div.dropdown-menu label:focus {
     overflow: hidden;
     text-align: center;
 }
+.card-img-basket{
+    height: 100px;
+    overflow: hidden;
+    text-align: center;
+}
 .shop-items_blk .card-body {
     height: 9rem;
     background: transparent;
