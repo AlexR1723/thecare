@@ -280,11 +280,15 @@ def confirm_order(request):
     print(prod_ses)
 
     all_prices = 0
+    ids=[]
+    print('prod_ses')
+    print(prod_ses)
     if prod_ses is not None:
-        for i in prod_ses.values():
-            all_prices += int(i['total'])
-        # products = Product.objects.filter(slug__in=prod_ses.keys())
-        products = ProductSize.objects.filter(id__in=prod_ses.keys())
+        products=ProductSize.objects.filter(id__in=prod_ses.keys())
+        for i in products:
+            count = prod_ses[str(i.id)]['count']
+            all_prices += i.price * count
+        print(products)
     return render(request, 'Main/Confirm_order.html', locals())
 
 
@@ -306,7 +310,7 @@ def pay_result(request):
     InvId=request.GET.get('InvId')
     SignatureValue=request.GET.get('SignatureValue')
     Shp_User=request.GET.get('Shp_User')
-    hs = str(OutSum) + ':' + str(InvId) + ':' + settings.PAY_TEST_PASSWORD_2 + ':Shp_User=' + str(Shp_User)
+    hs = str(OutSum) + ':' + str(InvId) + ':' + settings.PAY_PASSWORD_2 + ':Shp_User=' + str(Shp_User)
     new_hash = hashlib.md5(hs.encode()).hexdigest()
     print(new_hash)
     print(SignatureValue)
@@ -372,18 +376,18 @@ def pay_check(request):
         if user:
             us_ord.user_id=user
         us_ord.save()
-        hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(us_ord.order_number) + ':' + settings.PAY_TEST_PASSWORD_1+':Shp_User='+str(user)
+        hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(us_ord.order_number) + ':' + settings.PAY_PASSWORD_1+':Shp_User='+str(user)
         # hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(us_ord.order_number) + ':' + settings.PAY_TEST_PASSWORD_1
         print(hs)
         new_hash = hashlib.md5(hs.encode()).hexdigest()
         print(new_hash)
 
 
-        ses = request.session.get(settings.CART_ORDER_NUMBER)
-        if not ses:
-            print('not ses')
-            ses=request.session[settings.CART_ORDER_NUMBER] = {}
-        ses['order_number']=us_ord.order_number
+        # ses = request.session.get(settings.CART_ORDER_NUMBER)
+        # if not ses:
+        #     print('not ses')
+        #     ses=request.session[settings.CART_ORDER_NUMBER] = {}
+        # ses['order_number']=us_ord.order_number
         # print(ses.keys())
 
         dc={}
