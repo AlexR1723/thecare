@@ -406,7 +406,7 @@ def pay_check(request):
             us_ord.user_id=user
         us_ord.save()
         # hs = settings.PAY_LOGIN + ':' + str(float(summ)) + ':' + str(us_ord.order_number) + ':' + settings.PAY_TEST_PASSWORD_1+':Shp_User='+str(user)
-        hs = settings.PAY_LOGIN + ':' + str(float(summ)) + ':' + str(us_ord.order_number) + ':' + settings.PAY_TEST_PASSWORD_1
+        hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(us_ord.order_number) + ':' + settings.PAY_TEST_PASSWORD_1
         print(hs)
         new_hash = hashlib.md5(hs.encode()).hexdigest()
         print(new_hash)
@@ -421,7 +421,7 @@ def pay_check(request):
 
         dc={}
         dc['SignatureValue']=new_hash
-        dc['OutSum']=str(float(summ))
+        dc['OutSum']=str(summ)
         dc['Shp_user']=user
         dc['MerchantLogin']=settings.PAY_LOGIN
         return HttpResponse(json.dumps(dc))
