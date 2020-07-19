@@ -222,21 +222,64 @@ def get_url(url, rec=False):
 def left_filter(url_page, head, filter=False, prod=False):
     if head == 'Поиск':
         names = str(url_page).lower().split('_')
+        print('names')
+        print(names)
         qname = Q()
         for i in names:
-            qname.add(Q(title__icontains=i), Q.AND)
-        prod1 = Product.objects.filter(qname)
-        if type(prod).__name__ == 'QuerySet':
-            prod = prod.filter(qname)
+            qname.add(Q(title__icontains=i), Q.OR)
+        # print(qname)
+        qshort=Q()
+        for i in names:
+            qshort.add(Q(shot_description__icontains=i), Q.OR)
+        # print(qname)
+        prod1 = list(Product.objects.filter(qname).values_list('id',flat=True))
+        prod2 = list(Product.objects.filter(qshort).values_list('id',flat=True))
+        print(len(prod1))
+        print(len(prod2))
+
+        # prod3 = list(set(prod1) & set(prod2))
+
+
+        if len(prod1)!=0 and len(prod2)!=0:
+            prod3=list(set(prod1) & set(prod2))
+            if len(prod3)==0:
+                # print(prod1)
+                # print(prod2)
+                prod1.extend(prod2)
+                prod3=prod1
+            #     print(prod3)
+            # print(prod3)
         else:
-            prod = Product.objects.filter(qname)
-        ids = list(prod1.values_list('id', flat=True))
+            if len(prod1)==0:
+                # print('prod1=0')
+                prod3=prod2
+            if len(prod2)==0:
+                # print('prod2=0')
+                prod3=prod1
+
+
+        # prod1=prod3
+        # print(len(prod3))
+        # print(prod3)
+        # print(type(prod))
+        prod3=Product.objects.filter(id__in=prod3)
+        # ids = list(prod1.values_list('id', flat=True))
+        ids = list(prod3.values_list('id', flat=True))
+        # print(len(ids))
         need = NeedType.objects.filter(productneed__product__id__in=ids).distinct('id').order_by('id', 'name')
         resource = ResourceType.objects.filter(product__id__in=ids).distinct('id').order_by('id', 'name')
         brands = Brands_model.objects.filter(product__id__in=ids).distinct('id').order_by('id', 'name')
+        if type(prod).__name__ == 'QuerySet':
+            # print('query')
+            # prod = prod.filter(qname)
+            prod = prod.filter(id__in=ids)
+        else:
+            # prod = Product.objects.filter(id__in=ids)
+            prod = prod3
+
         if filter:
             prod = prod.order_by(get_filter(filter))
-        return resource, need, brands, prod
+        return False, resource, need, brands, prod
     lefts = False
     if url_page != 'Sale' and url_page != 'Brands' and url_page != 'New_products':
         resource = ResourceType.objects.filter(category__name__icontains=head).order_by('name')
@@ -413,12 +456,14 @@ def Face(request):
 
 def Catalog(request, head_url):
     # dic = global_function(request)
-
+    print('catalog')
     url_page, head = get_url(head_url)
     if not head:
         # вывод страницы 404
         print('catalog for_men error')
-
+    print(head_url)
+    print(url_page)
+    print(head)
     is_search = False
     is_filter = False
     is_page = False
