@@ -1,5 +1,19 @@
 {% extends 'layout.html' %}
 {% load staticfiles %}
 {% block content %}
-404
+<div id="notfound">
+<div class="notfound">
+			<div class="notfound-404">
+				<h1>404</h1>
+			</div>
+			<h2>Страница не найдена</h2>
+			<p>Возможно, страница, которую вы ищете, была удалена, изменилось ее имя или временно недоступна. <a href="{% url 'Main' %}">Вернуться на главную страницу</a></p>
+{#			<div class="notfound-social">#}
+{#				<a href="#"><i class="fa fa-facebook"></i></a>#}
+{#				<a href="#"><i class="fa fa-twitter"></i></a>#}
+{#				<a href="#"><i class="fa fa-pinterest"></i></a>#}
+{#				<a href="#"><i class="fa fa-google-plus"></i></a>#}
+{#			</div>#}
+</div>
+	</div>
 {% endblock %}
