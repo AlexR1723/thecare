@@ -47,7 +47,14 @@ def Cart(request):
             # all_prices += int(i['total'])
         # products = Product.objects.filter(slug__in=prod_ses.keys())
         products = ProductSize.objects.filter(id__in=prod_ses.keys())
-    #     for i in prod_ses.keys():
+    if request.user.is_authenticated:
+        user_id=get_user_id(request)
+        auth_user=AuthUser.objects.get(id=user_id)
+        user=Users.objects.get(user=user_id)
+        fio=auth_user.last_name+' '+auth_user.first_name+' '+user.patronymic
+        adress=user.address
+        phone=user.phone
+        email=auth_user.email
 
 
     # prods=ProductSize.objects.all()
@@ -137,7 +144,6 @@ def plus_minus_product(request):
             item = str(pr_sz.id)
             if minus:
                 print('minus')
-                print(pr_sz.price)
                 ses[item] = {'count': int(ses[item]['count']) - 1,
                              'total': int(pr_sz.price) * (int(ses[item]['count']) - 1)}
             else:
