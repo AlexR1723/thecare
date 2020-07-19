@@ -316,7 +316,7 @@ def left_filter(url_page, head, filter=False, prod=False):
             if filter:
                 queryset = prod.order_by(get_filter(filter))
             else:
-                queryset = prod.order_by('-id')
+                queryset = prod.order_by('-hit_for_brand','-id')
             resource = CategoryType.objects.all()
             need = resource
         if url_page == 'New_products':
