@@ -34,4 +34,4 @@ urlpatterns = [
     url(r'profile/', include('Profile.urls')),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-handler404 = 'Main.views.error404'
+handler404 = 'Main.views.handler404'

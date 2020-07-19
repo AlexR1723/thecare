@@ -242,6 +242,7 @@ class Product(models.Model):
     date = models.DateField(blank=True, null=True)
     artik_brand = models.CharField(max_length=20, blank=True, null=True)
     is_top = models.BooleanField(blank=True, null=True)
+    hit_for_brand = models.BooleanField(blank=True, null=True)
 
     class Meta:
         managed = False

@@ -85,7 +85,7 @@ def Main(request):
 
 
 def Dev(request):
-    raise Http404("Poll does not exist")
+    raise Http404("aasdsd")
     # return HttpResponseNotFound('<h1>Page not found</h1>')
     # return HttpResponse(status=404)
 
@@ -479,15 +479,7 @@ def check_register(request):
     except:
         return HttpResponse(json.dumps('Ошибка, попробуйте позже!'))
 
-#
-# def error404(request, exception):
-#     # dic = global_function(request)
-#     return render(request, '404.html', locals())
 
-def error404(request, exception):
-    print('111')
-    response = render_to_response('404.html', {},
-                                  context_instance=RequestContext(request))
-    response.status_code = 404
-    return response
-    # return render(request, '404.html', locals())
+def handler404(request,exception):
+    return render(request, '404.html', locals())
+
