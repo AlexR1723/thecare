@@ -483,3 +483,6 @@ def check_register(request):
 def handler404(request,exception):
     return render(request, '404.html', locals())
 
+
+def success(request):
+    return render(request, 'success.html', locals())

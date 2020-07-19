@@ -329,11 +329,13 @@ def pay_result(request):
 
 
 def pay_success(request):
-    return HttpResponse(json.dumps('success'))
+    # return HttpResponse(json.dumps('success'))
+    return render(request, 'success.html', locals())
 
 
 def pay_fail(request):
-    return HttpResponse(json.dumps('fail'))
+    # return HttpResponse(json.dumps('fail'))
+    return render(request, 'fail.html', locals())
 
 
 def pay_check(request):

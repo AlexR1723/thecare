@@ -1583,3 +1583,119 @@ p.need-block {
     font-weight: 700;
 }
 
+/*404*/
+#notfound {
+  /*position: relative;*/
+  /*height: 100vh;*/
+}
+
+#notfound .notfound {
+  /*position: absolute;*/
+  /*left: 50%;*/
+  /*top: 50%;*/
+  /*-webkit-transform: translate(-50%, -50%);*/
+  /*    -ms-transform: translate(-50%, -50%);*/
+  /*        transform: translate(-50%, -50%);*/
+}
+
+.notfound {
+  max-width: 767px;
+  width: 100%;
+  line-height: 1.4;
+  text-align: center;
+  padding: 15px;
+    margin: auto;
+}
+
+.notfound .notfound-404 {
+  position: relative;
+  height: 220px;
+}
+
+.notfound .notfound-404 h1 {
+  font-family: 'Kanit', sans-serif;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  font-size: 186px;
+  font-weight: 200;
+  margin: 0px;
+  background: linear-gradient(130deg, #E7B9CB 30%, rgba(225, 48, 117,.7));
+  color:transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-transform: uppercase;
+}
+
+.notfound h2 {
+  /*font-family: 'Kanit', sans-serif;*/
+  font-size: 33px;
+  font-weight: 200;
+  text-transform: uppercase;
+  margin-top: 0px;
+  margin-bottom: 25px;
+  letter-spacing: 3px;
+}
+
+
+.notfound p {
+  font-family: 'Kanit', sans-serif;
+  font-size: 16px;
+  font-weight: 200;
+  margin-top: 0px;
+  margin-bottom: 25px;
+}
+
+
+.notfound a {
+  /*font-family: 'Kanit', sans-serif;*/
+  color: rgba(225, 48, 117,.7);
+  font-weight: 200;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(225, 48, 117,.7);
+  border-radius: 2px;
+}
+
+
+
+@media only screen and (max-width: 480px) {
+  .notfound .notfound-404 {
+    position: relative;
+    height: 168px;
+  }
+
+  .notfound .notfound-404 h1 {
+    font-size: 142px;
+  }
+
+  .notfound h2 {
+    font-size: 22px;
+  }
+}
+
+.text-right{
+    white-space: inherit !important;
+}
+.circle{
+
+    background-color: rgb(225, 48, 117);
+    border-radius: 50%;
+    position: absolute;
+    top: 100%;
+    /*color: black;*/
+    color: white;
+    font-size: 13px;
+    padding: 3px 2px 2px 2px;
+    min-width: 23px;
+    text-align: center;
+    transform: translate(35%,-50%);
+}
+@media (min-width: 320px) and (max-width: 768px) {
+    .circle {
+        top: 0;
+        transform: translate(50%,-50%);
+    }
+}

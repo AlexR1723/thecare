@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+{% block content %}
+    <div id="notfound">
+        <div class="notfound pt-5">
+            <h5>Ошибка оплаты</h5>
+            <a href="{% url 'Main' %}">Вернуться в магазин</a>
+        </div>
+    </div>
+{% endblock %}

@@ -45,7 +45,7 @@ jQuery("document").ready(function ($) {
 
 $('.multiple-items').slick({
     accessibility: true,
-    autoplay: true,
+    // autoplay: true,
     arrows: true,
     dots: false,
     infinite: true,
@@ -63,7 +63,7 @@ $('.multiple-items').slick({
             breakpoint: 1024,
             settings: {
                 pauseOnHover: true,
-                autoplay: true,
+                // autoplay: true,
                 slidesToShow: 3,
                 slidesToScroll: 1,
                 infinite: true,
@@ -75,24 +75,24 @@ $('.multiple-items').slick({
             breakpoint: 600,
             settings: {
                 pauseOnHover: true,
-                autoplay: true,
+                // autoplay: true,
                 infinite: true,
                 slidesToShow: 2,
                 slidesToScroll: 1,
                 dots: false,
-                lazyLoad: 'progressive'
+                lazyLoad: 'ondemand'
             }
         },
         {
             breakpoint: 480,
             settings: {
                 pauseOnHover: true,
-                autoplay: true,
+                // autoplay: true,
                 infinite: true,
                 slidesToShow: 2,
                 slidesToScroll: 1,
                 dots: false,
-                lazyLoad: 'progressive'
+                lazyLoad: 'ondemand'
             }
         }
     ]
