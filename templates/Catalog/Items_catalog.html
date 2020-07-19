@@ -105,7 +105,7 @@
             </div>
 
 
-            <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-md-0 sort_col">
+            <div class="col-12 col-sm-12 col-md-11 col-lg-11 col-xl-11 p-md-0 sort_col">
 
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 p-0 items_catalog mt-5 mb-0 collapse d-lg-inline-block d-xl-inline-block" id="collapseFilter">
@@ -398,15 +398,15 @@
                         </div>
                     </div>
 
-                    <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9 p-md-0 items-list_catalog my-3 ">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-9 p-md-0 items-list_catalog my-3 ">
                         <div class="row m-0">
                             {% if products %}
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-md-0 my-md-5">
                                     <div class="row m-0 justify-content-start align-items-center">
-                                        <div class="card-deck mb-5 ml-md-2 w-100" id="products">
-                                            <div class="row">
+                                        <div class="card-deck mb-5 ml-md-0 w-100" id="products">
+                                            <div class="row m-0">
                                             {% for p in products %}
-                                                <div class="card {% if p.get_sale %}sale-card{% endif %} col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3"
+                                                <div class="card {% if p.get_sale %}sale-card{% endif %} col-6 col-sm-6 col-md-4 col-lg-4 col-xl-3"
                                                      data-price="{{ p.price }}" data-name="{{ p.title }}"
                                                         {#                                                     data-num="{{ forloop.counter }}"#}
                                                 >
