@@ -37,35 +37,35 @@
                         <a href="tel:88004001212">
                             <img src="{% static 'image/phone.png' %}" alt="" class="mb-1" style="height: 20px;">
 
-{#                            <span class="d-none d-sm-none d-md-inline-block d-lg-inline-block d-xl-inline-block">#}
-{#                                {{ dic|get_dict:'number' }}</span>#}
+                            {#                            <span class="d-none d-sm-none d-md-inline-block d-lg-inline-block d-xl-inline-block">#}
+                            {#                                {{ dic|get_dict:'number' }}</span>#}
 
                             <span class="d-none d-sm-none d-md-inline-block d-lg-inline-block d-xl-inline-block">
-                                {{ request|gf_number}}</span>
+                                {{ request|gf_number }}</span>
 
                         </a>
                     </div>
                 </div>
                 <div class="col-6 col-md-4 text-center text-md-right mb-0">
                     <div class="row m-0 justify-content-end pr-3 d-none d-sm-none d-md-none d-lg-block d-xl-block">
-{#                        {% if not dic|get_dict:'is_auth' %}#}
+                        {#                        {% if not dic|get_dict:'is_auth' %}#}
                         {% if not request|gf_user %}
-                        <a href="{% url 'Log_in' %}">
-                            <img src="{% static 'image/user1.png' %}" alt=""
-                                 class="mb-1 d-inline-block d-sm-inline-block d-md-none d-lg-none d-xl-none">
-                            <!--                        <i class="fa fa-phone" aria-hidden="true"></i>-->
-                            <span class="d-none d-sm-none d-md-block d-lg-block d-xl-block">Вход/Регистрация</span>
-                        </a>
+                            <a href="{% url 'Log_in' %}">
+                                <img src="{% static 'image/user1.png' %}" alt=""
+                                     class="mb-1 d-inline-block d-sm-inline-block d-md-none d-lg-none d-xl-none">
+                                <!--                        <i class="fa fa-phone" aria-hidden="true"></i>-->
+                                <span class="d-none d-sm-none d-md-block d-lg-block d-xl-block">Вход/Регистрация</span>
+                            </a>
                         {% else %}
-                        <a href="{% url 'Orders_history' %}">
-                            <img src="{% static 'image/user1.png' %}" alt=""
-                                 class="mb-1 d-inline-block d-sm-inline-block d-md-none d-lg-none d-xl-none">
+                            <a href="{% url 'Orders_history' %}">
+                                <img src="{% static 'image/user1.png' %}" alt=""
+                                     class="mb-1 d-inline-block d-sm-inline-block d-md-none d-lg-none d-xl-none">
 
-{#                            <span class="d-none d-sm-none d-md-block d-lg-block d-xl-block">{{ dic|get_dict:'user_name' }}</span>#}
+                                {#                            <span class="d-none d-sm-none d-md-block d-lg-block d-xl-block">{{ dic|get_dict:'user_name' }}</span>#}
 
-                            <span class="d-none d-sm-none d-md-block d-lg-block d-xl-block">{{ request|gf_user}}</span>
+                                <span class="d-none d-sm-none d-md-block d-lg-block d-xl-block">{{ request|gf_user }}</span>
 
-                        </a>
+                            </a>
                         {% endif %}
                     </div>
                 </div>
@@ -90,14 +90,23 @@
 
 
         <div class="col-11 col-sm-12 col-md-11 col-lg-11 col-xl-11 pt-0 pb-2 cart-hdr">
-            <div class="row justify-content-end align-items-center d-none d-sm-none d-md-none d-lg-block d-xl-block">
-                <a href="{% url 'Cart' %}">
-                    <p class="text-right mb-0 mb-md-3">
-                        <i class="fa fa-shopping-basket mr-3" aria-hidden="true"></i>Корзина: <span class="cart-sum" id="user_basket_total">{{ request|gf_busket }} руб.</span>
-{#                        <span class="cart-sum" id="user_basket_total">{{ dic|get_dict:'basket' }} руб.</span>#}
+            <div class="row m-0 justify-content-end align-items-center d-none d-sm-none d-md-none d-lg-block d-xl-block">
+                <div class="col-12 p-0">
+                    <div class="row m-0 justify-content-end">
+                        <div class="col-auto">
+                            <a href="{% url 'Cart' %}">
+                                <p class="text-right mb-0 mb-md-3">
+                                    <i class="fa fa-shopping-basket mr-3" aria-hidden="true"></i>Корзина: <span
+                                    class="cart-sum" id="user_basket_total">{{ request|gf_busket }} руб.</span>
+                                    <div class="circle">
+                                    {{ request|gf_count_items }}
+                                </div>
 
-                    </p>
-                </a>
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -112,16 +121,17 @@
                         <div class="row m-0 w-100 justify-content-between align-items-center">
                             <div class="col-auto pl-0 pr-0">
                                 <button class="navbar-toggler" type="button" data-toggle="collapse"
-                                    data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02"
-                                    aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
+                                        data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02"
+                                        aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
                             </div>
 
                             <div class="col-auto pr-0 d-block d-sm-block d-md-block d-lg-none d-xl-none">
                                 <div class="row m-0 justify-content-end">
                                     {% if head %}
-                                        <a data-toggle="collapse" href="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter"
+                                        <a data-toggle="collapse" href="#collapseFilter" aria-expanded="false"
+                                           aria-controls="collapseFilter"
                                            class=" mr-3 ml-3">
                                             <img src="{% static 'image/filter.png' %}" alt="" class="mb-1"
                                                  style="height: 23px;">
@@ -134,6 +144,9 @@
                                     </a>
                                     <a href="{% url 'Cart' %}"
                                        class=" mr-3 ml-3">
+                                        <div class="circle">
+                                    {{ request|gf_count_items }}
+                                </div>
                                         <img src="{% static 'image/basket.png' %}" alt="" class="mb-1"
                                              style="height: 23px;">
                                     </a>
@@ -145,89 +158,90 @@
                                 </div>
                             </div>
 
-                        <div class="collapse navbar-collapse justify-content-start px-0" id="navbarTogglerDemo02">
-                            <div class="col-12 col-sm-12 col-md-11 col-lg-9 col-xl-9 px-0 mx-auto mx-md-auto mx-lg-0 mr-lg-auto">
-                                <ul class="navbar-nav justify-content-start text-center">
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link" href="#" id="navbarDropdown" data-toggle="dropdown"
-                                           aria-haspopup="true" aria-expanded="false">
-                                            Каталог
-                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <label class="w-100 m-0">
-                                                <a class="dropdown-item" href="{% url 'Catalog' 'New_products' %}">Новинки</a>
-                                            </label>
-{#                                            <label class="w-100 m-0">#}
-{#                                                <a class="dropdown-item" href="{% url 'Brands' %}">Бренды</a>#}
-{#                                            </label>#}
-                                            <label class="w-100 m-0">
-                                                <a class="dropdown-item" href="{% url 'Catalog' 'For_men' %}">Для
-                                                    мужчин</a>
-                                            </label>
-                                            <label class="w-100 m-0">
-                                                <a class="dropdown-item"
-                                                   href="{% url 'Catalog' 'Sets_and_miniatures' %}">Наборы и
-                                                    миниатюры</a>
-                                            </label>
-                                            <label class="w-100 m-0">
-                                                <a class="dropdown-item" href="{% url 'Catalog' 'Beauty_box' %}">Бьюти
-                                                    боксы</a>
-                                            </label>
-                                            <label class="w-100 m-0">
-                                                <a class="dropdown-item" href="{% url 'Catalog' 'Sale' %}">Sale</a>
-                                            </label>
-                                            <label class="w-100 m-0">
-                                                <a class="dropdown-item" href="{% url 'Catalog' 'For_hair' %}">Для
-                                                    волос</a>
-                                            </label>
-                                            <label class="w-100 m-0">
-                                                <a class="dropdown-item" href="{% url 'Catalog' 'For_face' %}">Для
-                                                    лица</a>
-                                            </label>
-                                            <label class="w-100 m-0">
-                                                <a class="dropdown-item" href="{% url 'Catalog' 'For_body' %}">Для
-                                                    тела</a>
-                                            </label>
-                                            <label class="w-100 m-0">
-                                                <a class="dropdown-item" href="{% url 'Catalog' 'Dyes_for_hair' %}">Красители
-                                                    для волос</a>
-                                            </label>
+                            <div class="collapse navbar-collapse justify-content-start px-0" id="navbarTogglerDemo02">
+                                <div class="col-12 col-sm-12 col-md-11 col-lg-9 col-xl-9 px-0 mx-auto mx-md-auto mx-lg-0 mr-lg-auto">
+                                    <ul class="navbar-nav justify-content-start text-center">
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link" href="#" id="navbarDropdown" data-toggle="dropdown"
+                                               aria-haspopup="true" aria-expanded="false">
+                                                Каталог
+                                                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                <label class="w-100 m-0">
+                                                    <a class="dropdown-item" href="{% url 'Catalog' 'New_products' %}">Новинки</a>
+                                                </label>
+                                                {#                                            <label class="w-100 m-0">#}
+                                                {#                                                <a class="dropdown-item" href="{% url 'Brands' %}">Бренды</a>#}
+                                                {#                                            </label>#}
+                                                <label class="w-100 m-0">
+                                                    <a class="dropdown-item" href="{% url 'Catalog' 'For_men' %}">Для
+                                                        мужчин</a>
+                                                </label>
+                                                <label class="w-100 m-0">
+                                                    <a class="dropdown-item"
+                                                       href="{% url 'Catalog' 'Sets_and_miniatures' %}">Наборы и
+                                                        миниатюры</a>
+                                                </label>
+                                                <label class="w-100 m-0">
+                                                    <a class="dropdown-item" href="{% url 'Catalog' 'Beauty_box' %}">Бьюти
+                                                        боксы</a>
+                                                </label>
+                                                <label class="w-100 m-0">
+                                                    <a class="dropdown-item" href="{% url 'Catalog' 'Sale' %}">Sale</a>
+                                                </label>
+                                                <label class="w-100 m-0">
+                                                    <a class="dropdown-item" href="{% url 'Catalog' 'For_hair' %}">Для
+                                                        волос</a>
+                                                </label>
+                                                <label class="w-100 m-0">
+                                                    <a class="dropdown-item" href="{% url 'Catalog' 'For_face' %}">Для
+                                                        лица</a>
+                                                </label>
+                                                <label class="w-100 m-0">
+                                                    <a class="dropdown-item" href="{% url 'Catalog' 'For_body' %}">Для
+                                                        тела</a>
+                                                </label>
+                                                <label class="w-100 m-0">
+                                                    <a class="dropdown-item" href="{% url 'Catalog' 'Dyes_for_hair' %}">Красители
+                                                        для волос</a>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link " href="{% url 'Brands' %}">Бренды</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link " href="{% url 'Deliveries' %}">Доставка</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link " href="{% url 'Payments' %}">Оплата</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link " href="{% url 'Contacts' %}">Контакты</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link " href="{% url 'News' %}">Новости</a>
+                                        </li>
+                                        {% if request|gf_user %}
+                                            <li class="nav-item">
+                                                <a class="nav-link " href="{% url 'Orders_history' %}">Личный
+                                                    кабинет</a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                                <div class="col-9 col-md-4 col-lg-3 mx-auto mx-lg-0 pl-lg-0">
+                                    <label class="sr-only" for="inlineFormInputGroup"></label>
+                                    <form class="input-group my-2" action="/catalog/" id="search_form">
+                                        <input type="text" class="form-control" id="search_input" placeholder="">
+                                        <div class="input-group-text">
+                                            <button type="submit" style="background: none;border: none;padding: 0"><i
+                                                    class="fa fa-search" aria-hidden="true"></i></button>
                                         </div>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link " href="{% url 'Brands' %}">Бренды</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link " href="{% url 'Deliveries' %}">Доставка</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link " href="{% url 'Payments' %}">Оплата</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link " href="{% url 'Contacts' %}">Контакты</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link " href="{% url 'News' %}">Новости</a>
-                                    </li>
-                                    {% if request|gf_user %}
-                                    <li class="nav-item">
-                                        <a class="nav-link " href="{% url 'Orders_history' %}">Личный кабинет</a>
-                                    </li>
-                                    {% endif %}
-                                </ul>
+                                    </form>
+                                </div>
                             </div>
-                            <div class="col-9 col-md-4 col-lg-3 mx-auto mx-lg-0 pl-lg-0">
-                                <label class="sr-only" for="inlineFormInputGroup"></label>
-                                <form class="input-group my-2" action="/catalog/" id="search_form">
-                                    <input type="text" class="form-control" id="search_input" placeholder="">
-                                    <div class="input-group-text">
-                                        <button type="submit" style="background: none;border: none;padding: 0"><i
-                                                class="fa fa-search" aria-hidden="true"></i></button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
                         </div>
                     </nav>
                 </div>
@@ -271,12 +285,12 @@
                     <ul class="contact-list list-group list-unstyled">
                         <li>
                             <img src="{% static 'image/telephone1.png' %}" alt="" class="mb-1">
-{#                            <a href="#">{{ dic|get_dict:'number' }}</a>#}
+                            {#                            <a href="#">{{ dic|get_dict:'number' }}</a>#}
                             <a href="#">{{ request|gf_number }}</a>
                         </li>
                         <li class="mt-2">
                             <img src="{% static 'image/email1.png' %}" alt="">
-{#                            <a href="mailto:mail@gmail.com">{{ dic|get_dict:'email' }}</a>#}
+                            {#                            <a href="mailto:mail@gmail.com">{{ dic|get_dict:'email' }}</a>#}
                             <a href="mailto:mail@gmail.com">{{ request|gf_email }}</a>
                         </li>
                     </ul>

@@ -1675,3 +1675,27 @@ p.need-block {
     font-size: 22px;
   }
 }
+
+.text-right{
+    white-space: inherit !important;
+}
+.circle{
+
+    background-color: rgb(225, 48, 117);
+    border-radius: 50%;
+    position: absolute;
+    top: 100%;
+    /*color: black;*/
+    color: white;
+    font-size: 13px;
+    padding: 3px 2px 2px 2px;
+    min-width: 23px;
+    text-align: center;
+    transform: translate(35%,-50%);
+}
+@media (min-width: 320px) and (max-width: 768px) {
+    .circle {
+        top: 0;
+        transform: translate(50%,-50%);
+    }
+}

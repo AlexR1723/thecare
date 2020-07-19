@@ -56,5 +56,5 @@ def Brands(request):
         brand = Brands_model.objects.filter(name__istartswith=i)
         t.append(brand)
         letter.append(t)
-    print(letter)
+    # print(letter)
     return render(request, 'Brands/Brands.html', locals())
