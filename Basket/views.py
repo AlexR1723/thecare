@@ -41,12 +41,14 @@ def Cart(request):
     prod_ses = request.session.get(settings.CART_SESSION_ID)
     print(prod_ses)
 
-    all_prices = 0
+    # all_prices = 0
     if prod_ses is not None:
-        for i in prod_ses.values():
-            all_prices += int(i['total'])
+        # for i in prod_ses.values():
+            # all_prices += int(i['total'])
         # products = Product.objects.filter(slug__in=prod_ses.keys())
         products = ProductSize.objects.filter(id__in=prod_ses.keys())
+    #     for i in prod_ses.keys():
+
 
     # prods=ProductSize.objects.all()
     # for i in prods:
@@ -135,6 +137,7 @@ def plus_minus_product(request):
             item = str(pr_sz.id)
             if minus:
                 print('minus')
+                print(pr_sz.price)
                 ses[item] = {'count': int(ses[item]['count']) - 1,
                              'total': int(pr_sz.price) * (int(ses[item]['count']) - 1)}
             else:

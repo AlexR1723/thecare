@@ -457,7 +457,7 @@ $('#btn_add_to_cart').click(function () {
 $('.btn_cart_minus').on('click', function () {
     let elem = this
     let slug = elem.parentElement.dataset.slug
-    if (parseInt(this.nextElementSibling.value) >= 1) {
+    if (parseInt(this.nextElementSibling.value) >= 2) {
         $.ajax({
             type: "GET",
             dataType: "json",
@@ -486,7 +486,7 @@ $('.btn_cart_minus').on('click', function () {
 $('.btn_cart_plus').on('click', function () {
     let elem = this
     let slug = elem.parentElement.dataset.slug
-    if (parseInt(this.previousElementSibling.value) <= parseInt(this.previousElementSibling.max)) {
+    if (parseInt(this.previousElementSibling.value) < parseInt(this.previousElementSibling.max)) {
         $.ajax({
             type: "GET",
             dataType: "json",
@@ -553,7 +553,14 @@ $('.cart_item_input').on('keyup', function () {
     let elem = this
     let slug = elem.parentElement.dataset.slug
     let count = this.value
-    if (parseInt(this.value) <= parseInt(this.max)) {
+    // if (parseInt(this.value) <= parseInt(this.max)) {
+    if (!this.value){
+        count=0
+    }
+    if (parseInt(this.value) > parseInt(this.max)) {
+        this.value = this.max
+        count=this.max
+    }
         $.ajax({
             type: "GET",
             dataType: "json",
@@ -577,9 +584,7 @@ $('.cart_item_input').on('keyup', function () {
                 alert('error')
             }
         })
-    } else {
-        this.value = this.max
-    }
+
 })
 
 $('#btn_change_contact_details').click(function () {
