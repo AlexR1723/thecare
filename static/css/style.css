@@ -696,7 +696,7 @@ div.dropdown-menu label:hover, div.dropdown-menu label:focus {
     /*text-orientation: upright;*/
     z-index: 1;
 }
-.items-list_catalog .card-deck .sale-card .wrap span.hit {
+.items-list_catalog .card-deck .wrap span.hit {
     position: absolute;
     padding: .5rem;
     margin-right: 1rem;
