@@ -71,60 +71,23 @@ def get_user_id(request):
 
 
 def Main(request):
-    # print(request.session.get('username', False))
-    # inc=0;
-    # pr=Product.objects.all()
-    # for i in pr:
-    #     i.main_photo='uploads/test_7.png'
-    #     i.price=random.randrange(100,20000,10)
-    #     i.artikul=random.randrange(11111111,99999999)
-    #     i.count=random.randrange(1,100)
-    #     i.save()
-    #     inc+=1
-    #     print(inc)
-
-    # f = open('list_images.txt', 'w')
-    # products=Product.objects.all()
-    # for i in products:
-    #     f.write(str(i.main_photo)+';')
-    # f.close()
-
-
-
     slide_first = Slider.objects.all()[0]
     slide = Slider.objects.all()[1:]
     main_block = MainBlock.objects.all()
-    # face_count = Product.objects.order_by('-id').filter(category__name='Для лица').count()
     face = Product.objects.filter(is_top=True).filter(category__name='Для лица').order_by('-id')
-    # if face_count < 10:
-    #     face = Product.objects.order_by('-id').filter(category__name='Для лица')
-    # else:
-    #     face = Product.objects.order_by('-id').filter(category__name='Для лица')[0:10]
-    # # print(face)
-    # hair_count = Product.objects.order_by('-id').filter(category__name='Для волос').count()
     hair = Product.objects.filter(is_top=True).filter(category__name='Для волос').order_by('-id')
-    # if hair_count < 10:
-    #     hair = Product.objects.order_by('-id').filter(category__name='Для волос')
-    # else:
-    #     hair = Product.objects.order_by('-id').filter(category__name='Для волос')[0:10]
-    # # print(hair)
-    # body_count = Product.objects.order_by('-id').filter(category__name='Для тела').count()
     body = Product.objects.filter(is_top=True).filter(category__name='Для тела').order_by('-id')
-    # if body_count < 10:
-    #     body = Product.objects.order_by('-id').filter(category__name='Для тела')
-    # else:
-    #     body = Product.objects.order_by('-id').filter(category__name='Для тела')[0:10]
-
-    # print(body)
-    # k=0
+    # k = 0
     # if k == 0:
-    #     raise Http404
+
+    # else:
     return render(request, 'Main/Main.html', locals())
 
 
 def Dev(request):
-    # dic = global_function(request)
-    return render(request, 'Main/Dev.html', locals())
+    raise Http404("Poll does not exist")
+    # return HttpResponseNotFound('<h1>Page not found</h1>')
+    # return HttpResponse(status=404)
 
 
 def Save_excel_file(request):
@@ -161,15 +124,12 @@ def get_product_list(request):
     return HttpResponse(json.dumps(settings.PROD_LIST))
 
 
-
-
-
 def save_product(request):
     # добавить выборку каждой переменной
     print('save_product')
     try:
         i = int(request.GET.get('i'))
-        all=int(request.GET.get('all'))
+        all = int(request.GET.get('all'))
         # print(i+1)
         if (i + 1) >= all:
             # print('clear')
@@ -191,7 +151,7 @@ def save_product(request):
                 res = ResourceType(category=categ[0], name=v[9])
                 res.save()
             else:
-                res=res[0]
+                res = res[0]
             if categ.count() > 0:
                 brand = Brands_model.objects.filter(name__iexact=v[2])
                 if brand.count() == 0:
@@ -203,7 +163,8 @@ def save_product(request):
                 print(v[3])
                 print(v[2])
                 print(v[4])
-                product_str = Product_str.objects.filter(title__iexact=v[3]).filter(brand__name__iexact=v[2]).filter(shot_description__iexact=v[4])
+                product_str = Product_str.objects.filter(title__iexact=v[3]).filter(brand__name__iexact=v[2]).filter(
+                    shot_description__iexact=v[4])
                 # такого товара нет - добавили
                 if product_str.count() == 0:
                     print('if')
@@ -232,7 +193,7 @@ def save_product(request):
 
                 # потребности товара
                 # удаляем старые потребности
-                product_need=ProductNeed.objects.filter(product=product)
+                product_need = ProductNeed.objects.filter(product=product)
                 product_need.delete()
                 # выбираем новые потребности
                 needs = v[10]
@@ -243,7 +204,7 @@ def save_product(request):
                         need = NeedType(name=needs, category=categ[0])
                         need.save()
                     else:
-                        need=need[0]
+                        need = need[0]
                     product_need = ProductNeed.objects.filter(product=product).filter(need=need)
                     if product_need.count() == 0:
                         product_need = ProductNeed(product=product, need=need)
@@ -255,7 +216,7 @@ def save_product(request):
                             need = NeedType(name=n, category=categ[0])
                             need.save()
                         else:
-                            need=need[0]
+                            need = need[0]
                         product_need = ProductNeed.objects.filter(need=need).filter(product=product)
                         if product_need.count() == 0:
                             product_need = ProductNeed(product=product, need=need)
@@ -308,7 +269,6 @@ def save_product(request):
                     product_size.save()
                     print(product_size)
 
-
                 # оттенки
                 # удаляем старые оттенки
                 product_tone = ProductTone.objects.filter(product=product)
@@ -330,13 +290,13 @@ def save_product(request):
     except:
         return HttpResponse(json.dumps(False))
 
-def check_picture(request):
 
+def check_picture(request):
     # print(response)
     # f = open('list_images.txt', 'w')
     # f.truncate()
-    data=[]
-    products=Product.objects.all()
+    data = []
+    products = Product.objects.all()
     for i in products:
         data.append(str(i.main_photo))
     # data = f.read()
@@ -348,13 +308,13 @@ def check_picture(request):
         st = i.replace('uploads/product/', '')
         lst.append(st)
 
-    lst_not=[]
-    dirs=[]
+    lst_not = []
+    dirs = []
     dbx = dropbox.Dropbox(settings.DROPBOX_OAUTH2_TOKEN)
     response = dbx.files_list_folder(path=settings.DROPBOX_ROOT_PATH + 'uploads/product')
     if response.has_more == True:
         m1 = response.entries
-        cur=response.cursor
+        cur = response.cursor
         for i in m1:
             if isinstance(i, dropbox.files.FileMetadata):
                 dirs.append(i.name)
@@ -519,7 +479,15 @@ def check_register(request):
     except:
         return HttpResponse(json.dumps('Ошибка, попробуйте позже!'))
 
+#
+# def error404(request, exception):
+#     # dic = global_function(request)
+#     return render(request, '404.html', locals())
 
 def error404(request, exception):
-    # dic = global_function(request)
-    return render(request, '404.html', locals())
+    print('111')
+    response = render_to_response('404.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
+    # return render(request, '404.html', locals())
