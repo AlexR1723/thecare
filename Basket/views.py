@@ -7,6 +7,7 @@ from django.db import transaction
 
 from .models import *
 
+
 def get_user_id(request):
     user = request.session.get('username', False)
     if user:
@@ -186,157 +187,145 @@ def del_product(request):
 
 
 # @transaction.atomic()
-def buy_products(request):
-    prod_ses = request.session.get(settings.CART_SESSION_ID)
-    # print(prod_ses)
-    # print(list(prod_ses.keys()))
-    ids = []
-    for i in prod_ses.keys():
-        ids.append(int(i))
-
-    summ = 0
-    prods = ProductSize.objects.filter(id__in=ids)
-    for i in ids:
-        prod = prods.filter(id=i)[0]
-        count = prod_ses[str(i)]['count']
-        summ+= prod.price * count
-
-    with transaction.atomic():
-        inv = int(UserOrders.objects.latest('order_number').order_number)+1
-        new_user_order=UserOrders(order_number=inv)
-        # nhash=str(datetime.datetime.now())
-        new_user_order.save()
-        # print('inv')
-        # print(inv)
-        # hs=""
-        hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(inv) + ':' + settings.PAY_TEST_PASSWORD_1
-        # print(hs)
-        user = get_user_id(request)
-        # if user:
-        #     hs += ':user=' + str(user)
-        # else:
-        #     hs += ':user=0'
-        # print(hs)
-        # new_hash = hashlib.md5(hs.encode()).hexdigest()
-        # print(new_hash)
-        # dct={}
-        # dct['login']=settings.PAY_LOGIN
-        # dct['signature']=new_hash
-        # dct['outsumm']=summ
-        # dct['inv']=inv
-        # dct['desc']='description'
-        # dct['user']=str(int(user))
-        # MerchantLogin=settings.PAY_LOGIN
-        # OutSum=summ
-
-
-        # mrh_login = "Test1999";
-    # $mrh_pass1 = "password_1";
-    # $inv_id = 678678;
-    # $inv_desc = "Товары для животных";
-    # $out_summ = "100.00";
-    # $IsTest = 1;
-    # $crc = md5("$mrh_login:$out_summ:$inv_id:$mrh_pass1");
-
-    # for i in ids:
-    #     prod = prods.filter(id=i)[0]
-    #     count = ses[str(i)]['count']
-    #     ses[str(i)]['total'] = prod.price * count
-
-    # all_prices = 0
-    # if prod_ses is not None:
-    #     for i in prod_ses.values():
-    #         all_prices += int(i['total'])
-    #     # products = Product.objects.filter(slug__in=prod_ses.keys())
-    #     products = ProductSize.objects.filter(id__in=prod_ses.keys())
-    if user:
-        # ids = ProductSize.objects.all().values_list('id', flat=True)
-        # # print(ids)
-        # # print(list(ids))
-        # random.shuffle(list(ids))
-        # print(ids)
-        # us_or = UserOrders(user_id=user, date=datetime.date.today(), status_id=1, summ=55555)
-        # # us_or.save()
-        # inc = 0
-        # for i in range(10):
-        #     item = ids[i]
-        #     count = random.randrange(1, 5)
-        #     order_prods = OrdersProducts(order_id=us_or.id, product_id=item, count=count)
-        #     # order_prods.save()
-        #     inc += 1
-        #     print(inc)
-        return HttpResponse(json.dumps(True))
-    else:
-        return HttpResponse(json.dumps(True))
+# def buy_products(request):
+#     prod_ses = request.session.get(settings.CART_SESSION_ID)
+#     # print(prod_ses)
+#     # print(list(prod_ses.keys()))
+#     ids = []
+#     for i in prod_ses.keys():
+#         ids.append(int(i))
+#
+#     summ = 0
+#     prods = ProductSize.objects.filter(id__in=ids)
+#     for i in ids:
+#         prod = prods.filter(id=i)[0]
+#         count = prod_ses[str(i)]['count']
+#         summ+= prod.price * count
+#
+#     with transaction.atomic():
+#         inv = int(UserOrders.objects.latest('order_number').order_number)+1
+#         new_user_order=UserOrders(order_number=inv)
+#         # nhash=str(datetime.datetime.now())
+#         new_user_order.save()
+#         # print('inv')
+#         # print(inv)
+#         # hs=""
+#         hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(inv) + ':' + settings.PAY_TEST_PASSWORD_1
+#         # print(hs)
+#         user = get_user_id(request)
+#         # if user:
+#         #     hs += ':user=' + str(user)
+#         # else:
+#         #     hs += ':user=0'
+#         # print(hs)
+#         # new_hash = hashlib.md5(hs.encode()).hexdigest()
+#         # print(new_hash)
+#         # dct={}
+#         # dct['login']=settings.PAY_LOGIN
+#         # dct['signature']=new_hash
+#         # dct['outsumm']=summ
+#         # dct['inv']=inv
+#         # dct['desc']='description'
+#         # dct['user']=str(int(user))
+#         # MerchantLogin=settings.PAY_LOGIN
+#         # OutSum=summ
+#
+#
+#         # mrh_login = "Test1999";
+#     # $mrh_pass1 = "password_1";
+#     # $inv_id = 678678;
+#     # $inv_desc = "Товары для животных";
+#     # $out_summ = "100.00";
+#     # $IsTest = 1;
+#     # $crc = md5("$mrh_login:$out_summ:$inv_id:$mrh_pass1");
+#
+#     # for i in ids:
+#     #     prod = prods.filter(id=i)[0]
+#     #     count = ses[str(i)]['count']
+#     #     ses[str(i)]['total'] = prod.price * count
+#
+#     # all_prices = 0
+#     # if prod_ses is not None:
+#     #     for i in prod_ses.values():
+#     #         all_prices += int(i['total'])
+#     #     # products = Product.objects.filter(slug__in=prod_ses.keys())
+#     #     products = ProductSize.objects.filter(id__in=prod_ses.keys())
+#     if user:
+#         # ids = ProductSize.objects.all().values_list('id', flat=True)
+#         # # print(ids)
+#         # # print(list(ids))
+#         # random.shuffle(list(ids))
+#         # print(ids)
+#         # us_or = UserOrders(user_id=user, date=datetime.date.today(), status_id=1, summ=55555)
+#         # # us_or.save()
+#         # inc = 0
+#         # for i in range(10):
+#         #     item = ids[i]
+#         #     count = random.randrange(1, 5)
+#         #     order_prods = OrdersProducts(order_id=us_or.id, product_id=item, count=count)
+#         #     # order_prods.save()
+#         #     inc += 1
+#         #     print(inc)
+#         return HttpResponse(json.dumps(True))
+#     else:
+#         return HttpResponse(json.dumps(True))
 
 def confirm_order(request):
     # dic = global_function(request)
-    fio=request.POST.get('fio')
-    address=request.POST.get('address')
-    email=request.POST.get('email')
-    tel=request.POST.get('tel')
-    print(fio,address,email,tel)
+    fio = request.POST.get('fio')
+    address = request.POST.get('address')
+    email = request.POST.get('email')
+    tel = request.POST.get('tel')
+    print(fio, address, email, tel)
     prod_ses = request.session.get(settings.CART_SESSION_ID)
     print(prod_ses)
 
     all_prices = 0
-    ids=[]
+    ids = []
     print('prod_ses')
     print(prod_ses)
     if prod_ses is not None:
-        products=ProductSize.objects.filter(id__in=prod_ses.keys())
+        products = ProductSize.objects.filter(id__in=prod_ses.keys())
         for i in products:
             count = prod_ses[str(i.id)]['count']
             all_prices += i.price * count
         print(products)
+
+    ses = request.session.get(settings.CART_USER)
+    if not ses:
+        request.session[settings.CART_USER] = {}
+        ses = request.session.get(settings.CART_USER)
+    ses['fio'] = str(fio).strip()
+    ses['address'] = str(address).strip()
+    ses['phonenumber'] = str(tel).strip()
+    ses['email'] = str(email).strip()
+
     return render(request, 'Main/Confirm_order.html', locals())
 
 
 # записывать заказ в бд
 # проверять заказ по номеру
 # создать таблицу в бд с товарами оплаченными ???
-#проверять количество заказываемого товара с количеством на складе
+# проверять количество заказываемого товара с количеством на складе
 def pay_result(request):
     print('pay_result')
-    OutSum=request.GET.get('OutSum')
-    InvId=request.GET.get('InvId')
-    SignatureValue=request.GET.get('SignatureValue')
-    Shp_User=request.GET.get('Shp_User')
+    OutSum = request.GET.get('OutSum')
+    InvId = request.GET.get('InvId')
+    SignatureValue = request.GET.get('SignatureValue')
+    Shp_User = request.GET.get('Shp_User')
     hs = str(OutSum) + ':' + str(InvId) + ':' + settings.PAY_PASSWORD_2 + ':Shp_User=' + str(Shp_User)
     new_hash = hashlib.md5(hs.encode()).hexdigest()
     print(new_hash)
     print(SignatureValue)
-    if str(SignatureValue).lower()==str(new_hash).lower():
-        return HttpResponse(json.dumps('OK'+str(InvId)))
+    if str(SignatureValue).lower() == str(new_hash).lower():
+        order = UserOrders.objects.filter(order_number=InvId)[0]
+        order.status = 1
+        order.date = datetime.datetime.now()
+        order.save()
+        # prods=UserOrderProducts.
+        return HttpResponse(json.dumps('OK' + str(InvId)))
     else:
         return HttpResponse(json.dumps('bad sign'))
-
-
-
-# def create_hash(request, summ):
-#     # summ=request.GET.get('OutSum')
-#     # def viewfunc(request):
-#     # This code executes in autocommit mode (Django's default).
-#     # do_stuff()
-#
-#     with transaction.atomic():
-#         # This code executes inside a transaction.
-#         # do_more_stuff()
-#         # summ = '5656556'
-#         # $crc = md5("$mrh_login:$out_summ:$inv_id:$mrh_pass1");
-#         inv = 0
-#         hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(
-#             inv) + ':' + settings.PAY_TEST_PASSWORD_1
-#         print(hs)
-#         user = get_user_id(request)
-#         if user:
-#             hs += ':user=' + str(user)
-#         else:
-#             hs += ':user=0'
-#         print(hs)
-#         new_hash = hashlib.md5(hs.encode()).hexdigest()
-#         print(new_hash)
-#     return True
 
 
 def pay_success(request):
@@ -346,10 +335,11 @@ def pay_success(request):
 def pay_fail(request):
     return HttpResponse(json.dumps('fail'))
 
+
 def pay_check(request):
-    user=get_user_id(request)
+    user = get_user_id(request)
     if not user:
-        user=0
+        user = 0
     print(user)
     prod_ses = request.session.get(settings.CART_SESSION_ID)
     print(prod_ses)
@@ -362,18 +352,25 @@ def pay_check(request):
         prod = prods.filter(id=i)[0]
         count = prod_ses[str(i)]['count']
         summ += prod.price * count
+    ses_user = request.session.get(settings.CART_USER)
     with transaction.atomic():
         inv = int(UserOrders.objects.latest('order_number').order_number) + 1
-        us_ord=UserOrders(amount=summ,status_id=4,date=datetime.datetime.now(),order_number=inv)
+        us_ord = UserOrders(amount=summ, status_id=4, order_number=inv, fio=ses_user['fio'],
+                            phonenumber=ses_user['phonenumber'], address=ses_user['address'],
+                            email=ses_user['email'])
+        for i in prods:
+            uop = UserOrderProducts(order_id=us_ord.order_number, product_size_id=i.id, count=prod_ses[i.id]['count'],
+                                    amount=i.price)
+            uop.save()
         if user:
-            us_ord.user_id=user
+            us_ord.user_id = user
         us_ord.save()
-        hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(us_ord.order_number) + ':' + settings.PAY_PASSWORD_1+':Shp_User='+str(user)
+        hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(
+            us_ord.order_number) + ':' + settings.PAY_PASSWORD_1 + ':Shp_User=' + str(user)
         # hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(us_ord.order_number) + ':' + settings.PAY_TEST_PASSWORD_1
         print(hs)
         new_hash = hashlib.md5(hs.encode()).hexdigest()
         print(new_hash)
-
 
         # ses = request.session.get(settings.CART_ORDER_NUMBER)
         # if not ses:
@@ -382,10 +379,10 @@ def pay_check(request):
         # ses['order_number']=us_ord.order_number
         # print(ses.keys())
 
-        dc={}
-        dc['SignatureValue']=new_hash
-        dc['OutSum']=str(summ)
-        dc['Shp_user']=user
-        dc['MerchantLogin']=settings.PAY_LOGIN
-        dc['InvoiceID']=us_ord.order_number
+        dc = {}
+        dc['SignatureValue'] = new_hash
+        dc['OutSum'] = str(summ)
+        dc['Shp_user'] = user
+        dc['MerchantLogin'] = settings.PAY_LOGIN
+        dc['InvoiceID'] = us_ord.order_number
         return HttpResponse(json.dumps(dc))

@@ -314,7 +314,10 @@ def left_filter(url_page, head, filter=False, prod=False):
         if url_page == 'Brands':
             lefts = 'brands'
             if filter:
-                queryset = prod.order_by(get_filter(filter))
+                if filter=='new':
+                    queryset = prod.order_by('-hit_for_brand', '-id')
+                else:
+                    queryset = prod.order_by(get_filter(filter))
             else:
                 queryset = prod.order_by('-hit_for_brand','-id')
             resource = CategoryType.objects.all()

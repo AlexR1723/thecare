@@ -29,6 +29,7 @@ jQuery("document").ready(function ($) {
         box.addClass("active-info");
         btn.addClass('d-none');
     }
+
     function hideSendBox() {
         box.removeClass("active-info");
         btn.removeClass('d-none');
@@ -38,8 +39,8 @@ jQuery("document").ready(function ($) {
 
     setInterval(() => {
         hideSendBox();
-        setTimeout(() => showSendBox(), 60000*2);
-    }, 60000*2);
+        setTimeout(() => showSendBox(), 60000 * 2);
+    }, 60000 * 2);
 });
 
 $('.multiple-items').slick({
@@ -655,37 +656,37 @@ $('#btn_change_address').click(function () {
     })
 })
 
-$('#btn_buy_products').click(function () {
-    // let city = document.getElementById('da_city').value
-    // let street = document.getElementById('da_street').value
-    // let house = document.getElementById('da_house').value
-    // let flat = document.getElementById('da_flat').value
-    $.ajax({
-        type: "GET",
-        dataType: "json",
-        async: false,
-        url: '/cart/buy_products',
-        data: {
-            // city: city,
-            // street: street,
-            // house: house,
-            // flat: flat
-        },
-        success: function (data) {
-            if (data !== false) {
-                notice(data)
-                // document.getElementById('user_basket_total').innerText = data + ' руб.'
-                // notice('Добавлено в корзину')
-            } else {
-                // notice('Произошла ошибка, попробуйте позже!')
-                window.location.href = '/log_in'
-            }
-        },
-        error: function (data) {
-            alert('error')
-        }
-    })
-});
+// $('#btn_buy_products').click(function () {
+//     // let city = document.getElementById('da_city').value
+//     // let street = document.getElementById('da_street').value
+//     // let house = document.getElementById('da_house').value
+//     // let flat = document.getElementById('da_flat').value
+//     $.ajax({
+//         type: "GET",
+//         dataType: "json",
+//         async: false,
+//         url: '/cart/buy_products',
+//         data: {
+//             // city: city,
+//             // street: street,
+//             // house: house,
+//             // flat: flat
+//         },
+//         success: function (data) {
+//             if (data !== false) {
+//                 notice(data)
+//                 // document.getElementById('user_basket_total').innerText = data + ' руб.'
+//                 // notice('Добавлено в корзину')
+//             } else {
+//                 // notice('Произошла ошибка, попробуйте позже!')
+//                 window.location.href = '/log_in'
+//             }
+//         },
+//         error: function (data) {
+//             alert('error')
+//         }
+//     })
+// });
 $('#FIO').click(function () {
     document.getElementById('FIO').classList.remove('is-invalid');
     document.getElementById('FIO').classList.remove('is-valid');
@@ -756,6 +757,24 @@ $('#conf-btn').click(function () {
             document.getElementById('tel').classList.add('is-invalid');
         notice("Заполнены не все поля");
     }
+
+    // $.ajax({
+    //     type: "GET",
+    //     url: '/cart/confirm_order',
+    //     data: {
+    //         fio: fio,
+    //         address: address,
+    //         email: email,
+    //         tel: tel
+    //     },
+    //     success: function (data) {
+    //
+    //     },
+    //     error: function (data) {
+    //         alert('error')
+    //     }
+    // })
+
 });
 
 $('#btn_final_pay').click(function () {
@@ -763,29 +782,29 @@ $('#btn_final_pay').click(function () {
 
     // let slug = elem.parentElement.dataset.slug
     // if (parseInt(this.previousElementSibling.value) <= parseInt(this.previousElementSibling.max)) {
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            async: false,
-            url: '/cart/pay_check',
-            success: function (data) {
-                console.log(data)
-                let el=document.getElementById('pay_values')
-                el.setAttribute('onclick','Robokassa.StartPayment({' +
-                    'MerchantLogin: \''+data.MerchantLogin+'\',' +
-                    'OutSum: \''+data.OutSum+'\',' +
-                    'Description: \'Оплата на сайте The Care\',' +
-                    'InvoiceID: \''+data.InvoiceID+'\',' +
-                    'Shp_User: \''+data.Shp_user+'\',' +
-                    'Culture: \'ru\',' +
-                    'Encoding: \'utf-8\',' +
-                    // 'IsTest: \'1\',' +
-                    'SignatureValue: \''+data.SignatureValue+'\'})' )
-                el.click()
-            },
-            error: function (data) {
-                alert('error')
-            }
-        })
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        async: false,
+        url: '/cart/pay_check',
+        success: function (data) {
+            console.log(data)
+            let el = document.getElementById('pay_values')
+            el.setAttribute('onclick', 'Robokassa.StartPayment({' +
+                'MerchantLogin: \'' + data.MerchantLogin + '\',' +
+                'OutSum: \'' + data.OutSum + '\',' +
+                'Description: \'Оплата на сайте The Care\',' +
+                'InvoiceID: \'' + data.InvoiceID + '\',' +
+                'Shp_User: \'' + data.Shp_user + '\',' +
+                'Culture: \'ru\',' +
+                'Encoding: \'utf-8\',' +
+                // 'IsTest: \'1\',' +
+                'SignatureValue: \'' + data.SignatureValue + '\'})')
+            el.click()
+        },
+        error: function (data) {
+            alert('error')
+        }
+    })
     // }
 })
