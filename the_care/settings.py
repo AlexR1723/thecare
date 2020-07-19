@@ -132,7 +132,7 @@ USE_L10N = True
 
 USE_TZ = False
 
-# DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
 DROPBOX_OAUTH2_TOKEN = 'ScXC5sD_X0AAAAAAAAAATKPrbFg-32dbxGIkw-DpExBnl-SRkIJLNG7COWtnQCFB'
 DROPBOX_ROOT_PATH = '/the_care/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

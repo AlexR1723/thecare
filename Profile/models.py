@@ -254,13 +254,26 @@ class OrdersProducts(models.Model):
 
 class UserOrders(models.Model):
     user = models.ForeignKey('AuthUser', models.DO_NOTHING, blank=True, null=True)
-    date = models.DateField(blank=True, null=True)
+    date = models.DateTimeField(blank=True, null=True)
     status = models.ForeignKey('OrdersStatus', models.DO_NOTHING, blank=True, null=True)
-    summ = models.IntegerField(blank=True, null=True)
+    amount = models.IntegerField(blank=True, null=True)
+    order_number = models.IntegerField(unique=True, blank=True, null=True)
+    fio = models.TextField(blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
+    phonenumber = models.TextField(blank=True, null=True)
+    email = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'user_orders'
 
-    # def get_status(self):
-    #     status=OrdersStatus.objects.get()
+
+class UserOrderProducts(models.Model):
+    order = models.ForeignKey('UserOrders', models.DO_NOTHING, blank=True, null=True)
+    product_size = models.ForeignKey('ProductSize', models.DO_NOTHING, blank=True, null=True)
+    count = models.IntegerField(blank=True, null=True)
+    amount = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'user_order_products'
