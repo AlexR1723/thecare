@@ -369,14 +369,24 @@ div.dropdown-menu label:hover, div.dropdown-menu label:focus {
     transition: .5s;
 }
 .card-img{
-    height: 300px;
+    height: 200px;
     overflow: hidden;
     text-align: center;
+}
+@media (min-width: 320px) and (max-width: 768px) {
+    .card-img {
+        height: 150px;
+    }
 }
 .card-img-catalog{
     height: 200px;
     overflow: hidden;
     text-align: center;
+}
+@media (min-width: 320px) and (max-width: 425px) {
+    .card-img-catalog {
+        height: 100px;
+    }
 }
 .card-img-basket{
     height: 100px;
@@ -827,6 +837,7 @@ div.dropdown-menu label:hover, div.dropdown-menu label:focus {
 
 .items-list_catalog .card-deck .card:hover {
     box-shadow: 0px 0px 10px #C4C4C4;
+    z-index: 9;
 }
 
 .items-list_catalog .nav_blk .page-link,
@@ -873,14 +884,15 @@ div.dropdown-menu label:hover, div.dropdown-menu label:focus {
 
 @media (min-width: 576px) and (max-width: 768px) {
     .card-deck .card {
-        flex: 45% 0 0;
+        /*flex: 45% 0 0;*/
+        flex: 32% 0 0;
     }
 }
 
 @media (min-width: 320px) and (max-width: 425px) {
     .sort_col .sort-select {
         position: relative;
-        top: 1.5rem;
+        top: 0.5rem;
     }
 
     .items-list_catalog .card-deck .card,
