@@ -1651,7 +1651,7 @@ p.need-block {
 
 
 .notfound a {
-  font-family: 'Kanit', sans-serif;
+  /*font-family: 'Kanit', sans-serif;*/
   color: rgba(225, 48, 117,.7);
   font-weight: 200;
   text-decoration: none;
