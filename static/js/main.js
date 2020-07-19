@@ -420,7 +420,7 @@ function check_register() {
 
 $('#search_input').keyup(function () {
     let names = this.value.split(' ').join('_')
-    let form = document.getElementById('search_form').action = "/catalog/" + names + '/'
+    document.getElementById('search_form').action = "/catalog/" + names + '/'
 })
 
 $('#btn_add_to_cart').click(function () {
