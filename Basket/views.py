@@ -322,7 +322,21 @@ def pay_result(request):
         order.status = 1
         order.date = datetime.datetime.now()
         order.save()
-        # prods=UserOrderProducts.
+        prods=UserOrderProducts.objects.filter(order_id=order.id)
+        for i in prods:
+            prod=ProductSize.objects.get(id=i.product_size_id)
+            print('prod')
+            print(prod.count)
+            print(i.count)
+            cnt=prod.count-i.count
+            print(cnt)
+            if cnt<0:
+                print('less 0')
+                return HttpResponse(json.dumps('bad sign'))
+            else:
+                prod.count=cnt
+                prod.save()
+                print('count after order'+str(prod.count))
         return HttpResponse(json.dumps('OK' + str(InvId)))
     else:
         return HttpResponse(json.dumps('bad sign'))
@@ -330,6 +344,8 @@ def pay_result(request):
 
 def pay_success(request):
     # return HttpResponse(json.dumps('success'))
+    OutSum = request.GET.get('OutSum')
+    InvId = request.GET.get('InvId')
     return render(request, 'success.html', locals())
 
 
@@ -360,13 +376,14 @@ def pay_check(request):
         us_ord = UserOrders(amount=summ, status_id=4, order_number=inv, fio=ses_user['fio'],
                             phonenumber=ses_user['phonenumber'], address=ses_user['address'],
                             email=ses_user['email'])
-        for i in prods:
-            uop = UserOrderProducts(order_id=us_ord.order_number, product_size_id=i.id, count=prod_ses[i.id]['count'],
-                                    amount=i.price)
-            uop.save()
         if user:
             us_ord.user_id = user
         us_ord.save()
+        print(prods)
+        for i in prods:
+            uop = UserOrderProducts(order_id=us_ord.id, product_size_id=i.id, count=int(prod_ses[str(i.id)]['count']),
+                                    amount=i.price)
+            uop.save()
         hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(
             us_ord.order_number) + ':' + settings.PAY_PASSWORD_1 + ':Shp_User=' + str(user)
         # hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(us_ord.order_number) + ':' + settings.PAY_TEST_PASSWORD_1
