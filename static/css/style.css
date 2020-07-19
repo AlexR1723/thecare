@@ -685,10 +685,22 @@ div.dropdown-menu label:hover, div.dropdown-menu label:focus {
     color: rgba(0, 0, 0, .5);
 }
 
-.items-list_catalog .card-deck .sale-card .wrap span {
+.items-list_catalog .card-deck .sale-card .wrap span.sale {
     position: absolute;
     padding: .5rem;
     margin-left: 1rem;
+    color: #ffffff;
+    font-weight: 600;
+    background: #E7B9CB;
+    /*writing-mode: vertical-rl;*/
+    /*text-orientation: upright;*/
+    z-index: 1;
+}
+.items-list_catalog .card-deck .wrap span.hit {
+    position: absolute;
+    padding: .5rem;
+    margin-right: 1rem;
+    right: 0;
     color: #ffffff;
     font-weight: 600;
     background: #E7B9CB;
