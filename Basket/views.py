@@ -328,7 +328,7 @@ def pay_result(request):
     print(SignatureValue)
     if str(SignatureValue).lower() == str(new_hash).lower():
         order = UserOrders.objects.filter(order_number=InvId)[0]
-        order.status = 1
+        order.status_id = 1
         order.date = datetime.datetime.now()
         order.save()
         prods=UserOrderProducts.objects.filter(order_id=order.id)
