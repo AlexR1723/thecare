@@ -66,15 +66,19 @@ ROOT_URLCONF = 'the_care.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
-        'APP_DIRS': True,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+            ],
+            'loaders': [
+                ('django.template.loaders.cached.Loader', [
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',
+                ]),
             ],
         },
     },
@@ -93,6 +97,7 @@ DATABASES = {
         'PASSWORD': '5538bf75a59b86696b02be9cb59ecfaef53f4c0b96f889ee3299de4eadb0a8c9',
         'HOST': 'ec2-54-247-72-30.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
+        'CONN_MAX_AGE': None,
     }
 }
 
@@ -131,6 +136,10 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = False
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+
 
 DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
 DROPBOX_OAUTH2_TOKEN = 'ScXC5sD_X0AAAAAAAAAATKPrbFg-32dbxGIkw-DpExBnl-SRkIJLNG7COWtnQCFB'
