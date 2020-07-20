@@ -52,7 +52,7 @@ def Cart(request):
         auth_user=AuthUser.objects.get(id=user_id)
         user=Users.objects.get(user=user_id)
         fio=auth_user.last_name+' '+auth_user.first_name+' '+user.patronymic
-        adress=user.address
+        adress=user.adress
         phone=user.phone
         email=auth_user.email
 
