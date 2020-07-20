@@ -104,6 +104,7 @@
                 <div class="row m-0 justify-content-start align-items-center">
                     <div class="slider multiple-items w-100">
                         {% for f in face %}
+                                    <a href="{{ f.get_absolute_url }}">
                             <div class="card">
                                 <div class="card-img">
                                     {% if f.main_photo != null and f.main_photo != "" %}
@@ -113,11 +114,10 @@
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title mb-1">{{ f.get_price.price }} руб</h5>
-                                    <a href="{{ f.get_absolute_url }}">
                                         <p class="card-text">{{ f.title }}</p>
-                                    </a>
                                 </div>
                             </div>
+                                    </a>
                         {% endfor %}
                     </div>
                 </div>
@@ -137,6 +137,7 @@
                 <div class="row m-0 justify-content-start align-items-center">
                     <div class="slider multiple-items w-100">
                         {% for h in hair %}
+                            <a href="{{ h.get_absolute_url }}">
                             <div class="card">
                                 <div class="card-img">
                                     {% if h.main_photo != null and h.main_photo != "" %}
@@ -146,11 +147,10 @@
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title mb-1">{{ h.get_price.price }} руб</h5>
-                                    <a href="{{ h.get_absolute_url }}">
                                         <p class="card-text">{{ h.title }}</p>
-                                    </a>
                                 </div>
                             </div>
+                                    </a>
                         {% endfor %}
                     </div>
                 </div>
