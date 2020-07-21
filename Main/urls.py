@@ -47,7 +47,7 @@ urlpatterns = [
     # url(r'^items_catalog/$', views.Items_catalog, name="Items_catalog"),
     # url(r'^face/$', views.Face, name="Face"),
     url(r'^robots.txt$', views.robots_txt, name="robots_txt"),
-    url(r'^sitemap.xml', views.robots_txt, name="sitemap_xml"),
+    url(r'^sitemap.xml', views.sitemap_xml, name="sitemap_xml"),
 
 ]
 
