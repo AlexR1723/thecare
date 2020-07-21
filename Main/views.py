@@ -487,3 +487,11 @@ def handler404(request,exception):
 
 def success(request):
     return render(request, 'success.html', locals())
+
+
+
+def robots_txt(request):
+    return render(request, 'robots.txt', locals())
+
+def sitemap_xml(request):
+    return render(request, 'sitemap.xml', locals())

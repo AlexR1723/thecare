@@ -46,5 +46,8 @@ urlpatterns = [
     # url(r'^contacts/$', views.Contacts, name="Contacts"),
     # url(r'^items_catalog/$', views.Items_catalog, name="Items_catalog"),
     # url(r'^face/$', views.Face, name="Face"),
+    url(r'^robots.txt$', views.robots_txt, name="robots_txt"),
+    url(r'^sitemap.xml', views.robots_txt, name="sitemap_xml"),
+
 ]
 
