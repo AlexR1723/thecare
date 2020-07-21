@@ -14,6 +14,7 @@ from openpyxl import load_workbook
 import dropbox
 import os
 from django.conf import settings
+from django.views.decorators.cache import cache_page
 
 list = []
 list_count = 0
@@ -69,7 +70,7 @@ def get_user_id(request):
     # print(user)
     return user
 
-
+@cache_page(600, cache='default', key_prefix='')
 def Main(request):
     slide_first = Slider.objects.all()[0]
     slide = Slider.objects.all()[1:]
