@@ -10,8 +10,13 @@
                         <ol class="custom-breadcrumb breadcrumb px-0">
                             <li class="breadcrumb-item"><a href="{% url 'Main' %}"><i class="fa fa-home home-icon"
                                                                                       aria-hidden="true"></i></a></li>
+                            {% if head == 'Бренды' %}
+                                <li class="breadcrumb-item active" aria-current="page"><a
+                                    href="{% url 'Brands' %}">{{ head }}</a></li>
+                            {% else %}
                             <li class="breadcrumb-item active" aria-current="page"><a
                                     href="{% url 'Catalog' head_url %}">{{ head }}</a></li>
+                            {% endif %}
                         </ol>
                     </nav>
                 </div>

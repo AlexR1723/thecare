@@ -85,7 +85,7 @@ class NeedType(models.Model):
 
 class Brands_model(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True, verbose_name='Наименование')
-    image = models.ImageField(upload_to='uploads/', blank=True, null=True, verbose_name='Изображение')
+    sale = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
