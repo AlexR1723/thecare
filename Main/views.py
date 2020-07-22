@@ -394,10 +394,10 @@ def top_product_save(request):
                                                   category=categ[0], resource=res, brand=brand, artikul=v[14],
                                                   artik_brand=v[15], main_photo="uploads/product/" + v[11], is_top = 1)
                         product_str.save()
-                        if len(v) > 20:
-                            if str(v(20)).find('+') != -1:
-                                product_str.hit_for_brand=True
-                                product_str.save()
+                        # if len(v) > 20:
+                        #     if str(v(20)).find('+') != -1:
+                        #         product_str.hit_for_brand=True
+                        #         product_str.save()
                     # такой товар есть - обновили
                     else:
                         print('else')
@@ -414,10 +414,10 @@ def top_product_save(request):
                         product_str.is_top = 1
                         product_str.save()
                         print(product_str.is_top)
-                        if len(v)>20:
-                            if str(v(20)).find('+') != -1:
-                                product_str.hit_for_brand=True
-                                product_str.save()
+                        # if len(v)>20:
+                        #     if str(v(20)).find('+') != -1:
+                        #         product_str.hit_for_brand=True
+                        #         product_str.save()
                     # выбираем товар
                     product = Product.objects.get(id=product_str.id)
                     print(product)
