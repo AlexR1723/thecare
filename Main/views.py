@@ -291,6 +291,186 @@ def save_product(request):
     except:
         return HttpResponse(json.dumps(False))
 
+def del_product_top(request):
+    products=Product.filter(is_top=True)
+    for p in products:
+        p.is_top=False
+        p.save()
+    return HttpResponse(json.dumps(True))
+
+def save_product_top(request):
+    # добавить выборку каждой переменной
+    print('save_product')
+    try:
+        i = int(request.GET.get('i'))
+        all = int(request.GET.get('all'))
+        # print(i+1)
+        if (i + 1) >= all:
+            # print('clear')
+            settings.PROD_LIST.clear()
+        # print(i)
+        file = Files.objects.last()
+        rb = xlrd.open_workbook(file.file.path)
+
+        sheet = rb.sheet_by_index(0)
+        v = sheet.row_values(i)
+        # print(v)
+        if v is not None:
+            # print(v)
+            # категория (для волос, для тела и тд)
+            categ = CategoryType.objects.filter(name=v[8])
+            # наименование средства
+            res = ResourceType.objects.filter(category=categ[0]).filter(name=v[9])
+            if res.count() == 0:
+                res = ResourceType(category=categ[0], name=v[9])
+                res.save()
+            else:
+                res = res[0]
+            if categ.count() > 0:
+                brand = Brands_model.objects.filter(name__iexact=v[2])
+                if brand.count() == 0:
+                    brand = Brands_model(name=v[2])
+                    brand.save()
+                else:
+                    brand = brand[0]
+                # выбираем товар, где картинка текст
+                print(v[3])
+                print(v[2])
+                print(v[4])
+                product_str = Product_str.objects.filter(title__iexact=v[3]).filter(brand__name__iexact=v[2]).filter(
+                    shot_description__iexact=v[4])
+                # такого товара нет - добавили
+                if product_str.count() == 0:
+                    print('if')
+                    product_str = Product_str(title=v[3], shot_description=v[4], description=v[5], note=v[6],
+                                              components=v[7],
+                                              category=categ[0], resource=res, brand=brand, artikul=v[14],
+                                              artik_brand=v[15], main_photo="uploads/product/" + v[11], is_top=True)
+                    product_str.save()
+                    if str(v(20)).find('+') != -1:
+                        product_str.hit_for_brand=True
+                        product_str.save()
+                # такой товар есть - обновили
+                else:
+                    print('else')
+                    product_str = product_str[0]
+                    product_str.description = v[5]
+                    product_str.note = v[6]
+                    product_str.components = v[7]
+                    product_str.category = categ[0]
+                    product_str.resource = res
+                    product_str.brand = brand
+                    product_str.artikul = v[14]
+                    product_str.artik_brand = v[15]
+                    product_str.main_photo = "uploads/product/" + v[11]
+                    product_str.is_top=True
+                    product_str.save()
+                    if str(v(20)).find('+') != -1:
+                        product_str.hit_for_brand=True
+                        product_str.save()
+                # выбираем товар
+                product = Product.objects.get(id=product_str.id)
+                print(product)
+
+                # потребности товара
+                # удаляем старые потребности
+                product_need = ProductNeed.objects.filter(product=product)
+                product_need.delete()
+                # выбираем новые потребности
+                needs = v[10]
+                list_need = needs.split(', ')
+                if len(list_need) == 1:
+                    need = NeedType.objects.filter(name__iexact=needs).filter(category=categ[0])
+                    if need.count() == 0:
+                        need = NeedType(name=needs, category=categ[0])
+                        need.save()
+                    else:
+                        need = need[0]
+                    product_need = ProductNeed.objects.filter(product=product).filter(need=need)
+                    if product_need.count() == 0:
+                        product_need = ProductNeed(product=product, need=need)
+                        product_need.save()
+                else:
+                    for n in list_need:
+                        need = NeedType.objects.filter(name__iexact=n).filter(category=categ[0])
+                        if need.count() == 0:
+                            need = NeedType(name=n, category=categ[0])
+                            need.save()
+                        else:
+                            need = need[0]
+                        product_need = ProductNeed.objects.filter(need=need).filter(product=product)
+                        if product_need.count() == 0:
+                            product_need = ProductNeed(product=product, need=need)
+                            product_need.save()
+
+                # объем
+                # удаляем старые объемы
+                # product_size = ProductSize.objects.filter(product=product)
+                # product_size.delete()
+                # выбираем новые объемы
+                if v[12] == "":
+                    size_name = 0
+                else:
+                    size_name = v[12]
+                try:
+                    size_name = float(size_name)
+                    size = Size.objects.filter(float_name=size_name)
+                    if size.count() == 0:
+                        size = Size(float_name=size_name)
+                        size.save()
+                    else:
+                        size = size[0]
+                except:
+                    size = Size.objects.filter(str_name=size_name)
+                    if size.count() == 0:
+                        size = Size(str_name=size_name)
+                        size.save()
+                    else:
+                        size = size[0]
+                print(size)
+                count = 0
+                price = 0
+                sale = 0
+                if v[16] and v[16] != "":
+                    count = int(v[16])
+                if v[17] and v[17] != "":
+                    price = int(v[17])
+                if v[19] and v[19] != "":
+                    sale = int(v[19])
+                if sale == 0:
+                    print('if_size')
+                    product_size = ProductSize(product=product, size=size, price=price, count=count)
+                    product_size.save()
+                    print(product_size)
+                else:
+                    print('else_size')
+                    new_price = price - (price * sale / 100)
+                    product_size = ProductSize(product=product, size=size, old_price=price, count=count, sale=sale,
+                                               price=new_price)
+                    product_size.save()
+                    print(product_size)
+
+                # оттенки
+                # удаляем старые оттенки
+                product_tone = ProductTone.objects.filter(product=product)
+                product_tone.delete()
+                # выбираем новые оттенки
+                if v[13] != "" and v[13] != " ":
+                    tones = v[13]
+                    list_tone = tones.split('; ')
+                    if list_tone != "" and len(list_tone) != 0:
+                        for t in list_tone:
+                            product_tone = ProductTone(product=product, name=t)
+                            product_tone.save()
+
+            # if i+1 == len(settings.PROD_LIST):
+
+            return HttpResponse(json.dumps(True))
+        else:
+            return HttpResponse(json.dumps('not save'))
+    except:
+        return HttpResponse(json.dumps(False))
+
 
 def check_picture(request):
     # print(response)
