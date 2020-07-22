@@ -163,7 +163,7 @@ def save_product(request):
 
         sheet = rb.sheet_by_index(0)
         v = sheet.row_values(i)
-        # print(v)
+        print(v)
         if v is not None:
             # print(v)
             # категория (для волос, для тела и тд)
