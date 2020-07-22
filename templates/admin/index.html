@@ -153,46 +153,6 @@
     <script>
         window.onload = function () {
 
-            {#получить наименования брендов#}
-            {#$.ajax({#}
-            {#    type: "GET",#}
-            {#    dataType: "json",#}
-            {#    async: false,#}
-            {#    url: 'get_brands_list',#}
-            {#    success: function (data) {#}
-            {#        var select = document.getElementById('brands_list')#}
-            {#        for (var i = 0; i < data.length; i++) {#}
-            {#            var option = document.createElement('option')#}
-            {#            option.setAttribute('value', data[i][0])#}
-            {#            option.innerText = data[i][1]#}
-            {#            select.append(option)#}
-            {#        }#}
-            {#    },#}
-            {#    error: function (data) {#}
-            {#        alert('error')#}
-            {#    }#}
-
-            {#$('select#brands_list').on('change', function () {#}
-            {#    var brand = $("#brands_list option:selected").val();#}
-            {##}
-            {#    $.ajax({#}
-            {#        type: "GET",#}
-            {#        dataType: "json",#}
-            {#        async: false,#}
-            {#        url: 'get_sale_brand',#}
-            {#        data: {#}
-            {#            brand: brand#}
-            {#        },#}
-            {#        success: function (data) {#}
-            {#            var input = document.getElementById('brand_sale')#}
-            {#            input.setAttribute('value', data)#}
-            {#        },#}
-            {#        error: function (data) {#}
-            {#            alert('error')#}
-            {#        }#}
-            {#    });#}
-            {##}
-            {#})#}
 
             $('#check_picture').click(function () {
 
@@ -409,7 +369,7 @@
             <form class="w-100" action="{% url 'Save_excel_file' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label class="text">Выборите Excel файл для добавления товаров:</label>
-                <input type="hidden" name="top" value="top">
+                <input type="hidden" name="top" value="all">
                 <input type="file" class="mb-1 form-control prof-file d-none" name="excel-file" id="excel-file-admin">
                 <label for="excel-file-admin" class="btn btn-tertiary js-labelFile">
                     <i class="fas fa-upload" aria-hidden="true"></i>
