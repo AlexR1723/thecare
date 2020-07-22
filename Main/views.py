@@ -95,6 +95,7 @@ def Save_excel_file(request):
     print('Save_excel_file')
     if request.method == 'POST':
         settings.TOP=str(request.POST.get('top'))
+        print(settings.TOP)
         doc = request.FILES
         if (doc):
             settings.PROD_LIST.clear()
