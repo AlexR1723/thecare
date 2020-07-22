@@ -149,7 +149,7 @@
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script>
         window.onload = function () {
-            var flag = 'all';
+
             $('#check_picture').click(function () {
 
                 var div = document.getElementById('lst_not')
@@ -189,7 +189,6 @@
             $('input#excel-file-admin').on('change', function () {
                 var fileName = $(this).val();
                 if (fileName) {
-                    flag = 'all';
                     var btn = $('#submit-excel-file-admin');
                     btn.click();
                 }
@@ -197,7 +196,6 @@
             $('input#top-file-admin').on('change', function () {
                 var fileName = $(this).val();
                 if (fileName) {
-                    flag = 'top';
                     var btn = $('#submit-top-file-admin');
                     btn.click();
                 }
@@ -214,6 +212,7 @@
             var count = 0;
             // var time = (1000 / (count - 1)) * 5
             var list = get_count();
+            var flag = get_top();
             count = list.length;
             if (count > 0) {
                 show_progress(count);
@@ -282,6 +281,24 @@
             return list;
         }
 
+        function get_top() {
+            var flag = '';
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                async: false,
+                url: 'get_top',
+                success: function (data) {
+                    flag = data;
+                    // console.log(count);
+                },
+                error: function (data) {
+                    alert('error')
+                }
+            });
+            return flag;
+        }
+
         function show_progress(count) {
             var progress_bl = document.getElementById('progress-block');
             progress_bl.classList.remove('d-none');
@@ -322,7 +339,7 @@
                 type: "GET",
                 dataType: "json",
                 async: false,
-                url: 'save_product_top',
+                url: 'top_product_save',
                 data: {
                     i: i,
                     all: count
@@ -348,6 +365,7 @@
             <form class="w-100" action="{% url 'Save_excel_file' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label class="text">Выборите Excel файл для добавления товаров:</label>
+                <input type="hidden" name="top" value="top">
                 <input type="file" class="mb-1 form-control prof-file d-none" name="excel-file" id="excel-file-admin">
                 <label for="excel-file-admin" class="btn btn-tertiary js-labelFile">
                     <i class="fas fa-upload" aria-hidden="true"></i>
@@ -362,6 +380,7 @@
             <form class="w-100" action="{% url 'Save_excel_file' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label class="text">Выборите Excel файл для добавления товаров в "ТОП":</label>
+                <input type="hidden" name="top" value="top">
                 <input type="file" class="mb-1 form-control prof-file d-none" name="excel-file" id="top-file-admin">
                 <label for="top-file-admin" class="btn btn-tertiary js-labelFile">
                     <i class="fas fa-upload" aria-hidden="true"></i>

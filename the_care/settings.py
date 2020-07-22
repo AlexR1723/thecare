@@ -137,8 +137,8 @@ USE_L10N = True
 
 USE_TZ = False
 
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-SESSION_CACHE_ALIAS = "default"
+# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+# SESSION_CACHE_ALIAS = "default"
 
 PIPELINE = {
     'STYLESHEETS': {
@@ -187,6 +187,7 @@ CART_USER = 'user'
 LOGIN_URL = '/log_in'
 
 PROD_LIST = []
+TOP=''
 
 PAY_LOGIN = 'thecare'
 # PAY_INV = '4500029'

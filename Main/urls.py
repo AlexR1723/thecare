@@ -34,12 +34,13 @@ urlpatterns = [
     url(r'check_login', views.check_login, name='check_login'),
     url(r'check_register', views.check_register, name='check_register'),
 
+    url(r'top_product_save', views.top_product_save, name='top_product_save'),
     url(r'save_product', views.save_product, name='save_product'),
-    url(r'save_product_top', views.save_product_top, name='save_product_top'),
     url(r'del_product_top', views.del_product_top, name='del_product_top'),
     url(r'check_picture', views.check_picture, name='check_picture'),
     url(r'get_product_count', views.get_product_count, name='get_product_count'),
     url(r'get_product_list', views.get_product_list, name='get_product_list'),
+    url(r'get_top', views.get_top, name='get_top'),
 
     # url(r'^$', views.Main, name="Main"),
     # url(r'^dev/$', views.Dev, name="Dev"),
