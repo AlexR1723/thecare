@@ -443,7 +443,8 @@ $('#btn_add_to_cart').click(function () {
         },
         success: function (data) {
             if (data !== false) {
-                document.getElementById('user_basket_total').innerText = data + ' руб.'
+                document.getElementById('user_basket_total').innerText = data[0] + ' руб.'
+                document.getElementById('count_user_items').innerHTML = data[1]
                 notice('Добавлено в корзину')
             } else {
                 notice('Не удалось добавить в корзину, попробуйте позже!')
@@ -473,6 +474,7 @@ $('.btn_cart_minus').on('click', function () {
                     document.getElementById('item_' + slug).innerText = data.product_total + ' руб.'
                     document.getElementById('user_basket_total').innerText = data.total + ' руб.'
                     document.getElementById('cart_total_price').innerText = data.total + ' руб.'
+                    document.getElementById('count_user_items').innerHTML = data.cnt
                 } else {
                     notice('Произошла ошибка, попробуйте позже!')
                 }
@@ -501,6 +503,7 @@ $('.btn_cart_plus').on('click', function () {
                     document.getElementById('item_' + slug).innerText = data.product_total + ' руб.'
                     document.getElementById('user_basket_total').innerText = data.total + ' руб.'
                     document.getElementById('cart_total_price').innerText = data.total + ' руб.'
+                    document.getElementById('count_user_items').innerHTML = data.cnt
                 } else {
                     notice('Произошла ошибка, попробуйте позже!')
                 }
@@ -525,8 +528,9 @@ $('.btn_cart_del_item').on('click', function () {
         success: function (data) {
             if (data !== false) {
                 document.getElementById('carditem_' + slug).remove()
-                document.getElementById('user_basket_total').innerText = data + ' руб.'
-                document.getElementById('cart_total_price').innerText = data + ' руб.'
+                document.getElementById('user_basket_total').innerText = data[0] + ' руб.'
+                document.getElementById('cart_total_price').innerText = data[0] + ' руб.'
+                document.getElementById('count_user_items').innerHTML = data[1]
             } else {
                 notice('Произошла ошибка, попробуйте позже!')
             }
@@ -576,6 +580,7 @@ $('.cart_item_input').on('keyup', function () {
                     document.getElementById('item_' + slug).innerText = data.product_total + ' руб.'
                     document.getElementById('user_basket_total').innerText = data.total + ' руб.'
                     document.getElementById('cart_total_price').innerText = data.total + ' руб.'
+                    document.getElementById('count_user_items').innerHTML = data.cnt
                 } else {
                     notice('Произошла ошибка, попробуйте позже!')
                 }

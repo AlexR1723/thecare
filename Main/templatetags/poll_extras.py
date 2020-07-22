@@ -61,19 +61,34 @@ def gf_user(request):
     return user_name
 
 
+def session_save(request, obj):
+    try:
+        request.session[settings.CART_SESSION_ID] = obj
+        request.session.modified = True
+        return True
+    except:
+        return False
+
+
 @register.filter
 def gf_busket(request):
     basket = 0
     ses = request.session.get(settings.CART_SESSION_ID)
+    # print('gf_busket')
+    # print(ses)
     if ses and ses is not None:
         ids = []
         for i in ses.keys():
             ids.append(int(i))
-        prods = ProductSize.objects.filter(id__in=ids)
-        for i in ids:
-            prod = prods.filter(id=i)[0]
-            count = ses[str(i)]['count']
-            ses[str(i)]['total'] = prod.price * count
+            # print(ids)
+        if ids:
+            prods = ProductSize.objects.filter(id__in=ids)
+            # print(prods)
+            for i in ids:
+                prod = prods.filter(id=i)[0]
+                count = ses[str(i)]['count']
+                ses[str(i)]['total'] = prod.price * count
+                session_save(request,ses)
 
         for i in ses.values():
             basket += int(i['total'])
@@ -85,14 +100,14 @@ def gf_count_items(request):
     itm_cnt = 0
     ses = request.session.get(settings.CART_SESSION_ID)
     if ses and ses is not None:
-        ids = []
-        for i in ses.keys():
-            ids.append(int(i))
-        prods = ProductSize.objects.filter(id__in=ids)
-        for i in ids:
-            prod = prods.filter(id=i)[0]
-            count = ses[str(i)]['count']
-            ses[str(i)]['total'] = prod.price * count
+        # ids = []
+        # for i in ses.keys():
+        #     ids.append(int(i))
+        # prods = ProductSize.objects.filter(id__in=ids)
+        # for i in ids:
+        #     prod = prods.filter(id=i)[0]
+        #     count = ses[str(i)]['count']
+        #     ses[str(i)]['total'] = prod.price * count
 
         for i in ses.values():
             itm_cnt += int(i['count'])
