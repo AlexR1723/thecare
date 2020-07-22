@@ -44,7 +44,7 @@ from django.conf import settings
 def Brands(request):
     # dic = global_function(request)
 
-    items = Brands_model.objects.all().order_by('name')
+    items = Brands_model.objects.order_by('name')
     letter = []
     l=[]
     for i in items:

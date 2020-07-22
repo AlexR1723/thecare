@@ -142,6 +142,9 @@
             display: inline-block;
             vertical-align: top;
         }
+        .pl-3{
+            padding-left: 15px;
+        }
     </style>
 
     <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
@@ -149,6 +152,47 @@
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script>
         window.onload = function () {
+
+            {#получить наименования брендов#}
+            {#$.ajax({#}
+            {#    type: "GET",#}
+            {#    dataType: "json",#}
+            {#    async: false,#}
+            {#    url: 'get_brands_list',#}
+            {#    success: function (data) {#}
+            {#        var select = document.getElementById('brands_list')#}
+            {#        for (var i = 0; i < data.length; i++) {#}
+            {#            var option = document.createElement('option')#}
+            {#            option.setAttribute('value', data[i][0])#}
+            {#            option.innerText = data[i][1]#}
+            {#            select.append(option)#}
+            {#        }#}
+            {#    },#}
+            {#    error: function (data) {#}
+            {#        alert('error')#}
+            {#    }#}
+
+            {#$('select#brands_list').on('change', function () {#}
+            {#    var brand = $("#brands_list option:selected").val();#}
+            {##}
+            {#    $.ajax({#}
+            {#        type: "GET",#}
+            {#        dataType: "json",#}
+            {#        async: false,#}
+            {#        url: 'get_sale_brand',#}
+            {#        data: {#}
+            {#            brand: brand#}
+            {#        },#}
+            {#        success: function (data) {#}
+            {#            var input = document.getElementById('brand_sale')#}
+            {#            input.setAttribute('value', data)#}
+            {#        },#}
+            {#        error: function (data) {#}
+            {#            alert('error')#}
+            {#        }#}
+            {#    });#}
+            {##}
+            {#})#}
 
             $('#check_picture').click(function () {
 
@@ -412,10 +456,23 @@
         <div class="col-3">
             <button type="button" class="check_picture" id="check_picture">Проверить наличие картинок</button>
         </div>
-        {#        <label class="text-1">В файловом хранилище отсуствую следующие файлы:</label>#}
         <div id="lst_not" class="col-9">
 
         </div>
     </div>
+
+{#    <div class="upload-file">#}
+{#        <hr class="w-75">#}
+{#    </div>#}
+{#    <div class="upload-file">#}
+{#        <label class="text">Наименование бренда</label>#}
+{#        <select id="brands_list">#}
+{#            <option value="0">-Выберите бренд-</option>#}
+{#        </select>#}
+{#        <label class="text pl-3">скидка</label>#}
+{#        <input type="number" id="brand_sale" style="width: 40px">#}
+{#        <label class="text">%</label>#}
+{##}
+{#    </div>#}
 
 {% endblock %}

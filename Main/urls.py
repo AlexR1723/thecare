@@ -41,6 +41,8 @@ urlpatterns = [
     url(r'get_product_count', views.get_product_count, name='get_product_count'),
     url(r'get_product_list', views.get_product_list, name='get_product_list'),
     url(r'get_top', views.get_top, name='get_top'),
+    # url(r'get_brands_list', views.get_brands_list, name='get_brands_list'),
+    # url(r'get_sale_brand', views.get_sale_brand, name='get_sale_brand'),
 
     # url(r'^$', views.Main, name="Main"),
     # url(r'^dev/$', views.Dev, name="Dev"),

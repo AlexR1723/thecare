@@ -128,6 +128,24 @@ def get_product_list(request):
 def get_top(request):
     return HttpResponse(json.dumps(settings.TOP))
 
+# def get_brands_list(request):
+#     brands=Brands_model.objects.order_by('name')
+#     brands_list=[]
+#     for i in brands:
+#         brands_list.append([i.id,i.name])
+#     return HttpResponse(json.dumps(brands_list))
+#
+#
+# def get_sale_brand(request):
+#     brand=int(request.GET.get('brand'))
+#     product=ProductSize.objects.filter(product__brand__id=brand).order_by('-sale')
+#     print(product[0].sale)
+#     # brands=Brands_model.objects.order_by('name')
+#     # brands_list=[]
+#     # for i in brands:
+#     #     brands_list.append([i.id,i.name])
+#     return HttpResponse(product[0].sale)
+
 
 def save_product(request):
     # добавить выборку каждой переменной
