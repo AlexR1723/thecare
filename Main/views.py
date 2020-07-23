@@ -70,7 +70,7 @@ def get_user_id(request):
     # print(user)
     return user
 
-@cache_page(600, cache='default', key_prefix='')
+# @cache_page(600, cache='default', key_prefix='')
 def Main(request):
     slide_first = Slider.objects.all()[0]
     slide = Slider.objects.all()[1:]
