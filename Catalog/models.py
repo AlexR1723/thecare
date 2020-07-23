@@ -244,6 +244,10 @@ class Product(models.Model):
         sale = ProductSize.objects.filter(product_id=self.id).filter(sale__gt=0).exists()
         return sale
 
+    def get_sale_(self):
+        sale = ProductSize.objects.filter(product_id=self.id).filter(sale__gt=0).order_by('-sale')
+        return sale[0].sale
+
 
 class Size(models.Model):
     str_name = models.TextField(blank=True, null=True)
