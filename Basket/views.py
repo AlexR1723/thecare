@@ -18,33 +18,14 @@ def get_user_id(request):
     return user
 
 
-def check_product_exist(request):
-    try:
-        ses = request.session.get(settings.CART_SESSION_ID)
-        # print(ses)
-        prod_keys = set(ses.keys())
-        prod_bd = Product.objects.all().values_list('slug', flat=True)
-        for i in prod_keys:
-            if i not in prod_bd:
-                # print(i)
-                del ses[i]
-        session_save(request, ses)
-        # print(res)
-        return True
-    except:
-        return False
-
-
-# Create your views here.
 def Cart(request):
-    # dic = global_function(request)
     prod_ses = request.session.get(settings.CART_SESSION_ID)
     print(prod_ses)
 
     # all_prices = 0
     if prod_ses is not None:
         # for i in prod_ses.values():
-            # all_prices += int(i['total'])
+        # all_prices += int(i['total'])
         # products = Product.objects.filter(slug__in=prod_ses.keys())
         products = ProductSize.objects.filter(id__in=prod_ses.keys())
     if request.user.is_authenticated:
@@ -55,7 +36,6 @@ def Cart(request):
         adress=user.adress
         phone=user.phone
         email=auth_user.email
-
 
     # prods=ProductSize.objects.all()
     # for i in prods:
@@ -100,7 +80,6 @@ def create_cart_session(request):
         if not ses:
             print('not ses')
             request.session[settings.CART_SESSION_ID] = {}
-            # print(request.session.get(settings.CART_SESSION_ID))
             return request.session.get(settings.CART_SESSION_ID)
         else:
             return ses
@@ -123,10 +102,11 @@ def add_product(request):
                              'total': pr_sz.price * (ses[item]['count'] + count)}
             session_save(request, ses)
             total_price = 0
-            print(request.session.get(settings.CART_SESSION_ID))
+            cnt = 0
             for i in request.session.get(settings.CART_SESSION_ID).values():
                 total_price += int(i['total'])
-            return HttpResponse(json.dumps((total_price)))
+                cnt += int(i['count'])
+            return HttpResponse(json.dumps([total_price, cnt]))
         else:
             return HttpResponse(json.dumps((False)))
     except:
@@ -158,12 +138,15 @@ def plus_minus_product(request):
             total_price = 0
             print(request.session.get(settings.CART_SESSION_ID))
             ses = request.session.get(settings.CART_SESSION_ID)
+            cnt = 0
             for i in ses.values():
                 total_price += int(i['total'])
+                cnt += int(i['count'])
             res = {
                 'prod_count': ses[item]['count'],
                 'product_total': ses[item]['total'],
-                'total': total_price
+                'total': total_price,
+                'cnt': cnt
             }
             return HttpResponse(json.dumps((res)))
         else:
@@ -185,10 +168,11 @@ def del_product(request):
             else:
                 return HttpResponse(json.dumps((False)))
             total_price = 0
-            print(request.session.get(settings.CART_SESSION_ID))
+            cnt = 0
             for i in request.session.get(settings.CART_SESSION_ID).values():
                 total_price += int(i['total'])
-            return HttpResponse(json.dumps((total_price)))
+                cnt += int(i['count'])
+            return HttpResponse(json.dumps([total_price, cnt]))
         else:
             return HttpResponse(json.dumps((False)))
     except:
@@ -331,21 +315,22 @@ def pay_result(request):
         order.status_id = 1
         order.date = datetime.datetime.now()
         order.save()
-        prods=UserOrderProducts.objects.filter(order_id=order.id)
+        prods = UserOrderProducts.objects.filter(order_id=order.id)
         for i in prods:
-            prod=ProductSize.objects.get(id=i.product_size_id)
+            prod = ProductSize.objects.get(id=i.product_size_id)
             print('prod')
             print(prod.count)
             print(i.count)
-            cnt=prod.count-i.count
+            cnt = prod.count - i.count
             print(cnt)
-            if cnt<0:
+            if cnt < 0:
                 print('less 0')
+                session_save(request, {})
                 return HttpResponse(json.dumps('bad sign'))
             else:
-                prod.count=cnt
+                prod.count = cnt
                 prod.save()
-                print('count after order'+str(prod.count))
+                print('count after order' + str(prod.count))
         return HttpResponse(json.dumps('OK' + str(InvId)))
     else:
         return HttpResponse(json.dumps('bad sign'))
