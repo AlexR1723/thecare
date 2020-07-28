@@ -15,6 +15,7 @@ import dropbox
 import os
 from django.conf import settings
 from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 
 list = []
 list_count = 0
@@ -83,6 +84,11 @@ def Main(request):
 
     # else:
     return render(request, 'Main/Main.html', locals())
+
+
+def clear_cache(request):
+    cache.delete('/')
+    return HttpResponse(json.dumps(True))
 
 
 def Dev(request):
