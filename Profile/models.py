@@ -183,7 +183,7 @@ class ProductNeed(models.Model):
 
 
 class ProductTone(models.Model):
-    product = models.ForeignKey(Product, models.DO_NOTHING, blank=True, null=True)
+    product_size = models.ForeignKey(ProductSize, models.DO_NOTHING, blank=True, null=True)
     name = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
