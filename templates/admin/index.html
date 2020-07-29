@@ -100,8 +100,18 @@
             display: block;
         }
 
+        .col-auto{
+            display: inline-block;
+        }
+        .mr-2{
+            margin-right: 2rem;
+        }
+
         .mt-0 {
             margin-top: 0;
+        }
+        .m-0{
+            margin: 0;
         }
 
         .check_picture {
@@ -163,7 +173,7 @@
                 $.ajax({
                     type: "GET",
                     dataType: "json",
-                    async: false,
+                    async: true,
                     url: 'check_picture',
                     success: function (data) {
                         if (data.length == 0) {
@@ -188,7 +198,22 @@
                         console.log('ERROR')
                     }
                 });
-            })
+            });
+
+            $('#cache_clear').click(function () {
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    async: false,
+                    url: 'clear_cache',
+                    success: function (data) {
+                        alert('Сайт успешно обновлен!')
+                    },
+                    error: function (data) {
+                        console.log('ERROR')
+                    }
+                });
+            });
 
             $('input#excel-file-admin').on('change', function () {
                 var fileName = $(this).val();
@@ -413,11 +438,45 @@
         <hr class="w-75">
     </div>
     <div class="upload-file">
-        <div class="col-3">
+        <div class="col-auto mr-2">
+            <button type="button" class="check_picture" id="cache_clear">Обновить сайт</button>
+        </div>
+        <div class="col-auto">
             <button type="button" class="check_picture" id="check_picture">Проверить наличие картинок</button>
         </div>
         <div id="lst_not" class="col-9">
 
+        </div>
+    </div>
+    <div class="upload-file">
+        <hr class="w-75">
+    </div>
+    <div class="upload-file">
+        <div class="col-auto mr-2">
+            <div class="w-100">
+                <label class="m-0">№ заказа</label>
+            </div>
+            <div class="w-100">
+                <input type="text">
+            </div>
+        </div>
+        <div class="col-auto mr-2">
+            <div class="w-100">
+                <label class="m-0">статус</label>
+            </div>
+            <div class="w-100">
+                <input type="text">
+            </div>
+        </div>
+        <div class="col-auto mr-2">
+            <div class="w-100">
+                <button type="button" class="check_picture" id="check_status">Проверить</button>
+            </div>
+        </div>
+        <div class="col-auto mr-2">
+            <div class="w-100">
+                <button type="button" class="check_picture" id="save_status">Сохранить</button>
+            </div>
         </div>
     </div>
 

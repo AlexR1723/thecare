@@ -15,6 +15,7 @@ import dropbox
 import os
 from django.conf import settings
 from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 
 list = []
 list_count = 0
@@ -70,7 +71,7 @@ def get_user_id(request):
     # print(user)
     return user
 
-# @cache_page(600, cache='default', key_prefix='')
+@cache_page(600, cache='default', key_prefix='')
 def Main(request):
     slide_first = Slider.objects.all()[0]
     slide = Slider.objects.all()[1:]
@@ -83,6 +84,11 @@ def Main(request):
 
     # else:
     return render(request, 'Main/Main.html', locals())
+
+
+def clear_cache(request):
+    cache.delete('/')
+    return HttpResponse(json.dumps(True))
 
 
 def Dev(request):
@@ -164,7 +170,7 @@ def save_product(request):
 
         sheet = rb.sheet_by_index(0)
         v = sheet.row_values(i)
-        print(v)
+
         if v is not None:
             # print(v)
             # категория (для волос, для тела и тд)
@@ -197,10 +203,10 @@ def save_product(request):
                                               category=categ[0], resource=res, brand=brand, artikul=v[14],
                                               artik_brand=v[15], main_photo="uploads/product/" + v[11])
                     product_str.save()
-                    # if len(v) > 20:
-                    #     if str(v(20)).find('+') != -1:
-                    #         product_str.hit_for_brand = True
-                    #         product_str.save()
+                    if len(v) > 20:
+                        if str(v[20]).find('+') != -1:
+                            product_str.hit_for_brand = True
+                            product_str.save()
                 # такой товар есть - обновили
                 else:
                     print('else')
@@ -215,10 +221,10 @@ def save_product(request):
                     product_str.artik_brand = v[15]
                     product_str.main_photo = "uploads/product/" + v[11]
                     product_str.save()
-                    # if len(v) > 20:
-                    #     if str(v(20)).find('+') != -1:
-                    #         product_str.hit_for_brand = True
-                    #         product_str.save()
+                    if len(v) > 20:
+                        if str(v[20]).find('+') != -1:
+                            product_str.hit_for_brand = True
+                            product_str.save()
                 # выбираем товар
                 product = Product.objects.get(id=product_str.id)
                 print(product)
@@ -317,7 +323,7 @@ def save_product(request):
 
                 # оттенки
                 # удаляем старые оттенки
-                product_tone = ProductTone.objects.filter(product=product)
+                product_tone = ProductTone.objects.filter(product_size=product_size)
                 product_tone.delete()
                 # выбираем новые оттенки
                 if v[13] != "" and v[13] != " ":
@@ -325,7 +331,7 @@ def save_product(request):
                     list_tone = tones.split('; ')
                     if list_tone != "" and len(list_tone) != 0:
                         for t in list_tone:
-                            product_tone = ProductTone(product=product, name=t)
+                            product_tone = ProductTone(product_size=product_size, name=t)
                             product_tone.save()
 
             # if i+1 == len(settings.PROD_LIST):
@@ -394,10 +400,10 @@ def top_product_save(request):
                                                   category=categ[0], resource=res, brand=brand, artikul=v[14],
                                                   artik_brand=v[15], main_photo="uploads/product/" + v[11], is_top = 1)
                         product_str.save()
-                        # if len(v) > 20:
-                        #     if str(v(20)).find('+') != -1:
-                        #         product_str.hit_for_brand=True
-                        #         product_str.save()
+                        if len(v) > 20:
+                            if str(v[20]).find('+') != -1:
+                                product_str.hit_for_brand = True
+                                product_str.save()
                     # такой товар есть - обновили
                     else:
                         print('else')
@@ -414,10 +420,10 @@ def top_product_save(request):
                         product_str.is_top = 1
                         product_str.save()
                         print(product_str.is_top)
-                        # if len(v)>20:
-                        #     if str(v(20)).find('+') != -1:
-                        #         product_str.hit_for_brand=True
-                        #         product_str.save()
+                        if len(v)>20:
+                            if str(v[20]).find('+') != -1:
+                                product_str.hit_for_brand = True
+                                product_str.save()
                     # выбираем товар
                     product = Product.objects.get(id=product_str.id)
                     print(product)
@@ -516,7 +522,7 @@ def top_product_save(request):
 
                     # оттенки
                     # удаляем старые оттенки
-                    product_tone = ProductTone.objects.filter(product=product)
+                    product_tone = ProductTone.objects.filter(product_size=product_size)
                     product_tone.delete()
                     # выбираем новые оттенки
                     if v[13] != "" and v[13] != " ":
@@ -524,7 +530,7 @@ def top_product_save(request):
                         list_tone = tones.split('; ')
                         if list_tone != "" and len(list_tone) != 0:
                             for t in list_tone:
-                                product_tone = ProductTone(product=product, name=t)
+                                product_tone = ProductTone(product_size=product_size, name=t)
                                 product_tone.save()
 
                 # if i+1 == len(settings.PROD_LIST):
