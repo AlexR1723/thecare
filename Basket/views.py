@@ -4,7 +4,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.db import transaction
-
+from pysendpulse.pysendpulse import PySendPulse
 from .models import *
 
 
@@ -29,13 +29,13 @@ def Cart(request):
         # products = Product.objects.filter(slug__in=prod_ses.keys())
         products = ProductSize.objects.filter(id__in=prod_ses.keys())
     if request.user.is_authenticated:
-        user_id=get_user_id(request)
-        auth_user=AuthUser.objects.get(id=user_id)
-        user=Users.objects.get(user=user_id)
-        fio=auth_user.last_name+' '+auth_user.first_name+' '+user.patronymic
-        adress=user.adress
-        phone=user.phone
-        email=auth_user.email
+        user_id = get_user_id(request)
+        auth_user = AuthUser.objects.get(id=user_id)
+        user = Users.objects.get(user=user_id)
+        fio = auth_user.last_name + ' ' + auth_user.first_name + ' ' + user.patronymic
+        adress = user.adress
+        phone = user.phone
+        email = auth_user.email
 
     # prods=ProductSize.objects.all()
     # for i in prods:
@@ -311,6 +311,22 @@ def pay_result(request):
     print(new_hash)
     print(SignatureValue)
     if str(SignatureValue).lower() == str(new_hash).lower():
+
+        # отправка не больше десяти писем в секунду
+        print('send mail')
+        SPApiProxy = PySendPulse(settings.EMAIL_REST_API_ID, settings.EMAIL_REST_API_SECRET, 'memcached')
+        email = {
+            'subject': 'Уведомление от системы',
+            'html': '<h1>Hello, Anastason!</h1><p>This message is only sent to very pretty girls!</p>',
+            'text': ' пр Проверка рабоспособности почты',
+            'from': {'name': 'The Care', 'email': 'mail@thecare.ru'},
+            'to': [
+                {'name': 'Anastason', 'email': 'leha.avdeenko.98@mail.ru'}
+            ]
+        }
+        # sending = SPApiProxy.smtp_send_mail(email)
+        # print(sending)
+
         order = UserOrders.objects.filter(order_number=InvId)[0]
         order.status_id = 1
         order.date = datetime.datetime.now()
@@ -399,3 +415,8 @@ def pay_check(request):
         dc['MerchantLogin'] = settings.PAY_LOGIN
         dc['InvoiceID'] = us_ord.order_number
         return HttpResponse(json.dumps(dc))
+
+
+def send_mail(request):
+
+    return HttpResponse(json.dumps(True))

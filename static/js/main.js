@@ -818,3 +818,19 @@ $('#btn_final_pay').click(function () {
     })
     // }
 })
+
+$('#send_mail').click(function () {
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        async: false,
+        url: '/cart/send_mail',
+        success: function (data) {
+            console.log(data,'   ' ,Date())
+        },
+        error: function (data) {
+            alert('error')
+        }
+    })
+    // }
+})
