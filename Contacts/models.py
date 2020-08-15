@@ -89,6 +89,7 @@ class Product(models.Model):
     artik_brand = models.TextField(blank=True, null=True, max_length=20)
     is_top = models.BooleanField(blank=True, null=True)
     hit_for_brand = models.BooleanField(blank=True, null=True)
+    price=models.CharField(max_length=500, blank=True, null=True)
 
     # price = models.IntegerField(blank=True, null=True, verbose_name="Стоимость")
     # sale = models.IntegerField(blank=True, null=True)

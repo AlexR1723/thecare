@@ -24,6 +24,7 @@ def make_search_url(value, arg):
 # def get_dict(value, arg):
 #     return value[arg]
 
+    
 
 @register.filter
 def convert_to_int(value):
@@ -112,3 +113,32 @@ def gf_count_items(request):
         for i in ses.values():
             itm_cnt += int(i['count'])
     return itm_cnt
+
+
+
+
+
+# @register.filter
+# def get_media(id):
+# 	prod=Product.objects.get(id=id)
+# 	return prod.main_photo.url
+
+
+
+
+@register.filter
+def get_prod_price_format(id):
+	prod=int(Product.objects.get(id=id).id)
+	sizes = ProductSize.objects.filter(product__id=prod).order_by('size__float_name', 'size__str_name').values('price')
+	# return(sizes[0]['price'])
+	if len(sizes) > 0:
+		sizes=sizes[0]['price']
+		return '{:,}'.format(sizes).replace(',', ' ')
+	else:
+		return 0
+            
+          
+@register.filter
+def get_prod_absolute_url(id):
+	prod=Product.objects.get(id=id)
+	return reverse('Item_card', kwargs={'slug': prod.slug})

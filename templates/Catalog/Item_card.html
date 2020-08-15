@@ -2,7 +2,6 @@
 {% load staticfiles %}
 {% load poll_extras %}
 {% block content %}
-
     <div class="container-fluid p-0">
         <div class="row m-0 justify-content-center">
             <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 mt-3">
@@ -11,8 +10,9 @@
                         <ol class="custom-breadcrumb breadcrumb px-0">
                             <li class="breadcrumb-item"><a href="{% url 'Main' %}"><i class="fa fa-home home-icon"
                                                                                       aria-hidden="true"></i></a></li>
-                            <li class="breadcrumb-item active" aria-current="page"><a
-                                    href="{% url 'Catalog' category %}">{{ head }}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                            	<a href="{% url 'Catalog' category %}">{{ head }}</a>
+                            	</li>
                             <li class="breadcrumb-item active d-none d-md-block" aria-current="page">
                                 <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
                             </li>
@@ -44,50 +44,50 @@
                                 <div class="col-12 col-md-7 col-lg-8">
                                     <div class="card-body">
                                         <p class="card-text d-none d-sm-none d-md-inline-block d-lg-inline-block d-xl-inline-block">{{ item.description }}</p>
-                                        {% if not not_size %}
-                                            {% if not sizename %}
-                                                {% if have_sale %}
-                                                    <p class="card-text text-center text-md-left d-inline-block"
-                                                       style="color: red">Скидка!</p>
-                                                {% endif %}
-                                                {% for i in lst %}
-                                                    {% if i.5 > 0 %}
-                                                        <p class="card-text text-center text-md-left d-inline-block
-                                                        w-100">{{ i.1|convert_to_int }} мл. -{{ i.5 }}%</p>
+                                            {% if not not_size %}
+                                                {% if not sizename %}
+                                                    {% if have_sale %}
+                                                        <p class="card-text text-center text-md-left d-inline-block"
+                                                           style="color: red">Скидка!</p>
                                                     {% endif %}
-                                                {% endfor %}
-                                                <p class="card-text text-center text-md-left d-inline-block">
-                                                    Объемы:</p>
-                                                <select name="" id="select_product_sizes"
-                                                        class="select-product-sizes">
                                                     {% for i in lst %}
-                                                        <option
-                                                                value="{{ i.0 }}"
-                                                                data-price="{{ i.2 }}"
-                                                                data-sale="{{ i.3 }}"
-                                                                data-count="{{ i.4 }}">{{ i.1|convert_to_int }} мл.
-                                                            {% if i.3 %}
-                                                                <span style="color: red">-{{ i.5 }}%</span>{% endif %}
-                                                        </option>
+                                                        {% if i.5 > 0 %}
+                                                            <p class="card-text text-center text-md-left d-inline-block
+                                                        w-100">{{ i.1|convert_to_int }} мл. -{{ i.5 }}%</p>
+                                                        {% endif %}
                                                     {% endfor %}
-                                                </select>
-                                            {% else %}
-                                                <p class="card-text text-center text-md-left d-inline-block">Объем: </p>
-                                                <b>{{ sizename }} мл</b>
+                                                    <p class="card-text text-center text-md-left d-inline-block">
+                                                        Объемы:</p>
+                                                    <select name="" id="select_product_sizes"
+                                                            class="select-product-sizes">
+                                                        {% for i in lst %}
+                                                            <option
+                                                                    value="{{ i.0 }}"
+                                                                    data-price="{{ i.2 }}"
+                                                                    data-sale="{{ i.3 }}"
+                                                                    data-count="{{ i.4 }}">{{ i.1|convert_to_int }} мл.
+                                                                {% if i.3 %}
+                                                                    <span style="color: red">-{{ i.5 }}%</span>{% endif %}
+                                                            </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                {% else %}
+                                                    <p class="card-text text-center text-md-left d-inline-block">Объем: </p>
+                                                    <b>{{ sizename }} мл</b>
+                                                {% endif %}
                                             {% endif %}
-                                        {% endif %}
-                                        <div class="row m-0">
+                                        <div class="row m-0"></div>
                                             <p class="card-text text-center text-md-left d-inline-block">Оттенок: </p>
                                             <select name="" id="select_product_tone"
-                                                    class="select-product-sizes">
-                                                <option>
-                                                    Наимнование оттенка
-                                                </option>
-                                                <option>
-                                                    Наимнование оттенка
-                                                </option>
-                                            </select>
-                                        </div>
+                                                            class="select-product-sizes">
+                                                            <option>
+                                                               Наимнование оттенка
+                                                            </option>
+                                                            <option>
+                                                               Наимнование оттенка
+                                                            </option>
+                                                    </select>
+
 
                                         <div class="card-price-block row m-0 align-items-center mb-3">
 
@@ -213,12 +213,12 @@
                                         <div class="card">
                                             <a href="{{ i.product.get_absolute_url }}">
                                                 <div class="card-wrap">
-                                                    <div class="card-img">
-                                                        {% if i.product.main_photo %}
-                                                            <img src="{{ MEDIA_URL }}{{ i.product.main_photo.url }}"
-                                                                 class="card-img-top" alt="...">
-                                                        {% endif %}
-                                                    </div>
+                                                 <div class="card-img">
+                                                    {% if i.product.main_photo %}
+                                                        <img src="{{ MEDIA_URL }}{{ i.product.main_photo.url }}"
+                                                             class="card-img-top" alt="...">
+                                                    {% endif %}
+                                                 </div>
                                                     <div class="card-body">
                                                         <h5 class="card-title">{{ i.product.title }}</h5>
                                                         <p class="card-text">{{ i.product.shot_description }}</p>

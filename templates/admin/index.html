@@ -162,8 +162,6 @@
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script>
         window.onload = function () {
-
-
             $('#check_picture').click(function () {
 
                 var div = document.getElementById('lst_not')
@@ -243,6 +241,7 @@
             var list = get_count();
             var flag = get_top();
             count = list.length;
+            count = list;
             if (count > 0) {
                 show_progress(count);
                 if (flag === 'top') {
@@ -298,7 +297,7 @@
                 type: "GET",
                 dataType: "json",
                 async: false,
-                url: 'get_product_list',
+                url: 'get_product_count',
                 success: function (data) {
                     list = data;
                     // console.log(count);
@@ -393,7 +392,7 @@
         <div class="upload-file">
             <form class="w-100" action="{% url 'Save_excel_file' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <label class="text">Выборите Excel файл для добавления товаров:</label>
+                <label class="text">Выберите Excel файл для добавления товаров:</label>
                 <input type="hidden" name="top" value="all">
                 <input type="file" class="mb-1 form-control prof-file d-none" name="excel-file" id="excel-file-admin">
                 <label for="excel-file-admin" class="btn btn-tertiary js-labelFile">
@@ -408,7 +407,7 @@
         <div class="upload-file">
             <form class="w-100" action="{% url 'Save_excel_file' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <label class="text">Выборите Excel файл для добавления товаров в "ТОП":</label>
+                <label class="text">Выберите Excel файл для добавления товаров в "ТОП":</label>
                 <input type="hidden" name="top" value="top">
                 <input type="file" class="mb-1 form-control prof-file d-none" name="excel-file" id="top-file-admin">
                 <label for="top-file-admin" class="btn btn-tertiary js-labelFile">
@@ -428,7 +427,7 @@
         </div>
 
         <div class="upload-file">
-            <label class="text">Выборите изображения для добавления к товарам:</label>
+            <label class="text">Выберите изображения для добавления к товарам:</label>
             <a href="https://www.dropbox.com/home/the_care/uploads/product" target="_blank"
                class="btn btn-tertiary js-labelFile"><i class="fas fa-upload" aria-hidden="true"></i>
                 <span class="js-fileName">Загрузить изображения</span></a>

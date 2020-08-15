@@ -18,6 +18,24 @@ def get_user_id(request):
     return user
 
 
+def check_product_exist(request):
+    try:
+        ses = request.session.get(settings.CART_SESSION_ID)
+        # print(ses)
+        prod_keys = set(ses.keys())
+        prod_bd = Product.objects.all().values_list('slug', flat=True)
+        for i in prod_keys:
+            if i not in prod_bd:
+                # print(i)
+                del ses[i]
+        session_save(request, ses)
+        # print(res)
+        return True
+    except:
+        return False
+
+
+# Create your views here.
 def Cart(request):
     prod_ses = request.session.get(settings.CART_SESSION_ID)
     print(prod_ses)
@@ -29,13 +47,13 @@ def Cart(request):
         # products = Product.objects.filter(slug__in=prod_ses.keys())
         products = ProductSize.objects.filter(id__in=prod_ses.keys())
     if request.user.is_authenticated:
-        user_id = get_user_id(request)
-        auth_user = AuthUser.objects.get(id=user_id)
-        user = Users.objects.get(user=user_id)
-        fio = auth_user.last_name + ' ' + auth_user.first_name + ' ' + user.patronymic
-        adress = user.adress
-        phone = user.phone
-        email = auth_user.email
+        user_id=get_user_id(request)
+        auth_user=AuthUser.objects.get(id=user_id)
+        user=Users.objects.get(user=user_id)
+        fio=auth_user.last_name+' '+auth_user.first_name+' '+user.patronymic
+        adress=user.adress
+        phone=user.phone
+        email=auth_user.email
 
     # prods=ProductSize.objects.all()
     # for i in prods:
