@@ -4,7 +4,9 @@ from django.urls import reverse
 from uuslug import slugify
 import datetime
 from os.path import splitext
-from transliterate import slugify
+
+
+# from transliterate import slugify
 
 
 class AuthUser(models.Model):
@@ -115,14 +117,14 @@ class Product(models.Model):
     artik_brand = models.TextField(blank=True, null=True, max_length=20)
     is_top = models.IntegerField(blank=True, null=True, default=0)
     hit_for_brand = models.IntegerField(blank=True, null=True, default=0)
-    price=models.CharField(max_length=500, blank=True, null=True)
+    price = models.CharField(max_length=500, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'product'
         indexes = [
-        	models.Index(fields=['title']),
-        	]
+            models.Index(fields=['title']),
+        ]
         verbose_name = _("товар")
         verbose_name_plural = _("Товары")
 
@@ -130,26 +132,24 @@ class Product(models.Model):
         return reverse('Item_card', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
-    	if not self.id:
-    		super(Product, self).save(*args, **kwargs)
-    		string = str(self.id) + '-' + self.title
-    	else:
-    		string = str(self.id) + '-' + self.title
-    	self.slug = slugify(string)
-    	self.date = datetime.datetime.today()
-    	sizes = ProductSize.objects.filter(product=self).order_by('size__float_name', 'size__str_name')
-    	if sizes.count() > 0:
-    		sizes=sizes[0]
-    		self.price = '{:,}'.format(sizes.price).replace(',', ' ')
-    	else:
-    		self.price = '0'
-    	super(Product, self).save(*args, **kwargs)
+        if not self.id:
+            super(Product, self).save(*args, **kwargs)
+            string = str(self.id) + '-' + self.title
+        else:
+            string = str(self.id) + '-' + self.title
+        self.slug = slugify(string)
+        self.date = datetime.datetime.today()
+        sizes = ProductSize.objects.filter(product=self).order_by('size__float_name', 'size__str_name')
+        if sizes.count() > 0:
+            sizes = sizes[0]
+            self.price = '{:,}'.format(sizes.price).replace(',', ' ')
+        else:
+            self.price = '0'
+        super(Product, self).save(*args, **kwargs)
 
-    	self.note = self.note.replace('\n', '<br />')
-    	self.description = self.description.replace('\n', '<br />')
-    	self.components = self.components.replace('\n', '<br />')
-
-
+        self.note = self.note.replace('\n', '<br />')
+        self.description = self.description.replace('\n', '<br />')
+        self.components = self.components.replace('\n', '<br />')
 
     def __str__(self):
         return str(self.id) + ' ' + self.title
@@ -165,7 +165,7 @@ class Product(models.Model):
     def get_price(self):
         sizes = ProductSize.objects.filter(product=self).order_by('size__float_name', 'size__str_name')
         if sizes.count() > 0:
-            sizes=sizes[0]
+            sizes = sizes[0]
             return sizes
         else:
             return 0
@@ -173,7 +173,7 @@ class Product(models.Model):
 
 class Size(models.Model):
     str_name = models.TextField(blank=True, null=True)
-    float_name=models.FloatField(blank=True, null=True)
+    float_name = models.FloatField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -193,7 +193,7 @@ class ProductSize(models.Model):
         db_table = 'product_size'
 
     def price_format(self):
-    	return '{:,}'.format(self.price).replace(',', ' ')
+        return '{:,}'.format(self.price).replace(',', ' ')
 
 
 class ProductNeed(models.Model):
@@ -207,7 +207,6 @@ class ProductNeed(models.Model):
         verbose_name_plural = _("Потребности")
 
 
-
 class ProductTone(models.Model):
     product_size = models.ForeignKey(ProductSize, models.DO_NOTHING, blank=True, null=True)
     name = models.CharField(max_length=100, blank=True, null=True)
@@ -215,7 +214,6 @@ class ProductTone(models.Model):
     class Meta:
         managed = False
         db_table = 'product_tone'
-
 
 
 class ResourceType(models.Model):
@@ -232,11 +230,9 @@ class ResourceType(models.Model):
         return self.name
 
 
-
 def slugify_upload(instance, filename):
     name, ext = splitext(filename)
     return slugify(name) + ext
-
 
 
 class Files(models.Model):
@@ -269,13 +265,11 @@ class MainBlock(models.Model):
         verbose_name_plural = _("Блоки с картинками")
 
 
-
-
 class Product_str(models.Model):
     title = models.CharField(max_length=500, blank=True, null=True, verbose_name="Наименование")
     shot_description = models.TextField(blank=True, null=True, verbose_name="Краткое описание")
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
-    main_photo = models.TextField(blank=True, null=True,  verbose_name="Фото")
+    main_photo = models.TextField(blank=True, null=True, verbose_name="Фото")
     artikul = models.TextField(blank=True, null=True, max_length=20, verbose_name="Артикул")
     note = models.TextField(blank=True, null=True, verbose_name="Примечание")
     components = models.TextField(blank=True, null=True, verbose_name="Состав")
@@ -287,7 +281,7 @@ class Product_str(models.Model):
     artik_brand = models.TextField(blank=True, null=True, max_length=20)
     is_top = models.IntegerField(blank=True, null=True, default=0)
     hit_for_brand = models.IntegerField(blank=True, null=True, default=0)
-    price=models.CharField(max_length=500, blank=True, null=True)
+    price = models.CharField(max_length=500, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -296,11 +290,11 @@ class Product_str(models.Model):
         verbose_name_plural = _("Товары")
 
     def save(self, *args, **kwargs):
-    	if not self.id:
-    		super(Product_str, self).save(*args, **kwargs)
-    		string = str(self.id) + '-' + self.title
-    	else:
-    		string = str(self.id) + '-' + self.title
-    	self.slug = slugify(string)
-    	self.date = datetime.datetime.today()
-    	super(Product_str, self).save(*args, **kwargs)
+        if not self.id:
+            super(Product_str, self).save(*args, **kwargs)
+            string = str(self.id) + '-' + self.title
+        else:
+            string = str(self.id) + '-' + self.title
+        self.slug = slugify(string)
+        self.date = datetime.datetime.today()
+        super(Product_str, self).save(*args, **kwargs)

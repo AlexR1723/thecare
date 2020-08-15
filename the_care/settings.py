@@ -10,8 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-import os
-import sys
+import os, sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -91,16 +90,24 @@ WSGI_APPLICATION = 'the_care.wsgi.application'
 DEFAULT_CHARSET = 'utf-8'
 
 DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.mysql',
-         'NAME': 'cg24089_thecare',
-         'USER': 'cg24089_thecare',
-         'PASSWORD': 'Amg63!',
-         'HOST': 'localhost',
-         'PORT': '5432',
-         'CONN_MAX_AGE': None,
-
-     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'cg24089_thecare',
+    #     'USER': 'cg24089_thecare',
+    #     'PASSWORD': 'Amg63!',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432',
+    #     'CONN_MAX_AGE': None,
+    # }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dbvh9j72shni68',
+        'USER': 'ctpgsekgklrode',
+        'PASSWORD': '5538bf75a59b86696b02be9cb59ecfaef53f4c0b96f889ee3299de4eadb0a8c9',
+        'HOST': 'ec2-54-247-72-30.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
+        'CONN_MAX_AGE': None,
+    }
 }
 
 # Password validation
@@ -139,21 +146,21 @@ USE_L10N = True
 
 USE_TZ = False
 
-SECURE_SSL_REDIRECT = True
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-SESSION_CACHE_ALIAS = "default"
+# SECURE_SSL_REDIRECT = True
+# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+# SESSION_CACHE_ALIAS = "default"
 
 PIPELINE = {
     'STYLESHEETS': {
         'colors': {
             'source_filenames': (
-              'css/animate.css',
-              'css/bootstrap.css',
-              'css/bootstrap.min.css',
-              #'css/noty.css',
-              'css/slick.css',
-              'css/slick-theme.css',
-              'css/style.css'
+                'css/animate.css',
+                # 'css/bootstrap.css',
+                # 'css/bootstrap.min.css',
+                # 'css/noty.css',
+                'css/slick.css',
+                'css/slick-theme.css',
+                'css/style.css'
             ),
             'output_filename': 'css/style.css',
             'extra_context': {
@@ -164,11 +171,11 @@ PIPELINE = {
     'JAVASCRIPT': {
         'stats': {
             'source_filenames': (
-              'js/bootstrap.js',
-              'js/bootstrap.min.js',
-              'js/main.js',
-              #'js/noty.js',
-              'js/slick.min.js',
+                # 'js/bootstrap.js',
+                # 'js/bootstrap.min.js',
+                'js/main.js',
+                # 'js/noty.js',
+                'js/slick.min.js',
             ),
             'output_filename': 'js/main.js',
         }
@@ -193,7 +200,7 @@ CART_USER = 'user'
 LOGIN_URL = '/log_in'
 
 PROD_LIST = []
-TOP=''
+TOP = ''
 
 PAY_LOGIN = 'thecare'
 PAY_PASSWORD_1 = 'Yumbt46Uvps35bb8plFF'
@@ -202,8 +209,8 @@ PAY_PASSWORD_2 = 'tz8VOaOG9ZSFLfk5H23e'
 PAY_TEST_PASSWORD_1 = 'test_pass_1'
 PAY_TEST_PASSWORD_2 = 'V8nNBsOSEW3a2pvXc71J'
 
-MC_CLIENT_ID='836169265342'
-MC_CLIENT_SECRET='da69bffa1356fe682f1cf4e00241ecc91dd87e75f2a1bcec33'
+# MC_CLIENT_ID='836169265342'
+# MC_CLIENT_SECRET='da69bffa1356fe682f1cf4e00241ecc91dd87e75f2a1bcec33'
 
 EMAIL_HOST = 'smtp-pulse.com'
 EMAIL_PORT = 465
@@ -212,5 +219,5 @@ EMAIL_HOST_PASSWORD = "YRtMP4Dso4R"
 EMAIL_USE_SSL = True
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-EMAIL_REST_API_ID='f25ed79d241c819cbab226a651ad9187'
-EMAIL_REST_API_SECRET='9aff1c233fa1de995cf612d13a7f6c29'
+EMAIL_REST_API_ID = 'f25ed79d241c819cbab226a651ad9187'
+EMAIL_REST_API_SECRET = '9aff1c233fa1de995cf612d13a7f6c29'
