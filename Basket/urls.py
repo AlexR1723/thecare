@@ -29,4 +29,6 @@ urlpatterns = [
     url(r'pay_fail', views.pay_fail, name="pay_fail"),
     url(r'pay_check', views.pay_check, name="pay_check"),
 
+    url(r'send_mail', views.send_mail, name="send_mail"),
+
 ]

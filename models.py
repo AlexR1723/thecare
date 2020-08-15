@@ -76,7 +76,7 @@ class AuthUserUserPermissions(models.Model):
 
 class Brands(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
-    image = models.TextField(blank=True, null=True)
+    sale = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -281,7 +281,7 @@ class ProductSize(models.Model):
 
 
 class ProductTone(models.Model):
-    product = models.ForeignKey(Product, models.DO_NOTHING, blank=True, null=True)
+    product_size = models.ForeignKey(ProductSize, models.DO_NOTHING, blank=True, null=True)
     name = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
@@ -332,7 +332,10 @@ class UserOrders(models.Model):
     status = models.ForeignKey(OrdersStatus, models.DO_NOTHING, blank=True, null=True)
     amount = models.IntegerField(blank=True, null=True)
     order_number = models.IntegerField(unique=True, blank=True, null=True)
-    cache_hash = models.TextField(blank=True, null=True)
+    fio = models.TextField(blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
+    phonenumber = models.TextField(blank=True, null=True)
+    email = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False

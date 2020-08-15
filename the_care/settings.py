@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'the_care.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-DEFAULT_CHARSET = 'utf-8' 
+DEFAULT_CHARSET = 'utf-8'
 
 DATABASES = {
      'default': {
@@ -99,7 +99,7 @@ DATABASES = {
          'HOST': 'localhost',
          'PORT': '5432',
          'CONN_MAX_AGE': None,
-         
+
      }
 }
 
@@ -196,9 +196,21 @@ PROD_LIST = []
 TOP=''
 
 PAY_LOGIN = 'thecare'
-# PAY_INV = '4500029'
 PAY_PASSWORD_1 = 'Yumbt46Uvps35bb8plFF'
 PAY_PASSWORD_2 = 'tz8VOaOG9ZSFLfk5H23e'
 # PAY_TEST_PASSWORD_1 = 'ldy1yH3vsf049uwvpRpJ'
 PAY_TEST_PASSWORD_1 = 'test_pass_1'
 PAY_TEST_PASSWORD_2 = 'V8nNBsOSEW3a2pvXc71J'
+
+MC_CLIENT_ID='836169265342'
+MC_CLIENT_SECRET='da69bffa1356fe682f1cf4e00241ecc91dd87e75f2a1bcec33'
+
+EMAIL_HOST = 'smtp-pulse.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "thecare.shop@yandex.ru"
+EMAIL_HOST_PASSWORD = "YRtMP4Dso4R"
+EMAIL_USE_SSL = True
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_REST_API_ID='f25ed79d241c819cbab226a651ad9187'
+EMAIL_REST_API_SECRET='9aff1c233fa1de995cf612d13a7f6c29'

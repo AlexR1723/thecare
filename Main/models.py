@@ -98,7 +98,6 @@ class Brands_model(models.Model):
         verbose_name_plural = _("Бренды")
 
 
-
 class Product(models.Model):
     title = models.CharField(max_length=500, blank=True, null=True, verbose_name="Наименование")
     shot_description = models.TextField(blank=True, null=True, verbose_name="Краткое описание")
@@ -128,8 +127,7 @@ class Product(models.Model):
         verbose_name_plural = _("Товары")
 
     def get_absolute_url(self):
-    	print(self.slug)
-    	return reverse('Item_card', kwargs={'slug': self.slug})
+        return reverse('Item_card', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
     	if not self.id:
@@ -146,12 +144,12 @@ class Product(models.Model):
     	else:
     		self.price = '0'
     	super(Product, self).save(*args, **kwargs)
-    	
+
     	self.note = self.note.replace('\n', '<br />')
     	self.description = self.description.replace('\n', '<br />')
     	self.components = self.components.replace('\n', '<br />')
-    	
-    	
+
+
 
     def __str__(self):
         return str(self.id) + ' ' + self.title
@@ -193,7 +191,7 @@ class ProductSize(models.Model):
     class Meta:
         managed = False
         db_table = 'product_size'
-        
+
     def price_format(self):
     	return '{:,}'.format(self.price).replace(',', ' ')
 
@@ -238,8 +236,8 @@ class ResourceType(models.Model):
 def slugify_upload(instance, filename):
     name, ext = splitext(filename)
     return slugify(name) + ext
-    
-    
+
+
 
 class Files(models.Model):
     file = models.FileField(upload_to=slugify_upload, max_length=500, blank=True, null=True)
@@ -248,7 +246,6 @@ class Files(models.Model):
     class Meta:
         managed = False
         db_table = 'files'
-
 
 
 class Slider(models.Model):

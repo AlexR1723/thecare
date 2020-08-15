@@ -16,7 +16,6 @@ import os
 from django.conf import settings
 from django.views.decorators.cache import cache_page
 from django.core.cache import cache
-import sys, locale
 
 list = []
 list_count = 0
@@ -71,8 +70,8 @@ def get_user_id(request):
     # print('user')
     # print(user)
     return user
-    
-@cache_page(600, cache='default', key_prefix='')   
+
+@cache_page(600, cache='default', key_prefix='')
 def Main(request):
 	# count=Slider.objects.count()
 	# if count > 0:
@@ -284,7 +283,7 @@ def save_product(request):
     			# выбираем товар
     			product = Product.objects.get(id=product_str.id)
     			print(product)
-    			
+
     			# потребности товара
     			# удаляем старые потребности
     			product_need = ProductNeed.objects.filter(product=product)
@@ -402,7 +401,7 @@ def del_product_top(request):
         p.is_top = 0
         p.save()
     return HttpResponse(json.dumps(True))
-    
+
 
 def top_product_save(request):
     # добавить выборку каждой переменной
@@ -487,7 +486,7 @@ def top_product_save(request):
         			# выбираем товар
         			product = Product.objects.get(id=product_str.id)
         			print(product)
-        			
+
         			# потребности товара
         			# удаляем старые потребности
         			print('need')
@@ -606,7 +605,7 @@ def top_product_save(request):
         						product_tone = ProductTone(product_size=product_size, name=t)
         						product_tone.save()
         			product.save()
-        	
+
         		return HttpResponse(json.dumps(True))
         	else:
         		return HttpResponse(json.dumps('not save'))
@@ -614,7 +613,7 @@ def top_product_save(request):
         	return HttpResponse(json.dumps(True))
     except:
     	return HttpResponse(json.dumps(False))
-        	
+
 
 def check_picture(request):
     # print(response)
