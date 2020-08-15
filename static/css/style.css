@@ -15,3 +15,7 @@ html{scroll-behavior:smooth}.card-img-top{margin:auto!important;max-width:100%;w
 	background: url('../image/other.png') center center; 
 	background-size: cover
 }
+.embossing{
+	background: url('../image/embossing.png');
+	background-size: contain
+}
