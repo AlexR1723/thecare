@@ -113,8 +113,8 @@ class Product(models.Model):
     slug = models.TextField(blank=True, null=True, verbose_name="Ссылка")
     date = models.DateField(blank=True, null=True)
     artik_brand = models.TextField(blank=True, null=True, max_length=20)
-    is_top = models.IntegerField(blank=True, null=True, default=0)
-    hit_for_brand = models.IntegerField(blank=True, null=True, default=0)
+    is_top = models.BooleanField(blank=True, null=True)
+    hit_for_brand = models.BooleanField(blank=True, null=True)
     price=models.CharField(max_length=500, blank=True, null=True)
 
     class Meta:
@@ -285,8 +285,8 @@ class Product_str(models.Model):
     slug = models.TextField(blank=True, null=True, verbose_name="Ссылка")
     date = models.DateField(blank=True, null=True)
     artik_brand = models.TextField(blank=True, null=True, max_length=20)
-    is_top = models.IntegerField(blank=True, null=True, default=0)
-    hit_for_brand = models.IntegerField(blank=True, null=True, default=0)
+    is_top = models.BooleanField(blank=True, null=True)
+    hit_for_brand = models.BooleanField(blank=True, null=True)
     price=models.CharField(max_length=500, blank=True, null=True)
 
     class Meta:
