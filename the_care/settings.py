@@ -172,7 +172,7 @@ PIPELINE = {
     }
 }
 
-DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+# DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
 DROPBOX_OAUTH2_TOKEN = 'ScXC5sD_X0AAAAAAAAAATKPrbFg-32dbxGIkw-DpExBnl-SRkIJLNG7COWtnQCFB'
 DROPBOX_ROOT_PATH = '/the_care/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -201,7 +201,7 @@ MC_CLIENT_SECRET='da69bffa1356fe682f1cf4e00241ecc91dd87e75f2a1bcec33'
 
 EMAIL_HOST = 'smtp-pulse.com'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = "avdeenkoaleksey@gmail.com"
+EMAIL_HOST_USER = "thecare.shop@yandex.ru"
 EMAIL_HOST_PASSWORD = "YRtMP4Dso4R"
 EMAIL_USE_SSL = True
 SERVER_EMAIL = EMAIL_HOST_USER
