@@ -659,8 +659,8 @@ def Catalog_search_page_filter(request, head_url, text, page, filter):
 
 def Item_card(request, slug):
     # dic = global_function(request)
-    slug = str(slug)
-    slug = slug.split('-')
+    # slug = str(slug)
+    slug = str(slug).split('-')
     try:
         s_id = int(slug[0])
         s_name = '-'.join(slug[1:])
@@ -716,6 +716,11 @@ def Item_card(request, slug):
             print(i)
             have_sale=True
         lst.append(ls)
+
+    lst=['awgawawg+awgagawg','awfawfafw,awfawf','awfawf*awfaf',' a+a -a /a * a=a )a (a }a/a']
+    for i in lst:
+        print(slugify(i))
+
     return render(request, 'Catalog/Item_card.html', locals())
 
 
