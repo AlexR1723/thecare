@@ -92,15 +92,14 @@ DEFAULT_CHARSET = 'utf-8'
 
 DATABASES = {
      'default': {
-         'ENGINE': 'django.db.backends.mysql',
-         'NAME': 'cg24089_thecare',
-         'USER': 'cg24089_thecare',
-         'PASSWORD': 'Amg63!',
-         'HOST': 'localhost',
-         'PORT': '5432',
-         'CONN_MAX_AGE': None,
-
-     }
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dbvh9j72shni68',
+        'USER': 'ctpgsekgklrode',
+        'PASSWORD': '5538bf75a59b86696b02be9cb59ecfaef53f4c0b96f889ee3299de4eadb0a8c9',
+        'HOST': 'ec2-54-247-72-30.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
+        'CONN_MAX_AGE': None,
+    }
 }
 
 # Password validation
@@ -139,9 +138,8 @@ USE_L10N = True
 
 USE_TZ = False
 
-SECURE_SSL_REDIRECT = True
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-SESSION_CACHE_ALIAS = "default"
+# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+# SESSION_CACHE_ALIAS = "default"
 
 PIPELINE = {
     'STYLESHEETS': {
@@ -150,7 +148,6 @@ PIPELINE = {
               'css/animate.css',
               'css/bootstrap.css',
               'css/bootstrap.min.css',
-              #'css/noty.css',
               'css/slick.css',
               'css/slick-theme.css',
               'css/style.css'
@@ -167,7 +164,6 @@ PIPELINE = {
               'js/bootstrap.js',
               'js/bootstrap.min.js',
               'js/main.js',
-              #'js/noty.js',
               'js/slick.min.js',
             ),
             'output_filename': 'js/main.js',
@@ -214,3 +210,14 @@ SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_REST_API_ID='f25ed79d241c819cbab226a651ad9187'
 EMAIL_REST_API_SECRET='9aff1c233fa1de995cf612d13a7f6c29'
+
+
+# CORS_REPLACE_HTTPS_REFERER = False
+# HOST_SCHEME = "http://"
+# SECURE_PROXY_SSL_HEADER = None
+# SECURE_SSL_REDIRECT = False
+# SESSION_COOKIE_SECURE = False
+# CSRF_COOKIE_SECURE = False
+# SECURE_HSTS_SECONDS = None
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+# SECURE_FRAME_DENY = False
