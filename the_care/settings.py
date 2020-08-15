@@ -146,7 +146,6 @@ USE_L10N = True
 
 USE_TZ = False
 
-# SECURE_SSL_REDIRECT = True
 # SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 # SESSION_CACHE_ALIAS = "default"
 
@@ -155,9 +154,6 @@ PIPELINE = {
         'colors': {
             'source_filenames': (
                 'css/animate.css',
-                # 'css/bootstrap.css',
-                # 'css/bootstrap.min.css',
-                # 'css/noty.css',
                 'css/slick.css',
                 'css/slick-theme.css',
                 'css/style.css'
@@ -171,10 +167,7 @@ PIPELINE = {
     'JAVASCRIPT': {
         'stats': {
             'source_filenames': (
-                # 'js/bootstrap.js',
-                # 'js/bootstrap.min.js',
                 'js/main.js',
-                # 'js/noty.js',
                 'js/slick.min.js',
             ),
             'output_filename': 'js/main.js',
@@ -221,3 +214,13 @@ SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_REST_API_ID = 'f25ed79d241c819cbab226a651ad9187'
 EMAIL_REST_API_SECRET = '9aff1c233fa1de995cf612d13a7f6c29'
+
+# CORS_REPLACE_HTTPS_REFERER = False
+# HOST_SCHEME = "http://"
+# SECURE_PROXY_SSL_HEADER = None
+# SECURE_SSL_REDIRECT = False
+# SESSION_COOKIE_SECURE = False
+# CSRF_COOKIE_SECURE = False
+# SECURE_HSTS_SECONDS = None
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+# SECURE_FRAME_DENY = False
