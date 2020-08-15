@@ -661,62 +661,71 @@ def Item_card(request, slug):
     # dic = global_function(request)
     slug = str(slug)
     slug = slug.split('-')
+    # s_id = int(slug[0])
+    # s_name = '-'.join(slug[1:])
+    # itm = Product.objects.get(id=s_id)
+    # item=itm
+    # category, head = get_url(item.category.name, True)
+    # cat=item.category.id
     try:
-        s_id = int(slug[0])
-        s_name = '-'.join(slug[1:])
-        itm = Product.objects.get(id=s_id)
-        if slugify(itm.title) != s_name:
-            print('slug error')
-            # вывод страницы 404
-        else:
-            item = itm
-            category, head = get_url(item.category.name, True)
+    	s_id = int(slug[0])
+    	s_name = '-'.join(slug[1:])
+    	itm = Product.objects.get(id=s_id)
+    	
+    	# if slugify(itm.title) != s_name:
+    	# 	print('slug error')
+    	# 	# вывод страницы 404
+    	# 	return render(request, 'Catalog/Item_card.html', locals())
+    	# else:
+    	item = itm
+    	category, head = get_url(item.category.name, True)
+    	# вывод страницы 404
+    	cat = item.category.id
+    	res = item.resource_id
+    	ress = ProductNeed.objects.filter(product_id=item.id).values_list('need_id', flat=True)
+    	query = Q()
+    	for i in ress:
+    		query.add(Q(need_id=i), Q.OR)
+    	prods = ProductNeed.objects.filter(Q(query)).exclude(product_id=item.id)
+    	prods = prods.order_by('product_id', 'id')
+    	# .distinct('product_id')
+    	prods = list(prods)
+    	prods.reverse()
+    	if len(prods) > 12:
+    		prods = prods[:12]
+    	
+    	sizes = ProductSize.objects.filter(product_id=item.id)
+    	if sizes.count() == 1:
+    		
+    		if sizes[0].size.float_name != 0.0:
+    			sizename = sizes[0].size.float_name
+    		else:
+    			not_size = True
+    		if sizes[0].size.str_name:
+    			sizename = sizes[0].size.str_name
+    	
+    	sizes = sizes.order_by('size__float_name')
+    	lst = []
+    	have_sale=False
+    	for i in sizes:
+    		ls = []
+    		ls.append(i.id)
+    		if i.size.float_name:
+    			ls.append(i.size.float_name)
+    		if i.size.str_name:
+    			ls.append(i.size.str_name)
+    		ls.append(i.price)
+    		ls.append(i.old_price)
+    		ls.append(i.count)
+    		ls.append(i.sale)
+    		if int(i.sale)>0:
+    			print(i)
+    			have_sale=True
+    		lst.append(ls)
+    	return render(request, 'Catalog/Item_card.html', locals())
     except:
-        print('slug error')
-        # вывод страницы 404
-
-    cat = item.category.id
-    res = item.resource_id
-    ress = ProductNeed.objects.filter(product_id=item.id).values_list('need_id', flat=True)
-    query = Q()
-    for i in ress:
-        query.add(Q(need_id=i), Q.OR)
-    prods = ProductNeed.objects.filter(Q(query)).exclude(product_id=item.id)
-    prods = prods.order_by('product_id', 'id').distinct('product_id')
-    prods = list(prods)
-    prods.reverse()
-    if len(prods) > 12:
-        prods = prods[:12]
-
-    sizes = ProductSize.objects.filter(product_id=item.id)
-    if sizes.count() == 1:
-
-        if sizes[0].size.float_name != 0.0:
-            sizename = sizes[0].size.float_name
-        else:
-            not_size = True
-        if sizes[0].size.str_name:
-            sizename = sizes[0].size.str_name
-
-    sizes = sizes.order_by('size__float_name')
-    lst = []
-    have_sale=False
-    for i in sizes:
-        ls = []
-        ls.append(i.id)
-        if i.size.float_name:
-            ls.append(i.size.float_name)
-        if i.size.str_name:
-            ls.append(i.size.str_name)
-        ls.append(i.price)
-        ls.append(i.old_price)
-        ls.append(i.count)
-        ls.append(i.sale)
-        if int(i.sale)>0:
-            print(i)
-            have_sale=True
-        lst.append(ls)
-    return render(request, 'Catalog/Item_card.html', locals())
+    	print('slug error')
+    	return render(request, 'Catalog/Item_card.html', locals())
 
 
 # def get_product_sizes(request):

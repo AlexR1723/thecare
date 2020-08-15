@@ -85,7 +85,7 @@ class NeedType(models.Model):
 
 class Brands_model(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True, verbose_name='Наименование')
-    image = models.ImageField(upload_to='uploads/', blank=True, null=True, verbose_name='Изображение')
+    sale = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -112,6 +112,7 @@ class Product(models.Model):
     artik_brand = models.TextField(blank=True, null=True, max_length=20)
     is_top = models.BooleanField(blank=True, null=True)
     hit_for_brand = models.BooleanField(blank=True, null=True)
+    price=models.CharField(max_length=500, blank=True, null=True)
 
     # price = models.IntegerField(blank=True, null=True, verbose_name="Стоимость")
     # sale = models.IntegerField(blank=True, null=True)

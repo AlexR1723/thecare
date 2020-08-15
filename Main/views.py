@@ -14,6 +14,9 @@ from openpyxl import load_workbook
 import dropbox
 import os
 from django.conf import settings
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+import sys, locale
 
 list = []
 list_count = 0
@@ -68,20 +71,44 @@ def get_user_id(request):
     # print('user')
     # print(user)
     return user
-
-
+    
+@cache_page(600, cache='default', key_prefix='')   
 def Main(request):
-    slide_first = Slider.objects.all()[0]
-    slide = Slider.objects.all()[1:]
-    main_block = MainBlock.objects.all()
-    face = Product.objects.filter(is_top=True).filter(category__name='Для лица').order_by('-id')
-    hair = Product.objects.filter(is_top=True).filter(category__name='Для волос').order_by('-id')
-    body = Product.objects.filter(is_top=True).filter(category__name='Для тела').order_by('-id')
-    # k = 0
-    # if k == 0:
+	# count=Slider.objects.count()
+	# if count > 0:
+	# 	slide_first = Slider.objects.all()[0]
+	# 	slide = Slider.objects.all()[1:]
+	# else:
+	# 	slide_first = []
+	# 	slide = []
+	# main_block = MainBlock.objects.all()
+	# top=Product.objects.filter(is_top=True).values()
+	# face=top.filter(category__name='Для лица').order_by('-id').values()
+	# hair=top.filter(category__name='Для волос').order_by('-id').values()
+	# body=top.filter(category__name='Для тела').order_by('-id').values()
+	# face=Product.objects.filter(is_top=True).filter(category__name='Для лица').order_by('-id').only('title', 'main_photo')
+	# hair=Product.objects.filter(is_top=True).filter(category__name='Для волос').order_by('-id').only('title', 'main_photo')
+	# body=Product.objects.filter(is_top=True).filter(category__name='Для тела').order_by('-id').only('title', 'main_photo')
 
-    # else:
-    return render(request, 'Main/Main.html', locals())
+	# face=Product.objects.filter(is_top=True).filter(category=4).order_by('-id').only('title', 'main_photo')
+	# el='123'
+	# face=Product.objects.filter(is_top=True).filter(category=4).order_by('-id').only('id', 'title', 'main_photo', 'price').values('id', 'title', 'main_photo', 'price')
+	# hair=Product.objects.filter(is_top=True).filter(category=3).order_by('-id').only('id', 'title', 'main_photo', 'price').values('id', 'title', 'main_photo', 'price')
+	# body=Product.objects.filter(is_top=True).filter(category=5).order_by('-id').only('id', 'title', 'main_photo', 'price').values('id', 'title', 'main_photo', 'price')
+	face=Product.objects.filter(is_top=True).filter(category=4).order_by('-id').only('id', 'title', 'main_photo', 'price')
+	hair=Product.objects.filter(is_top=True).filter(category=3).order_by('-id').only('id', 'title', 'main_photo', 'price')
+	body=Product.objects.filter(is_top=True).filter(category=5).order_by('-id').only('id', 'title', 'main_photo', 'price')
+	# print(face)
+	# print(face)
+	# face = Product.objects.filter(is_top=True).filter(category__name='Для лица').order_by('-id')
+	# hair = Product.objects.filter(is_top=True).filter(category__name='Для волос').order_by('-id')
+	# body = Product.objects.filter(is_top=True).filter(category__name='Для тела').order_by('-id')
+	return render(request, 'Main/Main.html', locals())
+
+
+def clear_cache(request):
+    cache.delete('/')
+    return HttpResponse(json.dumps(True))
 
 
 def Dev(request):
@@ -93,208 +120,507 @@ def Dev(request):
 def Save_excel_file(request):
     print('Save_excel_file')
     if request.method == 'POST':
+        top=str(request.POST.get('top'))
+        if top == 'top':
+        	top=True
+        else:
+        	top=False
         doc = request.FILES
         if (doc):
-            settings.PROD_LIST.clear()
-            settings.DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+            # settings.PROD_LIST.clear()
+            # settings.DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
             print(doc['excel-file'])
-            file = Files(file=doc['excel-file'])
+            file = Files(file=doc['excel-file'], is_top=top)
+            print(file)
             file.save()
-            print(file.file.path)
+            # print(file.file.path)
             rb = xlrd.open_workbook(file.file.path)
 
             sheet = rb.sheet_by_index(0)
             vals = [sheet.row_values(rownum) for rownum in range(sheet.nrows)]
             for v in vals:
                 try:
-                    settings.PROD_LIST.append(v)
+                    # settings.PROD_LIST.append(v)
+                    list.append(v)
                 except:
                     print('ex1')
-            settings.DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+            # settings.DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
             list_count = len(settings.PROD_LIST)
+            # print(list_count)
             print(len(settings.PROD_LIST))
     return HttpResponseRedirect("/admin")
 
 
 def get_product_count(request):
-    return HttpResponse(json.dumps(len(settings.PROD_LIST)))
+	# print(sys.getdefaultencoding())
+	print(sys.getdefaultencoding())
+	# settings.PROD_LIST.clear()
+	# settings.DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+	c=Files.objects.count()
+	if c > 0:
+		file = Files.objects.last()
+		rb = xlrd.open_workbook(file.file.path)
+		sheet = rb.sheet_by_index(0)
+		vals = [sheet.row_values(rownum) for rownum in range(sheet.nrows)]
+		for v in vals:
+			try:
+				list.append(v)
+			except:
+				print('ex1')
+		list_count = len(list)
+		# settings.DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+		print(list_count)
+		return HttpResponse(json.dumps(list_count))
+	else:
+		return HttpResponse(json.dumps(0))
+    # return HttpResponse(json.dumps(len(settings.PROD_LIST)))
 
 
 def get_product_list(request):
-    return HttpResponse(json.dumps(settings.PROD_LIST))
+	print(list)
+	return HttpResponse(json.dumps(list))
+	# return HttpResponse(json.dumps(settings.PROD_LIST))
+
+def get_top(request):
+	c=Files.objects.count()
+	if c > 0:
+		file = Files.objects.last()
+		if file.is_top:
+			return HttpResponse(json.dumps('top'))
+		else:
+			return HttpResponse(json.dumps('all'))
+	else:
+		return HttpResponse(json.dumps(0))
+
+# def get_brands_list(request):
+#     brands=Brands_model.objects.order_by('name')
+#     brands_list=[]
+#     for i in brands:
+#         brands_list.append([i.id,i.name])
+#     return HttpResponse(json.dumps(brands_list))
+#
+#
+# def get_sale_brand(request):
+#     brand=int(request.GET.get('brand'))
+#     product=ProductSize.objects.filter(product__brand__id=brand).order_by('-sale')
+#     print(product[0].sale)
+#     # brands=Brands_model.objects.order_by('name')
+#     # brands_list=[]
+#     # for i in brands:
+#     #     brands_list.append([i.id,i.name])
+#     return HttpResponse(product[0].sale)
 
 
 def save_product(request):
     # добавить выборку каждой переменной
     print('save_product')
     try:
+    	i = int(request.GET.get('i'))
+    	all = int(request.GET.get('all'))
+    	# print(i+1)
+    	if (i + 1) >= all:
+    		file = Files.objects.all()
+    		file.delete()
+    	# print(i)
+    	file = Files.objects.last()
+    	settings.PROD_LIST.clear()
+    	# settings.DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+    	rb = xlrd.open_workbook(file.file.path)
+    	sheet = rb.sheet_by_index(0)
+    	v = sheet.row_values(i)
+    	# settings.DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+    	if v is not None:
+    		# print(v)
+    		# категория (для волос, для тела и тд)
+    		categ = CategoryType.objects.filter(name=v[8])
+    		# наименование средства
+    		res = ResourceType.objects.filter(category=categ[0]).filter(name=v[9])
+    		if res.count() == 0:
+    			res = ResourceType(category=categ[0], name=v[9])
+    			res.save()
+    		else:
+    			res = res[0]
+    		if categ.count() > 0:
+    			categ=categ[0]
+    			brand = Brands_model.objects.filter(name__iexact=v[2])
+    			if brand.count() == 0:
+    				brand = Brands_model(name=v[2])
+    				brand.save()
+    			else:
+    				brand = brand[0]
+    			# выбираем товар, где картинка текст
+    			print(v[3])
+    			print(v[2])
+    			print(v[4])
+    			product_str = Product_str.objects.filter(title__iexact=v[4]).filter(brand__name__iexact=v[2]).filter(shot_description__iexact=v[3])
+    			# такого товара нет - добавили
+    			if product_str.count() == 0:
+    				print('if')
+    				product_str = Product_str(title=v[4], shot_description=v[3], description="update"+v[5], note=v[6], components=v[7], category=categ, resource=res, brand=brand, artikul=v[14], artik_brand=v[15], main_photo="uploads/product/" + v[11], is_top=0)
+    				product_str.save()
+    				if len(v) > 20:
+    					if str(v[20]).find('+') != -1:
+    						product_str.hit_for_brand = True
+    						product_str.save()
+    			# такой товар есть - обновили
+    			else:
+    				print('else')
+    				product_str = product_str[0]
+    				product_str.description = "update"+v[5]
+    				product_str.note = v[6]
+    				product_str.components = v[7]
+    				product_str.category = categ
+    				product_str.resource = res
+    				product_str.brand = brand
+    				product_str.artikul = v[14]
+    				product_str.artik_brand = v[15]
+    				product_str.main_photo = "uploads/product/" + v[11]
+    				product_str.is_top = 0
+    				product_str.save()
+    				if len(v) > 20:
+    					if str(v[20]).find('+') != -1:
+    						product_str.hit_for_brand = True
+    						product_str.save()
+    			# выбираем товар
+    			product = Product.objects.get(id=product_str.id)
+    			print(product)
+    			
+    			# потребности товара
+    			# удаляем старые потребности
+    			product_need = ProductNeed.objects.filter(product=product)
+    			product_need.delete()
+    			# выбираем новые потребности
+    			needs = v[10]
+    			list_need = needs.split(', ')
+    			if len(list_need) == 1:
+    				need = NeedType.objects.filter(name__iexact=needs).filter(category=categ)
+    				if need.count() == 0:
+    					need = NeedType(name=needs, category=categ)
+    					need.save()
+    				else:
+    					need = need[0]
+    				product_need = ProductNeed.objects.filter(product=product).filter(need=need)
+    				if product_need.count() == 0:
+    					product_need = ProductNeed(product=product, need=need)
+    					product_need.save()
+    			else:
+    				for n in list_need:
+    					need = NeedType.objects.filter(name__iexact=n).filter(category=categ)
+    					if need.count() == 0:
+    						need = NeedType(name=n, category=categ)
+    						need.save()
+    					else:
+    						need = need[0]
+    					product_need = ProductNeed.objects.filter(need=need).filter(product=product)
+    					if product_need.count() == 0:
+    						product_need = ProductNeed(product=product, need=need)
+    						product_need.save()
+    			# product.description = "need"+v[5]
+    			product.save()
+    			# объем
+    			# удаляем старые объемы
+    			# product_size = ProductSize.objects.filter(product=product)
+    			# product_size.delete()
+    			# выбираем новые объемы
+    			if v[12] == "":
+    				size_name = 0
+    			else:
+    				size_name = v[12]
+    			try:
+    				size_name = float(size_name)
+    				size = Size.objects.filter(float_name=size_name)
+    				if size.count() == 0:
+    					size = Size(float_name=size_name)
+    					size.save()
+    				else:
+    					size = size[0]
+    			except:
+    				size = Size.objects.filter(str_name=size_name)
+    				if size.count() == 0:
+    					size = Size(str_name=size_name)
+    					size.save()
+    				else:
+    					size = size[0]
+    			print(size)
+    			count = 0
+    			price = 0
+    			sale = 0
+    			if v[16] and v[16] != "":
+    				count = int(v[16])
+    			if v[17] and v[17] != "":
+    				price = int(v[17])
+    			if v[19] and v[19] != "":
+    				sale = int(v[19])
+    			if sale == 0:
+    				print('if_size')
+    				product_size = ProductSize.objects.filter(product=product).filter(size=size)
+    				if product_size.count() == 0:
+    					product_size = ProductSize(product=product, size=size, price=price, count=count)
+    					product_size.save()
+    				else:
+    					product_size.price = price
+    					product_size.count = count
+    					product_size.save()
+    				print(product_size)
+    			else:
+    				print('else_size')
+    				new_price = price - (price * sale / 100)
+    				product_size = ProductSize.objects.filter(product=product).filter(size=size)
+    				if product_size.count() == 0:
+    					product_size = ProductSize(product=product, size=size, old_price=price, count=count, sale=sale, price=new_price)
+    					product_size.save()
+    				else:
+    					product_size.old_price = price
+    					product_size.count = count
+    					product_size.sale = sale
+    					product_size.price = new_price
+    					product_size.save()
+    				print(product_size)
+    			# product.description = "size"+v[5]
+    			product.save()
+    			# оттенки
+    			# удаляем старые оттенки
+    			product_tone = ProductTone.objects.filter(product_size=product_size)
+    			product_tone.delete()
+    			# выбираем новые оттенки
+    			if v[13] != "" and v[13] != " ":
+    				tones = v[13]
+    				list_tone = tones.split('; ')
+    				if list_tone != "" and len(list_tone) != 0:
+    					for t in list_tone:
+    						product_tone = ProductTone(product_size=product_size, name=t)
+    						product_tone.save()
+    		return HttpResponse(json.dumps(True))
+    	else:
+    		return HttpResponse(json.dumps('not save'))
+    except:
+    	return HttpResponse(json.dumps(False))
+
+def del_product_top(request):
+    products=Product.objects.filter(is_top = 1)
+    for p in products:
+        p.is_top = 0
+        p.save()
+    return HttpResponse(json.dumps(True))
+    
+
+def top_product_save(request):
+    # добавить выборку каждой переменной
+    print('save_product_top')
+    try:
         i = int(request.GET.get('i'))
         all = int(request.GET.get('all'))
-        # print(i+1)
+        print(i)
         if (i + 1) >= all:
-            # print('clear')
-            settings.PROD_LIST.clear()
+        	file = Files.objects.all()
+        	file.delete()
         # print(i)
         file = Files.objects.last()
+        print(file)
+        settings.PROD_LIST.clear()
+        # settings.DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
         rb = xlrd.open_workbook(file.file.path)
-
         sheet = rb.sheet_by_index(0)
         v = sheet.row_values(i)
-        # print(v)
-        if v is not None:
-            # print(v)
-            # категория (для волос, для тела и тд)
-            categ = CategoryType.objects.filter(name=v[8])
-            # наименование средства
-            res = ResourceType.objects.filter(category=categ[0]).filter(name=v[9])
-            if res.count() == 0:
-                res = ResourceType(category=categ[0], name=v[9])
-                res.save()
-            else:
-                res = res[0]
-            if categ.count() > 0:
-                brand = Brands_model.objects.filter(name__iexact=v[2])
-                if brand.count() == 0:
-                    brand = Brands_model(name=v[2])
-                    brand.save()
-                else:
-                    brand = brand[0]
-                # выбираем товар, где картинка текст
-                print(v[3])
-                print(v[2])
-                print(v[4])
-                product_str = Product_str.objects.filter(title__iexact=v[3]).filter(brand__name__iexact=v[2]).filter(
-                    shot_description__iexact=v[4])
-                # такого товара нет - добавили
-                if product_str.count() == 0:
-                    print('if')
-                    product_str = Product_str(title=v[3], shot_description=v[4], description=v[5], note=v[6],
-                                              components=v[7],
-                                              category=categ[0], resource=res, brand=brand, artikul=v[14],
-                                              artik_brand=v[15], main_photo="uploads/product/" + v[11])
-                    product_str.save()
-                # такой товар есть - обновили
-                else:
-                    print('else')
-                    product_str = product_str[0]
-                    product_str.description = v[5]
-                    product_str.note = v[6]
-                    product_str.components = v[7]
-                    product_str.category = categ[0]
-                    product_str.resource = res
-                    product_str.brand = brand
-                    product_str.artikul = v[14]
-                    product_str.artik_brand = v[15]
-                    product_str.main_photo = "uploads/product/" + v[11]
-                    product_str.save()
-                # выбираем товар
-                product = Product.objects.get(id=product_str.id)
-                print(product)
+        # settings.DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+        print(settings.DEFAULT_FILE_STORAGE)
+        print(v)
+        if v[2] != None and v[2] != '':
+        	if v is not None:
+        		g = v[8]
+        		categ = CategoryType.objects.filter(name=v[8])
+        		print(categ[0])
 
-                # потребности товара
-                # удаляем старые потребности
-                product_need = ProductNeed.objects.filter(product=product)
-                product_need.delete()
-                # выбираем новые потребности
-                needs = v[10]
-                list_need = needs.split(', ')
-                if len(list_need) == 1:
-                    need = NeedType.objects.filter(name__iexact=needs).filter(category=categ[0])
-                    if need.count() == 0:
-                        need = NeedType(name=needs, category=categ[0])
-                        need.save()
-                    else:
-                        need = need[0]
-                    product_need = ProductNeed.objects.filter(product=product).filter(need=need)
-                    if product_need.count() == 0:
-                        product_need = ProductNeed(product=product, need=need)
-                        product_need.save()
-                else:
-                    for n in list_need:
-                        need = NeedType.objects.filter(name__iexact=n).filter(category=categ[0])
-                        if need.count() == 0:
-                            need = NeedType(name=n, category=categ[0])
-                            need.save()
-                        else:
-                            need = need[0]
-                        product_need = ProductNeed.objects.filter(need=need).filter(product=product)
-                        if product_need.count() == 0:
-                            product_need = ProductNeed(product=product, need=need)
-                            product_need.save()
-
-                # объем
-                # удаляем старые объемы
-                # product_size = ProductSize.objects.filter(product=product)
-                # product_size.delete()
-                # выбираем новые объемы
-                if v[12] == "":
-                    size_name = 0
-                else:
-                    size_name = v[12]
-                try:
-                    size_name = float(size_name)
-                    size = Size.objects.filter(float_name=size_name)
-                    if size.count() == 0:
-                        size = Size(float_name=size_name)
-                        size.save()
-                    else:
-                        size = size[0]
-                except:
-                    size = Size.objects.filter(str_name=size_name)
-                    if size.count() == 0:
-                        size = Size(str_name=size_name)
-                        size.save()
-                    else:
-                        size = size[0]
-                print(size)
-                count = 0
-                price = 0
-                sale = 0
-                if v[16] and v[16] != "":
-                    count = int(v[16])
-                if v[17] and v[17] != "":
-                    price = int(v[17])
-                if v[19] and v[19] != "":
-                    sale = int(v[19])
-                if sale == 0:
-                    print('if_size')
-                    product_size = ProductSize(product=product, size=size, price=price, count=count)
-                    product_size.save()
-                    print(product_size)
-                else:
-                    print('else_size')
-                    new_price = price - (price * sale / 100)
-                    product_size = ProductSize(product=product, size=size, old_price=price, count=count, sale=sale,
-                                               price=new_price)
-                    product_size.save()
-                    print(product_size)
-
-                # оттенки
-                # удаляем старые оттенки
-                product_tone = ProductTone.objects.filter(product=product)
-                product_tone.delete()
-                # выбираем новые оттенки
-                if v[13] != "" and v[13] != " ":
-                    tones = v[13]
-                    list_tone = tones.split('; ')
-                    if list_tone != "" and len(list_tone) != 0:
-                        for t in list_tone:
-                            product_tone = ProductTone(product=product, name=t)
-                            product_tone.save()
-
-            # if i+1 == len(settings.PROD_LIST):
-
-            return HttpResponse(json.dumps(True))
+        		# наименование средства
+        		res = ResourceType.objects.filter(category=categ[0]).filter(name=v[9])
+        		if res.count() == 0:
+        			res = ResourceType(category=categ[0], name=v[9])
+        			res.save()
+        		else:
+        			res = res[0]
+        		print(res)
+        		if categ.count() > 0:
+        			categ=categ[0]
+        			brand = Brands_model.objects.filter(name__iexact=v[2])
+        			if brand.count() == 0:
+        				brand = Brands_model(name=v[2])
+        				brand.save()
+        			else:
+        				brand = brand[0]
+        			print(brand)
+        			# выбираем товар, где картинка текст
+        			# print(v[3])
+        			# print(v[2])
+        			# print(v[4])
+        			product_str = Product_str.objects.filter(title__iexact=v[4]).filter(brand__name__iexact=v[2]).filter(shot_description__iexact=v[3])
+        			# такого товара нет - добавили
+        			if product_str.count() == 0:
+        				print('if')
+        				# product_str = Product_str(title='title', shot_description='shot_desk', description='desc', note='note',components='comp',category=categ, resource=res, brand=brand, artikul='123',artik_brand='123', main_photo='uploads/product/1.jpg')
+        				product_str = Product_str(title=v[4], shot_description=v[3], description=v[5], note=v[6],components=v[7],category=categ, resource=res, brand=brand, artikul=v[14],artik_brand=v[15], main_photo="uploads/product/" + v[11], is_top = 1)
+        				print('if-1')
+        				product_str.save()
+        				if len(v) > 20:
+        					if str(v[20]).find('+') != -1:
+        						product_str.hit_for_brand = True
+        						product_str.save()
+        			# такой товар есть - обновили
+        			else:
+        				print('else')
+        				product_str = product_str[0]
+        				product_str.description = v[5]
+        				product_str.note = v[6]
+        				product_str.components = v[7]
+        				product_str.category = categ
+        				product_str.resource = res
+        				product_str.brand = brand
+        				product_str.artikul = v[14]
+        				product_str.artik_brand = v[15]
+        				product_str.main_photo = "uploads/product/" + v[11]
+        				product_str.is_top = 1
+        				product_str.save()
+        				print(product_str.is_top)
+        				if len(v)>20:
+        					if str(v[20]).find('+') != -1:
+        						product_str.hit_for_brand = True
+        						product_str.save()
+        			# выбираем товар
+        			product = Product.objects.get(id=product_str.id)
+        			print(product)
+        			
+        			# потребности товара
+        			# удаляем старые потребности
+        			print('need')
+        			product_need = ProductNeed.objects.filter(product=product)
+        			product_need.delete()
+        			print('need delete')
+        			# выбираем новые потребности
+        			needs = v[10]
+        			list_need = needs.split(', ')
+        			if len(list_need) == 1:
+        				print('need 1')
+        				need = NeedType.objects.filter(name__iexact=needs).filter(category=categ)
+        				if need.count() == 0:
+        					need = NeedType(name=needs, category=categ)
+        					need.save()
+        				else:
+        					need = need[0]
+        				print(need)
+        				product_need = ProductNeed.objects.filter(product=product).filter(need=need)
+        				print(product_need)
+        				if product_need.count() == 0:
+        					product_need = ProductNeed(product=product, need=need)
+        					product_need.save()
+        			else:
+        				print('need many')
+        				for n in list_need:
+        					need = NeedType.objects.filter(name__iexact=n).filter(category=categ)
+        					if need.count() == 0:
+        						need = NeedType(name=n, category=categ)
+        						need.save()
+        					else:
+        						need = need[0]
+        					print(need)
+        					product_need = ProductNeed.objects.filter(need=need).filter(product=product)
+        					print(product_need)
+        					if product_need.count() == 0:
+        						product_need = ProductNeed(product=product, need=need)
+        						product_need.save()
+        			# объем
+        			# удаляем старые объемы
+        			# product_size = ProductSize.objects.filter(product=product)
+        			# product_size.delete()
+        			# выбираем новые объемы
+        			if v[12] == "":
+        				size_name = 0
+        			else:
+        				size_name = v[12]
+        			print('size')
+        			try:
+        				size_name = float(size_name)
+        				print('float')
+        				print(size_name)
+        				size = Size.objects.filter(float_name = size_name)
+        				if size.count() == 0:
+        					print('size float')
+        					size = Size(float_name = size_name)
+        					size.save()
+        				else:
+        					size = size[0]
+        				print(size)
+        			except:
+        				print('str')
+        				print(size_name)
+        				size = Size.objects.filter(str_name = size_name)
+        				if size.count() == 0:
+        					print('size str')
+        					size = Size(str_name = size_name)
+        					size.save()
+        				else:
+        					size = size[0]
+        				print(size)
+        			count = 0
+        			price = 0
+        			sale = 0
+        			if v[16] and v[16] != "":
+        				count = int(v[16])
+        			if v[17] and v[17] != "":
+        				price = int(v[17])
+        			if v[19] and v[19] != "":
+        				sale = int(v[19])
+        			if sale == 0:
+        				print('if_size')
+        				product_size=ProductSize.objects.filter(product=product).filter(size=size)
+        				if product_size.count() == 0:
+        					product_size = ProductSize(product=product, size=size, price=price, count=count)
+        					product_size.save()
+        				else:
+        					product_size.price=price
+        					product_size.count=count
+        					product_size.save()
+        				print(product_size)
+        			else:
+        				print('else_size')
+        				new_price = price - (price * sale / 100)
+        				product_size = ProductSize.objects.filter(product=product).filter(size=size)
+        				if product_size.count() == 0:
+        					product_size = ProductSize(product=product, size=size, old_price=price, count=count, sale=sale,price=new_price)
+        					product_size.save()
+        				else:
+        					product_size.old_price = price
+        					product_size.count = count
+        					product_size.sale=sale
+        					product_size.price=new_price
+        					product_size.save()
+        				print(product_size)
+        			# оттенки
+        			# удаляем старые оттенки
+        			product_tone = ProductTone.objects.filter(product_size=product_size)
+        			product_tone.delete()
+        			# выбираем новые оттенки
+        			if v[13] != "" and v[13] != " ":
+        				tones = v[13]
+        				list_tone = tones.split('; ')
+        				if list_tone != "" and len(list_tone) != 0:
+        					for t in list_tone:
+        						product_tone = ProductTone(product_size=product_size, name=t)
+        						product_tone.save()
+        			product.save()
+        	
+        		return HttpResponse(json.dumps(True))
+        	else:
+        		return HttpResponse(json.dumps('not save'))
         else:
-            return HttpResponse(json.dumps('not save'))
+        	return HttpResponse(json.dumps(True))
     except:
-        return HttpResponse(json.dumps(False))
-
+    	return HttpResponse(json.dumps(False))
+        	
 
 def check_picture(request):
     # print(response)
     # f = open('list_images.txt', 'w')
     # f.truncate()
+    settings.DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
     data = []
     products = Product.objects.all()
     for i in products:
@@ -313,33 +639,33 @@ def check_picture(request):
     dbx = dropbox.Dropbox(settings.DROPBOX_OAUTH2_TOKEN)
     response = dbx.files_list_folder(path=settings.DROPBOX_ROOT_PATH + 'uploads/product')
     if response.has_more == True:
-        m1 = response.entries
-        cur = response.cursor
-        for i in m1:
-            if isinstance(i, dropbox.files.FileMetadata):
-                dirs.append(i.name)
-        m2 = dbx.files_list_folder_continue(cur)
-        if m2.has_more == True:
-            while m2.has_more == True:
-                for i in m2.entries:
-                    if isinstance(i, dropbox.files.FileMetadata):
-                        dirs.append(i.name)
-                cur = m2.cursor
-                m2 = dbx.files_list_folder_continue(cur)
-        else:
-            cur = response.cursor
-            m_final = dbx.files_list_folder_continue(cur)
-            for i in m_final.entries:
-                if isinstance(i, dropbox.files.FileMetadata):
-                    dirs.append(i.name)
+    	m1 = response.entries
+    	cur = response.cursor
+    	for i in m1:
+    		if isinstance(i, dropbox.files.FileMetadata):
+    			dirs.append(i.name)
+    	m2 = dbx.files_list_folder_continue(cur)
+    	if m2.has_more == True:
+    		while m2.has_more == True:
+    			for i in m2.entries:
+    				if isinstance(i, dropbox.files.FileMetadata):
+    					dirs.append(i.name)
+    			cur = m2.cursor
+    			m2 = dbx.files_list_folder_continue(cur)
+    	else:
+    		cur = response.cursor
+    		m_final = dbx.files_list_folder_continue(cur)
+    		for i in m_final.entries:
+    			if isinstance(i, dropbox.files.FileMetadata):
+    				dirs.append(i.name)
     print(len(dirs))
     print(len(lst))
     for i in lst:
-        # print(i)
-        if i not in dirs:
-            # print(i)
-            lst_not.append(i)
-            # print(i + ' not in dirs')
+    	# print(i)
+    	if i not in dirs:
+    		# print(i)
+    		lst_not.append(i)
+    		# print(i + ' not in dirs')
     # print(lst_not)
     return HttpResponse(json.dumps(lst_not))
 
@@ -486,3 +812,11 @@ def handler404(request,exception):
 
 def success(request):
     return render(request, 'success.html', locals())
+
+
+
+def robots_txt(request):
+    return render(request, 'robots.txt', locals())
+
+def sitemap_xml(request):
+    return render(request, 'sitemap.xml', locals())

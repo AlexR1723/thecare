@@ -1,48 +1,13 @@
 {% extends 'layout.html' %}
 {% load staticfiles %}
+{% load poll_extras %}
 {% block content %}
-
     <div class="container-fluid p-0">
-        {#        <div class="row m-0 justify-content-center">#}
-        {#            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0">#}
-        {#                <div class="row m-0 justify-content-center justify-content-md-between align-items-center">#}
-        {#                    <div class="col-12 col-md-12 mb-3 mb-md-0 p-0">#}
-        {#                        <div id="carouselExampleControls" class="carousel slide h_vh" data-ride="carousel">#}
-        {#                            <div class="carousel-inner h_vh">#}
-        {#                                <div class="carousel-item active h-100"#}
-        {#                                     style="background: url(#}
-        {#                                             {{ MEDIA_URL }}{{ slide_first.image.url }}) no-repeat center center; background-size: cover;">#}
-        {#                                </div>#}
-        {#                                {% for s in slide %}#}
-        {#                                    <div class="carousel-item h-100"#}
-        {#                                         style="background: url(#}
-        {#                                                 {{ MEDIA_URL }}{{ s.image.url }}) no-repeat center center; background-size: cover;">#}
-        {#                                        #}
-        {#                                    </div>#}
-        {#                                {% endfor %}#}
-        {#                            </div>#}
-        {#                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button"#}
-        {#                               data-slide="prev">#}
-        {#                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>#}
-        {#                                <span class="sr-only">Previous</span>#}
-        {#                            </a>#}
-        {#                            <a class="carousel-control-next" href="#carouselExampleControls" role="button"#}
-        {#                               data-slide="next">#}
-        {#                                <span class="carousel-control-next-icon" aria-hidden="true"></span>#}
-        {#                                <span class="sr-only">Next</span>#}
-        {#                            </a>#}
-        {#                        </div>#}
-        {#                    </div>#}
-        {#                </div>#}
-        {#            </div>#}
-        {#        </div>#}
-
         <div class="row m-0 justify-content-center">
             <div class="col-11 col-sm-11 col-md-12 col-lg-12 col-xl-12 p-0 my-2">
                 <div class="row m-0 justify-content-center align-items-center">
                     <div class="col-6 col-md-6 col-lg-3 p-0 mb-1 mb-md-0">
-                        <div class="w-100 items_hdr_bg"
-                             style="background: url({% static 'image/волосы.png' %}) center center; background-size: cover">
+                        <div class="w-100 items_hdr_bg hair-bg">
                             <div class="item_hdr_bg_layout row justify-content-center align-items-center m-0">
                                 <a href="{% url 'Catalog' 'For_hair' %}">
                                     <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-0">
@@ -53,8 +18,7 @@
                         </div>
                     </div>
                     <div class="col-6 col-md-6 col-lg-3 p-0 mb-1 mb-md-0">
-                        <div class="w-100 items_hdr_bg"
-                             style="background: url({% static 'image/лицо.png' %}) center center; background-size: cover">
+                        <div class="w-100 items_hdr_bg face-bg">
                             <div class="item_hdr_bg_layout row justify-content-center align-items-center m-0">
                                 <a href="{% url 'Catalog' 'For_face' %}">
                                     <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-0">
@@ -65,8 +29,7 @@
                         </div>
                     </div>
                     <div class="col-6 col-md-6 col-lg-3 p-0 mb-1 mb-md-0">
-                        <div class="w-100 items_hdr_bg"
-                             style="background: url({% static 'image/тело.png' %}) center center; background-size: cover">
+                        <div class="w-100 items_hdr_bg body-bg">
                             <div class="item_hdr_bg_layout row justify-content-center align-items-center m-0">
                                 <a href="{% url 'Catalog' 'For_body' %}">
                                     <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-0">
@@ -77,8 +40,7 @@
                         </div>
                     </div>
                     <div class="col-6 col-md-6 col-lg-3 p-0 mb-1 mb-md-0">
-                        <div class="w-100 items_hdr_bg"
-                             style="background: url({% static 'image/другое.png' %}) center center; background-size: cover">
+                        <div class="w-100 items_hdr_bg other-bg">
                             <div class="item_hdr_bg_layout row justify-content-center align-items-center m-0">
                                 <a href="#!">
                                     <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-0">
@@ -92,7 +54,6 @@
             </div>
         </div>
     </div>
-
     <div class="container-fluid p-0">
         <div class="row m-0 justify-content-center shop-items_blk face-top_blk mt-3 mb-5">
             <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
@@ -104,28 +65,28 @@
                 <div class="row m-0 justify-content-start align-items-center">
                     <div class="slider multiple-items w-100">
                         {% for f in face %}
+                                    <!--<a href="{{ f.id|get_prod_absolute_url }}">-->
                             <div class="card">
                                 <div class="card-img">
                                     {% if f.main_photo != null and f.main_photo != "" %}
-                                        <img data-lazy="{{ MEDIA_URL }}{{ f.main_photo.url }}" class="card-img-top-main"
+                                        <!--<img data-lazy="{{MEDIA_URL}}{{ f.main_photo.url }}" class="card-img-top-main"-->
+                                        <!--     alt="..."> -->
+                                             <img data-lazy="/media/{{ f.main_photo }}" class="card-img-top-main"
                                              alt="...">
                                     {% endif %}
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title mb-1">{{ f.get_price.price }} руб</h5>
-                                    <a href="{{ f.get_absolute_url }}">
+                                    <h5 class="card-title mb-1">{{ f.price }} руб</h5>
                                         <p class="card-text">{{ f.title }}</p>
-                                    </a>
                                 </div>
                             </div>
+                                    <!--</a>-->
                         {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
     <div class="container-fluid p-0">
         <div class="row m-0 justify-content-center shop-items_blk hair-top_blk pt-4 pb-5 mb-4">
             <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
@@ -137,27 +98,26 @@
                 <div class="row m-0 justify-content-start align-items-center">
                     <div class="slider multiple-items w-100">
                         {% for h in hair %}
+                            <!--<a href="{{ h.id|get_prod_absolute_url }}">-->
                             <div class="card">
                                 <div class="card-img">
                                     {% if h.main_photo != null and h.main_photo != "" %}
-                                        <img data-lazy="{{ MEDIA_URL }}{{ h.main_photo.url }}" class="card-img-top-main"
+                                        <img data-lazy="/media/{{ h.main_photo }}" class="card-img-top-main"
                                              alt="...">
                                     {% endif %}
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title mb-1">{{ h.get_price.price }} руб</h5>
-                                    <a href="{{ h.get_absolute_url }}">
+                                    <h5 class="card-title mb-1">{{ h.price }} руб</h5>
                                         <p class="card-text">{{ h.title }}</p>
-                                    </a>
                                 </div>
                             </div>
+                                    <!--</a>-->
                         {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="container-fluid p-0">
         <div class="row m-0 justify-content-center shop-items_blk body-top_blk mt-3 mb-5">
             <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
@@ -169,29 +129,26 @@
                 <div class="row m-0 justify-content-start align-items-center">
                     <div class="slider multiple-items w-100">
                         {% for b in body %}
-                            <a href="{{ b.get_absolute_url }}">
+                            <!--<a href="{{ b.id|get_prod_absolute_url }}">-->
                             <div class="card">
                                 <div class="card-img">
                                     {% if b.main_photo != null and b.main_photo != "" %}
-                                        <img data-lazy="{{ MEDIA_URL }}{{ b.main_photo.url }}" class="card-img-top-main"
+                                        <img data-lazy="/media/{{ b.main_photo }}" class="card-img-top-main"
                                              alt="...">
                                     {% endif %}
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title mb-1">{{ b.get_price.price }} руб</h5>
+                                    <h5 class="card-title mb-1">{{ b.price }} руб</h5>
 
                                         <p class="card-text">{{ b.title }}</p>
 
                                 </div>
                             </div>
-                            </a>
+                            <!--</a>-->
                         {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    </div>
-
-{% endblock %}
+    {% endblock %}

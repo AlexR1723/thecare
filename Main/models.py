@@ -3,6 +3,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
 from uuslug import slugify
 import datetime
+from os.path import splitext
+from transliterate import slugify
 
 
 class AuthUser(models.Model):
@@ -86,7 +88,7 @@ class NeedType(models.Model):
 
 class Brands_model(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True, verbose_name='Наименование')
-    image = models.ImageField(upload_to='uploads/', blank=True, null=True, verbose_name='Изображение')
+    sale = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -94,6 +96,7 @@ class Brands_model(models.Model):
         ordering = ['name']
         verbose_name = _("Бренд")
         verbose_name_plural = _("Бренды")
+
 
 
 class Product(models.Model):
@@ -111,30 +114,44 @@ class Product(models.Model):
     slug = models.TextField(blank=True, null=True, verbose_name="Ссылка")
     date = models.DateField(blank=True, null=True)
     artik_brand = models.TextField(blank=True, null=True, max_length=20)
-    is_top = models.BooleanField(blank=True, null=True)
+    is_top = models.IntegerField(blank=True, null=True, default=0)
+    hit_for_brand = models.IntegerField(blank=True, null=True, default=0)
+    price=models.CharField(max_length=500, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'product'
+        indexes = [
+        	models.Index(fields=['title']),
+        	]
         verbose_name = _("товар")
         verbose_name_plural = _("Товары")
 
     def get_absolute_url(self):
-        return reverse('Item_card', kwargs={'slug': self.slug})
+    	print(self.slug)
+    	return reverse('Item_card', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            super(Product, self).save(*args, **kwargs)
-            string = str(self.id) + '-' + self.title
-        else:
-            string = str(self.id) + '-' + self.title
-        self.slug = slugify(string)
-        self.date = datetime.datetime.today()
-        super(Product, self).save(*args, **kwargs)
-
-        # self.note = self.note.replace('\n', '<br />')
-        # self.description = self.description.replace('\n', '<br />')
-        # self.components = self.components.replace('\n', '<br />')
+    	if not self.id:
+    		super(Product, self).save(*args, **kwargs)
+    		string = str(self.id) + '-' + self.title
+    	else:
+    		string = str(self.id) + '-' + self.title
+    	self.slug = slugify(string)
+    	self.date = datetime.datetime.today()
+    	sizes = ProductSize.objects.filter(product=self).order_by('size__float_name', 'size__str_name')
+    	if sizes.count() > 0:
+    		sizes=sizes[0]
+    		self.price = '{:,}'.format(sizes.price).replace(',', ' ')
+    	else:
+    		self.price = '0'
+    	super(Product, self).save(*args, **kwargs)
+    	
+    	self.note = self.note.replace('\n', '<br />')
+    	self.description = self.description.replace('\n', '<br />')
+    	self.components = self.components.replace('\n', '<br />')
+    	
+    	
 
     def __str__(self):
         return str(self.id) + ' ' + self.title
@@ -176,6 +193,9 @@ class ProductSize(models.Model):
     class Meta:
         managed = False
         db_table = 'product_size'
+        
+    def price_format(self):
+    	return '{:,}'.format(self.price).replace(',', ' ')
 
 
 class ProductNeed(models.Model):
@@ -191,7 +211,7 @@ class ProductNeed(models.Model):
 
 
 class ProductTone(models.Model):
-    product = models.ForeignKey(Product, models.DO_NOTHING, blank=True, null=True)
+    product_size = models.ForeignKey(ProductSize, models.DO_NOTHING, blank=True, null=True)
     name = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
@@ -214,12 +234,21 @@ class ResourceType(models.Model):
         return self.name
 
 
+
+def slugify_upload(instance, filename):
+    name, ext = splitext(filename)
+    return slugify(name) + ext
+    
+    
+
 class Files(models.Model):
-    file = models.FileField(upload_to='excel', max_length=500, blank=True, null=True)
+    file = models.FileField(upload_to=slugify_upload, max_length=500, blank=True, null=True)
+    is_top = models.BooleanField()
 
     class Meta:
         managed = False
         db_table = 'files'
+
 
 
 class Slider(models.Model):
@@ -259,6 +288,9 @@ class Product_str(models.Model):
     slug = models.TextField(blank=True, null=True, verbose_name="Ссылка")
     date = models.DateField(blank=True, null=True)
     artik_brand = models.TextField(blank=True, null=True, max_length=20)
+    is_top = models.IntegerField(blank=True, null=True, default=0)
+    hit_for_brand = models.IntegerField(blank=True, null=True, default=0)
+    price=models.CharField(max_length=500, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -267,11 +299,11 @@ class Product_str(models.Model):
         verbose_name_plural = _("Товары")
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            super(Product_str, self).save(*args, **kwargs)
-            string = str(self.id) + '-' + self.title
-        else:
-            string = str(self.id) + '-' + self.title
-        self.slug = slugify(string)
-        self.date = datetime.datetime.today()
-        super(Product_str, self).save(*args, **kwargs)
+    	if not self.id:
+    		super(Product_str, self).save(*args, **kwargs)
+    		string = str(self.id) + '-' + self.title
+    	else:
+    		string = str(self.id) + '-' + self.title
+    	self.slug = slugify(string)
+    	self.date = datetime.datetime.today()
+    	super(Product_str, self).save(*args, **kwargs)

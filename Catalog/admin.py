@@ -47,13 +47,13 @@ class ProductNeedAdmin(admin.TabularInline):
 
 
 
-class ProductToneAdmin(admin.TabularInline):
-    model = ProductTone
+# class ProductToneAdmin(admin.TabularInline):
+#     model = ProductTone
 
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Product._meta.fields]
-    inlines = [ProductNeedAdmin, ProductToneAdmin]
+    inlines = [ProductNeedAdmin]
     exclude = ('slug',)
 
     class Meta:

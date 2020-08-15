@@ -100,8 +100,18 @@
             display: block;
         }
 
+        .col-auto{
+            display: inline-block;
+        }
+        .mr-2{
+            margin-right: 2rem;
+        }
+
         .mt-0 {
             margin-top: 0;
+        }
+        .m-0{
+            margin: 0;
         }
 
         .check_picture {
@@ -142,6 +152,9 @@
             display: inline-block;
             vertical-align: top;
         }
+        .pl-3{
+            padding-left: 15px;
+        }
     </style>
 
     <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
@@ -149,6 +162,8 @@
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script>
         window.onload = function () {
+
+
             $('#check_picture').click(function () {
 
                 var div = document.getElementById('lst_not')
@@ -158,7 +173,7 @@
                 $.ajax({
                     type: "GET",
                     dataType: "json",
-                    async: false,
+                    async: true,
                     url: 'check_picture',
                     success: function (data) {
                         if (data.length == 0) {
@@ -183,12 +198,34 @@
                         console.log('ERROR')
                     }
                 });
-            })
+            });
+
+            $('#cache_clear').click(function () {
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    async: false,
+                    url: 'clear_cache',
+                    success: function (data) {
+                        alert('Сайт успешно обновлен!')
+                    },
+                    error: function (data) {
+                        console.log('ERROR')
+                    }
+                });
+            });
 
             $('input#excel-file-admin').on('change', function () {
                 var fileName = $(this).val();
                 if (fileName) {
                     var btn = $('#submit-excel-file-admin');
+                    btn.click();
+                }
+            });
+            $('input#top-file-admin').on('change', function () {
+                var fileName = $(this).val();
+                if (fileName) {
+                    var btn = $('#submit-top-file-admin');
                     btn.click();
                 }
             });
@@ -204,9 +241,25 @@
             var count = 0;
             // var time = (1000 / (count - 1)) * 5
             var list = get_count();
+            var flag = get_top();
             count = list.length;
+            count = list;
             if (count > 0) {
                 show_progress(count);
+                if (flag === 'top') {
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        async: false,
+                        url: 'del_product_top',
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (data) {
+                            alert('error')
+                        }
+                    });
+                }
                 var time = (1 / (count - 1)) * 5;
                 console.log(count);
                 for (var i = 1; i < count; i++) {
@@ -217,7 +270,11 @@
             function setTime(i) {
                 var answer = 'not save';
                 while (answer === 'not save') {
-                    answer = add_product(i, count);
+                    if (flag === 'all') {
+                        answer = add_product(i, count);
+                    } else {
+                        answer = add_product_top(i, count);
+                    }
                     if (answer === 'save') {
                         load();
                     }
@@ -242,7 +299,7 @@
                 type: "GET",
                 dataType: "json",
                 async: false,
-                url: 'get_product_list',
+                url: 'get_product_count',
                 success: function (data) {
                     list = data;
                     // console.log(count);
@@ -252,6 +309,24 @@
                 }
             });
             return list;
+        }
+
+        function get_top() {
+            var flag = '';
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                async: false,
+                url: 'get_top',
+                success: function (data) {
+                    flag = data;
+                    // console.log(count);
+                },
+                error: function (data) {
+                    alert('error')
+                }
+            });
+            return flag;
         }
 
         function show_progress(count) {
@@ -288,13 +363,39 @@
             return answer;
         }
 
+        function add_product_top(i, count) {
+            var answer = '';
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                async: false,
+                url: 'top_product_save',
+                data: {
+                    i: i,
+                    all: count
+                },
+                success: function (data) {
+                    if (data === 'not save') {
+                        answer = 'not save';
+                    } else {
+                        answer = 'save';
+                    }
+                },
+                error: function (data) {
+                    console.log('ERROR: ' + i)
+                }
+            });
+            return answer;
+        }
+
 
     </script>
     <div>
         <div class="upload-file">
             <form class="w-100" action="{% url 'Save_excel_file' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <label class="text">Выборите Excel файл для добавления товаров:</label>
+                <label class="text">Выберите Excel файл для добавления товаров:</label>
+                <input type="hidden" name="top" value="all">
                 <input type="file" class="mb-1 form-control prof-file d-none" name="excel-file" id="excel-file-admin">
                 <label for="excel-file-admin" class="btn btn-tertiary js-labelFile">
                     <i class="fas fa-upload" aria-hidden="true"></i>
@@ -304,15 +405,31 @@
                         class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить
                 </button>
             </form>
+        </div>
+        <div class="upload-file">
+            <form class="w-100" action="{% url 'Save_excel_file' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label class="text">Выберите Excel файл для добавления товаров в "ТОП":</label>
+                <input type="hidden" name="top" value="top">
+                <input type="file" class="mb-1 form-control prof-file d-none" name="excel-file" id="top-file-admin">
+                <label for="top-file-admin" class="btn btn-tertiary js-labelFile">
+                    <i class="fas fa-upload" aria-hidden="true"></i>
+                    <span class="js-fileName">Загрузить файл</span>
+                </label>
+                <button type="submit" id="submit-top-file-admin"
+                        class="btn btn-save btn-primary px-3 col-12 col-sm-2 col-md-2 d-none">Сохранить
+                </button>
+            </form>
+        </div>
+        <div class="upload-file">
             <div class="d-none" id="progress-block">
                 <progress id="progressbar" value="0" max="100"></progress>
                 <span class="progress-value">0%</span>
             </div>
-
         </div>
 
         <div class="upload-file">
-            <label class="text">Выборите изображения для добавления к товарам:</label>
+            <label class="text">Выберите изображения для добавления к товарам:</label>
             <a href="https://www.dropbox.com/home/the_care/uploads/product" target="_blank"
                class="btn btn-tertiary js-labelFile"><i class="fas fa-upload" aria-hidden="true"></i>
                 <span class="js-fileName">Загрузить изображения</span></a>
@@ -322,13 +439,60 @@
         <hr class="w-75">
     </div>
     <div class="upload-file">
-        <div class="col-3">
+        <div class="col-auto mr-2">
+            <button type="button" class="check_picture" id="cache_clear">Обновить сайт</button>
+        </div>
+        <div class="col-auto">
             <button type="button" class="check_picture" id="check_picture">Проверить наличие картинок</button>
         </div>
-        {#        <label class="text-1">В файловом хранилище отсуствую следующие файлы:</label>#}
         <div id="lst_not" class="col-9">
 
         </div>
     </div>
+    <div class="upload-file">
+        <hr class="w-75">
+    </div>
+    <div class="upload-file">
+        <div class="col-auto mr-2">
+            <div class="w-100">
+                <label class="m-0">№ заказа</label>
+            </div>
+            <div class="w-100">
+                <input type="text">
+            </div>
+        </div>
+        <div class="col-auto mr-2">
+            <div class="w-100">
+                <label class="m-0">статус</label>
+            </div>
+            <div class="w-100">
+                <input type="text">
+            </div>
+        </div>
+        <div class="col-auto mr-2">
+            <div class="w-100">
+                <button type="button" class="check_picture" id="check_status">Проверить</button>
+            </div>
+        </div>
+        <div class="col-auto mr-2">
+            <div class="w-100">
+                <button type="button" class="check_picture" id="save_status">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+{#    <div class="upload-file">#}
+{#        <hr class="w-75">#}
+{#    </div>#}
+{#    <div class="upload-file">#}
+{#        <label class="text">Наименование бренда</label>#}
+{#        <select id="brands_list">#}
+{#            <option value="0">-Выберите бренд-</option>#}
+{#        </select>#}
+{#        <label class="text pl-3">скидка</label>#}
+{#        <input type="number" id="brand_sale" style="width: 40px">#}
+{#        <label class="text">%</label>#}
+{##}
+{#    </div>#}
 
 {% endblock %}

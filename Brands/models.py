@@ -26,13 +26,26 @@ class Contact(models.Model):
 
 class Brands_model(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True, verbose_name='Наименование')
-    image = models.ImageField(upload_to='uploads/', blank=True, null=True, verbose_name='Изображение')
+    sale = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'brands'
         verbose_name = _("Бренд")
         verbose_name_plural = _("Бренды")
+
+    def save(self, *args, **kwargs):
+        print(self.sale)
+        products = ProductSize.objects.filter(product__brand__id=self.id)
+        for p in products:
+            price = p.price
+            if p.old_price != None and p.old_price != '' and p.old_price != 0:
+                price = p.old_price
+            p.old_price = price
+            p.sale = self.sale
+            p.price = ((price * 100) / self.sale)
+            p.save()
+        super(Brands_model, self).save(*args, **kwargs)
 
 
 class AuthUser(models.Model):
@@ -69,6 +82,7 @@ class Product(models.Model):
     artik_brand = models.TextField(blank=True, null=True, max_length=20)
     is_top = models.BooleanField(blank=True, null=True)
     hit_for_brand = models.BooleanField(blank=True, null=True)
+    price=models.CharField(max_length=500, blank=True, null=True)
 
     # price = models.IntegerField(blank=True, null=True, verbose_name="Стоимость")
     # sale = models.IntegerField(blank=True, null=True)
@@ -155,4 +169,3 @@ class ResourceType(models.Model):
 
     def __str__(self):
         return self.name
-

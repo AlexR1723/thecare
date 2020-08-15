@@ -4,22 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <title>The Care</title>
-    {% load staticfiles %}
+  {% load staticfiles %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'image/favicon.ico' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Comfortaa:400,600,700&display=swap&subset=cyrillic"
           rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/slick.css' %}">
     <link rel="stylesheet" href="{% static 'css/slick-theme.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/noty.css' %}">
+    <!--<link rel="stylesheet" href="{% static 'css/noty.css' %}">-->
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
 
-
+    <meta name="google-site-verification" content="3ocHcGLP_NlHF0JzuHgTXucCht15AADqHg1Vqcr4Qmo" />
 </head>
 <body>
 
@@ -29,7 +37,7 @@
 <a id="up"></a>
 <div class="container-fluid p-0 header">
     <div class="row m-0 justify-content-center"
-         style="background: url({% static 'image/тиснение.png' %});background-size: contain">
+         style="background: url({% static 'image/embossing.png' %});background-size: contain">
         <div class="col-10 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0 pt-0 pt-lg-3 pb-2 pb-md-0">
             <div class="row m-0 justify-content-md-between align-items-center">
                 <div class="col-6 col-md-4 text-center text-md-left phone-hdr mb-0">
@@ -37,8 +45,8 @@
                         <a href="tel:88004001212">
                             <img src="{% static 'image/phone.png' %}" alt="" class="mb-1" style="height: 20px;">
 
-                            {#                            <span class="d-none d-sm-none d-md-inline-block d-lg-inline-block d-xl-inline-block">#}
-                            {#                                {{ dic|get_dict:'number' }}</span>#}
+                            <!--{#                            <span class="d-none d-sm-none d-md-inline-block d-lg-inline-block d-xl-inline-block">#}-->
+                            <!--{#                                {{ dic|get_dict:'number' }}</span>#}-->
 
                             <span class="d-none d-sm-none d-md-inline-block d-lg-inline-block d-xl-inline-block">
                                 {{ request|gf_number }}</span>
@@ -98,7 +106,7 @@
                                 <p class="text-right mb-0 mb-md-3">
                                     <i class="fa fa-shopping-basket mr-3" aria-hidden="true"></i>Корзина: <span
                                     class="cart-sum" id="user_basket_total">{{ request|gf_busket }} руб.</span>
-                                    <div class="circle">
+                                    <div class="circle" id="count_user_items">
                                     {{ request|gf_count_items }}
                                 </div>
 
@@ -333,22 +341,13 @@
 </div>
 
 
-<script src="https://kit.fontawesome.com/2c9fd467ea.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+
 
 <script src="{% static 'js/slick.min.js' %}"></script>
-<script src="{% static 'js/bootstrap.js' %}"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
+{#<script src="{% static 'js/bootstrap.js' %}"></script>#}
+{#<script src="{% static 'js/bootstrap.min.js' %}"></script>#}
 <script src="{% static 'js/main.js' %}"></script>
-<script src="{% static 'js/noty.js' %}"></script>
-
+<!--<script src="{% static 'js/noty.js' %}"></script>-->
+<script async src="https://kit.fontawesome.com/2c9fd467ea.js"></script>
 </body>
 </html>
