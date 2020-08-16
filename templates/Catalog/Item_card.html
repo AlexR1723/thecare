@@ -2,11 +2,6 @@
 {% load staticfiles %}
 {% load poll_extras %}
 {% block content %}
-<!--{{s_name}}</br>-->
-<!--{{el}}</br>-->
-<!--{{el1}}</br>-->
-<!--{{s_id}}</br>-->
-
     <div class="container-fluid p-0">
         <div class="row m-0 justify-content-center">
             <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 mt-3">
@@ -160,7 +155,7 @@
                 </div>
                 <div class="row m-0 justify-content-start align-items-center">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 mt-2">
-                    
+
                         {% for i in item.needed %}
                             <a href="{% url 'Catalog_search' category i.need.id|make_search_url:"needs" %}"><span
                                     class="badge">{{ i.need.name|capfirst }}</span></a>
@@ -176,7 +171,7 @@
                 </div>
             </div>
 
-            
+
             <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 item-card_blk mb-4">
                 <div class="row m-0 justify-content-start align-items-center">
                     <div class="col-12 p-0">

@@ -706,10 +706,18 @@ def Item_card(request, slug):
         ls.append(i.id)
         if i.size.float_name:
             ls.append(i.size.float_name)
+            print(i.size.float_name)
+            print('float_name')
         if i.size.str_name:
             ls.append(i.size.str_name)
+            print(i.size.str_name)
+            print('str_name')
         ls.append(i.price)
+        # print(i.price)
+        # print('i.old_price')
         ls.append(i.old_price)
+        # print(i.old_price)
+        # print('i.old_price')
         ls.append(i.count)
         ls.append(i.sale)
         if int(i.sale)>0:
@@ -717,9 +725,6 @@ def Item_card(request, slug):
             have_sale=True
         lst.append(ls)
 
-    lst=['awgawawg+awgagawg','awfawfafw,awfawf','awfawf*awfaf',' a+a -a /a * a=a )a (a }a/a']
-    for i in lst:
-        print(slugify(i))
 
     return render(request, 'Catalog/Item_card.html', locals())
 
@@ -736,3 +741,4 @@ def Item_card(request, slug):
     #     lst.append(i)
     # ls1 = sorted(lst, key=lambda sz: sz['size_id'])
     # return HttpResponse(json.dumps(sizes))
+

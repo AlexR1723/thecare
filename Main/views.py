@@ -153,7 +153,7 @@ def Save_excel_file(request):
 
 def get_product_count(request):
 	# print(sys.getdefaultencoding())
-	print(sys.getdefaultencoding())
+	# print(sys.getdefaultencoding())
 	# settings.PROD_LIST.clear()
 	# settings.DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 	c=Files.objects.count()
