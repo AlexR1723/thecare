@@ -18,7 +18,8 @@ from . import views
 from django.urls import path
 
 urlpatterns = [
-    url(r'^face/$', views.Face, name="Face"),
+    # url(r'^face/$', views.Face, name="Face"),
+
     # url(r'^for_men/$', views.For_men, name="For_men"),
     # url(r'^for_men/(?P<filter>[a-z_]+)/$', views.For_men_filter, name="For_men_filter"),
     # url(r'^for_men/(?P<page>[0-9]+)/$', views.For_men_page, name="For_men_page"),
@@ -39,7 +40,8 @@ urlpatterns = [
     url(r'^(?P<head_url>[A-Za-zА-Яа-я_]+)/(?P<text>[^/]+)/(?P<page>[^/]+)/(?P<filter>[a-z_]+)/$', views.Catalog_search_page_filter,
         name="Catalog_search_page_filter"),
 
-    url(r'^items_catalog/$', views.Items_catalog, name="Items_catalog"),
+    # url(r'^items_catalog/$', views.Items_catalog, name="Items_catalog"),
+
     # url(r'get_product_sizes', views.get_product_sizes, name="get_product_sizes"),
     # url(r'^search_results/$', views.Search_results, name="Search_results"),
     # url(r'^item_card/$', views.Item_card, name="Item_card"),

@@ -5,6 +5,8 @@ from django.db.models import Q
 import random
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 import xlrd, xlwt, json, re, hashlib, random, datetime
+from collections import Counter
+from django.db.models import Count
 
 from django.conf import settings
 
@@ -228,47 +230,57 @@ def left_filter(url_page, head, filter=False, prod=False):
         for i in names:
             qname.add(Q(title__icontains=i), Q.OR)
         # print(qname)
-        qshort=Q()
+        qshort = Q()
         for i in names:
             qshort.add(Q(shot_description__icontains=i), Q.OR)
         # print(qname)
-        prod1 = list(Product.objects.filter(qname).values_list('id',flat=True))
-        prod2 = list(Product.objects.filter(qshort).values_list('id',flat=True))
+        prod1 = list(Product.objects.filter(qname).values_list('id', flat=True))
+        prod2 = list(Product.objects.filter(qshort).values_list('id', flat=True))
         print(len(prod1))
         print(len(prod2))
 
         # prod3 = list(set(prod1) & set(prod2))
 
-
-        if len(prod1)!=0 and len(prod2)!=0:
-            prod3=list(set(prod1) & set(prod2))
-            if len(prod3)==0:
+        if len(prod1) != 0 and len(prod2) != 0:
+            prod3 = list(set(prod1) & set(prod2))
+            if len(prod3) == 0:
                 # print(prod1)
                 # print(prod2)
                 prod1.extend(prod2)
-                prod3=prod1
+                prod3 = prod1
             #     print(prod3)
             # print(prod3)
         else:
-            if len(prod1)==0:
+            if len(prod1) == 0:
                 # print('prod1=0')
-                prod3=prod2
-            if len(prod2)==0:
+                prod3 = prod2
+            if len(prod2) == 0:
                 # print('prod2=0')
-                prod3=prod1
-
+                prod3 = prod1
 
         # prod1=prod3
         # print(len(prod3))
         # print(prod3)
         # print(type(prod))
-        prod3=Product.objects.filter(id__in=prod3)
+        prod3 = Product.objects.filter(id__in=prod3)
         # ids = list(prod1.values_list('id', flat=True))
         ids = list(prod3.values_list('id', flat=True))
         # print(len(ids))
-        need = NeedType.objects.filter(productneed__product__id__in=ids).distinct('id').order_by('id', 'name')
-        resource = ResourceType.objects.filter(product__id__in=ids).distinct('id').order_by('id', 'name')
-        brands = Brands_model.objects.filter(product__id__in=ids).distinct('id').order_by('id', 'name')
+        # need = NeedType.objects.filter(productneed__product__id__in=ids).distinct('id').order_by('id', 'name')
+        # print(need)
+        need = list(set(list(NeedType.objects.filter(productneed__product__id__in=ids).values_list('id', flat=True))))
+        need = NeedType.objects.filter(id__in=need).order_by('name')
+        # print('--------------')
+        # print(need)
+
+        # resource = ResourceType.objects.filter(product__id__in=ids).distinct('id').order_by('id', 'name')
+        resource = list(set(list(ResourceType.objects.filter(product__id__in=ids).values_list('id', flat=True))))
+        print(resource)
+        resource = ResourceType.objects.filter(id__in=resource).order_by('name')
+
+        # brands = Brands_model.objects.filter(product__id__in=ids).distinct('id').order_by('id', 'name')
+        brands = list(set(list(Brands_model.objects.filter(product__id__in=ids).values_list('id', flat=True))))
+        brands = Brands_model.objects.filter(id__in=brands).order_by('name')
         if type(prod).__name__ == 'QuerySet':
             # print('query')
             # prod = prod.filter(qname)
@@ -308,24 +320,51 @@ def left_filter(url_page, head, filter=False, prod=False):
                 queryset = prod.filter(productsize__sale__gt=0).order_by(get_filter(filter))
             if not filter and prod:
                 queryset = prod.filter(productsize__sale__gt=0).order_by('-id')
-            resource = CategoryType.objects.filter(product__productsize__sale__gt=0).distinct('id')
+            # resource = CategoryType.objects.filter(product__productsize__sale__gt=0).distinct('id')
+            resource = list(set(list(CategoryType.objects.filter(product__productsize__sale__gt=0).values_list('id',flat=True))))
+            resource=CategoryType.objects.filter(id__in=resource)
             need = resource
 
         if url_page == 'Brands':
             lefts = 'brands'
             if filter:
-                if filter=='new':
+                if filter == 'new':
                     queryset = prod.order_by('-hit_for_brand', '-id')
                 else:
                     queryset = prod.order_by(get_filter(filter))
             else:
-                queryset = prod.order_by('-hit_for_brand','-id')
+                queryset = prod.order_by('-hit_for_brand', '-id')
             resource = CategoryType.objects.all()
             need = resource
         if url_page == 'New_products':
             dat = datetime.datetime.today() + datetime.timedelta(days=-30)
             lefts = 'new'
-            resource = CategoryType.objects.filter(product__date__gte=dat).distinct('id')
+            print('lefts new prods')
+            # resource = CategoryType.objects.filter(product__date__gte=dat).distinct('id')
+            # resource = CategoryType.objects.filter(product__date__gte=dat)
+            # resource=Product.objects.filter(date__gte=dat).values('category').distinct()
+            resource = list(set(list(Product.objects.filter(date__gte=dat).values_list('category_id', flat=True))))
+            resource = CategoryType.objects.filter(id__in=resource).order_by('id')
+            # print(resource)
+            # prods = ProductNeed.objects.filter(Q(query)).exclude(product_id=item.id)
+            # ids = list(prods.values_list('product_id', flat=True))
+            # ids.sort(key=Counter(ids).get, reverse=True)
+            # ids1 = []
+            # for i in ids:
+            #     if i not in ids1:
+            #         ids1.append(i)
+            # ids = ids1[:12]
+            # prods = Product.objects.filter(id__in=ids)
+
+            # print(resource.count())
+            print(resource)
+            # print(set(resource))
+            # ids=resource.values_list('id',flat=True)
+            # print(ids)
+            # resource=CategoryType.objects.filter(product__date__gte=dat).values('id').distinct()
+            # resource = CategoryType.objects.filter(product__date__gte=dat).order_by('id')
+            # print(resource.count())
+            # print(resource)
             need = resource
             if filter and not prod:
                 queryset = Product.objects.filter(date__gte=dat).order_by(get_filter(filter))
@@ -348,111 +387,11 @@ def Items_catalog(request):
 def Face(request):
     # dic = global_function(request)
 
-    head = 'Средства для лица'
-    product = Product.objects.all()
-    resource = ResourceType.objects.filter(category__name='Для лица')
-    need = NeedType.objects.filter(category__name='Для лица')
-    url_page = 'face'
-
-    # print(Product.objects.filter(sale__gt=0).count())
-    # prod_list=Product.objects.all().values_list('id',flat=True)
-    # prod_list=random.choices(list(prod_list),k=300)
-    # print('count - '+str(len(prod_list)))
-    # inc=0
-    # for i in prod_list:
-    #     s=Product.objects.get(id=i)
-    #     type_sale=random.randint(0,1)
-    #     if type_sale==0:
-    #         c_sale=random.randint(5,75)
-    #         s.sale_is_number=False
-    #         s.sale=c_sale
-    #         s.sale_price=int(s.price*(100-c_sale)/100)
-    #     else:
-    #         c_sale = random.randint(50, s.price-30)
-    #         s.sale_is_number = True
-    #         s.sale = c_sale
-    #         s.sale_price = int(s.price-c_sale)
-    #     s.save()
-    #     inc=inc+1
-    #     print(str(inc)+'/'+str(len(prod_list)))
-
-    # print(Product.objects.filter(sale__gt=0).count())
-    # prods=Product.objects.filter(sale__gt=0)
-    # prods=Product.objects.all()
-    # inc=0
-    # for i in prods:
-    #     i.sale=0
-    #     i.sale_is_number=False
-    #     i.sale_price=0
-    #     i.save()
-    #     inc=inc+1
-    #     print(str(inc)+'/'+str(prods.count()))
-
-    # function "add resource type"
-    # res_list = CategoryType.objects.all()
-    # inc = 0
-    # for i in res_list:
-    #     for j in range(7):
-    #         sj = str(j)
-    #         res = ResourceType(name='Средство ' + i.name + ' #' + sj, category_id=i.id)
-    #         res.save()
-    #         inc = inc + 1
-    #         print('res type ' + str(inc) + '/' + str(res_list.count() * 7))
-
-    # function "add needs type"
-    # res_list=CategoryType.objects.all()
-    # inc=0
-    # for i in res_list:
-    #     for j in range(7):
-    #         sj=str(j)
-    #         res=NeedType(name='Потребность '+i.name+' #'+sj, category_id=i.id)
-    #         res.save()
-    #         inc = inc + 1
-    #         print('needs '+str(inc)+'/'+str(res_list.count()*7))
-
-    # function "add product"
-    # cat = 'Красители для волос'
-    # lorem = ' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tincidunt finibus sem, quis maximus purus ' \
-    #         'porttitor mollis. Sed sem eros, finibus nec orci nec, tristique fringilla massa. Phasellus pharetra, nunc in' \
-    #         ' sollicitudin porttitor, lectus libero sagittis sapien, a volutpat orci nunc ac libero. Duis ut mi et ipsum' \
-    #         ' rutrum varius. Cras auctor rutrum sem, euismod mollis purus interdum ac. Duis at dictum felis. Vivamus' \
-    #         ' gravida, odio dapibus ornare faucibus, libero ipsum dignissim erat, non suscipit lacus nunc sed eros. Proin' \
-    #         ' et purus mauris. In varius libero elit, imperdiet ornare neque fermentum sit amet. Sed sed nunc ultricies,' \
-    #         ' tincidunt sem quis.'
-    #
-    # brnds = Brands_model.objects.all().values_list('id', flat=True)
-    # category_type = CategoryType.objects.get(name__icontains=cat).id
-    # res=ResourceType.objects.filter(category_id=category_type).values_list('id',flat=True)
-    # for i in range(300):
-    #     si = str(i)
-    #     rand = random.randrange(1, 12)
-    #     img = 'uploads/test_' + str(rand) + '.png'
-    #     price = random.randrange(100, 30000, 50)
-    #     artic = random.randrange(10000000, 99999999)
-    #     size = random.randrange(10, 1000, 10)
-    #     p = Product(title='Product #' + si, shot_description='Short description for product #' + si,
-    #                 description='Full description for produc #' + si + lorem, main_photo=img, price=price,
-    #                 artikul=artic, note='Note for product #' + si + lorem,
-    #                 components='Components for product #' + si + lorem, size=size, brand_id=random.choice(brnds),
-    #                 category_id=category_type,resource_id=random.choice(res))
-    #     p.save()
-    #     print('prod #' + si + '/' + str(300))
-
-    # function "add product need"
-    # cat = 'Для мужчин'
-    # prods=Product.objects.filter(category__name__icontains=cat)
-    # needs=NeedType.objects.filter(category__name__icontains=cat).values_list('id', flat=True)
-    # needs=list(needs)
-    # inc=0
-    # for i in prods:
-    #     count_needs=random.randrange(1,5)
-    #     nds=needs
-    #     random.shuffle(nds)
-    #     for j in range(count_needs):
-    #         pn=ProductNeed(product_id=i.id,need_id=nds[j])
-    #         pn.save()
-    #     inc=inc+1
-    #     print('prod #' + str(inc) + '/' + str(prods.count())+' count prod need:'+str(count_needs))
+    # head = 'Средства для лица'
+    # product = Product.objects.all()
+    # resource = ResourceType.objects.filter(category__name='Для лица')
+    # need = NeedType.objects.filter(category__name='Для лица')
+    # url_page = 'face'
 
     return render(request, 'Catalog/Items_catalog.html', locals())
 
@@ -675,19 +614,21 @@ def Item_card(request, slug):
         print('slug error')
         # вывод страницы 404
 
-    cat = item.category.id
-    res = item.resource_id
-    ress = ProductNeed.objects.filter(product_id=item.id).values_list('need_id', flat=True)
+    # cat = item.category.id
+    # res = item.resource_id
+    res = ProductNeed.objects.filter(product_id=item.id).values_list('need_id', flat=True)
     query = Q()
-    for i in ress:
+    for i in res:
         query.add(Q(need_id=i), Q.OR)
     prods = ProductNeed.objects.filter(Q(query)).exclude(product_id=item.id)
-    prods = prods.order_by('product_id', 'id').distinct('product_id')
-    prods = list(prods)
-    prods.reverse()
-    if len(prods) > 12:
-        prods = prods[:12]
-
+    ids = list(prods.values_list('product_id', flat=True))
+    ids.sort(key=Counter(ids).get, reverse=True)
+    ids1 = []
+    for i in ids:
+        if i not in ids1:
+            ids1.append(i)
+    ids = ids1[:12]
+    prods = Product.objects.filter(id__in=ids)
     sizes = ProductSize.objects.filter(product_id=item.id)
     if sizes.count() == 1:
 
@@ -700,45 +641,20 @@ def Item_card(request, slug):
 
     sizes = sizes.order_by('size__float_name')
     lst = []
-    have_sale=False
+    have_sale = False
     for i in sizes:
         ls = []
         ls.append(i.id)
         if i.size.float_name:
             ls.append(i.size.float_name)
-            print(i.size.float_name)
-            print('float_name')
         if i.size.str_name:
             ls.append(i.size.str_name)
-            print(i.size.str_name)
-            print('str_name')
         ls.append(i.price)
-        # print(i.price)
-        # print('i.old_price')
         ls.append(i.old_price)
-        # print(i.old_price)
-        # print('i.old_price')
         ls.append(i.count)
         ls.append(i.sale)
-        if int(i.sale)>0:
+        if int(i.sale) > 0:
             print(i)
-            have_sale=True
+            have_sale = True
         lst.append(ls)
-
-
     return render(request, 'Catalog/Item_card.html', locals())
-
-
-# def get_product_sizes(request):
-#     slug = request.GET.get('slug')
-#     sizes = list(ProductSize.objects.filter(product__slug=slug).values())
-    # lst = []
-    # for i in sizes:
-    #     try:
-    #         i['size_id'] = float(Size.objects.get(id=i['size_id']).name)
-    #     except:
-    #         i['size_id'] = Size.objects.get(id=i['size_id']).name
-    #     lst.append(i)
-    # ls1 = sorted(lst, key=lambda sz: sz['size_id'])
-    # return HttpResponse(json.dumps(sizes))
-

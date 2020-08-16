@@ -221,24 +221,23 @@
 
                                     {% for i in prods %}
                                         <div class="card">
-                                            <a href="{{ i.product.get_absolute_url }}">
+                                            <a href="{{ i.get_absolute_url }}">
                                                 <div class="card-wrap">
                                                  <div class="card-img">
-                                                    {% if i.product.main_photo %}
-                                                        <img src="{{ MEDIA_URL }}{{ i.product.main_photo.url }}"
+                                                    {% if i.main_photo %}
+                                                        <img src="{{ MEDIA_URL }}{{ i.main_photo.url }}"
                                                              class="card-img-top" alt="...">
                                                     {% endif %}
                                                  </div>
                                                     <div class="card-body">
-                                                        <h5 class="card-title">{{ i.product.title }}</h5>
-                                                        <p class="card-text">{{ i.product.shot_description }}</p>
+                                                        <h5 class="card-title">{{ i.title }}</h5>
+                                                        <p class="card-text">{{ i.shot_description }}</p>
                                                         <button type="button" class="btn btn-buy mx-auto">Купить
                                                         </button>
                                                     </div>
                                                     <div class="card-footer">
                                                         <hr>
-                                                        <small class="text-muted">{{ i.product.get_price.price }}
-                                                            руб</small>
+                                                        <small class="text-muted">{{ i.get_price.price }} руб</small>
                                                     </div>
                                                 </div>
                                             </a>

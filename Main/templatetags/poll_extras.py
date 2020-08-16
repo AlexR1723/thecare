@@ -28,14 +28,14 @@ def make_search_url(value, arg):
 
 @register.filter
 def convert_to_int(value):
-    print('convert_to_int')
-    print(value)
-    print(type(value))
+    # print('convert_to_int')
+    # print(value)
+    # print(type(value))
     if value / int(value) != 1:
         return value
     else:
-        print('convert')
-        print(int(value))
+        # print('convert')
+        # print(int(value))
         return int(value)
 
 
