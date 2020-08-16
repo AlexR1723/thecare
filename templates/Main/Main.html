@@ -54,160 +54,9 @@
             </div>
         </div>
     </div>
-    <!--<div class="container-fluid p-0">-->
-    <!--    <div class="row m-0 justify-content-center shop-items_blk face-top_blk mt-3 mb-5">-->
-    <!--        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">-->
-    <!--            <div class="row m-0 justify-content-start align-items-center">-->
-    <!--                <h3>Топ 10 для лица</h3>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">-->
-    <!--            <div class="row m-0 justify-content-start align-items-center">-->
-    <!--            	<div id="carouselFace" class="carousel slide w-100" data-ride="carousel" data-interval="false">-->
-				<!--	  <div class="carousel-inner">-->
-				<!--	    <div class="carousel-item active">-->
-				<!--	    	<div class="row m-0">-->
-				<!--	    	{% for f in face %}-->
-				<!--		    <div class="col-4 d-inline-block">-->
-				<!--		    	<div class="card">-->
-				<!--		    		<div class="card-img">-->
-				<!--		    			{% if f.main_photo != null and f.main_photo != "" %}-->
-				<!--		    			<img src="/media/{{ f.main_photo }}" class="card-img-top-main" alt="...">-->
-				<!--		    			{% endif %}-->
-				<!--		    		</div>-->
-				<!--		    		<div class="card-body">-->
-				<!--		    			<h5 class="card-title mb-1">{{ f.price }} руб</h5>-->
-				<!--		    			<p class="card-text">{{ f.title }}</p>-->
-				<!--		    		</div>-->
-				<!--		    	</div>-->
-				<!--		    </div>-->
-				<!--		    {% if forloop.counter|is_3 and forloop.counter|last:face|length == False %}-->
-				<!--		    </div>-->
-				<!--		    </div>-->
-				<!--		    <div class="carousel-item">-->
-				<!--		    	<div class="row m-0">-->
-				<!--		    {% endif %}-->
-				<!--		    {% endfor %}-->
-				<!--		    </div>-->
-				<!--	    </div>-->
-				<!--	  </div>-->
-				<!--	  <a class="carousel-control-prev" href="#carouselFace" role="button" data-slide="prev">-->
-				<!--	    <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
-				<!--	    <span class="sr-only">Previous</span>-->
-				<!--	  </a>-->
-				<!--	  <a class="carousel-control-next" href="#carouselFace" role="button" data-slide="next">-->
-				<!--	    <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-				<!--	    <span class="sr-only">Next</span>-->
-				<!--	  </a>-->
-				<!--	</div>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--    </div>-->
-    <!--</div>-->
-
-    <!--<div class="container-fluid p-0">-->
-    <!--    <div class="row m-0 justify-content-center shop-items_blk hair-top_blk pt-4 pb-5 mb-4">-->
-    <!--        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">-->
-    <!--            <div class="row m-0 justify-content-start align-items-center">-->
-    <!--                <h3>Топ 10 для волос</h3>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">-->
-    <!--            <div class="row m-0 justify-content-start align-items-center">-->
-    <!--            	<div id="carouselHair" class="carousel slide w-100" data-ride="carousel" data-interval="false">-->
-				<!--	  <div class="carousel-inner">-->
-				<!--	    <div class="carousel-item active">-->
-				<!--	    	<div class="row m-0">-->
-				<!--	    	{% for h in hair %}-->
-				<!--		    <div class="col-4 d-inline-block">-->
-				<!--		    	<div class="card">-->
-				<!--		    		<div class="card-img">-->
-				<!--		    			{% if h.main_photo != null and h.main_photo != "" %}-->
-				<!--		    			<img src="/media/{{ h.main_photo }}" class="card-img-top-main" alt="...">-->
-				<!--		    			{% endif %}-->
-				<!--		    		</div>-->
-				<!--		    		<div class="card-body">-->
-				<!--		    			<h5 class="card-title mb-1">{{ h.price }} руб</h5>-->
-				<!--		    			<p class="card-text">{{ h.title }}</p>-->
-				<!--		    		</div>-->
-				<!--		    	</div>-->
-				<!--		    </div>-->
-				<!--		    {% if forloop.counter|is_3 and forloop.counter|last:hair|length == False %}-->
-				<!--		    </div>-->
-				<!--		    </div>-->
-				<!--		    <div class="carousel-item">-->
-				<!--		    	<div class="row m-0">-->
-				<!--		    {% endif %}-->
-				<!--		    {% endfor %}-->
-				<!--		    </div>-->
-				<!--	    </div>-->
-				<!--	  </div>-->
-				<!--	  <a class="carousel-control-prev" href="#carouselHair" role="button" data-slide="prev">-->
-				<!--	    <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
-				<!--	    <span class="sr-only">Previous</span>-->
-				<!--	  </a>-->
-				<!--	  <a class="carousel-control-next" href="#carouselHair" role="button" data-slide="next">-->
-				<!--	    <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-				<!--	    <span class="sr-only">Next</span>-->
-				<!--	  </a>-->
-				<!--	</div>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--    </div>-->
-    <!--</div>-->
-    <!--<div class="container-fluid p-0">-->
-    <!--    <div class="row m-0 justify-content-center shop-items_blk body-top_blk mt-3 mb-5">-->
-    <!--        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">-->
-    <!--            <div class="row m-0 justify-content-start align-items-center">-->
-    <!--                <h3>Топ 10 для тела</h3>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--        <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">-->
-    <!--            <div class="row m-0 justify-content-start align-items-center">-->
-    <!--            	<div id="carouselBody" class="carousel slide w-100" data-ride="carousel" data-interval="false">-->
-				<!--	  <div class="carousel-inner">-->
-				<!--	    <div class="carousel-item active">-->
-				<!--	    	<div class="row m-0">-->
-				<!--	    	{% for b in body %}-->
-				<!--		    <div class="col-4 d-inline-block">-->
-				<!--		    	<div class="card">-->
-				<!--		    		<div class="card-img">-->
-				<!--		    			{% if b.main_photo != null and b.main_photo != "" %}-->
-				<!--		    			<img src="/media/{{ b.main_photo }}" class="card-img-top-main" alt="...">-->
-				<!--		    			{% endif %}-->
-				<!--		    		</div>-->
-				<!--		    		<div class="card-body">-->
-				<!--		    			<h5 class="card-title mb-1">{{ b.price }} руб</h5>-->
-				<!--		    			<p class="card-text">{{ b.title }}</p>-->
-				<!--		    		</div>-->
-				<!--		    	</div>-->
-				<!--		    </div>-->
-				<!--		    {% if forloop.counter|is_3 and forloop.counter|last:body|length == False %}-->
-				<!--		    </div>-->
-				<!--		    </div>-->
-				<!--		    <div class="carousel-item">-->
-				<!--		    	<div class="row m-0">-->
-				<!--		    {% endif %}-->
-				<!--		    {% endfor %}-->
-				<!--		    </div>-->
-				<!--	    </div>-->
-				<!--	  </div>-->
-				<!--	  <a class="carousel-control-prev" href="#carouselBody" role="button" data-slide="prev">-->
-				<!--	    <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
-				<!--	    <span class="sr-only">Previous</span>-->
-				<!--	  </a>-->
-				<!--	  <a class="carousel-control-next" href="#carouselBody" role="button" data-slide="next">-->
-				<!--	    <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-				<!--	    <span class="sr-only">Next</span>-->
-				<!--	  </a>-->
-				<!--	</div>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--    </div>-->
-    <!--</div>-->
-
+  
     <div class="container-fluid p-0">
-        <div class="row m-0 justify-content-center shop-items_blk face-top_blk mt-3 mb-5">
+        <div class="row m-0 justify-content-center shop-items_blk face-top_blk mt-3 mb-3">
             <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
                 <div class="row m-0 justify-content-start align-items-center">
                     <h3>Топ 10 для лица</h3>
@@ -222,12 +71,12 @@
                                 <div class="card-img">
                                     {% if f.main_photo != null and f.main_photo != "" %}
                                         <img data-lazy="{{MEDIA_URL}}{{ f.main_photo.url }}" class="card-img-top-main"
-                                             alt="...">
+                                             alt="..."> 
                                              <img data-lazy="/media/{{ f.main_photo }}" class="card-img-top-main"
                                              alt="...">
                                     {% endif %}
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body pb-0">
                                     <h5 class="card-title mb-1">{{ f.price }} руб</h5>
                                         <p class="card-text">{{ f.title }}</p>
                                 </div>
@@ -258,7 +107,7 @@
                                              alt="...">
                                     {% endif %}
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body pb-0">
                                     <h5 class="card-title mb-1">{{ h.price }} руб</h5>
                                         <p class="card-text">{{ h.title }}</p>
                                 </div>
@@ -271,7 +120,7 @@
         </div>
     </div>
     <div class="container-fluid p-0">
-        <div class="row m-0 justify-content-center shop-items_blk body-top_blk mt-3 mb-5">
+        <div class="row m-0 justify-content-center shop-items_blk body-top_blk mt-3 mb-3">
             <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0">
                 <div class="row m-0 justify-content-start align-items-center">
                     <h3>Топ 10 для тела</h3>
@@ -289,7 +138,7 @@
                                              alt="...">
                                     {% endif %}
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body pb-0">
                                     <h5 class="card-title mb-1">{{ b.price }} руб</h5>
 
                                         <p class="card-text">{{ b.title }}</p>

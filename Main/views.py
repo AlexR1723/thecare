@@ -16,6 +16,7 @@ import os
 from django.conf import settings
 from django.views.decorators.cache import cache_page
 from django.core.cache import cache
+import sys, locale
 
 list = []
 list_count = 0
@@ -70,8 +71,8 @@ def get_user_id(request):
     # print('user')
     # print(user)
     return user
-
-@cache_page(600, cache='default', key_prefix='')
+    
+@cache_page(600, cache='default', key_prefix='')   
 def Main(request):
 	# count=Slider.objects.count()
 	# if count > 0:
@@ -255,17 +256,17 @@ def save_product(request):
     			# такого товара нет - добавили
     			if product_str.count() == 0:
     				print('if')
-    				product_str = Product_str(title=v[4], shot_description=v[3], description="update"+v[5], note=v[6], components=v[7], category=categ, resource=res, brand=brand, artikul=v[14], artik_brand=v[15], main_photo="uploads/product/" + v[11], is_top=0)
+    				product_str = Product_str(title=v[4], shot_description=v[3], description=v[5], note=v[6], components=v[7], category=categ, resource=res, brand=brand, artikul=v[14], artik_brand=v[15], main_photo="uploads/product/" + v[11], is_top=0)
     				product_str.save()
-    				if len(v) > 20:
-    					if str(v[20]).find('+') != -1:
-    						product_str.hit_for_brand = True
-    						product_str.save()
+    				# if len(v) > 20:
+    				# 	if str(v[20]).find('+') != -1:
+    				# 		product_str.hit_for_brand = True
+    				# 		product_str.save()
     			# такой товар есть - обновили
     			else:
     				print('else')
     				product_str = product_str[0]
-    				product_str.description = "update"+v[5]
+    				product_str.description = v[5]
     				product_str.note = v[6]
     				product_str.components = v[7]
     				product_str.category = categ
@@ -276,20 +277,22 @@ def save_product(request):
     				product_str.main_photo = "uploads/product/" + v[11]
     				product_str.is_top = 0
     				product_str.save()
-    				if len(v) > 20:
-    					if str(v[20]).find('+') != -1:
-    						product_str.hit_for_brand = True
-    						product_str.save()
+    				# if len(v) > 20:
+    				# 	if str(v[20]).find('+') != -1:
+    				# 		product_str.hit_for_brand = True
+    				# 		product_str.save()
     			# выбираем товар
     			product = Product.objects.get(id=product_str.id)
     			print(product)
-
+    			
     			# потребности товара
     			# удаляем старые потребности
     			product_need = ProductNeed.objects.filter(product=product)
     			product_need.delete()
     			# выбираем новые потребности
     			needs = v[10]
+    			product.description = v[10]+v[5]
+    			product.save()
     			list_need = needs.split(', ')
     			if len(list_need) == 1:
     				need = NeedType.objects.filter(name__iexact=needs).filter(category=categ)
@@ -314,8 +317,6 @@ def save_product(request):
     					if product_need.count() == 0:
     						product_need = ProductNeed(product=product, need=need)
     						product_need.save()
-    			# product.description = "need"+v[5]
-    			product.save()
     			# объем
     			# удаляем старые объемы
     			# product_size = ProductSize.objects.filter(product=product)
@@ -341,6 +342,8 @@ def save_product(request):
     				else:
     					size = size[0]
     			print(size)
+    			product.description = v[5]
+    			product.save()
     			count = 0
     			price = 0
     			sale = 0
@@ -357,6 +360,7 @@ def save_product(request):
     					product_size = ProductSize(product=product, size=size, price=price, count=count)
     					product_size.save()
     				else:
+    					product_size=product_size[0]
     					product_size.price = price
     					product_size.count = count
     					product_size.save()
@@ -366,26 +370,32 @@ def save_product(request):
     				new_price = price - (price * sale / 100)
     				product_size = ProductSize.objects.filter(product=product).filter(size=size)
     				if product_size.count() == 0:
-    					product_size = ProductSize(product=product, size=size, old_price=price, count=count, sale=sale, price=new_price)
+    					product_size = ProductSize(product=product, size=size, old_price=price, count=count, sale=sale, price=new_price, is_tone=False)
     					product_size.save()
     				else:
+    					product_size=product_size[0]
     					product_size.old_price = price
     					product_size.count = count
     					product_size.sale = sale
     					product_size.price = new_price
+    					product_size.is_tone=False
     					product_size.save()
     				print(product_size)
-    			# product.description = "size"+v[5]
+    			product.description = v[5]
     			product.save()
     			# оттенки
     			# удаляем старые оттенки
-    			product_tone = ProductTone.objects.filter(product_size=product_size)
-    			product_tone.delete()
+    			# product_tone = ProductTone.objects.filter(product_size=product_size)
+    			# product_tone.delete()
+    			# product.description = "tone_delete"+v[5]
+    			# product.save()
     			# выбираем новые оттенки
     			if v[13] != "" and v[13] != " ":
     				tones = v[13]
     				list_tone = tones.split('; ')
     				if list_tone != "" and len(list_tone) != 0:
+    					product_size.is_tone = True
+    					product_size.save()
     					for t in list_tone:
     						product_tone = ProductTone(product_size=product_size, name=t)
     						product_tone.save()
@@ -401,7 +411,7 @@ def del_product_top(request):
         p.is_top = 0
         p.save()
     return HttpResponse(json.dumps(True))
-
+    
 
 def top_product_save(request):
     # добавить выборку каждой переменной
@@ -486,7 +496,7 @@ def top_product_save(request):
         			# выбираем товар
         			product = Product.objects.get(id=product_str.id)
         			print(product)
-
+        			
         			# потребности товара
         			# удаляем старые потребности
         			print('need')
@@ -574,6 +584,7 @@ def top_product_save(request):
         					product_size = ProductSize(product=product, size=size, price=price, count=count)
         					product_size.save()
         				else:
+        					product_size=product_size[0]
         					product_size.price=price
         					product_size.count=count
         					product_size.save()
@@ -605,7 +616,7 @@ def top_product_save(request):
         						product_tone = ProductTone(product_size=product_size, name=t)
         						product_tone.save()
         			product.save()
-
+        	
         		return HttpResponse(json.dumps(True))
         	else:
         		return HttpResponse(json.dumps('not save'))
@@ -613,7 +624,7 @@ def top_product_save(request):
         	return HttpResponse(json.dumps(True))
     except:
     	return HttpResponse(json.dumps(False))
-
+        	
 
 def check_picture(request):
     # print(response)

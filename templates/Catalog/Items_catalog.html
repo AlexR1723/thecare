@@ -22,98 +22,109 @@
                 </div>
             </div>
 
-            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 items_blk head_blk">
-                <div class="row m-0 justify-content-start align-items-center">
-                    <h1 class="m-0">{{ head }}</h1>
-                </div>
-            </div>
+            <!--<div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9 p-md-0 items_blk head_blk">-->
+            <!--    <div class="row m-0 justify-content-start align-items-center">-->
+            <!--        <h1 class="m-0">{{ head }}</h1>-->
+            <!--    </div>-->
+            <!--</div>-->
             <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-11 p-md-0 sort_col">
-                <div class="row m-0 justify-content-end">
-                    <div class="col-12 col-md-5 col-lg-4 col-xl-3">
-                        <select class="form-control sort-select" id="filter_selector"
-                                onchange="location.href=this.value">
-                            <option value="
-                            {% if is_page and not is_search %}
-                            {% url 'Catalog_page_filter' url_page page 'new' %}
-                            {% endif %}
-                            {% if is_search and not is_page %}
-                            {% url 'Catalog_search_filter' url_page text 'new' %}
-                            {% endif %}
-                            {% if is_search and is_page %}
-                            {% url 'Catalog_search_page_filter' url_page text page 'new' %}
-                            {% endif %}
-                            {% if not is_search and not is_page %}
-                            {% url 'Catalog_filter' url_page 'new' %}
-                            {% endif %}
-                            "
-                                    {% if filter == "new" %}
-                                    selected
-                                    {% endif %}>Новые
-                            </option>
-                            <option value="
-                            {% if is_page and not is_search %}
-                            {% url 'Catalog_page_filter' url_page page 'price_up' %}
-                            {% endif %}
-                            {% if is_search and not is_page %}
-                            {% url 'Catalog_search_filter' url_page text 'price_up' %}
-                            {% endif %}
-                            {% if is_search and is_page %}
-                            {% url 'Catalog_search_page_filter' url_page text page 'price_up' %}
-                            {% endif %}
-                            {% if not is_search and not is_page %}
-                            {% url 'Catalog_filter' url_page 'price_up' %}
-                            {% endif %}
-                            "
-                                    {% if filter == "price_up" %}
-                                    selected
-                                    {% endif %}>По возрастанию цены
-                            </option>
-                            <option value="
-                            {% if is_page and not is_search %}
-                            {% url 'Catalog_page_filter' url_page page 'price_down' %}
-                            {% endif %}
-                            {% if is_search and not is_page %}
-                            {% url 'Catalog_search_filter' url_page text 'price_down' %}
-                            {% endif %}
-                            {% if is_search and is_page %}
-                            {% url 'Catalog_search_page_filter' url_page text page 'price_down' %}
-                            {% endif %}
-                            {% if not is_search and not is_page %}
-                            {% url 'Catalog_filter' url_page 'price_down' %}
-                            {% endif %}
-                            "
-                                    {% if filter == "price_down" %}
-                                    selected
-                                    {% endif %}>По убыванию цены
-                            </option>
-                            <option value="
-                            {% if is_page and not is_search %}
-                            {% url 'Catalog_page_filter' url_page page 'name' %}
-                            {% endif %}
-                            {% if is_search and not is_page %}
-                            {% url 'Catalog_search_filter' url_page text 'name' %}
-                            {% endif %}
-                            {% if is_search and is_page %}
-                            {% url 'Catalog_search_page_filter' url_page text page 'name' %}
-                            {% endif %}
-                            {% if not is_search and not is_page %}
-                            {% url 'Catalog_filter' url_page 'name' %}
-                            {% endif %}
-                            "
-                                    {% if filter == "name" %}
-                                    selected
-                                    {% endif %}>По названию
-                            </option>
-                        </select>
-                    </div>
+                <div class="row m-0 justify-content-between">
+                	<div class="col-12 col-md-auto col-lg-auto col-xl-auto">
+                		<h1 class="m-0">{{ head }}</h1>
+                	</div>
+                	<div class="col-12 col-md col-lg col-xl">
+                		<div class="row m-0 pt-2 justify-content-md-end">
+	                    	<div class="col-7 col-md-5 col-lg-4 col-xl-3 p-0">
+	                        <select class="form-control sort-select" id="filter_selector"
+	                                onchange="location.href=this.value">
+	                            <option value="
+	                            {% if is_page and not is_search %}
+	                            {% url 'Catalog_page_filter' url_page page 'new' %}
+	                            {% endif %}
+	                            {% if is_search and not is_page %}
+	                            {% url 'Catalog_search_filter' url_page text 'new' %}
+	                            {% endif %}
+	                            {% if is_search and is_page %}
+	                            {% url 'Catalog_search_page_filter' url_page text page 'new' %}
+	                            {% endif %}
+	                            {% if not is_search and not is_page %}
+	                            {% url 'Catalog_filter' url_page 'new' %}
+	                            {% endif %}
+	                            "
+	                                    {% if filter == "new" %}
+	                                    selected
+	                                    {% endif %}>Новые
+	                            </option>
+	                            <option value="
+	                            {% if is_page and not is_search %}
+	                            {% url 'Catalog_page_filter' url_page page 'price_up' %}
+	                            {% endif %}
+	                            {% if is_search and not is_page %}
+	                            {% url 'Catalog_search_filter' url_page text 'price_up' %}
+	                            {% endif %}
+	                            {% if is_search and is_page %}
+	                            {% url 'Catalog_search_page_filter' url_page text page 'price_up' %}
+	                            {% endif %}
+	                            {% if not is_search and not is_page %}
+	                            {% url 'Catalog_filter' url_page 'price_up' %}
+	                            {% endif %}
+	                            "
+	                                    {% if filter == "price_up" %}
+	                                    selected
+	                                    {% endif %}>По возрастанию цены
+	                            </option>
+	                            <option value="
+	                            {% if is_page and not is_search %}
+	                            {% url 'Catalog_page_filter' url_page page 'price_down' %}
+	                            {% endif %}
+	                            {% if is_search and not is_page %}
+	                            {% url 'Catalog_search_filter' url_page text 'price_down' %}
+	                            {% endif %}
+	                            {% if is_search and is_page %}
+	                            {% url 'Catalog_search_page_filter' url_page text page 'price_down' %}
+	                            {% endif %}
+	                            {% if not is_search and not is_page %}
+	                            {% url 'Catalog_filter' url_page 'price_down' %}
+	                            {% endif %}
+	                            "
+	                                    {% if filter == "price_down" %}
+	                                    selected
+	                                    {% endif %}>По убыванию цены
+	                            </option>
+	                            <option value="
+	                            {% if is_page and not is_search %}
+	                            {% url 'Catalog_page_filter' url_page page 'name' %}
+	                            {% endif %}
+	                            {% if is_search and not is_page %}
+	                            {% url 'Catalog_search_filter' url_page text 'name' %}
+	                            {% endif %}
+	                            {% if is_search and is_page %}
+	                            {% url 'Catalog_search_page_filter' url_page text page 'name' %}
+	                            {% endif %}
+	                            {% if not is_search and not is_page %}
+	                            {% url 'Catalog_filter' url_page 'name' %}
+	                            {% endif %}
+	                            "
+	                                    {% if filter == "name" %}
+	                                    selected
+	                                    {% endif %}>По названию
+	                            </option>
+	                        </select>
+	                    </div>
+	                    	<div class="col-5 col-md-4 col-lg-auto pr-0">
+	    						<button class="form-control sort-select pl-lg-5 pr-lg-5" data-toggle="collapse" href="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">Фильтр</button>
+		    <!--    <a data-toggle="collapse" href="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter"-->
+		                	</div>
+	                    </div>
+	                </div>
                 </div>
             </div>
 
 
             <div class="col-12 col-sm-12 col-md-11 col-lg-11 col-xl-11 p-md-0 sort_col">
 
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 p-0 items_catalog mt-5 mb-0 collapse d-lg-inline-block d-xl-inline-block"
+                <div class="row m-0 pt-4">
+                    <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 p-0 items_catalog mt-0 mb-0 collapse d-lg-inline-block d-xl-inline-block"
                          id="collapseFilter">
                         <div class="row m-0 justify-content-start align-items-center">
                             <div class="col">
@@ -413,6 +424,7 @@
                                         <div class="card-deck mb-5 ml-md-0 w-100" id="products">
                                             <div class="row w-100 m-0">
                                                 {% for p in products %}
+                                                <a href="{{ p.get_absolute_url }}">
                                                     <div class="card {% if p.get_sale %}sale-card{% endif %} col-6 col-sm-6 col-md-4 col-lg-4 col-xl-3"
                                                          data-price="{{ p.price }}" data-name="{{ p.title }}"
                                                             {#                                                     data-num="{{ forloop.counter }}"#}
@@ -430,7 +442,7 @@
                                                         {% endif %}
                                                         <div class="card-img-catalog">
                                                             {% if p.main_photo != None and p.main_photo != "" %}
-                                                                <img src="{{ MEDIA_URL }}{{ p.main_photo.url }}"
+                                                                <img src="{{MEDIA_URL}}{{ p.main_photo.url }}"
                                                                      class="card-img-top" alt="...">
                                                             {% endif %}
                                                         </div>
@@ -458,16 +470,42 @@
                                                             {#                                                                </div>#}
                                                             {#                                                            </div>#}
                                                             {#                                                        {% else %}#}
-                                                            <small class="text-muted">{{ p.get_price.price }}
+                                                            <small class="text-muted">{{ p.price }}
                                                                 руб.</small>
                                                             {#                                                        {% endif %}#}
                                                         </div>
                                                     </div>
+                                                    </a>
                                                 {% endfor %}
                                             </div>
                                         </div>
                                     </div>
-
+									<div class="row m-0 justify-content-center align-items-center pb-4">
+										{% if next %}
+                                                    <!--<li class="page-item">-->
+                                                        {% if is_search and not is_filter %}
+                                                            <a class="more-btn"
+                                                               href="{% url 'Catalog_search_page' url_page text next %}"
+                                                               aria-label="Next">Еще...</a>
+                                                        {% endif %}
+                                                        {% if is_filter and not is_search %}
+                                                            <a class="more-btn"
+                                                               href="{% url 'Catalog_page_filter' url_page next filter %}"
+                                                               aria-label="Next">Еще...</a>
+                                                        {% endif %}
+                                                        {% if is_filter and  is_search %}
+                                                            <a class="more-btn"
+                                                               href="{% url 'Catalog_search_page_filter' url_page text next filter %}"
+                                                               aria-label="Next">Еще...</a>
+                                                        {% endif %}
+                                                        {% if not is_filter and  not is_search %}
+                                                            <a class="more-btn"
+                                                               href="{% url 'Catalog_page' url_page next %}"
+                                                               aria-label="Next">Еще...</a>
+                                                        {% endif %}
+                                                    <!--</li>-->
+                                                {% endif %}
+									</div>
                                     <div class="row m-0 justify-content-center align-items-center nav_blk">
                                         <nav aria-label="Page navigation">
                                             <ul class="pagination">
@@ -504,7 +542,7 @@
                                                         {% endif %}
                                                     </li>
                                                 {% endif %}
-
+												
                                                 {% for i in pages %}
                                                     {% if not i %}
                                                         <a class="page-link" href="">...</a>
