@@ -223,7 +223,7 @@ class Product(models.Model):
             string = str(self.id) + '-' + self.title
         else:
             string = str(self.id) + '-' + self.title
-
+        self.slug=slugify(string)
         self.date = datetime.datetime.today()
         super(Product, self).save(*args, **kwargs)
 
