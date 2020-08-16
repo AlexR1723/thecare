@@ -143,8 +143,7 @@ def get_prod_absolute_url(id):
 	prod=Product.objects.get(id=id)
 	return reverse('Item_card', kwargs={'slug': prod.slug})
 
-
-@register.filter
+@register.filter	
 def is_3(elem):
 	if elem % 3 == 0:
 		return True
