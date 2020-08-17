@@ -6,6 +6,11 @@ register = template.Library()
 
 
 @register.filter
+def get_dict(dic, item):
+    return dic[str(item)]
+
+
+@register.filter
 def get_prod_count(dic, item):
     return dic[str(item)]['count']
 
@@ -24,7 +29,6 @@ def make_search_url(value, arg):
 # def get_dict(value, arg):
 #     return value[arg]
 
-    
 
 @register.filter
 def convert_to_int(value):
@@ -89,7 +93,7 @@ def gf_busket(request):
                 prod = prods.filter(id=i)[0]
                 count = ses[str(i)]['count']
                 ses[str(i)]['total'] = prod.price * count
-                session_save(request,ses)
+                session_save(request, ses)
 
         for i in ses.values():
             basket += int(i['total'])
@@ -115,44 +119,41 @@ def gf_count_items(request):
     return itm_cnt
 
 
-
-
-
 # @register.filter
 # def get_media(id):
 # 	prod=Product.objects.get(id=id)
 # 	return prod.main_photo.url
 
 
-
-
 @register.filter
 def get_prod_price_format(id):
-	prod=int(Product.objects.get(id=id).id)
-	sizes = ProductSize.objects.filter(product__id=prod).order_by('size__float_name', 'size__str_name').values('price')
-	# return(sizes[0]['price'])
-	if len(sizes) > 0:
-		sizes=sizes[0]['price']
-		return '{:,}'.format(sizes).replace(',', ' ')
-	else:
-		return 0
-            
-          
+    prod = int(Product.objects.get(id=id).id)
+    sizes = ProductSize.objects.filter(product__id=prod).order_by('size__float_name', 'size__str_name').values('price')
+    # return(sizes[0]['price'])
+    if len(sizes) > 0:
+        sizes = sizes[0]['price']
+        return '{:,}'.format(sizes).replace(',', ' ')
+    else:
+        return 0
+
+
 @register.filter
 def get_prod_absolute_url(id):
-	prod=Product.objects.get(id=id)
-	return reverse('Item_card', kwargs={'slug': prod.slug})
+    prod = Product.objects.get(id=id)
+    return reverse('Item_card', kwargs={'slug': prod.slug})
 
-@register.filter	
+
+@register.filter
 def is_3(elem):
-	if elem % 3 == 0:
-		return True
-	else:
-		return False
+    if elem % 3 == 0:
+        return True
+    else:
+        return False
+
 
 @register.filter
 def last(elem, all_c):
-	if elem == all_c:
-		return True
-	else:
-		return False
+    if elem == all_c:
+        return True
+    else:
+        return False

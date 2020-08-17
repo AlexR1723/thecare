@@ -46,8 +46,10 @@ def Cart(request):
         # all_prices += int(i['total'])
         # products = Product.objects.filter(slug__in=prod_ses.keys())
         products = ProductSize.objects.filter(id__in=prod_ses.keys())
-    if request.user.is_authenticated:
-        user_id=get_user_id(request)
+    # if request.user.is_authenticated:
+
+    user_id=get_user_id(request)
+    if user_id:
         auth_user=AuthUser.objects.get(id=user_id)
         user=Users.objects.get(user=user_id)
         fio=auth_user.last_name+' '+auth_user.first_name+' '+user.patronymic

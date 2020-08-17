@@ -170,6 +170,7 @@ class ProductSize(models.Model):
     count = models.IntegerField(blank=True, null=True, verbose_name="Количество", default=0)
     sale = models.IntegerField(blank=True, null=True, verbose_name="Скидка", default=0)
     old_price = models.IntegerField(blank=True, null=True, verbose_name="Старая цена", default=0)
+    is_tone = models.BooleanField(blank=True, null=True, verbose_name='Есть ли тоны?')
 
     class Meta:
         managed = False

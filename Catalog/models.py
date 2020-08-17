@@ -89,33 +89,33 @@ class CategoryType(models.Model):
         return self.name
 
     def get_res_items_sale(self):
-        items = ResourceType.objects.filter(category_id=self.id).order_by('id', 'name').filter(
-            product__productsize__sale__gt=0).distinct('id')
+        items = ResourceType.objects.filter(category_id=self.id).filter(
+            product__productsize__sale__gt=0).distinct().order_by('name')
         return items
 
     def get_need_items_sale(self):
         items = NeedType.objects.filter(productneed__product__category=self).filter(
-            productneed__product__productsize__sale__gt=0).order_by('id', 'name').distinct('id')
+            productneed__product__productsize__sale__gt=0).distinct().order_by('name')
         return items
 
     def get_res_items_new(self):
         dat = datetime.datetime.today() + datetime.timedelta(days=-30)
-        items = ResourceType.objects.filter(category_id=self.id).order_by('id', 'name').filter(
-            product__date__gte=dat).distinct('id')
+        items = ResourceType.objects.filter(category_id=self.id).filter(
+            product__date__gte=dat).distinct().order_by('name')
         return items
 
     def get_need_items_new(self):
         dat = datetime.datetime.today() + datetime.timedelta(days=-30)
         items = NeedType.objects.filter(productneed__product__category=self).filter(
-            productneed__product__date__gte=dat).order_by('id', 'name').distinct('id')
+            productneed__product__date__gte=dat).distinct().order_by('name')
         return items
 
     def get_res_items_brands(self):
-        items = ResourceType.objects.filter(category_id=self.id).order_by('id', 'name').distinct('id')
+        items = ResourceType.objects.filter(category_id=self.id).distinct().order_by('name')
         return items
 
     def get_need_items_brands(self):
-        items = NeedType.objects.filter(productneed__product__category=self).order_by('id', 'name').distinct('id')
+        items = NeedType.objects.filter(productneed__product__category=self).distinct().order_by('name')
         return items
 
 
@@ -206,7 +206,7 @@ class Product(models.Model):
     artik_brand = models.TextField(blank=True, null=True, max_length=20)
     is_top = models.BooleanField(blank=True, null=True)
     hit_for_brand = models.BooleanField(blank=True, null=True)
-    price=models.CharField(max_length=500, blank=True, null=True)
+    price = models.CharField(max_length=500, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -223,7 +223,7 @@ class Product(models.Model):
             string = str(self.id) + '-' + self.title
         else:
             string = str(self.id) + '-' + self.title
-        self.slug=slugify(string)
+        self.slug = slugify(string)
         self.date = datetime.datetime.today()
         super(Product, self).save(*args, **kwargs)
 
@@ -266,6 +266,7 @@ class ProductSize(models.Model):
     count = models.IntegerField(blank=True, null=True, verbose_name="Количество", default=0)
     sale = models.IntegerField(blank=True, null=True, verbose_name="Скидка", default=0)
     old_price = models.IntegerField(blank=True, null=True, verbose_name="Старая цена", default=0)
+    is_tone = models.BooleanField(blank=True, null=True,verbose_name='Есть ли тоны?')
 
     class Meta:
         managed = False
