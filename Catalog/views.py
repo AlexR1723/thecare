@@ -239,7 +239,17 @@ def left_filter(url_page, head, filter=False, prod=False):
     if url_page != 'Sale' and url_page != 'Brands' and url_page != 'New_products':
         resource = ResourceType.objects.filter(category__name__icontains=head).order_by('name')
         need = NeedType.objects.filter(category__name__icontains=head).order_by('name')
-        brands = Brands_model.objects.all().order_by('name')
+        # 'For_men': 'Для мужчин',
+        # 'For_hair': 'Для волос',
+        # 'For_body': 'Для тела',
+        # 'For_face': 'Для лица',
+        if url_page == 'For_men' or url_page == 'For_hair' or url_page == 'For_body' or url_page == 'For_face':
+            brands=list(BrandCategory.objects.filter(category__name__icontains=head).values_list('brand_id',flat=True))
+            print(brands)
+            brands=Brands_model.objects.filter(id__in=brands).order_by('name')
+            print(brands)
+        else:
+            brands = Brands_model.objects.all().order_by('name')
         if prod != False and prod.count() == 0:
             return resource, need, brands, prod
 

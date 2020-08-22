@@ -96,7 +96,7 @@ class Brands_model(models.Model):
 
 
 class BrandCategory(models.Model):
-    brand = models.ForeignKey('Brands', models.DO_NOTHING, blank=True, null=True)
+    brand = models.ForeignKey('Brands_model', models.DO_NOTHING, blank=True, null=True)
     category = models.ForeignKey('CategoryType', models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
