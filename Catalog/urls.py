@@ -43,7 +43,9 @@ urlpatterns = [
     # url(r'^items_catalog/$', views.Items_catalog, name="Items_catalog"),
 
     # url(r'get_product_sizes', views.get_product_sizes, name="get_product_sizes"),
+    url(r'get_sizes_by_id', views.get_sizes_by_id, name="get_sizes_by_id"),
     # url(r'^search_results/$', views.Search_results, name="Search_results"),
     # url(r'^item_card/$', views.Item_card, name="Item_card"),
     path('<slug:slug>', views.Item_card, name='Item_card'),
+
 ]

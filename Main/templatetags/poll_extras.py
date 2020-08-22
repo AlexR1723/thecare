@@ -123,6 +123,11 @@ def gf_count_items(request):
 # def get_media(id):
 # 	prod=Product.objects.get(id=id)
 # 	return prod.main_photo.url
+@register.filter
+def is_have_sales(id):
+    res=ProductSize.objects.get(id=int(id))
+    res = ProductSize.objects.filter(product_id=res.product_id).filter(size_id=res.size_id).filter(sale__gt=0).exists()
+    return res
 
 
 @register.filter

@@ -11,8 +11,8 @@
                             <li class="breadcrumb-item"><a href="{% url 'Main' %}"><i class="fa fa-home home-icon"
                                                                                       aria-hidden="true"></i></a></li>
                             <li class="breadcrumb-item active" aria-current="page">
-                            	<a href="{% url 'Catalog' category %}">{{ head }}</a>
-                            	</li>
+                                <a href="{% url 'Catalog' category %}">{{ head }}</a>
+                            </li>
                             <li class="breadcrumb-item active d-none d-md-block" aria-current="page">
                                 <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
                             </li>
@@ -44,102 +44,234 @@
                                 <div class="col-12 col-md-7 col-lg-8">
                                     <div class="card-body pb-0">
                                         <p class="card-text d-none d-sm-none d-md-inline-block d-lg-inline-block d-xl-inline-block">{{ item.description }}</p>
+                                        {% if not is_have_tones %}
                                             {% if not not_size %}
                                                 {% if not sizename %}
+
                                                     {% if have_sale %}
                                                         <p class="card-text text-center text-md-left d-inline-block"
                                                            style="color: red">Скидка!</p>
+                                                        {% for i in lst %}
+                                                            {% if i|get_dict:'sale' > 0 %}
+                                                                <p class="card-text text-center text-md-left d-inline-block
+                                                        w-100">{{ i|get_dict:'size'|convert_to_int }} мл.
+                                                                    -{{ i|get_dict:'sale' }}%</p>
+                                                            {% endif %}
+                                                        {% endfor %}
                                                     {% endif %}
-                                                    {% for i in lst %}
-                                                        {% if i|get_dict:'sale' > 0 %}
-                                                            <p class="card-text text-center text-md-left d-inline-block
-                                                        w-100">{{ i|get_dict:'size'|convert_to_int }} мл. -{{ i|get_dict:'sale' }}%</p>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                	<div class="row m-0 align-items-center">
-                                                		<div class="col-3 col-md-auto p-0">
-                                                    		<p class="card-text text-center text-md-left d-inline-block">Объемы:</p>
-                                                		</div>
-                                                		<div class="col-auto pr-0">
-		                                                    <select name="" id="select_product_sizes"
-		                                                            class="select-product-sizes">
-		                                                        {% for i in lst %}
-		                                                            <option
-		                                                                    value="{{ i|get_dict:'id' }}"
-		                                                                    data-price="{{ i|get_dict:'price' }}"
-		                                                                    data-sale="{{ i|get_dict:'old_price' }}"
-		                                                                    data-count="{{ i|get_dict:'count' }}">{{ i|get_dict:'size'|convert_to_int }} мл.
-		                                                                {% if i|get_dict:'old_price' %}
-		                                                                    <span style="color: red">-{{ i|get_dict:'sale' }}%</span>{% endif %}
-		                                                            </option>
-		                                                        {% endfor %}
-		                                                    </select>
-                                                    	</div>
+
+
+                                                    <div class="row m-0 align-items-center">
+                                                        <div class="col-3 col-md-auto p-0">
+                                                            <p class="card-text text-center text-md-left d-inline-block">
+                                                                Объемы:</p>
+                                                        </div>
+                                                        <div class="col-auto pr-0">
+                                                            <select id="select_product_sizes"
+                                                                    class="select-product-sizes">
+                                                                {% for i in lst %}
+                                                                    <option
+                                                                            value="{{ i|get_dict:'id' }}"
+                                                                            data-price="{{ i|get_dict:'price' }}"
+                                                                            data-sale="{{ i|get_dict:'old_price' }}"
+                                                                            data-count="{{ i|get_dict:'count' }}">{{ i|get_dict:'size'|convert_to_int }}
+                                                                        мл.
+                                                                        {% if i|get_dict:'old_price' %}
+                                                                            <span style="color: red">-{{ i|get_dict:'sale' }}%</span>
+                                                                        {% endif %}
+                                                                    </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 {% else %}
-	                                                <div class="row m-0 align-items-center">
-	                                                	<div class="col-3 col-md-auto p-0">
-	                                                    	<p class="card-text text-center text-md-left d-inline-block">Объем: </p>
-	                                                    </div>
-	                                                	<div class="col-auto pr-0">
-	                                                    	<b>{{ sizename }} мл</b>
-	                                                    </div>
+                                                    <div class="row m-0 align-items-center">
+                                                        <div class="col-3 col-md-auto p-0">
+                                                            <p class="card-text text-center text-md-left d-inline-block">
+                                                                Объем: </p>
+                                                        </div>
+                                                        <div class="col-auto pr-0">
+                                                            <b>{{ sizename }} мл</b>
+                                                        </div>
                                                     </div>
                                                 {% endif %}
                                             {% endif %}
-                                        <div class="row m-0 align-items-center pt-2">
-                                            <div class="col-3 col-md-auto p-0">
-                                            	<p class="card-text text-center text-md-left d-inline-block">Оттенок: </p>
+
+
+                                            {#                                        <div class="row m-0 align-items-center pt-2">#}
+                                            {#                                            <div class="col-3 col-md-auto p-0">#}
+                                            {#                                                <p class="card-text text-center text-md-left d-inline-block">#}
+                                            {#                                                    Оттенок: </p>#}
+                                            {#                                            </div>#}
+                                            {#                                            <div class="col-12 col-md-auto p-0 pl-md-3 pr-md-0">#}
+                                            {#                                                <select id="select_product_tone" class="select-product-sizes">#}
+                                            {#                                                    {% for i in tones %}#}
+                                            {#                                                        <option#}
+                                            {#                                                                value="{{ i|get_dict:'id' }}"#}
+                                            {#                                                                data-price="{{ i|get_dict:'price' }}"#}
+                                            {#                                                                data-sale="{{ i|get_dict:'old_price' }}"#}
+                                            {#                                                                data-count="{{ i|get_dict:'count' }}">{{ i|get_dict:'tone' }}#}
+                                            {#                                                            {% if i|get_dict:'old_price' %}#}
+                                            {#                                                                <span style="color: red">-{{ i|get_dict:'sale' }}%</span>{% endif %}#}
+                                            {#                                                        </option>#}
+                                            {#                                                    {% endfor %}#}
+                                            {#                                                </select>#}
+                                            {#                                            </div>#}
+                                            {#                                        </div>#}
+
+
+                                            <div class="card-price-block row m-0 align-items-center mb-3">
+                                                <div class="d-inline-block" id="is_sale_prod">
+                                                    {% if item.get_price.sale %}
+                                                        <i class="fa fa-tag" aria-hidden="true"></i>
+                                                        <small class="old-price-card"
+                                                               id="product_sale">{{ item.get_price.old_price }}
+                                                            руб.</small>
+                                                    {% endif %}
+                                                </div>
+
+                                                <div class="d-inline-block card-text text-center text-md-left">
+                                                    {% if lst.0|get_dict:'count' %}
+                                                        <span class="price-text"
+                                                              id="product_price">{{ item.get_price.price }} руб.</span>
+                                                    {% else %}
+                                                        <span class="price-text" id="product_price">К сожалению, товара нет в наличии.</span>
+                                                    {% endif %}
+                                                </div>
                                             </div>
-                                            <div class="col-12 col-md-auto p-0 pl-md-3 pr-md-0">
-                                            	<select name="" id="select_product_tone" class="select-product-sizes">
-                                                    <option>Наимнование оттенка</option>
-                                                    <option>Наимнование оттенка</option>
-                                                </select>
-                                            </div>
-                                        </div>
+
+                                            {% if lst.0|get_dict:'count' %}
+                                                <div class="items-counter mb-4 text-center text-md-left"
+                                                     id="prod_input">
+                                                    <button class="minus"><i class="fa fa-minus" aria-hidden="true"></i>
+                                                    </button>
+                                                    <input type="number" value="1" min="1" id="item_count"
+                                                           max="{{ item.get_price.count }}"
+                                                           onkeyup="check_input_count_prod(this)"
+                                                           onkeypress='return event.charCode >= 48 && event.charCode <= 57||event.charCode==8'
+                                                    />
+                                                    <button class="plus"><i class="fa fa-plus" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+
+                                                <div class="text-center text-md-left" id="prod_button">
+                                                    <button class="btn" data-slug="{{ item.get_price.id }}"
+                                                            id="btn_add_to_cart">В корзину
+                                                    </button>
+                                                </div>
+                                            {% endif %}
 
 
-                                        <div class="card-price-block row m-0 align-items-center mb-3">
+                                        {% else %}
 
-                                            <div class="d-inline-block" id="is_sale_prod">
-                                                {% if item.get_price.sale %}
-                                                    <i class="fa fa-tag" aria-hidden="true"></i>
-                                                    <small class="old-price-card"
-                                                           id="product_sale">{{ item.get_price.old_price }} руб.</small>
-                                                {% endif %}
-                                            </div>
 
-                                            <div class="d-inline-block card-text text-center text-md-left">
-                                                {% if lst.0|get_dict:'count' %}
-                                                    <span class="price-text"
-                                                          id="product_price">{{ item.get_price.price }} руб.</span>
+                                            {% if not not_size %}
+                                                {% if not sizename %}
+                                                    <div class="row m-0 align-items-center">
+                                                        <div class="col-3 col-md-auto p-0">
+                                                            <p class="card-text text-center text-md-left d-inline-block">
+                                                                Объемы:</p>
+                                                        </div>
+                                                        <div class="col-auto pr-0">
+                                                            <select id="select_product_sizes"
+                                                                    class="select-product-sizes"
+                                                                    data-tone="{{ is_have_tones }}">
+                                                                {% for i in lst %}
+                                                                    <option
+                                                                            value="{{ i|get_dict:'id' }}"
+                                                                            data-price="{{ i|get_dict:'price' }}"
+                                                                            data-sale="{{ i|get_dict:'old_price' }}"
+                                                                            data-count="{{ i|get_dict:'count' }}">{{ i|get_dict:'size'|convert_to_int }}
+                                                                        мл.
+                                                                        {% if i.id|is_have_sales %}
+                                                                            {#                                                                        {% if i|get_dict:'size_id' %}#}
+                                                                            {#                                                                <span style="color: red">-{{ i|get_dict:'sale' }}%</span>#}
+                                                                            <span style="color: red">%</span>
+                                                                        {% endif %}
+                                                                    </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 {% else %}
-                                                    <span class="price-text" id="product_price">К сожалению, товара нет в наличии.</span>
+                                                    <div class="row m-0 align-items-center">
+                                                        <div class="col-3 col-md-auto p-0">
+                                                            <p class="card-text text-center text-md-left d-inline-block">
+                                                                Объем: </p>
+                                                        </div>
+                                                        <div class="col-auto pr-0">
+                                                            <b>{{ sizename }} мл</b>
+                                                        </div>
+                                                    </div>
                                                 {% endif %}
-                                            </div>
-                                        </div>
+                                            {% endif %}
 
-                                        {% if lst.0|get_dict:'count' %}
-                                            <div class="items-counter mb-4 text-center text-md-left" id="prod_input">
-                                                <button class="minus"><i class="fa fa-minus" aria-hidden="true"></i>
-                                                </button>
-                                                <input type="number" value="1" min="1" id="item_count"
-                                                       max="{{ item.get_price.count }}"
-                                                       onkeyup="check_input_count_prod(this)"
-                                                       onkeypress='return event.charCode >= 48 && event.charCode <= 57||event.charCode==8'
-                                                />
-                                                <button class="plus"><i class="fa fa-plus" aria-hidden="true"></i>
-                                                </button>
+
+                                            <div class="row m-0 align-items-center pt-2">
+                                                <div class="col-3 col-md-auto p-0">
+                                                    <p class="card-text text-center text-md-left d-inline-block">
+                                                        Оттенок: </p>
+                                                </div>
+                                                <div class="col-12 col-md-auto p-0 pl-md-3 pr-md-0">
+                                                    <select id="select_product_tone"
+                                                            class="select-product-sizes">
+                                                        {% for i in tones %}
+                                                            <option
+                                                                    value="{{ i|get_dict:'id' }}"
+                                                                    data-price="{{ i|get_dict:'price' }}"
+                                                                    data-sale="{{ i|get_dict:'old_price' }}"
+                                                                    data-count="{{ i|get_dict:'count' }}">{{ i|get_dict:'tone' }}
+                                                                {% if i|get_dict:'old_price' %}
+                                                                    <span style="color: red">-{{ i|get_dict:'sale' }}%</span>{% endif %}
+                                                            </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
                                             </div>
 
-                                            <div class="text-center text-md-left" id="prod_button">
-                                                <button class="btn" data-slug="{{ item.get_price.id }}"
-                                                        id="btn_add_to_cart">В корзину
-                                                </button>
+
+                                            <div class="card-price-block row m-0 align-items-center mb-3">
+                                                <div class="d-inline-block" id="is_sale_prod">
+                                                    {#                                                    {% if item.get_price.sale %}#}
+                                                    {% if tones.0|get_dict:'sale' %}
+                                                        <i class="fa fa-tag" aria-hidden="true"></i>
+                                                        <small class="old-price-card"
+                                                               id="product_sale">{{ tones.0|get_dict:'sale' }}
+                                                            руб.</small>
+                                                    {% endif %}
+                                                </div>
+
+                                                <div class="d-inline-block card-text text-center text-md-left">
+                                                    {% if tones.0|get_dict:'count' %}
+                                                        <span class="price-text"
+                                                              id="product_price">{{ tones.0|get_dict:'price' }} руб.</span>
+                                                    {% else %}
+                                                        <span class="price-text" id="product_price">К сожалению, товара с таким оттенком нет в наличии.</span>
+                                                    {% endif %}
+                                                </div>
                                             </div>
+
+                                            {% if tones.0|get_dict:'count' %}
+                                                <div class="items-counter mb-4 text-center text-md-left"
+                                                     id="prod_input">
+                                                    <button class="minus"><i class="fa fa-minus" aria-hidden="true"></i>
+                                                    </button>
+                                                    <input type="number" value="1" min="1" id="item_count"
+                                                           max="{{ tones.0|get_dict:'count' }}"
+                                                           onkeyup="check_input_count_prod(this)"
+                                                           onkeypress='return event.charCode >= 48 && event.charCode <= 57||event.charCode==8'
+                                                    />
+                                                    <button class="plus"><i class="fa fa-plus" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+
+                                                <div class="text-center text-md-left" id="prod_button">
+                                                    <button class="btn" data-slug="{{ tones.0|get_dict:'id' }}"
+                                                            id="btn_add_to_cart">В корзину
+                                                    </button>
+                                                </div>
+                                            {% endif %}
                                         {% endif %}
-
                                     </div>
                                 </div>
                             </div>
@@ -154,7 +286,7 @@
                     </div>
                 </div>
                 <div class="row m-0 justify-content-start align-items-center">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 mt-2">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 mt-2">
 
                         {% for i in item.needed %}
                             <a href="{% url 'Catalog_search' category i.need.id|make_search_url:"needs" %}"><span
@@ -223,12 +355,12 @@
                                         <div class="card">
                                             <a href="{{ i.get_absolute_url }}">
                                                 <div class="card-wrap">
-                                                 <div class="card-img">
-                                                    {% if i.main_photo %}
-                                                        <img src="{{ MEDIA_URL }}{{ i.main_photo.url }}"
-                                                             class="card-img-top" alt="...">
-                                                    {% endif %}
-                                                 </div>
+                                                    <div class="card-img">
+                                                        {% if i.main_photo %}
+                                                            <img src="{{ MEDIA_URL }}{{ i.main_photo.url }}"
+                                                                 class="card-img-top" alt="...">
+                                                        {% endif %}
+                                                    </div>
                                                     <div class="card-body">
                                                         <h5 class="card-title">{{ i.title }}</h5>
                                                         <p class="card-text">{{ i.shot_description }}</p>

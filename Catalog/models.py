@@ -330,7 +330,6 @@ class Contact(models.Model):
         verbose_name_plural = _("Контакты")
 
 
-
 class BrandCategory(models.Model):
     brand = models.ForeignKey('Brands_model', models.DO_NOTHING, blank=True, null=True)
     category = models.ForeignKey('CategoryType', models.DO_NOTHING, blank=True, null=True)

@@ -12,9 +12,6 @@ from django.db.models import Count
 from django.conf import settings
 
 
-
-
-
 def f_pages(page, queryset, count_item):
     try:
         cnt_pgs = queryset.count()
@@ -188,6 +185,9 @@ def get_url(url, rec=False):
 
 
 def left_filter(url_page, head, filter=False, prod=False):
+    print('left filter head')
+    print(head)
+    print(url_page)
     if head == 'Поиск':
         names = str(url_page).lower().split('_')
         print('names')
@@ -239,19 +239,14 @@ def left_filter(url_page, head, filter=False, prod=False):
     if url_page != 'Sale' and url_page != 'Brands' and url_page != 'New_products':
         resource = ResourceType.objects.filter(category__name__icontains=head).order_by('name')
         need = NeedType.objects.filter(category__name__icontains=head).order_by('name')
-        # 'For_men': 'Для мужчин',
-        # 'For_hair': 'Для волос',
-        # 'For_body': 'Для тела',
-        # 'For_face': 'Для лица',
         if url_page == 'For_men' or url_page == 'For_hair' or url_page == 'For_body' or url_page == 'For_face':
-            brands=list(BrandCategory.objects.filter(category__name__icontains=head).values_list('brand_id',flat=True))
-            print(brands)
-            brands=Brands_model.objects.filter(id__in=brands).order_by('name')
-            print(brands)
+            brands = list(
+                BrandCategory.objects.filter(category__name__icontains=head).values_list('brand_id', flat=True))
+            brands = Brands_model.objects.filter(id__in=brands).order_by('name')
         else:
             brands = Brands_model.objects.all().order_by('name')
         if prod != False and prod.count() == 0:
-            return resource, need, brands, prod
+            return lefts, resource, need, brands, prod
 
         if filter and not prod:
             queryset = Product.objects.filter(category__name__icontains=head).order_by(get_filter(filter))
@@ -301,12 +296,18 @@ def left_filter(url_page, head, filter=False, prod=False):
                 queryset = prod.order_by(get_filter(filter))
             if not filter and prod:
                 queryset = prod.order_by('-id')
+        # else:
+        #     print('error url')
+            # resource = False
+            # need = False
+            # brands = False
+            # queryset = False
+            # lefts = False
 
     return lefts, resource, need, brands, queryset
 
 
 def Items_catalog(request):
-
     return render(request, 'Catalog/Items_catalog.html', locals())
 
 
@@ -404,6 +405,8 @@ def Catalog_page_filter(request, head_url, page, filter):
 
 
 def Catalog_search(request, head_url, text):
+    # print('head_url')
+    # print(head_url)
     url_page, head = get_url(head_url)
     if not head:
         raise Http404("")
@@ -494,6 +497,7 @@ def Item_card(request, slug):
         s_name = '-'.join(slug[1:])
         itm = Product.objects.get(id=s_id)
         if slugify(itm.title) != s_name:
+            print('slug error 1')
             raise Http404("")
         else:
             item = itm
@@ -510,18 +514,18 @@ def Item_card(request, slug):
     ids.sort(key=Counter(ids).get, reverse=True)
     ids1 = []
     for i in ids:
-        if len(ids1)>=12:
+        if len(ids1) >= 12:
             break
         else:
             if i not in ids1:
                 ids1.append(i)
     prods = Product.objects.filter(id__in=ids1)
-    res=[]
+    res = []
     for i in ids1:
         for j in prods:
-            if i==j.id:
+            if i == j.id:
                 res.append(j)
-    prods=res
+    prods = res
 
     sizes = ProductSize.objects.filter(product_id=item.id)
     if sizes.count() == 1:
@@ -536,39 +540,79 @@ def Item_card(request, slug):
     sizes = sizes.order_by('size__float_name')
     lst = []
     have_sale = False
-    have_tone=False
+    # have_tone = False
+    sz_id = []
+    sz_id_sales={}
+    tones=[]
+    main_tone=False
+
+    is_have_tones=sizes.exclude(tone__isnull=True).exists()
+    # print(is_have_tones)
+    # print(sizes[0].tone)
+    if is_have_tones==True:
+        sizes=sizes.order_by('size__float_name','tone')
+
     for i in sizes:
-        # ls = []
-        res={}
-        res['id']=i.id
-        # ls.append(i.id)
-        if i.size.float_name:
-            res['size'] = i.size.float_name
-            # ls.append(i.size.float_name)
-        if i.size.str_name:
-            res['size'] = i.size.str_name
-            # ls.append(i.size.str_name)
-        # ls.append(i.price)
-        # ls.append(i.old_price)
-        # ls.append(i.count)
-        # ls.append(i.sale)
-        res['price']=i.price
-        res['old_price'] = i.old_price
-        res['count'] = i.count
-        res['sale'] = i.sale
-        if int(i.sale) > 0:
-            print(i)
-            have_sale = True
-        if i.is_tone:
-            have_tone=True
-        # lst.append(ls)
-        lst.append(res)
+        if i.size_id not in sz_id:
+            res = {}
+            res['id'] = i.id
+            if i.size.float_name:
+                res['size'] = i.size.float_name
+            if i.size.str_name:
+                res['size'] = i.size.str_name
+            res['price'] = i.price
+            res['old_price'] = i.old_price
+            # res['tone'] = i.size_id
+            # res['product'] = i.product_id
+            # res['size_id'] = i.size_id
+            res['count'] = i.count
+            res['sale'] = i.sale
+            if int(i.sale) > 0:
+                have_sale = True
+                # sz_id_sales[i.size_id]=i.sale
+            if i.tone:
+                # have_tone=True
+                if not main_tone:
+                    main_tone=i.size_id
+            lst.append(res)
+            sz_id.append(i.size_id)
+    # print(lst)
+    # print(sz_id_sales)
+    # print(main_tone)
+    if is_have_tones:
+        for i in sizes:
+            if i.size_id==main_tone:
+                tn = {}
+                tn['id'] = i.id
+                tn['tone'] = i.tone
+                tn['price'] = i.price
+                tn['old_price'] = i.old_price
+                tn['count'] = i.count
+                tn['sale'] = i.sale
+                tones.append(tn)
+
     print(lst)
-    # tones=[]
-    # if have_tone:
-    #     tn={}
-    #     tn['id']
-    # result={}
-    # for i in sizes:
-    #
+    print(tones)
+
     return render(request, 'Catalog/Item_card.html', locals())
+
+def get_sizes_by_id(request):
+    try:
+        prod_id=int(request.GET.get('prod_id'))
+    except:
+        return HttpResponse(json.dumps(False))
+    sizes=ProductSize.objects.get(id=prod_id)
+    print(sizes)
+    sizes=ProductSize.objects.filter(product_id=sizes.product_id).filter(size_id=sizes.size_id).order_by('tone')
+    print(sizes)
+    tones=[]
+    for i in sizes:
+        tn = {}
+        tn['id'] = i.id
+        tn['tone'] = i.tone
+        tn['price'] = i.price
+        tn['old_price'] = i.old_price
+        tn['count'] = i.count
+        tn['sale'] = i.sale
+        tones.append(tn)
+    return HttpResponse(json.dumps(tones))

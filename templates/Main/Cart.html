@@ -44,7 +44,8 @@
                                             <a href="{{ i.product.get_absolute_url }}"
                                                class="item-name">{{ i.product.title }}, <b>
                                                 {% if i.size.float_name %}{{ i.size.float_name }}{% else %}
-                                                    {{ i.size.str_name }}{% endif %} мл.</b></a>
+                                                    {{ i.size.str_name }}{% endif %} мл.</b>
+                                            {% if i.tone %} {{ i.tone }}{% endif %}</a>
                                         </div>
                                         <div class="col-5 col-md-2 col-lg-2 col-xl-1 my-auto">
                                             <p class="price text-center m-0">{{ i.price }} руб</p>
