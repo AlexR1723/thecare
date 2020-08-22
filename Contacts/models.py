@@ -147,6 +147,8 @@ class ProductSize(models.Model):
     count = models.IntegerField(blank=True, null=True, verbose_name="Количество", default=0)
     sale = models.IntegerField(blank=True, null=True, verbose_name="Скидка", default=0)
     old_price = models.IntegerField(blank=True, null=True, verbose_name="Старая цена", default=0)
+    tone = models.CharField(max_length=100, blank=True, null=True)
+    flag = models.BooleanField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -188,3 +190,12 @@ class Brands_model(models.Model):
         ordering = ['name']
         verbose_name = _("Бренд")
         verbose_name_plural = _("Бренды")
+
+
+class BrandCategory(models.Model):
+    brand = models.ForeignKey('Brands', models.DO_NOTHING, blank=True, null=True)
+    category = models.ForeignKey('CategoryType', models.DO_NOTHING, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'brand_category'
