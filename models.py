@@ -74,6 +74,15 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (('user', 'permission'),)
 
 
+class BrandCategory(models.Model):
+    brand = models.ForeignKey('Brands', models.DO_NOTHING, blank=True, null=True)
+    category = models.ForeignKey('CategoryType', models.DO_NOTHING, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'brand_category'
+
+
 class Brands(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
     sale = models.IntegerField(blank=True, null=True)
@@ -175,6 +184,7 @@ class Feedback(models.Model):
 
 class Files(models.Model):
     file = models.CharField(max_length=500, blank=True, null=True)
+    is_top = models.BooleanField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -243,6 +253,7 @@ class Product(models.Model):
     artik_brand = models.CharField(max_length=20, blank=True, null=True)
     is_top = models.BooleanField(blank=True, null=True)
     hit_for_brand = models.BooleanField(blank=True, null=True)
+    price = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -274,6 +285,8 @@ class ProductSize(models.Model):
     count = models.IntegerField(blank=True, null=True)
     sale = models.IntegerField(blank=True, null=True)
     old_price = models.IntegerField(blank=True, null=True)
+    tone = models.TextField(blank=True, null=True)
+    flag = models.BooleanField(blank=True, null=True)
 
     class Meta:
         managed = False
