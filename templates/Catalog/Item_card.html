@@ -51,9 +51,9 @@
                                                            style="color: red">Скидка!</p>
                                                     {% endif %}
                                                     {% for i in lst %}
-                                                        {% if i.5 > 0 %}
+                                                        {% if i|get_dict:'sale' > 0 %}
                                                             <p class="card-text text-center text-md-left d-inline-block
-                                                        w-100">{{ i.1|convert_to_int }} мл. -{{ i.5 }}%</p>
+                                                        w-100">{{ i|get_dict:'size'|convert_to_int }} мл. -{{ i|get_dict:'sale' }}%</p>
                                                         {% endif %}
                                                     {% endfor %}
                                                 	<div class="row m-0 align-items-center">
@@ -65,12 +65,12 @@
 		                                                            class="select-product-sizes">
 		                                                        {% for i in lst %}
 		                                                            <option
-		                                                                    value="{{ i.0 }}"
-		                                                                    data-price="{{ i.2 }}"
-		                                                                    data-sale="{{ i.3 }}"
-		                                                                    data-count="{{ i.4 }}">{{ i.1|convert_to_int }} мл.
-		                                                                {% if i.3 %}
-		                                                                    <span style="color: red">-{{ i.5 }}%</span>{% endif %}
+		                                                                    value="{{ i|get_dict:'id' }}"
+		                                                                    data-price="{{ i|get_dict:'price' }}"
+		                                                                    data-sale="{{ i|get_dict:'old_price' }}"
+		                                                                    data-count="{{ i|get_dict:'count' }}">{{ i|get_dict:'size'|convert_to_int }} мл.
+		                                                                {% if i|get_dict:'old_price' %}
+		                                                                    <span style="color: red">-{{ i|get_dict:'sale' }}%</span>{% endif %}
 		                                                            </option>
 		                                                        {% endfor %}
 		                                                    </select>
@@ -111,7 +111,7 @@
                                             </div>
 
                                             <div class="d-inline-block card-text text-center text-md-left">
-                                                {% if lst.0.4 %}
+                                                {% if lst.0|get_dict:'count' %}
                                                     <span class="price-text"
                                                           id="product_price">{{ item.get_price.price }} руб.</span>
                                                 {% else %}
@@ -120,7 +120,7 @@
                                             </div>
                                         </div>
 
-                                        {% if lst.0.4 %}
+                                        {% if lst.0|get_dict:'count' %}
                                             <div class="items-counter mb-4 text-center text-md-left" id="prod_input">
                                                 <button class="minus"><i class="fa fa-minus" aria-hidden="true"></i>
                                                 </button>

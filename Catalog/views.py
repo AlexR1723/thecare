@@ -11,42 +11,7 @@ from django.db.models import Count
 from django.conf import settings
 
 
-# def global_function(request):
-#     number = Contact.objects.filter(is_main=True, contact_id=2)[0].text
-#     email = Contact.objects.filter(is_main=True, contact_id=4)[0].text
-#
-#     ses = request.session.get(settings.CART_SESSION_ID)
-#     ids = []
-#     for i in ses.keys():
-#         ids.append(int(i))
-#     prods = ProductSize.objects.filter(id__in=ids)
-#     for i in ids:
-#         prod = prods.filter(id=i)[0]
-#         count = ses[str(i)]['count']
-#         ses[str(i)]['total'] = prod.price * count
-#
-#     basket = 0
-#     ses = request.session.get(settings.CART_SESSION_ID)
-#     if ses and ses is not None:
-#         for i in ses.values():
-#             basket += int(i['total'])
-#
-#     is_auth = request.user.is_authenticated
-#     if is_auth:
-#         is_auth = request.session.get('username', False)
-#
-#     user_name = ''
-#     if is_auth:
-#         user_name = AuthUser.objects.get(username=is_auth).first_name
-#
-#     result_dict = {
-#         'number': number,
-#         'email': email,
-#         'basket': basket,
-#         'is_auth': is_auth,
-#         'user_name': user_name
-#     }
-#     return result_dict
+
 
 
 def f_pages(page, queryset, count_item):
@@ -229,16 +194,11 @@ def left_filter(url_page, head, filter=False, prod=False):
         qname = Q()
         for i in names:
             qname.add(Q(title__icontains=i), Q.OR)
-        # print(qname)
         qshort = Q()
         for i in names:
             qshort.add(Q(shot_description__icontains=i), Q.OR)
-        # print(qname)
         prod1 = list(Product.objects.filter(qname).values_list('id', flat=True))
         prod2 = list(Product.objects.filter(qshort).values_list('id', flat=True))
-        print(len(prod1))
-        print(len(prod2))
-
         # prod3 = list(set(prod1) & set(prod2))
 
         if len(prod1) != 0 and len(prod2) != 0:
@@ -258,29 +218,11 @@ def left_filter(url_page, head, filter=False, prod=False):
                 # print('prod2=0')
                 prod3 = prod1
 
-        # prod1=prod3
-        # print(len(prod3))
-        # print(prod3)
-        # print(type(prod))
         prod3 = Product.objects.filter(id__in=prod3)
-        # ids = list(prod1.values_list('id', flat=True))
         ids = list(prod3.values_list('id', flat=True))
-        # print(len(ids))
-        # need = NeedType.objects.filter(productneed__product__id__in=ids).distinct('id').order_by('id', 'name')
-        # print(need)
-        need = list(set(list(NeedType.objects.filter(productneed__product__id__in=ids).values_list('id', flat=True))))
-        need = NeedType.objects.filter(id__in=need).order_by('name')
-        # print('--------------')
-        # print(need)
-
-        # resource = ResourceType.objects.filter(product__id__in=ids).distinct('id').order_by('id', 'name')
-        resource = list(set(list(ResourceType.objects.filter(product__id__in=ids).values_list('id', flat=True))))
-        print(resource)
-        resource = ResourceType.objects.filter(id__in=resource).order_by('name')
-
-        # brands = Brands_model.objects.filter(product__id__in=ids).distinct('id').order_by('id', 'name')
-        brands = list(set(list(Brands_model.objects.filter(product__id__in=ids).values_list('id', flat=True))))
-        brands = Brands_model.objects.filter(id__in=brands).order_by('name')
+        need = NeedType.objects.filter(productneed__product__id__in=ids).distinct().order_by('name')
+        resource = ResourceType.objects.filter(product__id__in=ids).distinct().order_by('name')
+        brands = Brands_model.objects.filter(product__id__in=ids).distinct().order_by('name')
         if type(prod).__name__ == 'QuerySet':
             # print('query')
             # prod = prod.filter(qname)
@@ -320,9 +262,7 @@ def left_filter(url_page, head, filter=False, prod=False):
                 queryset = prod.filter(productsize__sale__gt=0).order_by(get_filter(filter))
             if not filter and prod:
                 queryset = prod.filter(productsize__sale__gt=0).order_by('-id')
-            # resource = CategoryType.objects.filter(product__productsize__sale__gt=0).distinct('id')
-            resource = list(set(list(CategoryType.objects.filter(product__productsize__sale__gt=0).values_list('id',flat=True))))
-            resource=CategoryType.objects.filter(id__in=resource)
+            resource = CategoryType.objects.filter(product__productsize__sale__gt=0).distinct().order_by('name')
             need = resource
 
         if url_page == 'Brands':
@@ -340,31 +280,7 @@ def left_filter(url_page, head, filter=False, prod=False):
             dat = datetime.datetime.today() + datetime.timedelta(days=-30)
             lefts = 'new'
             print('lefts new prods')
-            # resource = CategoryType.objects.filter(product__date__gte=dat).distinct('id')
-            # resource = CategoryType.objects.filter(product__date__gte=dat)
-            # resource=Product.objects.filter(date__gte=dat).values('category').distinct()
-            resource = list(set(list(Product.objects.filter(date__gte=dat).values_list('category_id', flat=True))))
-            resource = CategoryType.objects.filter(id__in=resource).order_by('id')
-            # print(resource)
-            # prods = ProductNeed.objects.filter(Q(query)).exclude(product_id=item.id)
-            # ids = list(prods.values_list('product_id', flat=True))
-            # ids.sort(key=Counter(ids).get, reverse=True)
-            # ids1 = []
-            # for i in ids:
-            #     if i not in ids1:
-            #         ids1.append(i)
-            # ids = ids1[:12]
-            # prods = Product.objects.filter(id__in=ids)
-
-            # print(resource.count())
-            print(resource)
-            # print(set(resource))
-            # ids=resource.values_list('id',flat=True)
-            # print(ids)
-            # resource=CategoryType.objects.filter(product__date__gte=dat).values('id').distinct()
-            # resource = CategoryType.objects.filter(product__date__gte=dat).order_by('id')
-            # print(resource.count())
-            # print(resource)
+            resource = CategoryType.objects.filter(product__date__gte=dat).distinct().order_by('name')
             need = resource
             if filter and not prod:
                 queryset = Product.objects.filter(date__gte=dat).order_by(get_filter(filter))
@@ -379,7 +295,6 @@ def left_filter(url_page, head, filter=False, prod=False):
 
 
 def Items_catalog(request):
-    # dic = global_function(request)
 
     return render(request, 'Catalog/Items_catalog.html', locals())
 
@@ -397,7 +312,6 @@ def Face(request):
 
 
 def Catalog(request, head_url):
-    # dic = global_function(request)
     print('catalog')
     url_page, head = get_url(head_url)
     if not head:
@@ -421,8 +335,6 @@ def Catalog(request, head_url):
 
 
 def Catalog_filter(request, head_url, filter):
-    # dic = global_function(request)
-
     url_page, head = get_url(head_url)
     if not head:
         # вывод страницы 404
@@ -443,8 +355,6 @@ def Catalog_filter(request, head_url, filter):
 
 
 def Catalog_page(request, head_url, page):
-    # dic = global_function(request)
-
     url_page, head = get_url(head_url)
     if not head:
         # вывод страницы 404
@@ -469,8 +379,6 @@ def Catalog_page(request, head_url, page):
 
 
 def Catalog_page_filter(request, head_url, page, filter):
-    # dic = global_function(request)
-
     url_page, head = get_url(head_url)
     if not head:
         # вывод страницы 404
@@ -495,8 +403,6 @@ def Catalog_page_filter(request, head_url, page, filter):
 
 
 def Catalog_search(request, head_url, text):
-    # dic = global_function(request)
-
     url_page, head = get_url(head_url)
     if not head:
         # вывод страницы 404
@@ -518,8 +424,6 @@ def Catalog_search(request, head_url, text):
 
 
 def Catalog_search_filter(request, head_url, text, filter):
-    # dic = global_function(request)
-
     url_page, head = get_url(head_url)
     if not head:
         # вывод страницы 404
@@ -541,8 +445,6 @@ def Catalog_search_filter(request, head_url, text, filter):
 
 
 def Catalog_search_page(request, head_url, text, page):
-    # dic = global_function(request)
-
     url_page, head = get_url(head_url)
     if not head:
         # вывод страницы 404
@@ -569,8 +471,6 @@ def Catalog_search_page(request, head_url, text, page):
 
 
 def Catalog_search_page_filter(request, head_url, text, page, filter):
-    # dic = global_function(request)
-
     url_page, head = get_url(head_url)
     if not head:
         # вывод страницы 404
@@ -597,8 +497,6 @@ def Catalog_search_page_filter(request, head_url, text, page, filter):
 
 
 def Item_card(request, slug):
-    # dic = global_function(request)
-    # slug = str(slug)
     slug = str(slug).split('-')
     try:
         s_id = int(slug[0])
@@ -614,8 +512,6 @@ def Item_card(request, slug):
         print('slug error')
         # вывод страницы 404
 
-    # cat = item.category.id
-    # res = item.resource_id
     res = ProductNeed.objects.filter(product_id=item.id).values_list('need_id', flat=True)
     query = Q()
     for i in res:
@@ -625,10 +521,19 @@ def Item_card(request, slug):
     ids.sort(key=Counter(ids).get, reverse=True)
     ids1 = []
     for i in ids:
-        if i not in ids1:
-            ids1.append(i)
-    ids = ids1[:12]
-    prods = Product.objects.filter(id__in=ids)
+        if len(ids1)>=12:
+            break
+        else:
+            if i not in ids1:
+                ids1.append(i)
+    prods = Product.objects.filter(id__in=ids1)
+    res=[]
+    for i in ids1:
+        for j in prods:
+            if i==j.id:
+                res.append(j)
+    prods=res
+
     sizes = ProductSize.objects.filter(product_id=item.id)
     if sizes.count() == 1:
 
@@ -642,19 +547,39 @@ def Item_card(request, slug):
     sizes = sizes.order_by('size__float_name')
     lst = []
     have_sale = False
+    have_tone=False
     for i in sizes:
-        ls = []
-        ls.append(i.id)
+        # ls = []
+        res={}
+        res['id']=i.id
+        # ls.append(i.id)
         if i.size.float_name:
-            ls.append(i.size.float_name)
+            res['size'] = i.size.float_name
+            # ls.append(i.size.float_name)
         if i.size.str_name:
-            ls.append(i.size.str_name)
-        ls.append(i.price)
-        ls.append(i.old_price)
-        ls.append(i.count)
-        ls.append(i.sale)
+            res['size'] = i.size.str_name
+            # ls.append(i.size.str_name)
+        # ls.append(i.price)
+        # ls.append(i.old_price)
+        # ls.append(i.count)
+        # ls.append(i.sale)
+        res['price']=i.price
+        res['old_price'] = i.old_price
+        res['count'] = i.count
+        res['sale'] = i.sale
         if int(i.sale) > 0:
             print(i)
             have_sale = True
-        lst.append(ls)
+        if i.is_tone:
+            have_tone=True
+        # lst.append(ls)
+        lst.append(res)
+    print(lst)
+    tones=[]
+    if have_tone:
+        tn={}
+        tn['id']
+    # result={}
+    # for i in sizes:
+    #
     return render(request, 'Catalog/Item_card.html', locals())
