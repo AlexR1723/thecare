@@ -6,6 +6,7 @@ import random
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 import xlrd, xlwt, json, re, hashlib, random, datetime
 from collections import Counter
+from django.http import Http404
 from django.db.models import Count
 
 from django.conf import settings
@@ -315,8 +316,7 @@ def Catalog(request, head_url):
     print('catalog')
     url_page, head = get_url(head_url)
     if not head:
-        # вывод страницы 404
-        print('catalog for_men error')
+        raise Http404("")
     print(head_url)
     print(url_page)
     print(head)
@@ -327,8 +327,7 @@ def Catalog(request, head_url):
     page = 1
     status, pages, chs, prev, next, query_res = f_pages(page, queryset, 12)
     if status == False:
-        # вывод страницы 404
-        print('catalog for_men error')
+        raise Http404("")
     else:
         products = query_res
     return render(request, 'Catalog/Items_catalog.html', locals())
@@ -337,8 +336,7 @@ def Catalog(request, head_url):
 def Catalog_filter(request, head_url, filter):
     url_page, head = get_url(head_url)
     if not head:
-        # вывод страницы 404
-        print('catalog for_men error')
+        raise Http404("")
     is_search = False
     is_filter = True
     is_page = False
@@ -347,8 +345,7 @@ def Catalog_filter(request, head_url, filter):
     page = 1
     status, pages, chs, prev, next, query_res = f_pages(page, queryset, 12)
     if status == False:
-        # вывод страницы 404
-        print('catalog for_men error')
+        raise Http404("")
     else:
         products = query_res
     return render(request, 'Catalog/Items_catalog.html', locals())
@@ -357,8 +354,7 @@ def Catalog_filter(request, head_url, filter):
 def Catalog_page(request, head_url, page):
     url_page, head = get_url(head_url)
     if not head:
-        # вывод страницы 404
-        print('catalog for_men error')
+        raise Http404("")
     is_search = False
     is_filter = False
     is_page = True
@@ -367,12 +363,10 @@ def Catalog_page(request, head_url, page):
     try:
         page = int(page)
     except:
-        # вывод страницы 404
-        print('catalog for_men pages error')
+        raise Http404("")
     status, pages, chs, prev, next, query_res = f_pages(page, queryset, 12)
     if not status:
-        # вывод страницы 404
-        print('catalog for_men pages error')
+        raise Http404("")
     else:
         products = query_res
     return render(request, 'Catalog/Items_catalog.html', locals())
@@ -381,8 +375,7 @@ def Catalog_page(request, head_url, page):
 def Catalog_page_filter(request, head_url, page, filter):
     url_page, head = get_url(head_url)
     if not head:
-        # вывод страницы 404
-        print('catalog for_men error')
+        raise Http404("")
     is_search = False
     is_filter = True
     is_page = True
@@ -391,12 +384,10 @@ def Catalog_page_filter(request, head_url, page, filter):
     try:
         page = int(page)
     except:
-        # вывод страницы 404
-        print('catalog for_men pages error')
+        raise Http404("")
     status, pages, chs, prev, next, query_res = f_pages(page, queryset, 12)
     if not status:
-        # вывод страницы 404
-        print('catalog for_men pages error')
+        raise Http404("")
     else:
         products = query_res
     return render(request, 'Catalog/Items_catalog.html', locals())
@@ -405,8 +396,7 @@ def Catalog_page_filter(request, head_url, page, filter):
 def Catalog_search(request, head_url, text):
     url_page, head = get_url(head_url)
     if not head:
-        # вывод страницы 404
-        print('catalog for_men error')
+        raise Http404("")
     is_search = True
     is_filter = False
     is_page = False
@@ -416,8 +406,7 @@ def Catalog_search(request, head_url, text):
     page = 1
     status, pages, chs, prev, next, query_res = f_pages(page, queryset, 12)
     if status == False:
-        # вывод страницы 404
-        print('catalog for_men search error')
+        raise Http404("")
     else:
         products = query_res
     return render(request, 'Catalog/Items_catalog.html', locals())
@@ -426,8 +415,7 @@ def Catalog_search(request, head_url, text):
 def Catalog_search_filter(request, head_url, text, filter):
     url_page, head = get_url(head_url)
     if not head:
-        # вывод страницы 404
-        print('catalog for_men error')
+        raise Http404("")
     is_search = True
     is_filter = True
     is_page = False
@@ -437,8 +425,7 @@ def Catalog_search_filter(request, head_url, text, filter):
     page = 1
     status, pages, chs, prev, next, query_res = f_pages(page, queryset, 12)
     if status == False:
-        # вывод страницы 404
-        print('catalog for_men search error')
+        raise Http404("")
     else:
         products = query_res
     return render(request, 'Catalog/Items_catalog.html', locals())
@@ -447,8 +434,7 @@ def Catalog_search_filter(request, head_url, text, filter):
 def Catalog_search_page(request, head_url, text, page):
     url_page, head = get_url(head_url)
     if not head:
-        # вывод страницы 404
-        print('catalog for_men error')
+        raise Http404("")
     is_search = True
     is_filter = False
     is_page = True
@@ -456,15 +442,13 @@ def Catalog_search_page(request, head_url, text, page):
     try:
         page = int(page)
     except:
-        # вывод страницы 404
-        print('catalog for_men pages error')
+        raise Http404("")
 
     resources_id, needs_id, brands_id, price_from, price_until, product = search(text, head_url)
     spec, resource, need, brands, queryset = left_filter(url_page, head, filter=False, prod=product)
     status, pages, chs, prev, next, query_res = f_pages(page, queryset, 12)
     if status == False:
-        # вывод страницы 404
-        print('catalog for_men search pages error')
+        raise Http404("")
     else:
         products = query_res
     return render(request, 'Catalog/Items_catalog.html', locals())
@@ -473,8 +457,7 @@ def Catalog_search_page(request, head_url, text, page):
 def Catalog_search_page_filter(request, head_url, text, page, filter):
     url_page, head = get_url(head_url)
     if not head:
-        # вывод страницы 404
-        print('catalog for_men error')
+        raise Http404("")
     is_search = True
     is_filter = True
     is_page = True
@@ -482,15 +465,13 @@ def Catalog_search_page_filter(request, head_url, text, page, filter):
     try:
         page = int(page)
     except:
-        # вывод страницы 404
-        print('catalog for_men pages error')
+        raise Http404("")
 
     resources_id, needs_id, brands_id, price_from, price_until, product = search(text, head_url)
     spec, resource, need, brands, queryset = left_filter(url_page, head, filter=filter, prod=product)
     status, pages, chs, prev, next, query_res = f_pages(page, queryset, 12)
     if status == False:
-        # вывод страницы 404
-        print('catalog for_men search pages error')
+        raise Http404("")
     else:
         products = query_res
     return render(request, 'Catalog/Items_catalog.html', locals())
@@ -503,14 +484,12 @@ def Item_card(request, slug):
         s_name = '-'.join(slug[1:])
         itm = Product.objects.get(id=s_id)
         if slugify(itm.title) != s_name:
-            print('slug error')
-            # вывод страницы 404
+            raise Http404("")
         else:
             item = itm
             category, head = get_url(item.category.name, True)
     except:
-        print('slug error')
-        # вывод страницы 404
+        raise Http404("")
 
     res = ProductNeed.objects.filter(product_id=item.id).values_list('need_id', flat=True)
     query = Q()
@@ -575,10 +554,10 @@ def Item_card(request, slug):
         # lst.append(ls)
         lst.append(res)
     print(lst)
-    tones=[]
-    if have_tone:
-        tn={}
-        tn['id']
+    # tones=[]
+    # if have_tone:
+    #     tn={}
+    #     tn['id']
     # result={}
     # for i in sizes:
     #
