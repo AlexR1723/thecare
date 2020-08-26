@@ -87,8 +87,7 @@
                                                 {% else %}
                                                     <div class="row m-0 align-items-center">
                                                         <div class="col-3 col-md-auto p-0">
-                                                            <p class="card-text text-center text-md-left d-inline-block">
-                                                                Объем: </p>
+                                                            <p class="card-text text-center text-md-left d-inline-block">Объем: </p>
                                                         </div>
                                                         <div class="col-auto pr-0">
                                                             <b>{{ sizename }} мл</b>
@@ -96,29 +95,6 @@
                                                     </div>
                                                 {% endif %}
                                             {% endif %}
-
-
-                                            {#                                        <div class="row m-0 align-items-center pt-2">#}
-                                            {#                                            <div class="col-3 col-md-auto p-0">#}
-                                            {#                                                <p class="card-text text-center text-md-left d-inline-block">#}
-                                            {#                                                    Оттенок: </p>#}
-                                            {#                                            </div>#}
-                                            {#                                            <div class="col-12 col-md-auto p-0 pl-md-3 pr-md-0">#}
-                                            {#                                                <select id="select_product_tone" class="select-product-sizes">#}
-                                            {#                                                    {% for i in tones %}#}
-                                            {#                                                        <option#}
-                                            {#                                                                value="{{ i|get_dict:'id' }}"#}
-                                            {#                                                                data-price="{{ i|get_dict:'price' }}"#}
-                                            {#                                                                data-sale="{{ i|get_dict:'old_price' }}"#}
-                                            {#                                                                data-count="{{ i|get_dict:'count' }}">{{ i|get_dict:'tone' }}#}
-                                            {#                                                            {% if i|get_dict:'old_price' %}#}
-                                            {#                                                                <span style="color: red">-{{ i|get_dict:'sale' }}%</span>{% endif %}#}
-                                            {#                                                        </option>#}
-                                            {#                                                    {% endfor %}#}
-                                            {#                                                </select>#}
-                                            {#                                            </div>#}
-                                            {#                                        </div>#}
-
 
                                             <div class="card-price-block row m-0 align-items-center mb-3">
                                                 <div class="d-inline-block" id="is_sale_prod">
@@ -184,8 +160,6 @@
                                                                             data-count="{{ i|get_dict:'count' }}">{{ i|get_dict:'size'|convert_to_int }}
                                                                         мл.
                                                                         {% if i.id|is_have_sales %}
-                                                                            {#                                                                        {% if i|get_dict:'size_id' %}#}
-                                                                            {#                                                                <span style="color: red">-{{ i|get_dict:'sale' }}%</span>#}
                                                                             <span style="color: red">%</span>
                                                                         {% endif %}
                                                                     </option>

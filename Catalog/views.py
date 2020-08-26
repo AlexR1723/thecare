@@ -273,6 +273,7 @@ def left_filter(url_page, head, filter=False, prod=False):
 
         if url_page == 'Brands':
             lefts = 'brands'
+            print('brands')
             if filter:
                 if filter == 'new':
                     queryset = prod.order_by('-hit_for_brand', '-id')
@@ -280,7 +281,12 @@ def left_filter(url_page, head, filter=False, prod=False):
                     queryset = prod.order_by(get_filter(filter))
             else:
                 queryset = prod.order_by('-hit_for_brand', '-id')
-            resource = CategoryType.objects.all()
+            ids=list(set(list(queryset.values_list('category_id',flat=True))))
+            print(ids)
+            resource = CategoryType.objects.filter(id__in=ids)
+            print(queryset.count())
+            # resource = CategoryType.objects.filter(product__in=queryset)
+            # print(resource.count())
             need = resource
         if url_page == 'New_products':
             dat = datetime.datetime.today() + datetime.timedelta(days=-30)
@@ -528,19 +534,18 @@ def Item_card(request, slug):
     prods = res
 
     sizes = ProductSize.objects.filter(product_id=item.id)
-    if sizes.count() == 1:
-
-        if sizes[0].size.float_name != 0.0:
-            sizename = sizes[0].size.float_name
-        else:
-            not_size = True
-        if sizes[0].size.str_name:
-            sizename = sizes[0].size.str_name
+    # if sizes.count() == 1:
+    #
+    #     if sizes[0].size.float_name != 0.0:
+    #         sizename = sizes[0].size.float_name
+    #     else:
+    #         not_size = True
+    #     if sizes[0].size.str_name:
+    #         sizename = sizes[0].size.str_name
 
     sizes = sizes.order_by('size__float_name')
     lst = []
     have_sale = False
-    # have_tone = False
     sz_id = []
     sz_id_sales={}
     tones=[]
@@ -562,16 +567,11 @@ def Item_card(request, slug):
                 res['size'] = i.size.str_name
             res['price'] = i.price
             res['old_price'] = i.old_price
-            # res['tone'] = i.size_id
-            # res['product'] = i.product_id
-            # res['size_id'] = i.size_id
             res['count'] = i.count
             res['sale'] = i.sale
             if int(i.sale) > 0:
                 have_sale = True
-                # sz_id_sales[i.size_id]=i.sale
             if i.tone:
-                # have_tone=True
                 if not main_tone:
                     main_tone=i.size_id
             lst.append(res)
@@ -591,6 +591,14 @@ def Item_card(request, slug):
                 tn['sale'] = i.sale
                 tones.append(tn)
 
+    if len(sz_id) == 1:
+
+        if sizes[0].size.float_name != 0.0:
+            sizename = sizes[0].size.float_name
+        else:
+            not_size = True
+        if sizes[0].size.str_name:
+            sizename = sizes[0].size.str_name
     print(lst)
     print(tones)
 

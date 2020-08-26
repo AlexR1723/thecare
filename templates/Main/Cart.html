@@ -35,9 +35,9 @@
                                     <div class="row no-gutters">
                                         <div class="col-12 col-md-2 col-lg-2 col-xl-2 d-none d-md-block my-auto">
                                             <div class="card-img-basket">
-                                            <img src="{{ MEDIA_URL }}{{ i.product.main_photo.url }}"
-                                                 class="card-img-top"
-                                                 alt="">
+                                                <img src="{{ MEDIA_URL }}{{ i.product.main_photo.url }}"
+                                                     class="card-img-top"
+                                                     alt="">
                                             </div>
                                         </div>
                                         <div class="col-6 col-md-2 col-lg-3 col-xl-4 my-3 my-md-auto">
@@ -45,7 +45,7 @@
                                                class="item-name">{{ i.product.title }}, <b>
                                                 {% if i.size.float_name %}{{ i.size.float_name }}{% else %}
                                                     {{ i.size.str_name }}{% endif %} мл.</b>
-                                            {% if i.tone %} {{ i.tone }}{% endif %}</a>
+                                                {% if i.tone %} {{ i.tone }}{% endif %}</a>
                                         </div>
                                         <div class="col-5 col-md-2 col-lg-2 col-xl-1 my-auto">
                                             <p class="price text-center m-0">{{ i.price }} руб</p>
@@ -83,10 +83,16 @@
                             <div class="col-12 col-md-11 col-lg-11 col-xl-11 p-0">
                                 <p class="price-text text-center text-md-right m-0"
                                    id="cart_total_price">{{ request|gf_busket }} руб.</p>
+                                {% if not is_get_sale %}
+                                    <p class="price-text text-center text-md-right m-0"
+                                       id="cart_total_price"> цена со скидкой {{ request|gf_busket:'True' }} руб.</p>
+                                {% endif %}
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 col-xl-12 d-flex justify-content-md-end align-items-center my-4 p-0">
-                                <button class="btn mx-auto mx-md-0" data-toggle="modal" data-target="#userInfoModal">ОФОРМИТЬ ЗАКАЗ</button>
-{#                                <button class="btn mx-auto mx-md-0" id="btn_buy_products">ОФОРМИТЬ ЗАКАЗ</button>#}
+                                <button class="btn mx-auto mx-md-0" data-toggle="modal" data-target="#userInfoModal">
+                                    ОФОРМИТЬ ЗАКАЗ
+                                </button>
+                                {#                                <button class="btn mx-auto mx-md-0" id="btn_buy_products">ОФОРМИТЬ ЗАКАЗ</button>#}
 
                             </div>
                         </div>
@@ -118,7 +124,8 @@
                         </div>
                         <div class="form-group p-0">
                             <label for="address">Адрес доставки</label>
-                            <input type="text" class="form-control w-100" id="address" name="address" value="{{ adress }}">
+                            <input type="text" class="form-control w-100" id="address" name="address"
+                                   value="{{ adress }}">
                         </div>
                         <div class="form-group p-0">
                             <label for="email">Email</label>

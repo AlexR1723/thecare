@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 {% load staticfiles %}
 {% block content %}
+    {% load poll_extras %}
 
     <div class="container-fluid p-0">
         <div class="row m-0 justify-content-center">
@@ -12,10 +13,10 @@
                                                                                       aria-hidden="true"></i></a></li>
                             {% if head == 'Бренды' %}
                                 <li class="breadcrumb-item active" aria-current="page"><a
-                                    href="{% url 'Brands' %}">{{ head }}</a></li>
+                                        href="{% url 'Brands' %}">{{ head }}</a></li>
                             {% else %}
-                            <li class="breadcrumb-item active" aria-current="page"><a
-                                    href="{% url 'Catalog' head_url %}">{{ head }}</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><a
+                                        href="{% url 'Catalog' head_url %}">{{ head }}</a></li>
                             {% endif %}
                         </ol>
                     </nav>
@@ -29,15 +30,15 @@
             <!--</div>-->
             <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-11 p-md-0 sort_col">
                 <div class="row m-0 justify-content-between">
-                	<div class="col-12 col-md-auto col-lg-auto col-xl-auto">
-                		<h1 class="m-0">{{ head }}</h1>
-                	</div>
-                	<div class="col-12 col-md col-lg col-xl">
-                		<div class="row m-0 pt-2 justify-content-md-end">
-	                    	<div class="col-7 col-md-5 col-lg-4 col-xl-3 p-0">
-	                        <select class="form-control sort-select" id="filter_selector"
-	                                onchange="location.href=this.value">
-	                            <option value="
+                    <div class="col-12 col-md-auto col-lg-auto col-xl-auto">
+                        <h1 class="m-0">{{ head }}</h1>
+                    </div>
+                    <div class="col-12 col-md col-lg col-xl">
+                        <div class="row m-0 pt-2 justify-content-md-end">
+                            <div class="col-7 col-md-5 col-lg-4 col-xl-3 p-0">
+                                <select class="form-control sort-select" id="filter_selector"
+                                        onchange="location.href=this.value">
+                                    <option value="
 	                            {% if is_page and not is_search %}
 	                            {% url 'Catalog_page_filter' url_page page 'new' %}
 	                            {% endif %}
@@ -51,11 +52,11 @@
 	                            {% url 'Catalog_filter' url_page 'new' %}
 	                            {% endif %}
 	                            "
-	                                    {% if filter == "new" %}
-	                                    selected
-	                                    {% endif %}>Новые
-	                            </option>
-	                            <option value="
+                                            {% if filter == "new" %}
+                                            selected
+                                            {% endif %}>Новые
+                                    </option>
+                                    <option value="
 	                            {% if is_page and not is_search %}
 	                            {% url 'Catalog_page_filter' url_page page 'price_up' %}
 	                            {% endif %}
@@ -69,11 +70,11 @@
 	                            {% url 'Catalog_filter' url_page 'price_up' %}
 	                            {% endif %}
 	                            "
-	                                    {% if filter == "price_up" %}
-	                                    selected
-	                                    {% endif %}>По возрастанию цены
-	                            </option>
-	                            <option value="
+                                            {% if filter == "price_up" %}
+                                            selected
+                                            {% endif %}>По возрастанию цены
+                                    </option>
+                                    <option value="
 	                            {% if is_page and not is_search %}
 	                            {% url 'Catalog_page_filter' url_page page 'price_down' %}
 	                            {% endif %}
@@ -87,11 +88,11 @@
 	                            {% url 'Catalog_filter' url_page 'price_down' %}
 	                            {% endif %}
 	                            "
-	                                    {% if filter == "price_down" %}
-	                                    selected
-	                                    {% endif %}>По убыванию цены
-	                            </option>
-	                            <option value="
+                                            {% if filter == "price_down" %}
+                                            selected
+                                            {% endif %}>По убыванию цены
+                                    </option>
+                                    <option value="
 	                            {% if is_page and not is_search %}
 	                            {% url 'Catalog_page_filter' url_page page 'name' %}
 	                            {% endif %}
@@ -105,18 +106,21 @@
 	                            {% url 'Catalog_filter' url_page 'name' %}
 	                            {% endif %}
 	                            "
-	                                    {% if filter == "name" %}
-	                                    selected
-	                                    {% endif %}>По названию
-	                            </option>
-	                        </select>
-	                    </div>
-	                    	<div class="col-5 col-md-4 col-lg-auto pr-0">
-	    						<button class="form-control sort-select pl-lg-5 pr-lg-5" data-toggle="collapse" href="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">Фильтр</button>
-		    <!--    <a data-toggle="collapse" href="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter"-->
-		                	</div>
-	                    </div>
-	                </div>
+                                            {% if filter == "name" %}
+                                            selected
+                                            {% endif %}>По названию
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-5 col-md-4 col-lg-auto pr-0">
+                                <button class="form-control sort-select pl-lg-5 pr-lg-5" data-toggle="collapse"
+                                        href="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+                                    Фильтр
+                                </button>
+                                <!--    <a data-toggle="collapse" href="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter"-->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -184,9 +188,9 @@
                                                                 {% if spec %}
                                                                     {% for r in resource %}
                                                                         {% if spec == 'sale' %}
-                                                                            {% if r.get_res_items_sale.count > 0 %}
+                                                                            {% if r|get_res_items_sale:products %}
                                                                                 <p class="need-block mb-0 mt-3">{{ r.name }}</p>
-                                                                                {% for items in r.get_res_items_sale %}
+                                                                                {% for items in r|get_res_items_sale:products %}
                                                                                     <div class="custom-control custom-checkbox my-1 mr-sm-2">
                                                                                         <input type="checkbox"
                                                                                                class="custom-control-input"
@@ -203,9 +207,9 @@
                                                                             {% endif %}
                                                                         {% endif %}
                                                                         {% if spec == 'new' %}
-                                                                            {% if r.get_res_items_new.count > 0 %}
+                                                                            {% if r|get_res_items_new:products %}
                                                                                 <p class="need-block mb-0 mt-3">{{ r.name }}</p>
-                                                                                {% for items in r.get_res_items_new %}
+                                                                                {% for items in r|get_res_items_new:products %}
                                                                                     <div class="custom-control custom-checkbox my-1 mr-sm-2">
                                                                                         <input type="checkbox"
                                                                                                class="custom-control-input"
@@ -222,9 +226,10 @@
                                                                             {% endif %}
                                                                         {% endif %}
                                                                         {% if spec == 'brands' %}
-                                                                            {% if r.get_res_items_brands.count > 0 %}
+                                                                            {#                                                                            {% if r.get_res_items_brands.count > 0 %}#}
+                                                                            {% if r|get_res_items_brands:products %}
                                                                                 <p class="need-block mb-0 mt-3">{{ r.name }}</p>
-                                                                                {% for items in r.get_res_items_brands %}
+                                                                                {% for items in r|get_res_items_brands:products %}
                                                                                     <div class="custom-control custom-checkbox my-1 mr-sm-2">
                                                                                         <input type="checkbox"
                                                                                                class="custom-control-input"
@@ -280,10 +285,9 @@
                                                                 {% if spec %}
                                                                     {% for n in need %}
                                                                         {% if spec == 'sale' %}
-                                                                            {% if n.get_need_items_sale.count > 0 %}
+                                                                            {% if n|get_need_items_sale:products %}
                                                                                 <p class="need-block mb-0 mt-3">{{ n.name }}</p>
-                                                                                {% for items in n.get_need_items_sale %}
-
+                                                                                {% for items in n|get_need_items_sale:products %}
                                                                                     <div class="custom-control custom-checkbox my-1 mr-sm-2">
                                                                                         <input type="checkbox"
                                                                                                class="custom-control-input"
@@ -300,9 +304,9 @@
                                                                             {% endif %}
                                                                         {% endif %}
                                                                         {% if spec == 'new' %}
-                                                                            {% if n.get_need_items_new.count > 0 %}
+                                                                            {% if n|get_need_items_new:products %}
                                                                                 <p class="need-block mb-0 mt-3">{{ n.name }}</p>
-                                                                                {% for items in n.get_need_items_new %}
+                                                                                {% for items in n|get_need_items_new:products %}
 
                                                                                     <div class="custom-control custom-checkbox my-1 mr-sm-2">
                                                                                         <input type="checkbox"
@@ -320,9 +324,10 @@
                                                                             {% endif %}
                                                                         {% endif %}
                                                                         {% if spec == 'brands' %}
-                                                                            {% if n.get_need_items_brands.count > 0 %}
+                                                                            {% if n|get_need_items_brands:products %}
                                                                                 <p class="need-block mb-0 mt-3">{{ n.name }}</p>
-                                                                                {% for items in n.get_need_items_brands %}
+{#                                                                                {% for items in n.get_need_items_brands %}#}
+                                                                                {% for items in n|get_need_items_brands:products %}
 
                                                                                     <div class="custom-control custom-checkbox my-1 mr-sm-2">
                                                                                         <input type="checkbox"
@@ -424,88 +429,89 @@
                                         <div class="card-deck mb-5 ml-md-0 w-100" id="products">
                                             <div class="row w-100 m-0">
                                                 {% for p in products %}
-                                                <a href="{{ p.get_absolute_url }}">
-                                                    <div class="card {% if p.get_sale %}sale-card{% endif %} col-6 col-sm-6 col-md-4 col-lg-4 col-xl-3"
-                                                         data-price="{{ p.price }}" data-name="{{ p.title }}"
-                                                            {#                                                     data-num="{{ forloop.counter }}"#}
-                                                    >
+                                                    <a href="{{ p.get_absolute_url }}">
+                                                        <div class="card {% if p.get_sale %}sale-card{% endif %} col-6 col-sm-6 col-md-4 col-lg-4 col-xl-3"
+                                                             data-price="{{ p.price }}" data-name="{{ p.title }}"
+                                                                {#                                                     data-num="{{ forloop.counter }}"#}
+                                                        >
 
-                                                        {% if p.get_sale %}
-                                                            <div class="wrap">
-                                                                <span class="sale">-{{p.get_sale_}}%</span>
-                                                            </div>
-                                                        {% endif %}
-                                                        {% if p.hit_for_brand %}
-                                                            <div class="wrap">
-                                                                <span class="hit">ХИТ</span>
-                                                            </div>
-                                                        {% endif %}
-                                                        <div class="card-img-catalog">
-                                                            {% if p.main_photo != None and p.main_photo != "" %}
-                                                                <img src="{{MEDIA_URL}}{{ p.main_photo.url }}"
-                                                                     class="card-img-top" alt="...">
+                                                            {% if p.get_sale %}
+                                                                <div class="wrap">
+                                                                    <span class="sale">-{{ p.get_sale_ }}%</span>
+                                                                </div>
                                                             {% endif %}
-                                                        </div>
+                                                            {% if p.hit_for_brand %}
+                                                                <div class="wrap">
+                                                                    <span class="hit">ХИТ</span>
+                                                                </div>
+                                                            {% endif %}
+                                                            <div class="card-img-catalog">
+                                                                {% if p.main_photo != None and p.main_photo != "" %}
+                                                                    <img src="{{ MEDIA_URL }}{{ p.main_photo.url }}"
+                                                                         class="card-img-top" alt="...">
+                                                                {% endif %}
+                                                            </div>
 
-                                                        <div class="card-body">
-                                                            <h5 class="card-title">{{ p.title }}</h5>
-                                                            <p class="card-text">{{ p.shot_description }}</p>
-                                                            <a href="{{ p.get_absolute_url }}">
-                                                                <button type="submit" class="btn btn-buy mx-auto">Купить
-                                                                </button>
-                                                            </a>
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">{{ p.title }}</h5>
+                                                                <p class="card-text">{{ p.shot_description }}</p>
+                                                                <a href="{{ p.get_absolute_url }}">
+                                                                    <button type="submit" class="btn btn-buy mx-auto">
+                                                                        Купить
+                                                                    </button>
+                                                                </a>
+                                                            </div>
+                                                            <div class="card-footer">
+                                                                <hr>
+                                                                {#                                                        {% if p.get_price.sale %}#}
+                                                                {#                                                            <div class="row">#}
+                                                                {#                                                                <div class="col-12 col-lg-4 pl-lg-0 pr-lg-0 pl-xl-3 pr-xl-0">#}
+                                                                {#                                                                    <small class="old-price">{{ p.get_price.old_price }}#}
+                                                                {#                                                                        руб</small>#}
+                                                                {#                                                                </div>#}
+                                                                {#                                                                <div class="col-12 col-lg-8 text-lg-right">#}
+                                                                {#                                                                    <i class="fa fa-tag" aria-hidden="true"></i>#}
+                                                                {#                                                                    <small class="text-muted">{{ p.get_price.price }}#}
+                                                                {#                                                                        руб</small>#}
+                                                                {#                                                                </div>#}
+                                                                {#                                                            </div>#}
+                                                                {#                                                        {% else %}#}
+                                                                <small class="text-muted">{{ p.price }}
+                                                                    руб.</small>
+                                                                {#                                                        {% endif %}#}
+                                                            </div>
                                                         </div>
-                                                        <div class="card-footer">
-                                                            <hr>
-                                                            {#                                                        {% if p.get_price.sale %}#}
-                                                            {#                                                            <div class="row">#}
-                                                            {#                                                                <div class="col-12 col-lg-4 pl-lg-0 pr-lg-0 pl-xl-3 pr-xl-0">#}
-                                                            {#                                                                    <small class="old-price">{{ p.get_price.old_price }}#}
-                                                            {#                                                                        руб</small>#}
-                                                            {#                                                                </div>#}
-                                                            {#                                                                <div class="col-12 col-lg-8 text-lg-right">#}
-                                                            {#                                                                    <i class="fa fa-tag" aria-hidden="true"></i>#}
-                                                            {#                                                                    <small class="text-muted">{{ p.get_price.price }}#}
-                                                            {#                                                                        руб</small>#}
-                                                            {#                                                                </div>#}
-                                                            {#                                                            </div>#}
-                                                            {#                                                        {% else %}#}
-                                                            <small class="text-muted">{{ p.price }}
-                                                                руб.</small>
-                                                            {#                                                        {% endif %}#}
-                                                        </div>
-                                                    </div>
                                                     </a>
                                                 {% endfor %}
                                             </div>
                                         </div>
                                     </div>
-									<div class="row m-0 justify-content-center align-items-center pb-4">
-										{% if next %}
-                                                    <!--<li class="page-item">-->
-                                                        {% if is_search and not is_filter %}
-                                                            <a class="more-btn"
-                                                               href="{% url 'Catalog_search_page' url_page text next %}"
-                                                               aria-label="Next">Еще...</a>
-                                                        {% endif %}
-                                                        {% if is_filter and not is_search %}
-                                                            <a class="more-btn"
-                                                               href="{% url 'Catalog_page_filter' url_page next filter %}"
-                                                               aria-label="Next">Еще...</a>
-                                                        {% endif %}
-                                                        {% if is_filter and  is_search %}
-                                                            <a class="more-btn"
-                                                               href="{% url 'Catalog_search_page_filter' url_page text next filter %}"
-                                                               aria-label="Next">Еще...</a>
-                                                        {% endif %}
-                                                        {% if not is_filter and  not is_search %}
-                                                            <a class="more-btn"
-                                                               href="{% url 'Catalog_page' url_page next %}"
-                                                               aria-label="Next">Еще...</a>
-                                                        {% endif %}
-                                                    <!--</li>-->
-                                                {% endif %}
-									</div>
+                                    <div class="row m-0 justify-content-center align-items-center pb-4">
+                                        {% if next %}
+                                            <!--<li class="page-item">-->
+                                            {% if is_search and not is_filter %}
+                                                <a class="more-btn"
+                                                   href="{% url 'Catalog_search_page' url_page text next %}"
+                                                   aria-label="Next">Еще...</a>
+                                            {% endif %}
+                                            {% if is_filter and not is_search %}
+                                                <a class="more-btn"
+                                                   href="{% url 'Catalog_page_filter' url_page next filter %}"
+                                                   aria-label="Next">Еще...</a>
+                                            {% endif %}
+                                            {% if is_filter and  is_search %}
+                                                <a class="more-btn"
+                                                   href="{% url 'Catalog_search_page_filter' url_page text next filter %}"
+                                                   aria-label="Next">Еще...</a>
+                                            {% endif %}
+                                            {% if not is_filter and  not is_search %}
+                                                <a class="more-btn"
+                                                   href="{% url 'Catalog_page' url_page next %}"
+                                                   aria-label="Next">Еще...</a>
+                                            {% endif %}
+                                            <!--</li>-->
+                                        {% endif %}
+                                    </div>
                                     <div class="row m-0 justify-content-center align-items-center nav_blk">
                                         <nav aria-label="Page navigation">
                                             <ul class="pagination">
@@ -542,7 +548,7 @@
                                                         {% endif %}
                                                     </li>
                                                 {% endif %}
-												
+
                                                 {% for i in pages %}
                                                     {% if not i %}
                                                         <a class="page-link" href="">...</a>

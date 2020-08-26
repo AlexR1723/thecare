@@ -1,4 +1,4 @@
-import datetime, json, random, hashlib
+import datetime, json, random, hashlib,time
 
 from django.conf import settings
 from django.http import HttpResponse
@@ -35,18 +35,11 @@ def check_product_exist(request):
         return False
 
 
-# Create your views here.
 def Cart(request):
     prod_ses = request.session.get(settings.CART_SESSION_ID)
     print(prod_ses)
-
-    # all_prices = 0
     if prod_ses is not None:
-        # for i in prod_ses.values():
-        # all_prices += int(i['total'])
-        # products = Product.objects.filter(slug__in=prod_ses.keys())
         products = ProductSize.objects.filter(id__in=prod_ses.keys())
-    # if request.user.is_authenticated:
 
     user_id=get_user_id(request)
     if user_id:
@@ -56,23 +49,8 @@ def Cart(request):
         adress=user.adress
         phone=user.phone
         email=auth_user.email
-
-    # prods=ProductSize.objects.all()
-    # for i in prods:
-    #     i.price=random.randrange(1000,15000,50)
-    #     i.count=random.randrange(5,23)
-    #     sl=random.randrange(1,100)
-    #     i.sale=0
-    #     i.old_price=0
-    #     if sl<40:
-    #         i.sale=random.randrange(5,40)
-    #         print(i.sale)
-    #         print(i.price*(i.sale/100))
-    #         print(i.price-i.price*(i.sale/100))
-    #         print(i.price)
-    #         i.old_price=i.price-i.price*(i.sale/100)
-    #         print('------------')
-    #     i.save()
+        is_get_sale=UserOrders.objects.filter(user_id=user_id).filter(status_id=1).exists()
+        print(is_get_sale)
     return render(request, 'Main/Cart.html', locals())
 
 
@@ -144,8 +122,9 @@ def plus_minus_product(request):
             item = str(pr_sz.id)
             if minus:
                 print('minus')
-                ses[item] = {'count': int(ses[item]['count']) - 1,
-                             'total': int(pr_sz.price) * (int(ses[item]['count']) - 1)}
+                if int(ses[item]['count'])>0:
+                    ses[item] = {'count': int(ses[item]['count']) - 1,
+                                 'total': int(pr_sz.price) * (int(ses[item]['count']) - 1)}
             else:
                 if count:
                     print('change')
@@ -199,99 +178,15 @@ def del_product(request):
         return HttpResponse(json.dumps((False)))
 
 
-# @transaction.atomic()
-# def buy_products(request):
-#     prod_ses = request.session.get(settings.CART_SESSION_ID)
-#     # print(prod_ses)
-#     # print(list(prod_ses.keys()))
-#     ids = []
-#     for i in prod_ses.keys():
-#         ids.append(int(i))
-#
-#     summ = 0
-#     prods = ProductSize.objects.filter(id__in=ids)
-#     for i in ids:
-#         prod = prods.filter(id=i)[0]
-#         count = prod_ses[str(i)]['count']
-#         summ+= prod.price * count
-#
-#     with transaction.atomic():
-#         inv = int(UserOrders.objects.latest('order_number').order_number)+1
-#         new_user_order=UserOrders(order_number=inv)
-#         # nhash=str(datetime.datetime.now())
-#         new_user_order.save()
-#         # print('inv')
-#         # print(inv)
-#         # hs=""
-#         hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(inv) + ':' + settings.PAY_TEST_PASSWORD_1
-#         # print(hs)
-#         user = get_user_id(request)
-#         # if user:
-#         #     hs += ':user=' + str(user)
-#         # else:
-#         #     hs += ':user=0'
-#         # print(hs)
-#         # new_hash = hashlib.md5(hs.encode()).hexdigest()
-#         # print(new_hash)
-#         # dct={}
-#         # dct['login']=settings.PAY_LOGIN
-#         # dct['signature']=new_hash
-#         # dct['outsumm']=summ
-#         # dct['inv']=inv
-#         # dct['desc']='description'
-#         # dct['user']=str(int(user))
-#         # MerchantLogin=settings.PAY_LOGIN
-#         # OutSum=summ
-#
-#
-#         # mrh_login = "Test1999";
-#     # $mrh_pass1 = "password_1";
-#     # $inv_id = 678678;
-#     # $inv_desc = "Товары для животных";
-#     # $out_summ = "100.00";
-#     # $IsTest = 1;
-#     # $crc = md5("$mrh_login:$out_summ:$inv_id:$mrh_pass1");
-#
-#     # for i in ids:
-#     #     prod = prods.filter(id=i)[0]
-#     #     count = ses[str(i)]['count']
-#     #     ses[str(i)]['total'] = prod.price * count
-#
-#     # all_prices = 0
-#     # if prod_ses is not None:
-#     #     for i in prod_ses.values():
-#     #         all_prices += int(i['total'])
-#     #     # products = Product.objects.filter(slug__in=prod_ses.keys())
-#     #     products = ProductSize.objects.filter(id__in=prod_ses.keys())
-#     if user:
-#         # ids = ProductSize.objects.all().values_list('id', flat=True)
-#         # # print(ids)
-#         # # print(list(ids))
-#         # random.shuffle(list(ids))
-#         # print(ids)
-#         # us_or = UserOrders(user_id=user, date=datetime.date.today(), status_id=1, summ=55555)
-#         # # us_or.save()
-#         # inc = 0
-#         # for i in range(10):
-#         #     item = ids[i]
-#         #     count = random.randrange(1, 5)
-#         #     order_prods = OrdersProducts(order_id=us_or.id, product_id=item, count=count)
-#         #     # order_prods.save()
-#         #     inc += 1
-#         #     print(inc)
-#         return HttpResponse(json.dumps(True))
-#     else:
-#         return HttpResponse(json.dumps(True))
-
 def confirm_order(request):
-    # dic = global_function(request)
+    print('confirm_order')
     fio = request.POST.get('fio')
     address = request.POST.get('address')
     email = request.POST.get('email')
     tel = request.POST.get('tel')
-    print(fio, address, email, tel)
+    # print(fio, address, email, tel)
     prod_ses = request.session.get(settings.CART_SESSION_ID)
-    print(prod_ses)
+    # print(prod_ses)
 
     all_prices = 0
     ids = []
@@ -302,7 +197,7 @@ def confirm_order(request):
         for i in products:
             count = prod_ses[str(i.id)]['count']
             all_prices += i.price * count
-        print(products)
+        # print(products)
 
     ses = request.session.get(settings.CART_USER)
     if not ses:
@@ -320,6 +215,7 @@ def confirm_order(request):
 # проверять заказ по номеру
 # создать таблицу в бд с товарами оплаченными ???
 # проверять количество заказываемого товара с количеством на складе
+# создать темплейты для почты
 def pay_result(request):
     print('pay_result')
     OutSum = request.GET.get('OutSum')
@@ -328,24 +224,30 @@ def pay_result(request):
     Shp_User = request.GET.get('Shp_User')
     hs = str(OutSum) + ':' + str(InvId) + ':' + settings.PAY_PASSWORD_2 + ':Shp_User=' + str(Shp_User)
     new_hash = hashlib.md5(hs.encode()).hexdigest()
-    print(new_hash)
-    print(SignatureValue)
+    # print(new_hash)
+    # print(SignatureValue)
     if str(SignatureValue).lower() == str(new_hash).lower():
+        is_send=False
+        while is_send==False:
+            try:
+                print('send mail')
+                SPApiProxy = PySendPulse(settings.EMAIL_REST_API_ID, settings.EMAIL_REST_API_SECRET, 'memcached')
+                email = {
+                    'subject': 'Уведомление от системы',
+                    'html': '<h1>Hello, Anastason!</h1><p>This message is only sent to very pretty girls!</p>',
+                    'text': ' пр Проверка рабоспособности почты',
+                    'from': {'name': 'The Care', 'email': 'mail@thecare.ru'},
+                    'to': [
+                        {'name': 'Anastason', 'email': 'leha.avdeenko.98@mail.ru'}
+                    ]
+                }
+                # sending = SPApiProxy.smtp_send_mail(email)
+                # print(sending)
+                is_send=True
+            except:
+                is_send=False
+                time.sleep(1)
 
-        # отправка не больше десяти писем в секунду
-        print('send mail')
-        SPApiProxy = PySendPulse(settings.EMAIL_REST_API_ID, settings.EMAIL_REST_API_SECRET, 'memcached')
-        email = {
-            'subject': 'Уведомление от системы',
-            'html': '<h1>Hello, Anastason!</h1><p>This message is only sent to very pretty girls!</p>',
-            'text': ' пр Проверка рабоспособности почты',
-            'from': {'name': 'The Care', 'email': 'mail@thecare.ru'},
-            'to': [
-                {'name': 'Anastason', 'email': 'leha.avdeenko.98@mail.ru'}
-            ]
-        }
-        # sending = SPApiProxy.smtp_send_mail(email)
-        # print(sending)
 
         order = UserOrders.objects.filter(order_number=InvId)[0]
         order.status_id = 1
@@ -354,26 +256,19 @@ def pay_result(request):
         prods = UserOrderProducts.objects.filter(order_id=order.id)
         for i in prods:
             prod = ProductSize.objects.get(id=i.product_size_id)
-            print('prod')
-            print(prod.count)
-            print(i.count)
             cnt = prod.count - i.count
-            print(cnt)
             if cnt < 0:
-                print('less 0')
                 session_save(request, {})
                 return HttpResponse(json.dumps('bad sign'))
             else:
                 prod.count = cnt
                 prod.save()
-                print('count after order' + str(prod.count))
         return HttpResponse(json.dumps('OK' + str(InvId)))
     else:
         return HttpResponse(json.dumps('bad sign'))
 
 
 def pay_success(request):
-    # return HttpResponse(json.dumps('success'))
     OutSum = request.GET.get('OutSum')
     InvId = request.GET.get('InvId')
     return render(request, 'success.html', locals())
@@ -388,9 +283,9 @@ def pay_check(request):
     user = get_user_id(request)
     if not user:
         user = 0
-    print(user)
+    # print(user)
     prod_ses = request.session.get(settings.CART_SESSION_ID)
-    print(prod_ses)
+    # print(prod_ses)
     ids = []
     for i in prod_ses.keys():
         ids.append(int(i))
@@ -400,6 +295,9 @@ def pay_check(request):
         prod = prods.filter(id=i)[0]
         count = prod_ses[str(i)]['count']
         summ += prod.price * count
+    is_get_sale = UserOrders.objects.filter(user_id=user).filter(status_id=1).exists()
+    if is_get_sale==False:
+        summ=int(summ*0.9)
     ses_user = request.session.get(settings.CART_USER)
     with transaction.atomic():
         inv = int(UserOrders.objects.latest('order_number').order_number) + 1
@@ -409,7 +307,7 @@ def pay_check(request):
         if user:
             us_ord.user_id = user
         us_ord.save()
-        print(prods)
+        # print(prods)
         for i in prods:
             uop = UserOrderProducts(order_id=us_ord.id, product_size_id=i.id, count=int(prod_ses[str(i.id)]['count']),
                                     amount=i.price)
@@ -417,9 +315,9 @@ def pay_check(request):
         hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(
             us_ord.order_number) + ':' + settings.PAY_PASSWORD_1 + ':Shp_User=' + str(user)
         # hs = settings.PAY_LOGIN + ':' + str(summ) + ':' + str(us_ord.order_number) + ':' + settings.PAY_TEST_PASSWORD_1
-        print(hs)
+        # print(hs)
         new_hash = hashlib.md5(hs.encode()).hexdigest()
-        print(new_hash)
+        # print(new_hash)
 
         # ses = request.session.get(settings.CART_ORDER_NUMBER)
         # if not ses:

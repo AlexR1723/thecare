@@ -88,35 +88,35 @@ class CategoryType(models.Model):
     def __str__(self):
         return self.name
 
-    def get_res_items_sale(self):
-        items = ResourceType.objects.filter(category_id=self.id).filter(
-            product__productsize__sale__gt=0).distinct().order_by('name')
-        return items
+    # def get_res_items_sale(self):
+    #     items = ResourceType.objects.filter(category_id=self.id).filter(
+    #         product__productsize__sale__gt=0).distinct().order_by('name')
+    #     return items
+    #
+    # def get_need_items_sale(self):
+    #     items = NeedType.objects.filter(productneed__product__category=self).filter(
+    #         productneed__product__productsize__sale__gt=0).distinct().order_by('name')
+    #     return items
 
-    def get_need_items_sale(self):
-        items = NeedType.objects.filter(productneed__product__category=self).filter(
-            productneed__product__productsize__sale__gt=0).distinct().order_by('name')
-        return items
+    # def get_res_items_new(self):
+    #     dat = datetime.datetime.today() + datetime.timedelta(days=-30)
+    #     items = ResourceType.objects.filter(category_id=self.id).filter(
+    #         product__date__gte=dat).distinct().order_by('name')
+    #     return items
+    #
+    # def get_need_items_new(self):
+    #     dat = datetime.datetime.today() + datetime.timedelta(days=-30)
+    #     items = NeedType.objects.filter(productneed__product__category=self).filter(
+    #         productneed__product__date__gte=dat).distinct().order_by('name')
+    #     return items
 
-    def get_res_items_new(self):
-        dat = datetime.datetime.today() + datetime.timedelta(days=-30)
-        items = ResourceType.objects.filter(category_id=self.id).filter(
-            product__date__gte=dat).distinct().order_by('name')
-        return items
-
-    def get_need_items_new(self):
-        dat = datetime.datetime.today() + datetime.timedelta(days=-30)
-        items = NeedType.objects.filter(productneed__product__category=self).filter(
-            productneed__product__date__gte=dat).distinct().order_by('name')
-        return items
-
-    def get_res_items_brands(self):
-        items = ResourceType.objects.filter(category_id=self.id).distinct().order_by('name')
-        return items
-
-    def get_need_items_brands(self):
-        items = NeedType.objects.filter(productneed__product__category=self).distinct().order_by('name')
-        return items
+    # def get_res_items_brands(self):
+    #     items = ResourceType.objects.filter(category_id=self.id).distinct().order_by('name')
+    #     return items
+    #
+    # def get_need_items_brands(self):
+    #     items = NeedType.objects.filter(productneed__product__category=self).distinct().order_by('name')
+    #     return items
 
 
 class DjangoAdminLog(models.Model):

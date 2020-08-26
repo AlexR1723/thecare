@@ -76,19 +76,16 @@ def session_save(request, obj):
 
 
 @register.filter
-def gf_busket(request):
+def gf_busket(request, is_sale=False):
     basket = 0
     ses = request.session.get(settings.CART_SESSION_ID)
-    # print('gf_busket')
-    # print(ses)
+
     if ses and ses is not None:
         ids = []
         for i in ses.keys():
             ids.append(int(i))
-            # print(ids)
         if ids:
             prods = ProductSize.objects.filter(id__in=ids)
-            # print(prods)
             for i in ids:
                 prod = prods.filter(id=i)[0]
                 count = ses[str(i)]['count']
@@ -97,6 +94,8 @@ def gf_busket(request):
 
         for i in ses.values():
             basket += int(i['total'])
+    if is_sale:
+        basket = int(basket * 0.9)
     return basket
 
 
@@ -105,27 +104,14 @@ def gf_count_items(request):
     itm_cnt = 0
     ses = request.session.get(settings.CART_SESSION_ID)
     if ses and ses is not None:
-        # ids = []
-        # for i in ses.keys():
-        #     ids.append(int(i))
-        # prods = ProductSize.objects.filter(id__in=ids)
-        # for i in ids:
-        #     prod = prods.filter(id=i)[0]
-        #     count = ses[str(i)]['count']
-        #     ses[str(i)]['total'] = prod.price * count
-
         for i in ses.values():
             itm_cnt += int(i['count'])
     return itm_cnt
 
 
-# @register.filter
-# def get_media(id):
-# 	prod=Product.objects.get(id=id)
-# 	return prod.main_photo.url
 @register.filter
 def is_have_sales(id):
-    res=ProductSize.objects.get(id=int(id))
+    res = ProductSize.objects.get(id=int(id))
     res = ProductSize.objects.filter(product_id=res.product_id).filter(size_id=res.size_id).filter(sale__gt=0).exists()
     return res
 
@@ -162,3 +148,54 @@ def last(elem, all_c):
         return True
     else:
         return False
+
+
+@register.filter
+def get_res_items_brands(res, queryset):
+    ids = list(set(list(queryset.values_list('resource_id', flat=True))))
+    items = ResourceType.objects.filter(category_id=res.id).filter(id__in=ids).distinct().order_by('name')
+    return items
+
+
+@register.filter
+def get_need_items_brands(need, queryset):
+    ids = list(set(list(queryset.values_list('id', flat=True))))
+    items = NeedType.objects.filter(productneed__product__category__name=need).filter(
+        productneed__product_id__in=ids).distinct().order_by('name')
+    return items
+
+
+@register.filter
+def get_res_items_new(res, queryset):
+    ids = list(set(list(queryset.values_list('resource_id', flat=True))))
+    dat = datetime.datetime.today() + datetime.timedelta(days=-30)
+    items = ResourceType.objects.filter(category_id=res.id).filter(
+        product__date__gte=dat).filter(id__in=ids).distinct().order_by('name')
+    return items
+
+
+@register.filter
+def get_need_items_new(need, queryset):
+    ids = list(set(list(queryset.values_list('id', flat=True))))
+    dat = datetime.datetime.today() + datetime.timedelta(days=-30)
+    items = NeedType.objects.filter(productneed__product__category__name=need).filter(
+        productneed__product__date__gte=dat).filter(
+        productneed__product_id__in=ids).distinct().order_by('name')
+    return items
+
+
+@register.filter
+def get_res_items_sale(res, queryset):
+    ids = list(set(list(queryset.values_list('resource_id', flat=True))))
+    items = ResourceType.objects.filter(category_id=res.id).filter(
+        product__productsize__sale__gt=0).filter(id__in=ids).distinct().order_by('name')
+    return items
+
+
+@register.filter
+def get_need_items_sale(need, queryset):
+    ids = list(set(list(queryset.values_list('id', flat=True))))
+    items = NeedType.objects.filter(productneed__product__category__name=need).filter(
+        productneed__product__productsize__sale__gt=0).filter(
+        productneed__product_id__in=ids).distinct().order_by('name')
+    return items
