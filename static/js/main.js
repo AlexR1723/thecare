@@ -85,6 +85,7 @@ jQuery("document").ready(function (e) {
     speed: 1e3,
     slidesToShow: 4,
     slidesToScroll: 1,
+    touchThreshold: 100,
     lazyLoad: "ondemand",
     pauseOnHover: !0,
     responsive: [{
@@ -143,7 +144,7 @@ jQuery("document").ready(function (e) {
         for (let e = 0; e < o.length; e++) t.push(o[e].dataset.res);
         d = "brands=" + t.join("&"), e.push(d)
     }
-    let u = e.join("%");
+    let u = e.join("|");
     console.log(u), this.dataset.filter && (u += "/" + this.dataset.filter + "/"), window.location.href = "/catalog/" + this.dataset.page + "/" + u
 }), $("#excel-file-admin").on("change", function () {
     $(this).val() && $("#submit-excel-file-admin").click()
@@ -275,7 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
     $("#btn_add_to_cart").click(function () {
         let count = document.getElementById('item_count').value
         let prod_size = document.getElementById('select_product_sizes')
-        if (prod_size.dataset.tone === "True") {
+        if (prod_size && prod_size.dataset.tone === "True") {
             prod_size=document.getElementById('select_product_tone').value
         } else {
 
