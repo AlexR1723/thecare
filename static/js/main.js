@@ -312,14 +312,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }),
     $(".btn_cart_minus").on("click", function () {
         let e = this, t = e.parentElement.dataset.slug;
-        parseInt(this.nextElementSibling.value) >= 2 && $.ajax({
+        // parseInt(this.nextElementSibling.value) >= 2 && 
+        $.ajax({
             type: "GET",
             dataType: "json",
             async: !1,
             url: "/cart/plus_minus_product",
             data: {slug: t, minus: 1},
             success: function (n) {
-                !1 !== n ? (e.nextSibling.value = n.prod_count, document.getElementById("item_" + t).innerText = n.product_total + " руб.", document.getElementById("user_basket_total").innerText = n.total + " руб.", document.getElementById("cart_total_price").innerText = n.total + " руб.", document.getElementById("count_user_items").innerHTML = n.cnt) : notice("Произошла ошибка, попробуйте позже!")
+                !1 !== n ? (e.nextSibling.value = n.prod_count, document.getElementById("item_" + t).innerText = n.product_total + " руб.", document.getElementById("user_basket_total").innerText = n.total + " руб.", document.getElementById("cart_total_price").innerText = n.total + " руб.", document.getElementById("count_user_items").innerHTML = n.cnt, document.getElementById("cart_total_price_sale").innerHTML = "цена с Вашей скидкой "+(n.total*0.9)+" руб.") : notice("Произошла ошибка, попробуйте позже!")
             },
             error: function (e) {
                 alert("error")
@@ -327,14 +328,15 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }), $(".btn_cart_plus").on("click", function () {
     let e = this, t = e.parentElement.dataset.slug;
-    parseInt(this.previousElementSibling.value) < parseInt(this.previousElementSibling.max) && $.ajax({
+    // parseInt(this.previousElementSibling.value) < parseInt(this.previousElementSibling.max) && 
+    $.ajax({
         type: "GET",
         dataType: "json",
         async: !1,
         url: "/cart/plus_minus_product",
         data: {slug: t},
         success: function (n) {
-            !1 !== n ? (e.previousSibling.value = n.prod_count, document.getElementById("item_" + t).innerText = n.product_total + " руб.", document.getElementById("user_basket_total").innerText = n.total + " руб.", document.getElementById("cart_total_price").innerText = n.total + " руб.", document.getElementById("count_user_items").innerHTML = n.cnt) : notice("Произошла ошибка, попробуйте позже!")
+            !1 !== n ? (e.previousSibling.previousSibling.value = n.prod_count, document.getElementById("item_" + t).innerText = n.product_total + " руб.", document.getElementById("user_basket_total").innerText = n.total + " руб.", document.getElementById("cart_total_price").innerText = n.total + " руб.", document.getElementById("count_user_items").innerHTML = n.cnt, document.getElementById("cart_total_price_sale").innerHTML = "цена с Вашей скидкой "+(n.total*0.9)+" руб.") : notice("Произошла ошибка, попробуйте позже!")
         },
         error: function (e) {
             alert("error")
@@ -344,21 +346,22 @@ document.addEventListener("DOMContentLoaded", () => {
     let e = this.dataset.slug;
     $.ajax({
         type: "GET", dataType: "json", async: !0, url: "/cart/del_product", data: {slug: e}, success: function (t) {
-            !1 !== t ? (document.getElementById("carditem_" + e).remove(), document.getElementById("user_basket_total").innerText = t[0] + " руб.", document.getElementById("cart_total_price").innerText = t[0] + " руб.", document.getElementById("count_user_items").innerHTML = t[1]) : notice("Произошла ошибка, попробуйте позже!")
+            !1 !== t ? (document.getElementById("carditem_" + e).remove(), document.getElementById("user_basket_total").innerText = t[0] + " руб.", document.getElementById("cart_total_price").innerText = t[0] + " руб.", document.getElementById("count_user_items").innerHTML = t[1], document.getElementById("cart_total_price_sale").innerHTML = "цена с Вашей скидкой "+(t[0]*0.9)+" руб.") : notice("Произошла ошибка, попробуйте позже!")
         }, error: function (e) {
             alert("error")
         }
     })
 }), $(".cart_item_input").on("keyup", function () {
     let e = this, t = e.parentElement.dataset.slug, n = this.value;
-    this.value || (n = 0), parseInt(this.value) > parseInt(this.max) && (this.value = this.max, n = this.max), $.ajax({
+    // this.value || (n = 0), parseInt(this.value) > parseInt(this.max) && (this.value = this.max, n = this.max), 
+    $.ajax({
         type: "GET",
         dataType: "json",
         async: !0,
         url: "/cart/plus_minus_product",
         data: {slug: t, count: n},
         success: function (n) {
-            !1 !== n ? (e.innerText = n.prod_count, document.getElementById("item_" + t).innerText = n.product_total + " руб.", document.getElementById("user_basket_total").innerText = n.total + " руб.", document.getElementById("cart_total_price").innerText = n.total + " руб.", document.getElementById("count_user_items").innerHTML = n.cnt) : notice("Произошла ошибка, попробуйте позже!")
+            !1 !== n ? (e.innerText = n.prod_count, document.getElementById("item_" + t).innerText = n.product_total + " руб.", document.getElementById("user_basket_total").innerText = n.total + " руб.", document.getElementById("cart_total_price").innerText = n.total + " руб.", document.getElementById("count_user_items").innerHTML = n.cnt, document.getElementById("cart_total_price_sale").innerHTML = "цена с Вашей скидкой "+(n.total*0.9)+" руб.") : notice("Произошла ошибка, попробуйте позже!")
         },
         error: function (e) {
             alert("error")
